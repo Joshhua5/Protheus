@@ -1,0 +1,15 @@
+Background = 0 0 800 600
+BOMB = 0 601 32 32
+ExplosionF1 = 0 634 32 32
+ExplosionF2 = 33 601 32 32
+ExplosionF3 = 0 667 32 32
+FLOOR = 66 601 32 32
+MenuBackground = 801 0 800 600
+PLAYER = 33 634 32 32
+PlayerF1 = 99 601 32 32
+PlayerF2 = 66 634 32 32
+PlayerF3 = 33 667 32 32
+PlayerF4 = 0 700 32 32
+ROCK = 66 667 32 32
+SPAWN = 33 700 32 32
+WALL = 0 733 32 32

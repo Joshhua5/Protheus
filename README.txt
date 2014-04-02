@@ -1,0 +1,1 @@
+Place SDL2 at C:/SDL2/
