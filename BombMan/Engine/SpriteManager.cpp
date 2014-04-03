@@ -88,36 +88,38 @@ namespace Pro{
 				continue;
 			SDL_Rect rect;
 			  
-			unsigned int pos = lines[x].find('=') + 1;
+			//unsigned int pos = lines[x].find('=') + 1;
 
-			int opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
+			//int opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
+			 
 
 
-
-			rect.x = atoi(&lines[x].substr(pos, opp)[0]);
-			// add length onto position
-			pos += opp;
-			// get the next length for .y
-			opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
-			// get the .y
-			rect.y = atoi(&lines[x].substr(pos, opp)[0]);
-			pos += opp;
-			opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
-
-			rect.w = atoi(&lines[x].substr(pos, opp)[0]);	
-			pos += opp;
-			opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
-
-			rect.h = atoi(&lines[x].substr(pos, opp)[0]);	
-			pos += opp;
-			opp = lines[x].find_first_of(' ', pos + 1) - lines[x].find_first_of(' ') - 1;
-
-			
-			std::string name = (lines[x].substr(0, lines[x].find_first_of(' ', 0))).c_str();
-
-			Sprite sprite(name, rect);
+			std::vector<std::string> elements;
+			// break string down into elements
+			//name = x y w h 
+			int pos = 0;
+			int length;
+			// Get name
+			elements.push_back(lines[x].substr(0, lines[x].find_first_of(' ', 0)));  
+			// find the first ' '
+			pos = lines[x].find(' ', pos);
+			for (int i = 0; i < 6; i++){ 
+				// grab the length between ' '
+				length = lines[x].find(' ', pos + 1) - pos;
+				elements.push_back(
+					lines[x].substr(pos + 1, length));
+				// move the position for the next value
+				pos += length;
+			}
+			// convert the elements into the integer
+			rect.x = atoi(elements.at(2).c_str());
+			rect.y = atoi(elements.at(3).c_str());
+			rect.w = atoi(elements.at(4).c_str());
+			rect.h = atoi(elements.at(5).c_str());
+  
+			Sprite sprite(elements.at(0), rect);
 			sprite.attachSpriteSheet(spriteSheet); 
-			sprites.insert({ name, sprite });
+			sprites.insert({ elements.at(0) , sprite });
 		}
 		delete [] buffer;
 		 

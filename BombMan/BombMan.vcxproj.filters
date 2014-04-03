@@ -99,6 +99,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game Source</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Map.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\AnimatedEntity.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Game Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Map.h">
+      <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

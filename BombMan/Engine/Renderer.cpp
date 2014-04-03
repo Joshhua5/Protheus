@@ -45,9 +45,14 @@ namespace Pro{
 
 		// check if world is smaller than camera space
 
-		for (int x = cameraPos.x; x < cameraPos.x + cameraPos.w - 1; x++){
+		for (int x = cameraPos.x; x < cameraPos.x + cameraPos.w; x++){
 			for (int y = cameraPos.y; y < cameraPos.y + cameraPos.h; y++){
 				
+				if (y > map->height)
+					continue;
+				// take 2 for array 0 and the '\r' at the end
+				if (x + 1 >= map->width)
+					continue;
 				// Map reads down and to the right
 				
 				// Convert Ascii to integer
@@ -58,13 +63,14 @@ namespace Pro{
 				// populate the sprite pointer
 				if (tile->sprite == nullptr)
 					tile->sprite = spriteMng->getSprite(tile->spriteName);
-				
-			/*	SDL_Rect sizeCache = tiles->at(map->data[y][x]).tileSize;
-
-				sizeCache.x = sizeCache.w * x;
-				sizeCache.y = sizeCache.h * y;*/
-				renderSprite(tile->sprite, tile->sprite->getRect());
-
+				 
+				SDL_Rect spriteRect = tile->sprite->getRect();
+				SDL_Rect position;
+				position.x = x * spriteRect.w;
+				position.y = y * spriteRect.h;
+				position.w = spriteRect.w;
+				position.h = spriteRect.h;
+				renderSprite(tile->sprite, position); 
 			}
 		}
 

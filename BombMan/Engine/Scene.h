@@ -12,7 +12,6 @@ namespace Pro{
 
 	class Scene
 	{
-		IDManager ID_Manager;
 		TileMap* tileData;
 		Camera* activeCamera;
 		std::unordered_map<ID, Entity> entities;

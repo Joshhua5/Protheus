@@ -24,6 +24,7 @@
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\Inventory.cpp" />
     <ClCompile Include="Engine\Item.cpp" />
+    <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Engine\Name.cpp" />
     <ClCompile Include="Engine\Network.cpp" />
     <ClCompile Include="Engine\Renderer.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Inventory.h" />
     <ClInclude Include="Engine\Item.h" />
+    <ClInclude Include="Engine\Map.h" />
     <ClInclude Include="Engine\Name.h" />
     <ClInclude Include="Engine\Network.h" />
     <ClInclude Include="Engine\Renderer.h" />
