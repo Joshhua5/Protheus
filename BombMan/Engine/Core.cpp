@@ -147,7 +147,7 @@ namespace Pro{
 	// Map Functions
 
 	TileType* Pro::Core::getMapTile(unsigned int x, unsigned int y){
-		return scene->getMapData()->getTile(x, y);
+		return scene->getMap()->getTile(x, y);
 	}
 	std::vector<Entity*> Pro::Core::pollMapTile(unsigned int x, unsigned int y){
 		return scene->pollTile(x, y);

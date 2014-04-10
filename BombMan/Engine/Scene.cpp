@@ -12,7 +12,7 @@ namespace Pro{
 
 	bool Scene::loadSceneData(const std::string& path, const std::string& data){
 		// Load Tile Data
-		tileData = new TileMap();
+		tileData = new Map();
 		tileData->loadLevel(path, data);
 		return true;
 	} 
@@ -50,7 +50,7 @@ namespace Pro{
 		entities.insert({ _id, entity }); 
 	}
 
-	TileMap* Scene::getMapData(){
+	Map* Scene::getMap(){
 		return tileData;
 	}
 	// id must be managed, if lost the entity can't be retrieved. 

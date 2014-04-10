@@ -5,14 +5,14 @@
 #include "Avatar.h"
 #include "Camera.h"
 #include "IDManager.h"
-#include "TileMap.h"
+#include "Map.h"
 #include "Tile.h"
 
 namespace Pro{
 
 	class Scene
 	{
-		TileMap* tileData;
+		Map* tileData;
 		Camera* activeCamera;
 		std::unordered_map<ID, Entity> entities;
 		std::unordered_map<ID, Camera*> cameras;
@@ -44,6 +44,6 @@ namespace Pro{
 
 		// return the private storage of entities
 		std::unordered_map<ID, Entity>* getEntities();
-		TileMap* getMapData();
+		Map* getMap();
 	};
 }

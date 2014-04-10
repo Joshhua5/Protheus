@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL_rect.h>
 #include <string>
+#include "Camera.h"
+#include <fstream>
 #include <vector>
 #include "Tile.h"
 // Build to replace TileMap
@@ -18,10 +20,13 @@ namespace Pro{
 		std::vector<std::vector<char>> data;
 	public:
 		char tileAt(unsigned int, unsigned int);
+		char* contains( int,  int);
 		SDL_Rect getDimensions();
+		void setData(std::vector<std::vector<char>>);
+		std::vector<std::vector<char>> getData();
+		bool visible(Camera* cam);
 	};
-
-
+	 
 	class Map
 	{
 	private:
@@ -31,14 +36,18 @@ namespace Pro{
 		std::vector<TileType> tileData;
 		bool getBoolean(const std::string& line);
 		std::string getString(const std::string& line); 
+		SDL_Rect getRect(const std::string& line);
 
-		void loadLevelData(const std::string& file);
-		void loadLevelTileData(const std::string&file);
+		bool loadLevelData(const std::string& file);
+		bool loadLevelTileData(const std::string&file);
 	public:
 		Map();
 		~Map();
-		
-		void loadLevel(const std::string& file, const std::string& data); 
+
+		std::vector<MapSection*> getVisibleSections(Camera* cam);
+		bool loadLevel(const std::string& file, const std::string& data);
+		TileType* getTile(unsigned int _x, unsigned int _y);
+		TileType* getTileType(char);
 	};
 }
  

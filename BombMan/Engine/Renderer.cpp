@@ -27,51 +27,43 @@ namespace Pro{
 
 	void Renderer::renderScene(){
 		// Get data
-		TileMap* map = scene->getMapData();
-		SDL_Rect cameraPos = scene->getActiveCamera()->getPosition();
-		std::vector<TileType>* tiles = &map->tileData;
+		Map* map = scene->getMap();
+		SDL_Rect cameraPos = scene->getActiveCamera()->getPosition(); 
 		std::unordered_map<ID, Entity>* entities = scene->getEntities();
 
 		// Render the Map, only tiles visible to the camera
 
-		if ((cameraPos.x + cameraPos.w) - map->width > 0)
-			// camera overhangs map
-			cameraPos.w -= (cameraPos.x + cameraPos.w) - map->width;
-		if ((cameraPos.y + cameraPos.h) - map->height > 0)
-			// camera overhangs map
-			cameraPos.h -= (cameraPos.y + cameraPos.h) - map->height ;
+		auto sections = map->getVisibleSections(scene->getActiveCamera());
 
 		// render the tiles
 
 		// check if world is smaller than camera space
+		int x(0), y(0);
 
-		for (int x = cameraPos.x; x < cameraPos.x + cameraPos.w; x++){
-			for (int y = cameraPos.y; y < cameraPos.y + cameraPos.h; y++){
-				
-				if (y > map->height)
-					continue;
-				// take 2 for array 0 and the '\r' at the end
-				if (x + 1 >= map->width)
-					continue;
-				// Map reads down and to the right
-				
-				// Convert Ascii to integer
-				TileType* tile = &tiles->at(map->data[y][x] - 48); 
-				// check if textured
-				if (!tile->isTextured)
-					continue;
-				// populate the sprite pointer
-				if (tile->sprite == nullptr)
-					tile->sprite = spriteMng->getSprite(tile->spriteName);
-				 
-				SDL_Rect spriteRect = tile->sprite->getRect();
-				SDL_Rect position;
-				position.x = x * spriteRect.w;
-				position.y = y * spriteRect.h;
-				position.w = spriteRect.w;
-				position.h = spriteRect.h;
-				renderSprite(tile->sprite, position); 
+		for each(const auto& section in sections){
+			for each(const auto& col in section->getData()){ 
+				for each(const auto& row in col){
+					TileType* tile = map->getTileType(row - 48);
+					// check if textured
+					if (!tile->isTextured)
+						continue;
+					// populate the sprite pointer
+					if (tile->sprite == nullptr)
+						tile->sprite = spriteMng->getSprite(tile->spriteName);
+
+					SDL_Rect spriteRect = tile->sprite->getRect();
+					SDL_Rect position;
+					position.x = x * spriteRect.w;
+					position.y = y * spriteRect.h;
+					position.w = spriteRect.w;
+					position.h = spriteRect.h;
+					renderSprite(tile->sprite, position);
+					y++;
+				}
+				x++;
+				y = 0;
 			}
+			x = 0;
 		}
 
 		// render entities 
