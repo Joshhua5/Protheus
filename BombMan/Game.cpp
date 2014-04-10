@@ -7,15 +7,7 @@ Game::Game(){
 Game::~Game(){
 
 }
-  
-//void Pro::Core::start(){
- 
-	//scene.getCamera()->getRect()->w = 18;
-	//scene.getCamera()->getRect()->h = 18;
-
- 
-//}
-
+   
 
 void Game::setup(){
 

@@ -33,7 +33,6 @@
     <ClCompile Include="Engine\SpriteEntity.cpp" />
     <ClCompile Include="Engine\SpriteManager.cpp" />
     <ClCompile Include="Engine\Tile.cpp" />
-    <ClCompile Include="Engine\TileMap.cpp" />
     <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
@@ -62,7 +61,6 @@
     <ClInclude Include="Engine\SpriteEntity.h" />
     <ClInclude Include="Engine\SpriteManager.h" />
     <ClInclude Include="Engine\Tile.h" />
-    <ClInclude Include="Engine\TileMap.h" />
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game.h" />

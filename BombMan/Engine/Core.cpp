@@ -12,10 +12,11 @@ namespace Pro{
 		timer->startUpdate();
 		update(); 
 		timer->endUpdate();
-		timer->startRender();
 
-		timer->endRender();
+		timer->startRender();
 		render();
+		timer->endRender();
+		
 		timer->tick(); 
 	}
 

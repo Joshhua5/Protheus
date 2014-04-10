@@ -31,17 +31,18 @@ namespace Pro{
 		SDL_Rect cameraPos = scene->getActiveCamera()->getPosition(); 
 		std::unordered_map<ID, Entity>* entities = scene->getEntities();
 
-		// Render the Map, only tiles visible to the camera
+		// Render the Map, only sections visible to the camera
 
 		auto sections = map->getVisibleSections(scene->getActiveCamera());
 
 		// render the tiles
-
-		// check if world is smaller than camera space
+		 
 		int x(0), y(0);
 
 		for each(const auto& section in sections){
 			for each(const auto& col in section->getData()){ 
+				if (col[0] == '\r')
+					continue;
 				for each(const auto& row in col){
 					TileType* tile = map->getTileType(row - 48);
 					// check if textured

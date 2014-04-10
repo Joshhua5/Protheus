@@ -78,9 +78,6 @@
     <ClCompile Include="Engine\Tile.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\TileMap.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Timer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Tile.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\TileMap.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Timer.h">

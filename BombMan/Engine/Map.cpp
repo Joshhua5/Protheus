@@ -191,8 +191,8 @@ bool MapSection::visible(Camera* cam){
 #define d dimensions 
 	// need to check if the camera can see the MapSection
 	// top bottom check 
-	if (d.x > pos.x && d.x + d.w < pos.x + pos.w){
-		if (d.y + d.h < pos.y && d.y > pos.y)
+	if (d.x >= pos.x && d.x + d.w <= pos.x + pos.w){
+		if (d.y + d.h <= pos.y && d.y >= pos.y)
 			return true;
 		if (d.y + d.h > pos.y && d.y + d.h < pos.y + pos.h)
 			return true;
