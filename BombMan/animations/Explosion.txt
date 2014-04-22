@@ -1,3 +1,0 @@
-textures\\ExplosionF1.bmp
-textures\\ExplosionF2.bmp
-textures\\ExplosionF3.bmp

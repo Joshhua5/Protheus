@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Engine Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Engine Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Game Source">
+      <UniqueIdentifier>{c4fa4ebe-86ea-4fe8-8e0d-65c14351ec8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Header">
+      <UniqueIdentifier>{97b531c7-7124-469d-826a-caba1795af3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\GUI">
+      <UniqueIdentifier>{c34fdf38-4e90-449e-b206-538227591505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\GUI">
+      <UniqueIdentifier>{ee0f07f3-778e-4945-8846-9ac0762656d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\AnimatedEntity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AnimatedSprite.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Avatar.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Entity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EventHandeler.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\IDManager.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inventory.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Item.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Name.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Network.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Sprite.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SpriteEntity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SpriteManager.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Tile.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Timer.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Window.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntryPoint.cpp">
+      <Filter>Game Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Map.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUI.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIEntity.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIButton.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUICollapsibleMenu.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIEditor.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUILabel.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUISlider.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIText.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIWindow.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIContext.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIEvent.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIMenuBar.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIDropDownMenu.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\AnimatedEntity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AnimatedSprite.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Avatar.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Entity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EventHandeler.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\IDManager.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inventory.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Item.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Name.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Network.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Sprite.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteEntity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteManager.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Tile.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Timer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Window.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Map.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUI.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIEntity.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIWindow.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIButton.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUICollapsibleMenu.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIEditor.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUILabel.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUISlider.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIText.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIContext.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIEvent.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIMenuBar.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIDropDownMenu.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>

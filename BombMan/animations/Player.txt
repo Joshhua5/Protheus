@@ -1,6 +1,0 @@
-textures\\PlayerF1.bmp
-textures\\PlayerF2.bmp
-textures\\PlayerF3.bmp
-textures\\PlayerF4.bmp
-textures\\PlayerF3.bmp
-textures\\PlayerF2.bmp 
