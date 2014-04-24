@@ -1,6 +1,8 @@
 #include "GUIContext.h"
 
 using namespace Pro;
+using namespace GUI;
+
 GUIContext::GUIContext()
 {
 }
@@ -46,13 +48,13 @@ void GUIContext::setContextName(const std::string& name){
 	context_name = name;
 }
 
-ID GUIContext::getID(const std::string& name){
+Pro::ID GUIContext::getID(const std::string& name){
 	return id_manager->getIDFromName(name);
 }
 
 void GUIContext::removeID(const std::string& name){
 	id_manager->releaseID(name);
 }
-std::string GUIContext::getName(ID _id){
+std::string GUIContext::getName(Pro::ID _id){
 	return id_manager->getName(_id);
 }

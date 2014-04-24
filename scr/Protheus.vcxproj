@@ -18,7 +18,7 @@
     <ClCompile Include="Engine\Core.cpp" />
     <ClCompile Include="Engine\Entity.cpp" />
     <ClCompile Include="Engine\EventHandeler.cpp" />
-    <ClCompile Include="Engine\GUI.cpp" />
+    <ClCompile Include="Engine\GraphicalUI.cpp" />
     <ClCompile Include="Engine\GUIEntity.cpp" />
     <ClCompile Include="Engine\IDManager.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
@@ -46,39 +46,41 @@
     <ClCompile Include="Engine\GUIEvent.cpp" />
     <ClCompile Include="Engine\GUIMenuBar.cpp" />
     <ClCompile Include="Engine\GUIDropDownMenu.cpp" />
-    <ClCompile Include="lua\lapi.c" />
-    <ClCompile Include="lua\lauxlib.c" />
-    <ClCompile Include="lua\lbaselib.c" />
-    <ClCompile Include="lua\lbitlib.c" />
-    <ClCompile Include="lua\lcode.c" />
-    <ClCompile Include="lua\lcorolib.c" />
-    <ClCompile Include="lua\lctype.c" />
-    <ClCompile Include="lua\ldblib.c" />
-    <ClCompile Include="lua\ldebug.c" />
-    <ClCompile Include="lua\ldo.c" />
-    <ClCompile Include="lua\ldump.c" />
-    <ClCompile Include="lua\lfunc.c" />
-    <ClCompile Include="lua\lgc.c" />
-    <ClCompile Include="lua\linit.c" />
-    <ClCompile Include="lua\liolib.c" />
-    <ClCompile Include="lua\llex.c" />
-    <ClCompile Include="lua\lmathlib.c" />
-    <ClCompile Include="lua\lmem.c" />
-    <ClCompile Include="lua\loadlib.c" />
-    <ClCompile Include="lua\lobject.c" />
-    <ClCompile Include="lua\lopcodes.c" />
-    <ClCompile Include="lua\loslib.c" />
-    <ClCompile Include="lua\lparser.c" />
-    <ClCompile Include="lua\lstate.c" />
-    <ClCompile Include="lua\lstring.c" />
-    <ClCompile Include="lua\lstrlib.c" />
-    <ClCompile Include="lua\ltable.c" />
-    <ClCompile Include="lua\ltablib.c" />
-    <ClCompile Include="lua\ltm.c" />
-    <ClCompile Include="lua\lundump.c" />
-    <ClCompile Include="lua\lvm.c" />
-    <ClCompile Include="lua\lzio.c" />
+    <ClCompile Include="Engine\Lua.cpp" />
+    <ClCompile Include="Engine\lua\lapi.c" />
+    <ClCompile Include="Engine\lua\lauxlib.c" />
+    <ClCompile Include="Engine\lua\lbaselib.c" />
+    <ClCompile Include="Engine\lua\lbitlib.c" />
+    <ClCompile Include="Engine\lua\lcode.c" />
+    <ClCompile Include="Engine\lua\lcorolib.c" />
+    <ClCompile Include="Engine\lua\lctype.c" />
+    <ClCompile Include="Engine\lua\ldblib.c" />
+    <ClCompile Include="Engine\lua\ldebug.c" />
+    <ClCompile Include="Engine\lua\ldo.c" />
+    <ClCompile Include="Engine\lua\ldump.c" />
+    <ClCompile Include="Engine\lua\lfunc.c" />
+    <ClCompile Include="Engine\lua\lgc.c" />
+    <ClCompile Include="Engine\lua\linit.c" />
+    <ClCompile Include="Engine\lua\liolib.c" />
+    <ClCompile Include="Engine\lua\llex.c" />
+    <ClCompile Include="Engine\lua\lmathlib.c" />
+    <ClCompile Include="Engine\lua\lmem.c" />
+    <ClCompile Include="Engine\lua\loadlib.c" />
+    <ClCompile Include="Engine\lua\lobject.c" />
+    <ClCompile Include="Engine\lua\lopcodes.c" />
+    <ClCompile Include="Engine\lua\loslib.c" />
+    <ClCompile Include="Engine\lua\lparser.c" />
+    <ClCompile Include="Engine\lua\lstate.c" />
+    <ClCompile Include="Engine\lua\lstring.c" />
+    <ClCompile Include="Engine\lua\lstrlib.c" />
+    <ClCompile Include="Engine\lua\ltable.c" />
+    <ClCompile Include="Engine\lua\ltablib.c" />
+    <ClCompile Include="Engine\lua\ltm.c" />
+    <ClCompile Include="Engine\lua\lundump.c" />
+    <ClCompile Include="Engine\lua\lvm.c" />
+    <ClCompile Include="Engine\lua\lzio.c" />
     <ClCompile Include="Engine\Main.cpp" />
+    <ClCompile Include="SpriteBatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\AnimatedEntity.h" />
@@ -88,7 +90,7 @@
     <ClInclude Include="Engine\Core.h" />
     <ClInclude Include="Engine\Entity.h" />
     <ClInclude Include="Engine\EventHandeler.h" />
-    <ClInclude Include="Engine\GUI.h" />
+    <ClInclude Include="Engine\GraphicalUI.h" />
     <ClInclude Include="Engine\GUIEntity.h" />
     <ClInclude Include="Engine\IDManager.h" />
     <ClInclude Include="Engine\Input.h" />
@@ -116,32 +118,34 @@
     <ClInclude Include="Engine\GUIEvent.h" />
     <ClInclude Include="Engine\GUIMenuBar.h" />
     <ClInclude Include="Engine\GUIDropDownMenu.h" />
-    <ClInclude Include="lua\lapi.h" />
-    <ClInclude Include="lua\lauxlib.h" />
-    <ClInclude Include="lua\lcode.h" />
-    <ClInclude Include="lua\lctype.h" />
-    <ClInclude Include="lua\ldebug.h" />
-    <ClInclude Include="lua\ldo.h" />
-    <ClInclude Include="lua\lfunc.h" />
-    <ClInclude Include="lua\lgc.h" />
-    <ClInclude Include="lua\llex.h" />
-    <ClInclude Include="lua\llimits.h" />
-    <ClInclude Include="lua\lmem.h" />
-    <ClInclude Include="lua\lobject.h" />
-    <ClInclude Include="lua\lopcodes.h" />
-    <ClInclude Include="lua\lparser.h" />
-    <ClInclude Include="lua\lstate.h" />
-    <ClInclude Include="lua\lstring.h" />
-    <ClInclude Include="lua\ltable.h" />
-    <ClInclude Include="lua\ltm.h" />
-    <ClInclude Include="lua\lua.h" />
-    <ClInclude Include="lua\lua.hpp" />
-    <ClInclude Include="lua\luaconf.h" />
-    <ClInclude Include="lua\lualib.h" />
-    <ClInclude Include="lua\lundump.h" />
-    <ClInclude Include="lua\lvm.h" />
-    <ClInclude Include="lua\lzio.h" />
+    <ClInclude Include="Engine\Lua.h" />
+    <ClInclude Include="Engine\lua\lapi.h" />
+    <ClInclude Include="Engine\lua\lauxlib.h" />
+    <ClInclude Include="Engine\lua\lcode.h" />
+    <ClInclude Include="Engine\lua\lctype.h" />
+    <ClInclude Include="Engine\lua\ldebug.h" />
+    <ClInclude Include="Engine\lua\ldo.h" />
+    <ClInclude Include="Engine\lua\lfunc.h" />
+    <ClInclude Include="Engine\lua\lgc.h" />
+    <ClInclude Include="Engine\lua\llex.h" />
+    <ClInclude Include="Engine\lua\llimits.h" />
+    <ClInclude Include="Engine\lua\lmem.h" />
+    <ClInclude Include="Engine\lua\lobject.h" />
+    <ClInclude Include="Engine\lua\lopcodes.h" />
+    <ClInclude Include="Engine\lua\lparser.h" />
+    <ClInclude Include="Engine\lua\lstate.h" />
+    <ClInclude Include="Engine\lua\lstring.h" />
+    <ClInclude Include="Engine\lua\ltable.h" />
+    <ClInclude Include="Engine\lua\ltm.h" />
+    <ClInclude Include="Engine\lua\lua.h" />
+    <ClInclude Include="Engine\lua\lua.hpp" />
+    <ClInclude Include="Engine\lua\luaconf.h" />
+    <ClInclude Include="Engine\lua\lualib.h" />
+    <ClInclude Include="Engine\lua\lundump.h" />
+    <ClInclude Include="Engine\lua\lvm.h" />
+    <ClInclude Include="Engine\lua\lzio.h" />
     <ClInclude Include="Engine\Main.h" />
+    <ClInclude Include="SpriteBatcher.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
@@ -173,8 +177,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\SDL2\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

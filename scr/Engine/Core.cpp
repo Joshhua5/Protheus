@@ -39,11 +39,11 @@ namespace Pro{
 
 	bool Core::start(){
 		scene = new Scene();
-		network = new Network(); 
+		network = new Networking::Network();
 		timer = new Timer();
-		sprite_manager = new SpriteManager();
+		sprite_manager = new Graphics::SpriteManager();
 		event_handeler = new EventHandeler();
-		renderer = new Renderer(sprite_manager, scene);
+		renderer = new Graphics::Renderer(sprite_manager, scene);
 
 		SDL_Init(SDL_INIT_EVERYTHING);
 		if (window->createWindow() == false)
@@ -100,27 +100,27 @@ namespace Pro{
 
 	// Network Functions
 
-	TCPConnection* Pro::Core::netStartServer(){
+	Networking::TCPConnection* Pro::Core::netStartServer(){
 		return network->startServer();
 	}
-	TCPConnection* Pro::Core::netConnectToServer(const std::string &IP){
+	Networking::TCPConnection* Pro::Core::netConnectToServer(const std::string &IP){
 		return network->connectToServer(IP);
 	}
 
 	// returns the amount of bytes recieved
-	unsigned int Pro::Core::netRecv(TCPConnection* _con, void *buffer){
+	unsigned int Pro::Core::netRecv(Networking::TCPConnection* _con, void *buffer){
 		return network->recv(_con, buffer);
 	}
 	// returns the amount of bytes recieved without clearing the buffer
-	unsigned int Pro::Core::netPeek(TCPConnection* _con){
+	unsigned int Pro::Core::netPeek(Networking::TCPConnection* _con){
 		return network->peek(_con);
 	}
 	// sends the buffer through the connection
-	void Pro::Core::netSend(TCPConnection* connection, void* buffer, unsigned int bufferSize){
+	void Pro::Core::netSend(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize){
 		network->send(connection, buffer, bufferSize);
 	}
 	/* sends the buffer through the connection and deletes the buffer  */
-	void Pro::Core::netSendd(TCPConnection* connection, void* buffer, unsigned int bufferSize){
+	void Pro::Core::netSendd(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize){
 		network->sendd(connection, buffer, bufferSize);
 	}
 

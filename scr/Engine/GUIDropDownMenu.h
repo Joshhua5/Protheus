@@ -1,9 +1,11 @@
 #pragma once
 namespace Pro{
-	class GUIDropDownMenu
-	{
-	public:
-		GUIDropDownMenu();
-		~GUIDropDownMenu();
-	};
+	namespace GUI{
+		class GUIDropDownMenu
+		{
+		public:
+			GUIDropDownMenu();
+			~GUIDropDownMenu();
+		};
+	}
 }

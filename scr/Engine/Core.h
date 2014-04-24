@@ -5,6 +5,7 @@
 #include "Network.h"
 #include "Window.h"
 #include "SpriteManager.h"
+#include "Lua.h"
 #include "EventHandeler.h"
 
 namespace Pro{
@@ -12,11 +13,12 @@ namespace Pro{
 	class Core
 	{
 		Scene* scene;
-		Network* network;
-		Renderer* renderer;
+		Networking::Network* network;
+		Graphics::Renderer* renderer;
 		Window* window;
 		Timer* timer;
-		SpriteManager* sprite_manager;
+		Lua::Lua* lua;
+		Graphics::SpriteManager* sprite_manager;
 		EventHandeler* event_handeler;
 		IDManager* id_manager;
 
@@ -57,17 +59,17 @@ namespace Pro{
 
 		// Network Functions
 
-		TCPConnection* netStartServer();
-		TCPConnection* netConnectToServer(const std::string &IP);
+		Networking::TCPConnection* netStartServer();
+		Networking::TCPConnection* netConnectToServer(const std::string &IP);
 
 		// returns the amount of bytes recieved
-		unsigned int netRecv(TCPConnection*, void *buffer);
+		unsigned int netRecv(Networking::TCPConnection*, void *buffer);
 		// returns the amount of bytes recieved without clearing the buffer
-		unsigned int netPeek(TCPConnection*);
+		unsigned int netPeek(Networking::TCPConnection*);
 		// sends the buffer through the connection
-		void netSend(TCPConnection* connection, void* buffer, unsigned int bufferSize);
+		void netSend(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize);
 		/* sends the buffer through the connection and deletes the buffer  */
-		void netSendd(TCPConnection* connection, void* buffer, unsigned int bufferSize);
+		void netSendd(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize);
 
 		// Resource Functions
 		 

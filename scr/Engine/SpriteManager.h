@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include "AnimatedSprite.h" 
 namespace Pro{
-
+	namespace Graphics{
 	class SpriteManager
 	{
 		SDL_Texture* spriteSheet;
@@ -27,5 +27,5 @@ namespace Pro{
 		bool loadAnimations(SDL_Renderer* renderer, const std::string& path);
 		void release();
 	};
-
+	}
 }

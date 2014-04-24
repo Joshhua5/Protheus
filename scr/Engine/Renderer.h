@@ -5,7 +5,7 @@
 #include "SpriteManager.h"
 #include <SDL.h>
 namespace Pro{
-
+	namespace Graphics{
 	class Renderer
 	{
 	private:
@@ -23,4 +23,5 @@ namespace Pro{
 
 		void renderScene( );
 	}; 
+	}
 }

@@ -4,14 +4,16 @@
 #include <SDL_events.h>
 #include "GUIEvent.h"
 namespace Pro{
-	class GUIMenuBar 
-	{
-		std::vector<GUIDropDownMenu> elements;
-	public:
-		GUIMenuBar();
-		~GUIMenuBar();
+	namespace GUI{
+		class GUIMenuBar
+		{
+			std::vector<GUIDropDownMenu> elements;
+		public:
+			GUIMenuBar();
+			~GUIMenuBar();
 
-		void attachMenu(GUIDropDownMenu* component);
-		void update(std::vector<SDL_Event> events);
-	};
+			void attachMenu(GUIDropDownMenu* component);
+			void update(std::vector<SDL_Event> events);
+		};
+	}
 }

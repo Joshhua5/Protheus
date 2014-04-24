@@ -12,6 +12,7 @@ int main(int argc, char* args[])
 	dim.h = 600;
 	core->setWindowDimensions(dim);
 	core->setWindowTitle("Core");
+
 	core->start();
 	 
 	if (core->loadSpriteSheet(".\\textures\\SpriteSheet.PNG", "textures\\SpriteSheet.txt") == false)

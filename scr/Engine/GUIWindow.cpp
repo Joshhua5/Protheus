@@ -2,6 +2,7 @@
 
 
 using namespace Pro;
+using namespace GUI;
 
 GUIWindow::GUIWindow()
 {

@@ -1,6 +1,7 @@
 #include "GUIEntity.h"
 
 using namespace Pro;
+using namespace GUI;
 
 GUIEntity::GUIEntity()
 {

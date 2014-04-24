@@ -1,11 +1,13 @@
 #pragma once
 #include "GUIEntity.h"
 namespace Pro{
-	class GUILabel : 
-		public GUIEntity
-	{
-	public:
-		GUILabel();
-		~GUILabel();
-	};
+	namespace GUI{
+		class GUILabel :
+			public GUIEntity
+		{
+		public:
+			GUILabel();
+			~GUILabel();
+		};
+	}
 }

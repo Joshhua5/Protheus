@@ -1,9 +1,11 @@
 #pragma once 
 namespace Pro{ 
-	class GUIEditor
-	{
-	public:
-		GUIEditor();
-		~GUIEditor();
-	}; 
+	namespace GUI{
+		class GUIEditor
+		{
+		public:
+			GUIEditor();
+			~GUIEditor();
+		};
+	}
 }
