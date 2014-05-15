@@ -111,6 +111,22 @@ namespace Pro{
 				{ "update", &Core::lUpdate },
 				{ nullptr, nullptr }
 			}; defineMetatable("engine_metatable", engine_metatable);
+
+
+			luaL_Reg gui_button_metatable[] = {
+				{ "bindCallback", &GUI::GUIButton::lBindCallback },
+				{ "getPosition", &GUI::GUIButton::lGetPosition },
+				{ "setPosition", &GUI::GUIButton::lSetPosition },
+				{ "getDimensions", &GUI::GUIButton::lGetDimensions },
+				{ "setDimensions", &GUI::GUIButton::lSetDimensions },
+				{ "getParent", &GUI::GUIButton::lGetParent },
+				{ "setParent", &GUI::GUIButton::lSetParent },
+				{ "getID", &GUI::GUIButton::lGetID },
+				{ "enable", &GUI::GUIButton::lEnable },
+				{ "disable", &GUI::GUIButton::lDisable },
+				{ "isEnabled", &GUI::GUIButton::lIsEnabled },
+				{ nullptr, nullptr }
+			}; defineMetatable("gui_entity_metatable", gui_button_metatable);
 		}
 
 		void Lua::attachCore(Core* _core){
@@ -147,16 +163,15 @@ namespace Pro{
 		}
 
 		int Lua::createAvatar(lua_State* L){
-			Avatar** userdata = (Avatar**)lua_newuserdata(L, sizeof(Avatar*));
+			Avatar** userdata = static_cast<Avatar**>(lua_newuserdata(L, sizeof(Avatar*)));
 			*userdata = new Avatar();
 			engine_core->addEntity(*userdata, lua_tostring(L, 1));
 			luaL_getmetatable(L, "avatar_metatable");
-			lua_setmetatable(L, -2);
-
+			lua_setmetatable(L, -2); 
 			return 1;
 		}
 		int Lua::createCamera(lua_State* L){
-			Camera** userdata = (Camera**)lua_newuserdata(L, sizeof(Camera*));
+			Camera** userdata = static_cast<Camera**>(lua_newuserdata(L, sizeof(Camera*)));
 			*userdata = new Camera();
 			engine_core->addCamera(*userdata, lua_tostring(L, 1));
 			if (engine_core->getActiveCamera() == nullptr)
@@ -166,6 +181,13 @@ namespace Pro{
 
 			return 1;
 		}
-
+		int Lua::createGUIButton(lua_State* L){
+			GUI::GUIButton** userdata = static_cast<GUI::GUIButton**>(lua_newuserdata(L, sizeof(Camera*)));
+			*userdata = new GUI::GUIButton(); 
+			luaL_getmetatable(L, "gui_button_metatable");
+			lua_setmetatable(L, -2); 
+			return 1;
+		}
+		//int Lua::createGUIContext(lua_State* L){}
 	}
 }

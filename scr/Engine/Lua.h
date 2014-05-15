@@ -3,6 +3,7 @@
  
 #include "lua/lua.hpp" 
 #include "Core.h"
+#include "GraphicalUI.h"
 #include <string>
 
 namespace Pro{
@@ -15,6 +16,8 @@ namespace Pro{
 			// Object Creation
 			static int createAvatar(lua_State*);
 			static int createCamera(lua_State*);
+			static int createGUIButton(lua_State*);
+			static int createGUIContext(lua_State*);
 			// No arguments
 			static int updateEngine(lua_State*);
 			static int loadSpriteSheet(lua_State* L);

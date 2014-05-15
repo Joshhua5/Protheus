@@ -24,9 +24,11 @@ GUIEvent* GUIWindow::update(SDL_Event mouse_event){
 				}
 				break;
 			 default:
-				 if (entities->isClickWithin(mouse_event.button))
-					return entities->generateEvent();
-					break;
+				 if (entities->isClickWithin(mouse_event.button)){
+					 entities->callback();
+					 return entities->generateEvent(); 
+				 }
+				break;
 			}
 		}
 	} 

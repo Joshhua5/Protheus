@@ -151,10 +151,6 @@
     <ClInclude Include="Engine\Math.h" />
     <ClInclude Include="Engine\Vectors.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Engine\EngineScript\Avatar.lua" />
-    <None Include="Engine\EngineScript\Entity.lua" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
     <RootNamespace>BombMan</RootNamespace>

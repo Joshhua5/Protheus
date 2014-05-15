@@ -15,6 +15,9 @@ namespace Pro{
 		std::string getSpriteName();
 
 		void setSprite(const std::string&);
+		 
+		static int lSetSprite(lua_State*);
+		static int lGetSpriteName(lua_State*); 
 	};
 
 }

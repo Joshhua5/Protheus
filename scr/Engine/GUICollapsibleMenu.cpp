@@ -16,9 +16,11 @@ void GUICollapsibleMenu::addComponent(GUIEntity* component){
 
 }
 
-GUIEvent* GUICollapsibleMenu::update(SDL_Event mouse_event){ 
+GUIEvent* GUICollapsibleMenu::update(SDL_Event mouse_event){
 	for each(auto window_ents in window_entities)
-		if (window_ents->isClickWithin(mouse_event.button))
+		if (window_ents->isClickWithin(mouse_event.button)){
+			window_ents->callback();
 			return window_ents->generateEvent();
+		}
 	return nullptr;
 }

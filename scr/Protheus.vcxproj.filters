@@ -441,8 +441,4 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Engine\EngineScript\Entity.lua" />
-    <None Include="Engine\EngineScript\Avatar.lua" />
-  </ItemGroup>
 </Project>
