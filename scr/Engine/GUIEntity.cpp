@@ -63,25 +63,7 @@ namespace Pro{
 			int y = _mouse.y;
 			return isClickWithin(x, y);
 		}
-
-		GUIEvent* GUIEntity::generateEvent(){
-			GUIEvent* newEvent = new GUIEvent();
-			newEvent->entity_pointer = this;
-			newEvent->entity_type = type;
-			switch (type){
-			case GUI_ENTITY_TYPE::BUTTON:
-			case GUI_ENTITY_TYPE::LABEL:
-			case GUI_ENTITY_TYPE::SLIDER:
-				newEvent->event_type = GUI_EVENT::CLICK;
-				break;
-			case GUI_ENTITY_TYPE::TEXT:
-			case GUI_ENTITY_TYPE::COLLAPSIBLE_MENU:
-			case GUI_ENTITY_TYPE::WINDOW:
-				newEvent->event_type = GUI_EVENT::FOCUS;
-				break;
-			}
-			return newEvent;
-		}
+		 
 		std::string* GUIEntity::getCallback(){
 			return &lua_callback;
 		}
@@ -106,8 +88,8 @@ namespace Pro{
 			GUIEntity* p = getPointer(L);
 			p->setCallback(L,
 				lua_tostring(L, 2),
-				lua_tonumber(L, 3),
-				lua_tonumber(L, 4));
+				static_cast<unsigned char>(lua_tonumber(L, 3)),
+				static_cast<unsigned char>(lua_tonumber(L, 4)));
 			return 0;
 		}
 		int  GUIEntity::lGetPosition(lua_State* L){
@@ -120,8 +102,8 @@ namespace Pro{
 		int  GUIEntity::lSetPosition(lua_State* L){
 			GUIEntity* p = getPointer(L);
 			SDL_Point r;
-			r.x = lua_tonumber(L, 2);
-			r.y = lua_tonumber(L, 3);
+			r.x = static_cast<int>(lua_tonumber(L, 2));
+			r.y = static_cast<int>(lua_tonumber(L, 3));
 			p->setPosition(r);
 			return 0;
 		} 
@@ -135,8 +117,8 @@ namespace Pro{
 		int  GUIEntity::lSetDimensions(lua_State* L){
 			GUIEntity* p = getPointer(L);
 			SDL_Point r;
-			r.x = lua_tonumber(L, 2);
-			r.y = lua_tonumber(L, 3);
+			r.x = static_cast<int>(lua_tonumber(L, 2));
+			r.y = static_cast<int>(lua_tonumber(L, 3));
 			p->setDimensions(r);
 			return 0;
 		}
@@ -147,6 +129,7 @@ namespace Pro{
 			luaL_getmetatable(L, "gui_entity_metatable");
 			lua_setmetatable(L, -2);
 			p->getParent();
+			return 1;
 		}
 		int  GUIEntity::lSetParent(lua_State* L){
 			GUIEntity* p = getPointer(L);

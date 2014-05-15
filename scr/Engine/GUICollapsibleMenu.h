@@ -14,7 +14,7 @@ namespace Pro{
 			~GUICollapsibleMenu();
 
 			void addComponent(GUIEntity* component);
-			GUIEvent* update(SDL_Event mouse_event);
+			void update(SDL_Event mouse_event);
 		};
 	}
 }

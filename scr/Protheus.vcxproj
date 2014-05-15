@@ -43,7 +43,6 @@
     <ClCompile Include="Engine\GUISlider.cpp" />
     <ClCompile Include="Engine\GUIText.cpp" />
     <ClCompile Include="Engine\GUIWindow.cpp" />
-    <ClCompile Include="Engine\GUIEvent.cpp" />
     <ClCompile Include="Engine\GUIMenuBar.cpp" />
     <ClCompile Include="Engine\GUIDropDownMenu.cpp" />
     <ClCompile Include="Engine\Lua.cpp" />
@@ -117,7 +116,6 @@
     <ClInclude Include="Engine\GUISlider.h" />
     <ClInclude Include="Engine\GUIText.h" />
     <ClInclude Include="Engine\GUIWindow.h" />
-    <ClInclude Include="Engine\GUIEvent.h" />
     <ClInclude Include="Engine\GUIMenuBar.h" />
     <ClInclude Include="Engine\GUIDropDownMenu.h" />
     <ClInclude Include="Engine\Lua.h" />
@@ -150,6 +148,10 @@
     <ClInclude Include="Engine\SpriteBatcher.h" />
     <ClInclude Include="Engine\Math.h" />
     <ClInclude Include="Engine\Vectors.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Protheus.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
@@ -185,7 +187,7 @@
     <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
@@ -200,7 +202,7 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

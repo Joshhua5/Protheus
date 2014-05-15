@@ -108,9 +108,6 @@
     <ClCompile Include="Engine\GUIContext.cpp">
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GUIEvent.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GUIMenuBar.cpp">
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
@@ -338,9 +335,6 @@
     <ClInclude Include="Engine\GUIContext.h">
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\GUIEvent.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\GUIMenuBar.h">
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
@@ -440,5 +434,13 @@
     <ClInclude Include="Engine\Vectors.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Protheus.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

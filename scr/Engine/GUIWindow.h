@@ -1,12 +1,10 @@
 #pragma once
 #include <SDL_rect.h>
 #include <SDL_events.h>
-#include "GUIEntity.h"
-#include "GUIEvent.h"
+#include "GUIEntity.h" 
 #include "GUIButton.h"
 #include "GUISlider.h"
-#include "GUIText.h"
-#include "GUIEvent.h"
+#include "GUIText.h" 
 #include "GUICollapsibleMenu.h"
 #include "GUIMenuBar.h"
 #include <vector>
@@ -30,7 +28,7 @@ namespace Pro{
 
 			void attachMenuBar(GUIMenuBar* component);
 			void addComponent(GUIEntity* component);
-			GUIEvent* update(SDL_Event mouse_event);
+			void update(SDL_Event mouse_event);
 		};
 	}
 }

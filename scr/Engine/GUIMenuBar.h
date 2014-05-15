@@ -2,7 +2,6 @@
 #include <vector>
 #include "GUIDropDownMenu.h"
 #include <SDL_events.h>
-#include "GUIEvent.h"
 namespace Pro{
 	namespace GUI{
 		class GUIMenuBar

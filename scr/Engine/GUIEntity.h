@@ -1,15 +1,21 @@
 #pragma once
 #include <SDL.h>
 #include <string> 
-#include "GUIEvent.h"
 #include "lua\lua.hpp"
 
 namespace Pro{ 
-	namespace GUI{
-		struct GUIEvent;
-		enum struct GUI_ENTITY_TYPE;
+	namespace GUI{ 
 
 		typedef unsigned int ID;
+		enum struct GUI_ENTITY_TYPE{
+			BUTTON,
+			LABEL,
+			SLIDER,
+			TEXT,
+			WINDOW,
+			COLLAPSIBLE_MENU
+		};
+
 		class GUIEntity
 		{
 			// relative position to the parent
@@ -55,9 +61,7 @@ namespace Pro{
 
 			std::string* getCallback();
 			void setCallback(lua_State*, const std::string&, unsigned char args, unsigned char returns);
-			void callback();
-
-			GUIEvent* generateEvent();
+			void callback(); 
 
 			static int lBindCallback(lua_State*);
 			static int lGetPosition(lua_State*);

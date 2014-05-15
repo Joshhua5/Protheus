@@ -12,19 +12,10 @@ GraphicalUI::~GraphicalUI()
 }
 
 
-std::stack<GUI::GUIEvent> GraphicalUI::update(std::vector<SDL_Event*> events){
-	std::stack<GUI::GUIEvent> returned_events;
-	GUI::GUIEvent* feedback;
-	for each(auto event in events){
-		for each(auto windows in window_contexts){
-			feedback = windows->update(*event);
-			if (feedback != nullptr){
-				returned_events.push(*feedback);
-				delete feedback;
-			} 
-		}
-	}
-	return returned_events;
+void GraphicalUI::update(std::vector<SDL_Event*> events){ 
+	for each(auto event in events)
+		for each(auto windows in window_contexts)
+			windows->update(*event);  
 }
  
 
