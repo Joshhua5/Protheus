@@ -10,7 +10,7 @@ namespace Pro{
 	{
 	public:
 		Avatar();
-		~Avatar();
+		~Avatar(); 
 	};
 
 }

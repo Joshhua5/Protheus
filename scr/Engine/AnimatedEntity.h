@@ -16,7 +16,12 @@ namespace Pro{
 
 		AnimatedSprite* activeAnimation;
 		void addAnimation(unsigned int animID, AnimatedSprite* sprite);
-		void activateAnim(unsigned int animID);
+		void activateAnimation(unsigned int animID);
+
+		// LUA FUNCTIONS
+		
+		static int lAddAnimation(lua_State*);
+		static int lActivateAnimation(lua_State*);
 	};
 
 }

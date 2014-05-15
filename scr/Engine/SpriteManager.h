@@ -5,7 +5,7 @@
 #include <thread>
 #include <fstream>
 #include <SDL_image.h>
-#include "AnimatedSprite.h" 
+#include "AnimatedSprite.h"  
 namespace Pro{
 	namespace Graphics{
 	class SpriteManager

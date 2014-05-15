@@ -234,7 +234,13 @@
     <ClCompile Include="Engine\GraphicalUI.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteBatcher.cpp">
+    <ClCompile Include="Engine\SpriteBatcher.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Vectors.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -425,8 +431,18 @@
     <ClInclude Include="Engine\GraphicalUI.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteBatcher.h">
+    <ClInclude Include="Engine\SpriteBatcher.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Math.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vectors.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\EngineScript\Entity.lua" />
+    <None Include="Engine\EngineScript\Avatar.lua" />
   </ItemGroup>
 </Project>

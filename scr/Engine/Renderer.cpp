@@ -4,7 +4,7 @@ namespace Pro{
 	namespace Graphics{
 
 		Renderer::Renderer(SpriteManager* _spriteMng, Scene* _scene)
-		{
+		{ 
 			spriteMng = _spriteMng;
 			scene = _scene;
 		}
@@ -12,6 +12,7 @@ namespace Pro{
 
 		Renderer::~Renderer()
 		{
+			delete sprite_batcher;
 		}
 
 		bool Renderer::init(SDL_Window* window){
@@ -19,6 +20,7 @@ namespace Pro{
 				SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (renderer == nullptr)
 				return false;
+			sprite_batcher = new SpriteBatcher(renderer);
 			return true;
 		}
 
@@ -29,8 +31,9 @@ namespace Pro{
 		void Renderer::renderScene(){
 			// Get data
 			Map* map = scene->getMap();
-			SDL_Rect cameraPos = scene->getActiveCamera()->getPosition();
-			std::unordered_map<ID, Entity>* entities = scene->getEntities();
+			//SDL_Point* cameraPos = scene->getActiveCamera()->getPosition();
+
+			std::unordered_map<ID, Entity*>* entities = scene->getEntities();
 
 			// Render the Map, only sections visible to the camera
 
@@ -54,12 +57,9 @@ namespace Pro{
 							tile->sprite = spriteMng->getSprite(tile->spriteName);
 
 						SDL_Rect spriteRect = tile->sprite->getRect();
-						SDL_Rect position;
-						position.x = x * spriteRect.w;
-						position.y = y * spriteRect.h;
-						position.w = spriteRect.w;
-						position.h = spriteRect.h;
-						renderSprite(tile->sprite, position);
+						spriteRect.x *= spriteRect.w;
+						spriteRect.y *= spriteRect.h;
+						sprite_batcher->push(tile->sprite, spriteRect); 
 						y++;
 					}
 					x++;
@@ -73,27 +73,24 @@ namespace Pro{
 			SpriteEntity* seCache;
 			for each(auto kv in *entities){
 				// check if animated
-				aeCache = dynamic_cast<AnimatedEntity*>(&kv.second);
-				if (aeCache != nullptr){
-					renderSprite(aeCache->activeAnimation->getFrame(), aeCache->getPositionRect());
+				aeCache = dynamic_cast<AnimatedEntity*>(kv.second);
+				if (aeCache != nullptr){ 
+					sprite_batcher->push(aeCache->activeAnimation->getFrame(), aeCache->getPositionRect());
 					aeCache->activeAnimation->nextFrame();
 					continue;
 				}
 				// check if has sprite
-				seCache = dynamic_cast<SpriteEntity*>(&kv.second);
+				seCache = dynamic_cast<SpriteEntity*>(kv.second);
 				if (seCache != nullptr){
-					renderSprite(spriteMng->getSprite(seCache->getSpriteName()), seCache->getPositionRect());
+					sprite_batcher->push(spriteMng->getSprite(seCache->getSpriteName()), seCache->getPositionRect());
 					continue;
 				}
 				continue;
 			}
-
+			// calls the batcher to render all sprites
+			sprite_batcher->flush();
 		}
 
-		bool Renderer::renderSprite(Sprite* spt, SDL_Rect position){
-			if (SDL_RenderCopy(renderer, spt->getSpriteSheet(), &spt->getRect(), &position) == 0)
-				return true;
-			return false;
-		}
+		
 	}
 }

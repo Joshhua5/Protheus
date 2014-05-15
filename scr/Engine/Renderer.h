@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "SpriteManager.h"
 #include <SDL.h>
+#include "SpriteBatcher.h"
 namespace Pro{
 	namespace Graphics{
 	class Renderer
@@ -11,6 +12,7 @@ namespace Pro{
 	private:
 		SDL_Renderer* renderer;
 		SpriteManager* spriteMng;
+		SpriteBatcher* sprite_batcher;
 		Scene* scene;
 	public:
 		Renderer(SpriteManager*, Scene*);
@@ -19,9 +21,7 @@ namespace Pro{
 		bool init(SDL_Window* window);
 		SDL_Renderer* getRenderer();
 
-		bool renderSprite(Sprite*, SDL_Rect position);
-
-		void renderScene( );
+		void renderScene();
 	}; 
 	}
 }

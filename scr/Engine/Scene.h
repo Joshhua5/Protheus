@@ -14,7 +14,7 @@ namespace Pro{
 	{
 		Map* tileData;
 		Camera* activeCamera;
-		std::unordered_map<ID, Entity> entities;
+		std::unordered_map<ID, Entity*> entities;
 		std::unordered_map<ID, Camera*> cameras;
 	public:
 		Scene();
@@ -31,7 +31,7 @@ namespace Pro{
 		// get's an ID
 		Entity* getEntity(ID); 
 		// allows the id to be retrieved via the name
-		void addEntity(Entity, ID);
+		void addEntity(Entity*, ID);
 		// id must be managed, if lost the entity can't be retrieved. 
 
 		bool destoryEntity(ID);
@@ -40,10 +40,10 @@ namespace Pro{
 		Camera* getCamera(ID);
 		Camera* getActiveCamera();
 		void setActiveCamera(ID);
-		void addCamera(ID, Camera);
+		void addCamera(ID, Camera*);
 
 		// return the private storage of entities
-		std::unordered_map<ID, Entity>* getEntities();
+		std::unordered_map<ID, Entity*>* getEntities();
 		Map* getMap();
 	};
 }

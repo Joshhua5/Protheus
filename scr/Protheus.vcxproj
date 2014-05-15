@@ -80,7 +80,9 @@
     <ClCompile Include="Engine\lua\lvm.c" />
     <ClCompile Include="Engine\lua\lzio.c" />
     <ClCompile Include="Engine\Main.cpp" />
-    <ClCompile Include="SpriteBatcher.cpp" />
+    <ClCompile Include="Engine\SpriteBatcher.cpp" />
+    <ClCompile Include="Engine\Math.cpp" />
+    <ClCompile Include="Engine\Vectors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\AnimatedEntity.h" />
@@ -145,7 +147,13 @@
     <ClInclude Include="Engine\lua\lvm.h" />
     <ClInclude Include="Engine\lua\lzio.h" />
     <ClInclude Include="Engine\Main.h" />
-    <ClInclude Include="SpriteBatcher.h" />
+    <ClInclude Include="Engine\SpriteBatcher.h" />
+    <ClInclude Include="Engine\Math.h" />
+    <ClInclude Include="Engine\Vectors.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\EngineScript\Avatar.lua" />
+    <None Include="Engine\EngineScript\Entity.lua" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
@@ -180,6 +188,8 @@
     <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
@@ -194,6 +204,7 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

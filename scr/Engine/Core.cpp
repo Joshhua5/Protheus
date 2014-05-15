@@ -75,10 +75,11 @@ namespace Pro{
 			GAME FUNCTIONS
 	*/
 
-	void Pro::Core::addEntity(Entity entity, const std::string&  name){
+	ID Pro::Core::addEntity(Entity* entity, const std::string&  name){
 		ID id = id_manager->getID(name);
-		entity.setID(id);
+		entity->setID(id);
 		scene->addEntity(entity, id);
+		return id;
 	}
 
 	void Pro::Core::removeEntity(Entity entity){
@@ -165,7 +166,7 @@ namespace Pro{
 	Camera* Pro::Core::getCamera(const std::string& name){
 		return scene->getCamera(id_manager->getIDFromName(name));
 	}
-	void Pro::Core::addCamera(Camera _cam, const std::string& name){
+	void Pro::Core::addCamera(Camera* _cam, const std::string& name){
 		ID id = id_manager->getID(name);
 		scene->addCamera(id, _cam);
 	} 
@@ -177,7 +178,13 @@ namespace Pro{
 		window->setTitle(name); 
 	}
 
-	std::unordered_map<ID, Entity>* Core::getEntities(){
+	std::unordered_map<ID, Entity*>* Core::getEntities(){
 		return scene->getEntities();
+	}
+
+	int Core::lUpdate(lua_State* L){
+		Core* p = *(static_cast<Core**>(lua_touserdata(L, 1)));
+		p->run();
+		return 0;
 	}
 }

@@ -57,7 +57,7 @@ namespace Pro{
 				animations.insert({ key, anim });
 			}
 			stream.close();
-			return true;
+			return 0;
 		}
 
 		bool SpriteManager::loadSpriteSheet(SDL_Renderer *renderer, const std::string &path, const std::string& data){
@@ -65,7 +65,7 @@ namespace Pro{
 			std::fstream stream(data);
 
 			if (!stream.is_open() || stream.bad()){
-				return false;
+				return 1;
 			}
 
 			char* buffer = new char[512];
@@ -123,7 +123,7 @@ namespace Pro{
 			}
 			delete[] buffer;
 
-			return true;
+			return 0;
 		}
 
 		Sprite* SpriteManager::getSprite(const std::string& name){

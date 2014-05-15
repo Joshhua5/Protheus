@@ -187,21 +187,22 @@ void MapSection::setData(std::vector<std::vector<char>> dat){
 }
 
 bool MapSection::visible(Camera* cam){
-	SDL_Rect pos = cam->getPosition();
+	SDL_Point pos = *cam->getPosition();
+	SDL_Point dim = *cam->getDimensions();
 #define d dimensions 
 	// need to check if the camera can see the MapSection
 	// top bottom check 
-	if (d.x >= pos.x && d.x + d.w <= pos.x + pos.w){
+	if (d.x >= pos.x && d.x + d.w <= pos.x + dim.x){
 		if (d.y + d.h <= pos.y && d.y >= pos.y)
 			return true;
-		if (d.y + d.h > pos.y && d.y + d.h < pos.y + pos.h)
+		if (d.y + d.h > pos.y && d.y + d.h < pos.y + dim.y)
 			return true;
 	}
 	// check left and right
-	else if (d.y > pos.y && d.y + d.h < pos.y + pos.h){
-		if (d.x + d.w > pos.x && d.x + d.w < pos.x + pos.w)
+	else if (d.y > pos.y && d.y + d.h < pos.y + dim.y){
+		if (d.x + d.w > pos.x && d.x + d.w < pos.x + dim.x)
 			return true;
-		if (d.x > pos.x + pos.w && d.x < pos.x + pos.w)
+		if (d.x > pos.x + dim.x && d.x < pos.x + dim.x)
 			return true;
 	}
 	return false;

@@ -4,8 +4,7 @@
 #include "Timer.h" 
 #include "Network.h"
 #include "Window.h"
-#include "SpriteManager.h"
-#include "Lua.h"
+#include "SpriteManager.h" 
 #include "EventHandeler.h"
 
 namespace Pro{
@@ -16,8 +15,7 @@ namespace Pro{
 		Networking::Network* network;
 		Graphics::Renderer* renderer;
 		Window* window;
-		Timer* timer;
-		Lua::Lua* lua;
+		Timer* timer; 
 		Graphics::SpriteManager* sprite_manager;
 		EventHandeler* event_handeler;
 		IDManager* id_manager;
@@ -50,9 +48,9 @@ namespace Pro{
 
 		// Game Functions
 
-		void addEntity(Entity entity, const std::string&  name);
+		ID addEntity(Entity* entity, const std::string&  name);
 		void removeEntity(Entity entity); 
-		std::unordered_map<ID, Entity>* getEntities();
+		std::unordered_map<ID, Entity*>* getEntities();
 		Entity* getEntity(ID _id);
 		Entity* getEntity(const std::string&  name);
 		ID getID(const std::string&  name);
@@ -90,6 +88,9 @@ namespace Pro{
 		void setActiveCamera(const std::string& name);
 		Camera* getActiveCamera();
 		Camera* getCamera(const std::string& name);
-		void addCamera(Camera, const std::string& name);
+		void addCamera(Camera*, const std::string& name);
+
+
+		static int lUpdate(lua_State*);
 	}; 
 }

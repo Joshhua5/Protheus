@@ -1,4 +1,5 @@
 #pragma once
+#include "lua\lua.hpp"
 #include <SDL_rect.h>
 namespace Pro{
 	typedef unsigned int ID;
@@ -28,6 +29,15 @@ namespace Pro{
 		bool isActive();
 
 		unsigned int getID();
-		void setID(unsigned int);
+		void setID(unsigned int); 
+
+		// LUA Functions
+
+		static int lGetPosition(lua_State*);
+		static int lSetPosition(lua_State*);
+		static int lGetID(lua_State*);
+		static int lActivate(lua_State*);
+		static int lDeactivate(lua_State*);
+		static int lIsActive(lua_State*);
 	};
 }

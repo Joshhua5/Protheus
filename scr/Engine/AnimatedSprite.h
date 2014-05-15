@@ -16,6 +16,9 @@ namespace Pro{
 		Sprite* getFrame();
 		Sprite* getFrame(int);
 		void addFrame(Sprite*);
+
+		// LUA Functions 
+
 	};
 
 }

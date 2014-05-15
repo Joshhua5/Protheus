@@ -5,8 +5,7 @@
 namespace Pro{
 
 	class Inventory
-	{
-		SDL_Rect size;
+	{ 
 		std::vector<Item*> items;
 	public:
 		Inventory();
@@ -15,6 +14,12 @@ namespace Pro{
 		bool checkForItem(Item*);
 		bool giveItem(Item*);
 		bool takeItem(Item*);
+		size_t inventorySize();
+
+		static int lCheckForItem(lua_State*);
+		static int lGiveItem(lua_State*);
+		static int lTakeItem(lua_State*);
+		static int lInventorySize(lua_State*);
 	};
 
 }
