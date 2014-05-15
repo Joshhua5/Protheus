@@ -240,6 +240,9 @@
     <ClCompile Include="Engine\Vectors.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GUIContainer.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\AnimatedEntity.h">
@@ -434,13 +437,8 @@
     <ClInclude Include="Engine\Vectors.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Engine Header Files</Filter>
+    <ClInclude Include="Engine\GUIContainer.h">
+      <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Protheus.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -1,20 +1,17 @@
 #pragma once
-#include "GUIEntity.h"
+#include "GUIEntity.h" 
+#include "GUIContainer.h"
+#include "IDManager.h"
 #include <SDL_events.h>
 #include <vector>
 namespace Pro{
 	namespace GUI{
-		class GUICollapsibleMenu :
-			public GUIEntity
+		class GUICollapsibleMenu : 
+			public GUIContainer
 		{
-			std::vector<GUIEntity*> window_entities;
-
 		public:
 			GUICollapsibleMenu();
-			~GUICollapsibleMenu();
-
-			void addComponent(GUIEntity* component);
-			void update(SDL_Event mouse_event);
+			~GUICollapsibleMenu(); 
 		};
 	}
 }

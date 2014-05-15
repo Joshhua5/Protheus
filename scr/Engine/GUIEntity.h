@@ -26,6 +26,7 @@ namespace Pro{
 			// id of this entity
 			// the context has a translation to the name 
 			ID entityID;
+			std::string entityName;
 			// wether or not the entity is enabled and active
 			bool entity_enabled;
 
@@ -53,6 +54,9 @@ namespace Pro{
 			ID getID();
 			void setID(ID);
 
+			std::string* getName();
+			void setName(const std::string& name);
+
 			bool enabled();
 			void enabled(bool);
 
@@ -71,6 +75,8 @@ namespace Pro{
 			static int lGetParent(lua_State*);
 			static int lSetParent(lua_State*);
 			static int lGetID(lua_State*); 
+			static int lSetName(lua_State*);
+			static int lGetName(lua_State*);
 			static int lEnable(lua_State*);
 			static int lDisable(lua_State*);
 			static int lIsEnabled(lua_State*);

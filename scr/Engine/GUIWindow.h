@@ -4,20 +4,19 @@
 #include "GUIEntity.h" 
 #include "GUIButton.h"
 #include "GUISlider.h"
-#include "GUIText.h" 
+#include "IDManager.h"
+#include "GUIText.h"  
+#include "GUIContainer.h"
 #include "GUICollapsibleMenu.h"
 #include "GUIMenuBar.h"
-#include <vector>
-#include <stack>
+#include <vector> 
+
 namespace Pro{
 	namespace GUI{
-		class GUIWindow :
-			public GUIEntity
+		class GUIWindow : 
+			public GUIContainer
 		{
-		private:
-			// Packed with position and size  
-			std::vector<GUIEntity*> window_entities;
-
+		private: 
 			// Titles bar for drop down menus
 			bool hasMenuBar;
 			GUIMenuBar* menu_bar;
@@ -25,10 +24,8 @@ namespace Pro{
 		public:
 			GUIWindow();
 			~GUIWindow();
-
-			void attachMenuBar(GUIMenuBar* component);
-			void addComponent(GUIEntity* component);
-			void update(SDL_Event mouse_event);
+			 
+			void attachMenuBar(GUIMenuBar* component); 
 		};
 	}
 }

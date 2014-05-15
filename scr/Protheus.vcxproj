@@ -16,6 +16,7 @@
     <ClCompile Include="Engine\Avatar.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
     <ClCompile Include="Engine\Core.cpp" />
+    <ClCompile Include="Engine\GUIContainer.cpp" />
     <ClCompile Include="Engine\Entity.cpp" />
     <ClCompile Include="Engine\EventHandeler.cpp" />
     <ClCompile Include="Engine\GraphicalUI.cpp" />
@@ -148,10 +149,7 @@
     <ClInclude Include="Engine\SpriteBatcher.h" />
     <ClInclude Include="Engine\Math.h" />
     <ClInclude Include="Engine\Vectors.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Protheus.rc" />
+    <ClInclude Include="Engine\GUIContainer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

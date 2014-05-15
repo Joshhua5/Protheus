@@ -63,6 +63,14 @@ namespace Pro{
 			int y = _mouse.y;
 			return isClickWithin(x, y);
 		}
+
+		std::string* GUIEntity::getName(){
+			return &entityName;
+		}
+
+		void GUIEntity::setName(const std::string& name){
+			entityName = name;
+		}
 		 
 		std::string* GUIEntity::getCallback(){
 			return &lua_callback;
@@ -157,5 +165,15 @@ namespace Pro{
 			return 1;
 		}
 
+		int GUIEntity::lSetName(lua_State* L){
+			GUIEntity* p = getPointer(L);
+			p->setName(lua_tostring(L, 2));
+			return 0;
+		}
+		int GUIEntity::lGetName(lua_State* L){
+			GUIEntity* p = getPointer(L);
+			lua_pushstring(L, &(*p->getName())[0]);
+			return 1;
+		}
 	}
 }

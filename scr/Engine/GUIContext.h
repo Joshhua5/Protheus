@@ -9,7 +9,7 @@ namespace Pro{
 		class GUIContext
 		{
 		private:
-			std::unordered_map<std::string, GUIWindow> windows;
+			std::unordered_map<ID, GUIWindow> windows;
 			// a private ID manager for the GUI context
 			IDManager* id_manager;
 
@@ -30,6 +30,15 @@ namespace Pro{
 			std::string getName(ID _id);
 			ID getID(const std::string& name);
 			void removeID(const std::string& name);
+
+			// LUA Functions
+
+			static int lAttachWindow(lua_State*);
+			static int lDetachWindow(lua_State*);
+			static int lGetContextName(lua_State*);
+			static int lSetContextName(lua_State*);
+
+			//static int 
 		};
 	}
 }
