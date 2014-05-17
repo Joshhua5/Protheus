@@ -1,13 +1,19 @@
 #include "Avatar.h"
 
-namespace Pro{
+using namespace Pro;
+using namespace GameObject;
 
-	Avatar::Avatar()
-	{
-	}
+Avatar::Avatar() : AnimatedEntity()
+{
+}
 
 
-	Avatar::~Avatar()
-	{
-	}
+Avatar::Avatar(const std::string& name) :
+AnimatedEntity(name)
+{
+
+}
+
+Avatar::~Avatar()
+{
 }

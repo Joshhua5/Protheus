@@ -1,9 +1,8 @@
 #include "Renderer.h"
 
 namespace Pro{
-	namespace Graphics{
-
-		Renderer::Renderer(SpriteManager* _spriteMng, Scene* _scene)
+	namespace Graphics{ 
+		Renderer::Renderer(SpriteManager* _spriteMng, Scene::Scene* _scene)
 		{ 
 			spriteMng = _spriteMng;
 			scene = _scene;
@@ -30,10 +29,10 @@ namespace Pro{
 
 		void Renderer::renderScene(){
 			// Get data
-			Map* map = scene->getMap();
+			Scene::Map* map = scene->getMap();
 			//SDL_Point* cameraPos = scene->getActiveCamera()->getPosition();
 
-			std::unordered_map<ID, Entity*>* entities = scene->getEntities();
+			//std::unordered_map<GUID, GameObject::Entity*>* entities = scene->getEntities();
 
 			// Render the Map, only sections visible to the camera
 
@@ -48,18 +47,18 @@ namespace Pro{
 					if (col[0] == '\r')
 						continue;
 					for each(const auto& row in col){
-						TileType* tile = map->getTileType(row - 48);
+						Scene::TileType* tile = map->getTileType(row - 48);
 						// check if textured
 						if (!tile->isTextured)
 							continue;
 						// populate the sprite pointer
-						if (tile->sprite == nullptr)
-							tile->sprite = spriteMng->getSprite(tile->spriteName);
+						if (static_cast<Asset::Sprite*>(tile->spriteCache) == nullptr)
+							tile->spriteCache = spriteMng->getSprite(tile->spriteName);
 
-						SDL_Rect spriteRect = tile->sprite->getRect();
-						spriteRect.x *= spriteRect.w;
-						spriteRect.y *= spriteRect.h;
-						sprite_batcher->push(tile->sprite, spriteRect); 
+						Math::Vector4 spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getRect();
+						spriteRect.x *= spriteRect.z;
+						spriteRect.y *= spriteRect.w;
+						sprite_batcher->push(static_cast<Asset::Sprite*>(tile->spriteCache), spriteRect);
 						y++;
 					}
 					x++;
@@ -69,24 +68,24 @@ namespace Pro{
 			}
 
 			// render entities 
-			AnimatedEntity* aeCache;
-			SpriteEntity* seCache;
-			for each(auto kv in *entities){
-				// check if animated
-				aeCache = dynamic_cast<AnimatedEntity*>(kv.second);
-				if (aeCache != nullptr){ 
-					sprite_batcher->push(aeCache->activeAnimation->getFrame(), aeCache->getPositionRect());
-					aeCache->activeAnimation->nextFrame();
-					continue;
-				}
-				// check if has sprite
-				seCache = dynamic_cast<SpriteEntity*>(kv.second);
-				if (seCache != nullptr){
-					sprite_batcher->push(spriteMng->getSprite(seCache->getSpriteName()), seCache->getPositionRect());
-					continue;
-				}
-				continue;
-			}
+			//GameObject::AnimatedEntity* aeCache;
+			//GameObject::SpriteEntity* seCache;
+			//for each(auto kv in *entities){
+			//	// check if animated
+			//	aeCache = dynamic_cast<GameObject::AnimatedEntity*>(kv.second);
+			//	if (aeCache != nullptr){ 
+			//		sprite_batcher->push(aeCache->activeAnimation->getFrame(), aeCache->getPositionRect());
+			//		aeCache->activeAnimation->nextFrame();
+			//		continue;
+			//	}
+			//	// check if has sprite
+			//	seCache = dynamic_cast<GameObject::SpriteEntity*>(kv.second);
+			//	if (seCache != nullptr){
+			//		sprite_batcher->push(spriteMng->getSprite(seCache->getSpriteName()), seCache->getPositionRect());
+			//		continue;
+			//	}
+			//	continue;
+			//}
 			// calls the batcher to render all sprites
 			sprite_batcher->flush();
 		}

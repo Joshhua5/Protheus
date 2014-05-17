@@ -1,42 +1,37 @@
 #pragma once
-#include "GUIWindow.h"
-#include "IDManager.h" 
 #include <SDL_events.h>
 #include <unordered_map>
 #include <vector>
+
+#include "GUIWindow.h" 
+#include "CGUID.h"
+
 namespace Pro{
 	namespace GUI{
-		class GUIContext
+		class GUIContext : 
+			public CGUID
 		{
 		private:
-			std::unordered_map<ID, GUIWindow> windows;
-			// a private ID manager for the GUI context
-			IDManager* id_manager;
+			std::unordered_map<uint32, GUIWindow> windows; 
 
-			GUIEntity* focusedEntity;
-			std::string context_name;
+			GUIEntity* focusedEntity; 
 		public:
+			GUIContext(const std::string& name);
 			GUIContext();
 			~GUIContext();
 
 			void update(SDL_Event event);
 
-			void attachWindow(GUIWindow window, const std::string& windowName);
-			void detachWindow(const std::string& windowName);
+			void attachWindow(GUIWindow window);
+			void detachWindow(uint32);
 			  
-			std::string getContextName();
-			void setContextName(const std::string& name);
-
-			std::string getName(ID _id);
-			ID getID(const std::string& name);
-			void removeID(const std::string& name);
+			std::string* getContextName(); 
 
 			// LUA Functions
 
 			static int lAttachWindow(lua_State*);
 			static int lDetachWindow(lua_State*);
-			static int lGetContextName(lua_State*);
-			static int lSetContextName(lua_State*);
+			static int lGetContextName(lua_State*); 
 
 			//static int 
 		};

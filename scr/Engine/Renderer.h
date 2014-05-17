@@ -13,9 +13,9 @@ namespace Pro{
 		SDL_Renderer* renderer;
 		SpriteManager* spriteMng;
 		SpriteBatcher* sprite_batcher;
-		Scene* scene;
+		Scene::Scene* scene;
 	public:
-		Renderer(SpriteManager*, Scene*);
+		Renderer(SpriteManager*, Scene::Scene*);
 		~Renderer();
 
 		bool init(SDL_Window* window);

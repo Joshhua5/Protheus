@@ -2,22 +2,23 @@
 #include <string>
 #include "Entity.h"
 namespace Pro{
+	namespace GameObject{
+		class SpriteEntity :
+			public Entity
+		{
+		protected:
+			uint32 sprite_guid;
+		public:
+			SpriteEntity(const std::string& name);
+			SpriteEntity();
+			~SpriteEntity();
 
-	class SpriteEntity :
-		public Entity
-	{
-	protected:
-		std::string sprite_name;
-	public:
-		SpriteEntity();
-		virtual ~SpriteEntity();
+			uint32 getSpriteGUID();
 
-		std::string getSpriteName();
+			void setSprite(uint32 guid);
 
-		void setSprite(const std::string&);
-		 
-		static int lSetSprite(lua_State*);
-		static int lGetSpriteName(lua_State*); 
-	};
-
+			static int lSetSprite(lua_State*);
+			static int lGetSpriteGUID(lua_State*);
+		};
+	}
 }

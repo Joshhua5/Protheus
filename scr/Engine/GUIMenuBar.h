@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "GUIDropDownMenu.h"
 #include <SDL_events.h>
+#include "GUIDropDownMenu.h"
 namespace Pro{
 	namespace GUI{
 		class GUIMenuBar

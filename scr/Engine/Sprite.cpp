@@ -1,33 +1,31 @@
 #include "Sprite.h"
+using namespace Pro;
+using namespace Asset;
 
-namespace Pro{
+Sprite::Sprite()
+{
+}
+Sprite::Sprite(const std::string& name, Math::Vector4 _rect) : 
+CGUID(name)
+{ 
+	rect = _rect;
+}
 
-	Sprite::Sprite()
-	{
-	}
-	Sprite::Sprite(const std::string& name, SDL_Rect _rect)
-	{
-		setName(name);
-		rect = _rect;
-	}
+Sprite::~Sprite()
+{
+}
 
-	Sprite::~Sprite()
-	{
-	}
+void Sprite::attachSpriteSheet(SDL_Texture* _spriteSheet){
+	spriteSheet = _spriteSheet;
+}
 
+Math::Vector4 Sprite::getRect(){
+	return rect;
+}
+void Sprite::setRect(Math::Vector4 _rect){
+	rect = _rect;
+}
 
-	void Sprite::attachSpriteSheet(SDL_Texture* _spriteSheet){
-		spriteSheet = _spriteSheet;
-	}
-
-	SDL_Rect Sprite::getRect(){
-		return rect;
-	}
-	void Sprite::setRect(SDL_Rect _rect){
-		rect = _rect;
-	}
-
-	SDL_Texture* Sprite::getSpriteSheet(){
-		return spriteSheet;
-	}
+SDL_Texture* Sprite::getSpriteSheet(){
+	return spriteSheet;
 }

@@ -5,13 +5,7 @@ namespace Pro{
 		GUIContainer::GUIContainer(){}
 		GUIContainer::~GUIContainer(){}
 		 
-
-		void GUIContainer::attachIDManager(IDManager* _id_manager){
-			id_manager = _id_manager;
-		}
-
-		void GUIContainer::addComponent(GUIEntity* e){
-			e->setID(id_manager->getID(*e->getName()));
+		void GUIContainer::addComponent(GUIEntity* e){ 
 			window_entities.push_back(e);
 		}
 
@@ -30,6 +24,15 @@ namespace Pro{
 					}
 				}
 			}
+			// Call the containers callback
+			callback();
+		}
+
+
+		int GUIContainer::lAddComponent(lua_State* L){
+			GUIContainer* p = *static_cast<GUIContainer**>(lua_touserdata(L, 1));
+			p->addComponent(*static_cast<GUIEntity**>(lua_touserdata(L, 2)));
+			return 0;
 		}
 	}
 }

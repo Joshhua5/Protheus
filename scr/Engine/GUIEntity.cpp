@@ -2,7 +2,11 @@
 
 namespace Pro{
 	namespace GUI{
-
+		 
+		GUIEntity::GUIEntity(const std::string& name) : CGUID(name){
+			lua_callback = "\0";
+			lua_state = nullptr; 
+		}
 
 		GUIEntity::GUIEntity()
 		{
@@ -36,14 +40,7 @@ namespace Pro{
 		}
 		void GUIEntity::setParent(GUIEntity* _parent){
 			parent = _parent;
-		}
-
-		ID GUIEntity::getID(){
-			return entityID;
-		}
-		void GUIEntity::setID(ID _id){
-			entityID = _id;
-		}
+		} 
 
 		bool GUIEntity::enabled(){
 			return entity_enabled;
@@ -63,15 +60,7 @@ namespace Pro{
 			int y = _mouse.y;
 			return isClickWithin(x, y);
 		}
-
-		std::string* GUIEntity::getName(){
-			return &entityName;
-		}
-
-		void GUIEntity::setName(const std::string& name){
-			entityName = name;
-		}
-		 
+		  
 		std::string* GUIEntity::getCallback(){
 			return &lua_callback;
 		}
@@ -87,7 +76,7 @@ namespace Pro{
 			lua_getglobal(lua_state, &lua_callback[0]);
 			lua_call(lua_state, 0, 0);
 			return;
-		}
+		} 
 		inline GUIEntity* getPointer(lua_State* L){
 			return *(static_cast<GUIEntity**>(lua_touserdata(L, 1)));
 		}
@@ -143,12 +132,7 @@ namespace Pro{
 			GUIEntity* p = getPointer(L);
 			p->setParent(static_cast<GUIEntity*>(lua_touserdata(L, 2)));
 			return 0;
-		}
-		int  GUIEntity::lGetID(lua_State*L){
-			GUIEntity* p = getPointer(L);
-			lua_pushnumber(L, p->getID());
-			return 1;
-		}
+		} 
 		int  GUIEntity::lEnable(lua_State* L){
 			GUIEntity* p = getPointer(L);
 			p->enabled(true);
@@ -163,16 +147,10 @@ namespace Pro{
 			GUIEntity* p = getPointer(L);
 			lua_pushboolean(L, p->enabled());
 			return 1;
-		}
-
-		int GUIEntity::lSetName(lua_State* L){
-			GUIEntity* p = getPointer(L);
-			p->setName(lua_tostring(L, 2));
-			return 0;
-		}
+		}  
 		int GUIEntity::lGetName(lua_State* L){
 			GUIEntity* p = getPointer(L);
-			lua_pushstring(L, &(*p->getName())[0]);
+			lua_pushstring(L, &(*GUIDLookup::getName(p->getGUID()))[0] );
 			return 1;
 		}
 	}

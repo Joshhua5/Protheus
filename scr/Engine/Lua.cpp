@@ -83,27 +83,27 @@ namespace Pro{
 		}
 		void Lua::defineMetatables(){
 			luaL_Reg avatar_metatable[] = {
-				{ "getID", &Avatar::lGetID },
-				{ "getPosition", &Avatar::lGetPosition },
-				{ "setPosition", &Avatar::lSetPosition },
-				{ "activate", &Avatar::lActivate },
-				{ "deactivate", &Avatar::lDeactivate },
-				{ "isActive", &Avatar::lIsActive },
-				{ "giveItem", &Avatar::lGiveItem },
-				{ "takeItem", &Avatar::lTakeItem },
-				{ "inventorySize", &Avatar::lInventorySize },
-				{ "checkForItem", &Avatar::lCheckForItem },
-				{ "addAnimation", &Avatar::lAddAnimation },
-				{ "activateAnimation", &Avatar::lActivateAnimation },
+				{ "getGUID", &GameObject::Avatar::lGetGUID },
+				{ "getPosition", &GameObject::Avatar::lGetPosition },
+				{ "setPosition", &GameObject::Avatar::lSetPosition },
+				{ "activate", &GameObject::Avatar::lActivate },
+				{ "deactivate", &GameObject::Avatar::lDeactivate },
+				{ "isActive", &GameObject::Avatar::lIsActive },
+				{ "giveItem", &GameObject::Avatar::lGiveItem },
+				{ "takeItem", &GameObject::Avatar::lTakeItem },
+				{ "inventorySize", &GameObject::Avatar::lInventorySize },
+				{ "checkForItem", &GameObject::Avatar::lCheckForItem },
+				{ "addAnimation", &GameObject::Avatar::lAddAnimation },
+				{ "activateAnimation", &GameObject::Avatar::lActivateAnimation },
 				{ nullptr, nullptr }
 			}; defineMetatable("avatar_metatable", avatar_metatable);
 
 			luaL_Reg camera_metatable[] = {
-				{ "getPosition", &Camera::lGetPosition },
-				{ "setPosition", &Camera::lSetDimensions },
-				{ "getDimensions", &Camera::lGetDimensions },
-				{ "setDimensions", &Camera::lSetDimensions },
-				{ "move", &Camera::lMove },
+				{ "getPosition", &Scene::Camera::lGetPosition },
+				{ "setPosition", &Scene::Camera::lSetDimensions },
+				{ "getDimensions", &Scene::Camera::lGetDimensions },
+				{ "setDimensions", &Scene::Camera::lSetDimensions },
+				{ "move", &Scene::Camera::lMove },
 				{ nullptr, nullptr }
 			}; defineMetatable("camera_metatable", camera_metatable);
 
@@ -111,7 +111,6 @@ namespace Pro{
 				{ "update", &Core::lUpdate },
 				{ nullptr, nullptr }
 			}; defineMetatable("engine_metatable", engine_metatable);
-
 
 			luaL_Reg gui_button_metatable[] = {
 				{ "bindCallback", &GUI::GUIButton::lBindCallback },
@@ -121,12 +120,39 @@ namespace Pro{
 				{ "setDimensions", &GUI::GUIButton::lSetDimensions },
 				{ "getParent", &GUI::GUIButton::lGetParent },
 				{ "setParent", &GUI::GUIButton::lSetParent },
-				{ "getID", &GUI::GUIButton::lGetID },
+				{ "getName", &GUI::GUIButton::lGetName }, 
+				{ "getGUID", &GUI::GUIButton::lGetGUID },
 				{ "enable", &GUI::GUIButton::lEnable },
 				{ "disable", &GUI::GUIButton::lDisable },
 				{ "isEnabled", &GUI::GUIButton::lIsEnabled },
 				{ nullptr, nullptr }
 			}; defineMetatable("gui_entity_metatable", gui_button_metatable);
+
+			luaL_Reg gui_context_metatable[] = {
+				{ "attachWindow", &GUI::GUIContext::lAttachWindow },
+				{ "detachWindow", &GUI::GUIContext::lDetachWindow }, 
+				{ "getContextName", &GUI::GUIContext::lGetContextName },
+				{ nullptr, nullptr }
+			}; defineMetatable("gui_context_metatable", gui_context_metatable);
+
+			luaL_Reg gui_window_metatable[] = {
+				{ "bindCallback", &GUI::GUIWindow::lBindCallback },
+				{ "getPosition", &GUI::GUIWindow::lGetPosition },
+				{ "setPosition", &GUI::GUIWindow::lSetPosition },
+				{ "getDimensions", &GUI::GUIWindow::lGetDimensions },
+				{ "setDimensions", &GUI::GUIWindow::lSetDimensions },
+				{ "getParent", &GUI::GUIWindow::lGetParent },
+				{ "setParent", &GUI::GUIWindow::lSetParent },
+				{ "getName", &GUI::GUIWindow::lGetName }, 
+				{ "getGUID", &GUI::GUIWindow::lGetGUID },
+				{ "enable", &GUI::GUIWindow::lEnable },
+				{ "disable", &GUI::GUIWindow::lDisable },
+				{ "isEnabled", &GUI::GUIWindow::lIsEnabled },
+				{ "addComponent", &GUI::GUIWindow::lAddComponent },
+				{nullptr, nullptr}
+
+			}; defineMetatable("gui_window_metatable", gui_window_metatable);
+
 		}
 
 		void Lua::attachCore(Core* _core){
@@ -163,17 +189,17 @@ namespace Pro{
 		}
 
 		int Lua::createAvatar(lua_State* L){
-			Avatar** userdata = static_cast<Avatar**>(lua_newuserdata(L, sizeof(Avatar*)));
-			*userdata = new Avatar();
-			engine_core->addEntity(*userdata, lua_tostring(L, 1));
+			GameObject::Avatar** userdata = static_cast<GameObject::Avatar**>(lua_newuserdata(L, sizeof(GameObject::Avatar*)));
+			*userdata = new GameObject::Avatar(lua_tostring(L, 1));
+			engine_core->addEntity(*userdata);
 			luaL_getmetatable(L, "avatar_metatable");
 			lua_setmetatable(L, -2); 
 			return 1;
 		}
 		int Lua::createCamera(lua_State* L){
-			Camera** userdata = static_cast<Camera**>(lua_newuserdata(L, sizeof(Camera*)));
-			*userdata = new Camera();
-			engine_core->addCamera(*userdata, lua_tostring(L, 1));
+			Scene::Camera** userdata = static_cast<Scene::Camera**>(lua_newuserdata(L, sizeof(Scene::Camera*)));
+			*userdata = new Scene::Camera(lua_tostring(L, 1));
+			engine_core->addCamera(*userdata);
 			if (engine_core->getActiveCamera() == nullptr)
 				engine_core->setActiveCamera(lua_tostring(L, 1));
 			luaL_getmetatable(L, "camera_metatable");
@@ -182,8 +208,8 @@ namespace Pro{
 			return 1;
 		}
 		int Lua::createGUIButton(lua_State* L){
-			GUI::GUIButton** userdata = static_cast<GUI::GUIButton**>(lua_newuserdata(L, sizeof(Camera*)));
-			*userdata = new GUI::GUIButton(); 
+			GUI::GUIButton** userdata = static_cast<GUI::GUIButton**>(lua_newuserdata(L, sizeof(GUI::GUIButton*)));
+			*userdata = new GUI::GUIButton(lua_tostring(L, 1));
 			luaL_getmetatable(L, "gui_button_metatable");
 			lua_setmetatable(L, -2); 
 			return 1;

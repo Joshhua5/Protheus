@@ -7,17 +7,20 @@ int main(int argc, char* args[])
 	Pro::Lua::Lua* lua = new Pro::Lua::Lua();
 	lua->attachCore(core);
 	lua->loadConfig("script\\Config.lua");
+	SDL_Init(SDL_INIT_EVERYTHING);
 	
 	core->start();
 
+	// all move into lua function lStartEngine
+	 
 	lua->loadResources();
 	lua->loadMain();
 
 	// Load Camera 
-	Pro::Camera* camera = new Pro::Camera();
-	camera->setDimensions(18, 18);
-	camera->setPosition(0, 0);
-	core->addCamera(camera, "camera1");
+	Pro::Scene::Camera* camera = new Pro::Scene::Camera("camera1");
+	camera->setDimensions(Math::Vector2(18, 18));
+	camera->setPosition(Math::Vector2(0, 0));
+	core->addCamera(camera);
 	core->setActiveCamera("camera1");
 	 
 	while (!SDL_QuitRequested())
@@ -25,6 +28,6 @@ int main(int argc, char* args[])
 
 	core->cleanup();
 	delete core;
-	return 0; 
+	return 0;
 }
 

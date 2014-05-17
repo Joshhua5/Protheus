@@ -42,28 +42,24 @@ namespace Pro{
 			unsigned int inputBufferSize = 0;
 			while (connection->connected){
 				// Get Data Recieved
-				if (connection->isServer){
-					if ((inputBufferSize = SDLNet_TCP_Recv(connection->clientSock, inputBuffer, 1024)) != -1){
-						Buffer buf;
-						buf.buffer = new char[inputBufferSize];
-						buf.size = inputBufferSize;
-						memcpy(buf.buffer, inputBuffer, inputBufferSize);
-						mutex.lock();
-						connection->inputStack.push(buf);
-						mutex.unlock();
-					}
-				}
-				else
-				{
-					if ((inputBufferSize = SDLNet_TCP_Recv(connection->serverSock, inputBuffer, 1024)) != -1){
-						Buffer buf;
-						buf.buffer = new char[inputBufferSize];
-						buf.size = inputBufferSize;
-						memcpy(buf.buffer, inputBuffer, inputBufferSize);
-						mutex.lock();
-						connection->inputStack.push(buf);
-						mutex.unlock();
-					}
+				if (connection->isServer &&
+					(inputBufferSize = SDLNet_TCP_Recv(connection->clientSock, inputBuffer, 1024)) != -1){ 
+					Buffer buf;
+					buf.buffer = new char[inputBufferSize];
+					buf.size = inputBufferSize;
+					memcpy(buf.buffer, inputBuffer, inputBufferSize);
+					mutex.lock();
+					connection->inputStack.push(buf);
+					mutex.unlock();
+				} 
+				else if ((inputBufferSize = SDLNet_TCP_Recv(connection->serverSock, inputBuffer, 1024)) != -1){ 
+					Buffer buf;
+					buf.buffer = new char[inputBufferSize];
+					buf.size = inputBufferSize;
+					memcpy(buf.buffer, inputBuffer, inputBufferSize);
+					mutex.lock();
+					connection->inputStack.push(buf);
+					mutex.unlock();
 				}
 
 				// Send Data submitted

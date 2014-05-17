@@ -20,6 +20,7 @@ namespace Pro{
 			static int createGUIContext(lua_State*);
 			// No arguments
 			static int updateEngine(lua_State*);
+			static int startEngine(lua_State*);
 			static int loadSpriteSheet(lua_State* L);
 			static int loadSpriteAnimations(lua_State* L);
 			static int loadScene(lua_State* L);

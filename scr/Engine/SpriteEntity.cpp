@@ -1,33 +1,32 @@
 #include "SpriteEntity.h"
 
-namespace Pro{
+using namespace Pro;
+using namespace GameObject;
 
-	SpriteEntity::SpriteEntity()
-	{
-	}
+SpriteEntity::SpriteEntity(const std::string& name) : 
+Entity(name){}
 
+SpriteEntity::SpriteEntity() :
+Entity(){}
+ 
+SpriteEntity::~SpriteEntity() {}
 
-	SpriteEntity::~SpriteEntity()
-	{
-	}
+uint32 SpriteEntity::getSpriteGUID(){
+	return sprite_guid;
+}
 
-	std::string SpriteEntity::getSpriteName(){
-		return sprite_name;
-	}
+void SpriteEntity::setSprite(uint32 _guid){
+	sprite_guid = _guid;
+}
 
-	void SpriteEntity::setSprite(const std::string& _name){
-		sprite_name = _name;
-	}
+int SpriteEntity::lSetSprite(lua_State* L){
+	SpriteEntity* p = *(static_cast<SpriteEntity**>(lua_touserdata(L, 1)));
+	p->setSprite(static_cast<uint32>(lua_tonumber(L, 2)));
+	return 0;
+}
 
-
-	int SpriteEntity::lSetSprite(lua_State* L){
-		SpriteEntity* p = *(static_cast<SpriteEntity**>(lua_touserdata(L, 1)));
-		p->setSprite(lua_tostring(L, 2));
-		return 0;
-	}
-	int lGetSpriteName(lua_State* L){
-		SpriteEntity* p = *(static_cast<SpriteEntity**>(lua_touserdata(L, 1)));
-		lua_pushstring(L, &p->getSpriteName()[0]);
-		return 1;
-	}
+int  SpriteEntity::lGetSpriteGUID(lua_State* L){
+	SpriteEntity* p = *(static_cast<SpriteEntity**>(lua_touserdata(L, 1)));
+	lua_pushnumber(L, p->getSpriteGUID());
+	return 1;
 }

@@ -3,8 +3,7 @@
 namespace Pro{
 
 	Core::Core(){ 
-		running = false;
-		id_manager = new IDManager(); 
+		running = false; 
 		window = new Window();
 	}
 
@@ -36,27 +35,7 @@ namespace Pro{
 	bool Core::loadSpriteAnimations(const std::string& path){
 		return sprite_manager->loadAnimations(renderer->getRenderer(), path);
 	}
-
-	bool Core::start(){
-		scene = new Scene();
-		network = new Networking::Network();
-		timer = new Timer();
-		sprite_manager = new Graphics::SpriteManager();
-		event_handeler = new EventHandeler();
-		renderer = new Graphics::Renderer(sprite_manager, scene);
-
-		SDL_Init(SDL_INIT_EVERYTHING);
-		if (window->createWindow() == false)
-			return false; 
-		if (renderer->init(window->getWindow()) == false)
-			return false;
-		if (network->init() == false)
-			return false;
-		
-		running = true; 
-		return true;
-	}
-	  
+	
 	bool Core::cleanup(){
 
 		network->cleanup();
@@ -75,30 +54,21 @@ namespace Pro{
 			GAME FUNCTIONS
 	*/
 
-	ID Pro::Core::addEntity(Entity* entity, const std::string&  name){
-		ID id = id_manager->getID(name);
-		entity->setID(id);
-		scene->addEntity(entity, id);
-		return id;
+	void Core::addEntity(GameObject::Entity* entity){
+		scene->addEntity(entity);
 	}
 
-	void Pro::Core::removeEntity(Entity entity){
-		ID id = entity.getID();
-		id_manager->releaseID(id);
+	void Pro::Core::removeEntity(GameObject::Entity entity){
+		uint32 id = entity.getGUID();
+		GUIDLookup::releaseGUID(id);
 		scene->destoryEntity(id);
 	}
 	
 
-	Entity* Pro::Core::getEntity(ID _id){
+	GameObject::Entity* Pro::Core::getEntity(uint32 _id){
 		return scene->getEntity(_id);
-	}
-	Entity* Pro::Core::getEntity(const std::string&  name){
-		return scene->getEntity(id_manager->getIDFromName(name));
-	}
-	ID Pro::Core::getID(const std::string&  name){
-		return id_manager->getIDFromName(name);
-	}
-
+	} 
+	 
 	// Network Functions
 
 	Networking::TCPConnection* Pro::Core::netStartServer(){
@@ -127,7 +97,7 @@ namespace Pro{
 
 	// Resource Functions
 
-	AnimatedSprite*	Pro::Core::getSpriteAnimations(const std::string& name){
+	Asset::AnimatedSprite*	Pro::Core::getSpriteAnimations(const std::string& name){
 		return sprite_manager->getAnim(name);
 	}
 
@@ -148,27 +118,26 @@ namespace Pro{
 
 	// Map Functions
 
-	TileType* Pro::Core::getMapTile(unsigned int x, unsigned int y){
+	Scene::TileType* Pro::Core::getMapTile(unsigned int x, unsigned int y){
 		return scene->getMap()->getTile(x, y);
 	}
-	std::vector<Entity*> Pro::Core::pollMapTile(unsigned int x, unsigned int y){
-		return scene->pollTile(x, y);
+	std::vector<GameObject::Entity*> Pro::Core::pollMapTile(unsigned int x, unsigned int y){
+		return scene->pollTile(Math::Vector2(static_cast<int>(x), static_cast<int>(y)));
 	}
-	std::vector<Entity*> Pro::Core::pollMapTile(SDL_Rect pos){
-		return scene->pollTile(pos);
+	std::vector<GameObject::Entity*> Pro::Core::pollMapTile(SDL_Rect pos){
+		return scene->pollTile(Math::Vector2(pos.x, pos.y));
 	}
 	void Pro::Core::setActiveCamera(const std::string& name){
-		scene->setActiveCamera(id_manager->getIDFromName(name));
+		scene->setActiveCamera(GUIDLookup::getGUID(name));
 	}
-	Camera* Pro::Core::getActiveCamera(){
+	Scene::Camera* Pro::Core::getActiveCamera(){
 		return scene->getActiveCamera();
 	}
-	Camera* Pro::Core::getCamera(const std::string& name){
-		return scene->getCamera(id_manager->getIDFromName(name));
+	Scene::Camera* Pro::Core::getCamera(const std::string& name){
+		return scene->getCamera(GUIDLookup::getGUID(name));
 	}
-	void Pro::Core::addCamera(Camera* _cam, const std::string& name){
-		ID id = id_manager->getID(name);
-		scene->addCamera(id, _cam);
+	void Core::addCamera(Scene::Camera* _cam){ 
+		scene->addCamera(_cam);
 	} 
 
 	void Core::setWindowDimensions(SDL_Rect rect){
@@ -177,14 +146,29 @@ namespace Pro{
 	void Core::setWindowTitle(const std::string& name){
 		window->setTitle(name); 
 	}
-
-	std::unordered_map<ID, Entity*>* Core::getEntities(){
-		return scene->getEntities();
-	}
-
+	  
 	int Core::lUpdate(lua_State* L){
 		Core* p = *(static_cast<Core**>(lua_touserdata(L, 1)));
 		p->run();
 		return 0;
+	}
+	bool Core::start(){
+		scene = new Scene::Scene();
+		network = new Networking::Network();
+		timer = new Timer();
+		sprite_manager = new Graphics::SpriteManager();
+		event_handeler = new EventHandeler();
+		renderer = new Graphics::Renderer(sprite_manager, scene);
+
+		SDL_Init(SDL_INIT_EVERYTHING);
+		if (window->createWindow() == false)
+			return false;
+		if (renderer->init(window->getWindow()) == false)
+			return false;
+		if (network->init() == false)
+			return false;
+
+		running = true;
+		return true;
 	}
 }

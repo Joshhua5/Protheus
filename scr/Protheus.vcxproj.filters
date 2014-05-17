@@ -25,6 +25,12 @@
     <Filter Include="Lua Header">
       <UniqueIdentifier>{bce6dfe0-b403-4452-b48e-d12af7250eaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Source Files\Containers">
+      <UniqueIdentifier>{3b499125-257b-4621-9ea4-432ea7ea20f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Containers">
+      <UniqueIdentifier>{d18ed4e1-0c15-45c5-a741-5ec609842454}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\AnimatedEntity.cpp">
@@ -39,16 +45,10 @@
     <ClCompile Include="Engine\Camera.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Core.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Entity.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\EventHandeler.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\IDManager.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Name.cpp">
@@ -237,11 +237,41 @@
     <ClCompile Include="Engine\Math.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Vectors.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GUIContainer.cpp">
       <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\MapSection.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIDLookup.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EntityContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CameraContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Position.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Volume.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Vector2.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Vector3.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Vector4.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CGUID.cpp">
+      <Filter>Engine Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,16 +287,10 @@
     <ClInclude Include="Engine\Camera.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Core.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Entity.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\EventHandeler.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\IDManager.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Input.h">
@@ -434,11 +458,44 @@
     <ClInclude Include="Engine\Math.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Vectors.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\GUIContainer.h">
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\MapSection.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIDLookup.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EntityContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CameraContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Position.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Volume.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector3.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector2.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector4.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CGUID.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Descriptor.txt" />
   </ItemGroup>
 </Project>

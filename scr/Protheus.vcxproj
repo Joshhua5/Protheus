@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\CameraContainer.cpp" />
     <ClCompile Include="Engine\AnimatedEntity.cpp" />
     <ClCompile Include="Engine\AnimatedSprite.cpp" />
     <ClCompile Include="Engine\Avatar.cpp" />
@@ -21,7 +22,7 @@
     <ClCompile Include="Engine\EventHandeler.cpp" />
     <ClCompile Include="Engine\GraphicalUI.cpp" />
     <ClCompile Include="Engine\GUIEntity.cpp" />
-    <ClCompile Include="Engine\IDManager.cpp" />
+    <ClCompile Include="Engine\GUIDLookup.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\Inventory.cpp" />
     <ClCompile Include="Engine\Item.cpp" />
@@ -82,9 +83,17 @@
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\SpriteBatcher.cpp" />
     <ClCompile Include="Engine\Math.cpp" />
-    <ClCompile Include="Engine\Vectors.cpp" />
+    <ClCompile Include="Engine\MapSection.cpp" />
+    <ClCompile Include="Engine\EntityContainer.cpp" />
+    <ClCompile Include="Engine\Position.cpp" />
+    <ClCompile Include="Engine\Volume.cpp" />
+    <ClCompile Include="Engine\Vector2.cpp" />
+    <ClCompile Include="Engine\Vector3.cpp" />
+    <ClCompile Include="Engine\Vector4.cpp" />
+    <ClCompile Include="Engine\CGUID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\CameraContainer.h" />
     <ClInclude Include="Engine\AnimatedEntity.h" />
     <ClInclude Include="Engine\AnimatedSprite.h" />
     <ClInclude Include="Engine\Avatar.h" />
@@ -94,7 +103,7 @@
     <ClInclude Include="Engine\EventHandeler.h" />
     <ClInclude Include="Engine\GraphicalUI.h" />
     <ClInclude Include="Engine\GUIEntity.h" />
-    <ClInclude Include="Engine\IDManager.h" />
+    <ClInclude Include="Engine\GUIDLookup.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Inventory.h" />
     <ClInclude Include="Engine\Item.h" />
@@ -148,8 +157,18 @@
     <ClInclude Include="Engine\Main.h" />
     <ClInclude Include="Engine\SpriteBatcher.h" />
     <ClInclude Include="Engine\Math.h" />
-    <ClInclude Include="Engine\Vectors.h" />
     <ClInclude Include="Engine\GUIContainer.h" />
+    <ClInclude Include="Engine\MapSection.h" />
+    <ClInclude Include="Engine\EntityContainer.h" />
+    <ClInclude Include="Engine\Position.h" />
+    <ClInclude Include="Engine\Volume.h" />
+    <ClInclude Include="Engine\Vector2.h" />
+    <ClInclude Include="Engine\Vector3.h" />
+    <ClInclude Include="Engine\Vector4.h" />
+    <ClInclude Include="Engine\CGUID.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Descriptor.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

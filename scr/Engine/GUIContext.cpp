@@ -3,15 +3,18 @@
 using namespace Pro;
 using namespace GUI;
 
+GUIContext::GUIContext(const std::string& name) : CGUID(name)
+{ 
+}
+
+
 GUIContext::GUIContext()
-{
-	id_manager = new IDManager();
+{ 
 }
 
 
 GUIContext::~GUIContext()
 {
-	delete id_manager;
 }
 
 void GUIContext::update(SDL_Event event){
@@ -21,30 +24,16 @@ void GUIContext::update(SDL_Event event){
 				windows.second.update(event);
 }
 
-void GUIContext::attachWindow(GUIWindow window, const std::string& windowName){
+void GUIContext::attachWindow(GUIWindow window){
 	// Attach all objects with an ID 
-	windows.insert({ getID(windowName), window });
+	windows.insert({ window.getGUID(), window });
 }
-void GUIContext::detachWindow(const std::string& windowName){
-	windows.erase(getID(windowName));
-}
-
-std::string GUIContext::getContextName(){
-	return context_name;
-}
-void GUIContext::setContextName(const std::string& name){
-	context_name = name;
+void GUIContext::detachWindow(uint32 i){
+	windows.erase(i);
 }
 
-Pro::ID GUIContext::getID(const std::string& name){
-	return id_manager->getIDFromName(name);
-}
-
-void GUIContext::removeID(const std::string& name){
-	id_manager->releaseID(name);
-}
-std::string GUIContext::getName(Pro::ID _id){
-	return id_manager->getName(_id);
+std::string* GUIContext::getContextName(){
+	return GUIDLookup::getName(guid);
 }
 
 inline GUIContext* toPointer(lua_State* L){
@@ -54,22 +43,18 @@ inline GUIContext* toPointer(lua_State* L){
 int GUIContext::lAttachWindow(lua_State* L){
 	GUIContext* p = toPointer(L);
 	GUIWindow* w = *static_cast<GUIWindow**>(lua_touserdata(L, 1));
-	p->attachWindow(*w, *w->getName());
-	w->attachIDManager(p->id_manager);
+	p->attachWindow(*w);
 	return 0;
 }
+
 int GUIContext::lDetachWindow(lua_State* L){
 	GUIContext* p = toPointer(L);
-	p->detachWindow(lua_tostring(L, 2));
+	p->detachWindow(static_cast<uint32>(lua_tonumber(L, 2)));
 	return 0;
 }
+
 int GUIContext::lGetContextName(lua_State* L){
 	GUIContext* p = toPointer(L);
-	lua_pushstring(L, &p->getContextName()[0]);
+	lua_pushstring(L, &(*p->getContextName())[0]);
 	return 1;
-}
-int GUIContext::lSetContextName(lua_State* L){
-	GUIContext* p = toPointer(L);
-	p->setContextName(lua_tostring(L, 2));
-	return 0;
 }

@@ -12,8 +12,8 @@ namespace Pro{
 		}
 
 		// opens a file with each line being a frame
-		AnimatedSprite SpriteManager::loadAnimation(SDL_Renderer *renderer, const std::string& path){
-			AnimatedSprite anim;
+		Asset::AnimatedSprite SpriteManager::loadAnimation(SDL_Renderer *renderer, const std::string& path){
+			Asset::AnimatedSprite anim;
 			std::fstream stream(path);
 
 			if (stream.eof())
@@ -51,7 +51,7 @@ namespace Pro{
 				stream.getline(&line[0], 512);
 				std::string key = line.substr(0, line.find_first_of(':'));
 
-				AnimatedSprite anim = loadAnimation(renderer,
+				Asset::AnimatedSprite anim = loadAnimation(renderer,
 					line.substr(line.find_first_of(':') + 1, line.find(';') - line.find(':') - 1));
 
 				animations.insert({ key, anim });
@@ -117,7 +117,7 @@ namespace Pro{
 				rect.w = atoi(elements.at(4).c_str());
 				rect.h = atoi(elements.at(5).c_str());
 
-				Sprite sprite(elements.at(0), rect);
+				Asset::Sprite sprite(elements.at(0), rect);
 				sprite.attachSpriteSheet(spriteSheet);
 				sprites.insert({ elements.at(0), sprite });
 			}
@@ -126,11 +126,11 @@ namespace Pro{
 			return 0;
 		}
 
-		Sprite* SpriteManager::getSprite(const std::string& name){
+		Asset::Sprite* SpriteManager::getSprite(const std::string& name){
 			return &sprites.at(name);
 		}
 
-		AnimatedSprite* SpriteManager::getAnim(const std::string& name){
+		Asset::AnimatedSprite* SpriteManager::getAnim(const std::string& name){
 			return &animations.at(name);
 		}
 

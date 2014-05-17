@@ -1,28 +1,28 @@
 #pragma once
-#include <SDL.h>
+#include <SDL_Rect.h>
+
+#include "CGUID.h"
+#include "Math.h"
 #include "lua\lua.hpp"
+#include "Position.h"
+#include "Volume.h"
+
 namespace Pro{
-
-	class Camera
-	{
-		// position and width
-		SDL_Point position;
-		SDL_Point dimensions;
-	public:
-		Camera();
-		~Camera();
-		SDL_Point* getPosition();
-		void move(int x, int y);
-		SDL_Point* getDimensions();
-		void setPosition(int x, int y);
-		void setDimensions(int w, int h);
-
-		// Lua Functions
-
-		static int lGetPosition(lua_State*);
-		static int lSetPosition(lua_State*);
-		static int lMove(lua_State*);
-		static int lGetDimensions(lua_State*);
-		static int lSetDimensions(lua_State*);
-	};
+	namespace Scene{
+		class Camera : 
+			public Position,
+			public Volume, 
+			public CGUID
+		{  
+		public:
+			Camera(const std::string& name);
+			Camera();
+			~Camera(); 
+			void move(Math::Vector2); 
+			  
+			// Lua Functions
+			 
+			static int lMove(lua_State*); 
+		};
+	}
 }

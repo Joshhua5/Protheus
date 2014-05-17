@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "GUIContext.h"
 #include <SDL.h>
 #include <string>
+#include "GUIContext.h"
 
 namespace Pro{
 	class GraphicalUI
@@ -25,8 +25,8 @@ namespace Pro{
 		void setInactive(const std::string& name);
 
 		void addContext(GUI::GUIContext* context);
-		GUI::GUIContext* getContext(ID contextID);
-		void removeContext(ID);
+		GUI::GUIContext* getContext(uint32 contextID);
+		void removeContext(uint32);
 	};
 
 }

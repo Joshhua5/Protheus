@@ -1,11 +1,23 @@
-#pragma once
-#include "Vectors.h"
-namespace Pro{
-	namespace Math{
-		// Assumes support for SSE3
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
 
-		// Vectors
-		 
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 17:05:2014 Waring J.
+
+*************************************************************************/
+
+#pragma once
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+namespace Pro{
+	namespace Math{  
+
 	}
 }
 

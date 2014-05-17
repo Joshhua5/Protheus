@@ -1,22 +1,23 @@
 #pragma once
-#include "Vectors.h"
-#include "Sprite.h"
 #include <stack>
+#include "Math.h"
+#include "Sprite.h"
+
 
 namespace Pro{
 	namespace Graphics {
 		class SpriteBatcher
 		{ 
 			SDL_Renderer* renderer;
-			std::stack<Sprite*> sprite_stack;
-			std::stack<SDL_Rect> rect_stack;
+			std::stack<Asset::Sprite*> sprite_stack;
+			std::stack<Math::Vector4> rect_stack;
 		public:
 			SpriteBatcher(SDL_Renderer*);
 			SpriteBatcher();
 			~SpriteBatcher();
 
-			void push(Sprite*, SDL_Rect);
+			void push(Asset::Sprite*, Math::Vector4);
 			void flush();
-		}; 
+		};
 	}
 }

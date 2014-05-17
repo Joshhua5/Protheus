@@ -1,10 +1,13 @@
 #pragma once
-#include <SDL_rect.h>
+#include <SDL.h>
 #include <string>
-#include "Camera.h"
 #include <fstream>
 #include <vector>
+
+#include "Camera.h"
 #include "Tile.h"
+#include "MapSection.h"
+
 // Build to replace TileMap
 
 // Theory
@@ -15,39 +18,28 @@
 *	if the section is active
 */
 namespace Pro{
-	class MapSection{
-		SDL_Rect dimensions;
-		std::vector<std::vector<char>> data;
-	public:
-		char tileAt(unsigned int, unsigned int);
-		char* contains( int,  int);
-		SDL_Rect getDimensions();
-		void setData(std::vector<std::vector<char>>);
-		std::vector<std::vector<char>> getData();
-		bool visible(Camera* cam);
-	};
-	 
-	class Map
-	{
-	private:
-		SDL_Rect dimensions;
-		 
-		std::vector<MapSection*> mapSections;
-		std::vector<TileType> tileData;
-		bool getBoolean(const std::string& line);
-		std::string getString(const std::string& line); 
-		SDL_Rect getRect(const std::string& line);
+	namespace Scene{
+		class Map
+		{
+		private:
+			SDL_Rect dimensions;
 
-		bool loadLevelData(const std::string& file);
-		bool loadLevelTileData(const std::string&file);
-	public:
-		Map();
-		~Map();
+			std::vector<MapSection*> mapSections;
+			std::vector<TileType> tileData;
+			bool getBoolean(const std::string& line);
+			std::string getString(const std::string& line);
+			SDL_Rect getRect(const std::string& line);
 
-		std::vector<MapSection*> getVisibleSections(Camera* cam);
-		bool loadLevel(const std::string& file, const std::string& data);
-		TileType* getTile(unsigned int _x, unsigned int _y);
-		TileType* getTileType(char);
-	};
+			bool loadLevelData(const std::string& file);
+			bool loadLevelTileData(const std::string&file);
+		public:
+			Map();
+			~Map();
+
+			std::vector<MapSection*> getVisibleSections(Camera* cam);
+			bool loadLevel(const std::string& file, const std::string& data);
+			TileType* getTile(unsigned int _x, unsigned int _y);
+			TileType* getTileType(char);
+		};
+	} 
 }
- 

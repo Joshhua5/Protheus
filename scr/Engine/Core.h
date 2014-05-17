@@ -3,29 +3,27 @@
 #include "Renderer.h"
 #include "Timer.h" 
 #include "Network.h"
+#include "GUIDLookup.h"
 #include "Window.h"
 #include "SpriteManager.h" 
 #include "EventHandeler.h"
 
-namespace Pro{
-
+namespace Pro{ 
 	class Core
 	{
-		Scene* scene;
+		Scene::Scene* scene;
 		Networking::Network* network;
 		Graphics::Renderer* renderer;
 		Window* window;
-		Timer* timer; 
+		Timer* timer;
 		Graphics::SpriteManager* sprite_manager;
 		EventHandeler* event_handeler;
-		IDManager* id_manager;
 
 		bool running = false;
 
 		bool update();
 		bool render();
-	public:
-
+	public: 
 		// Core functions 
 		Core::Core();
 		  
@@ -48,12 +46,10 @@ namespace Pro{
 
 		// Game Functions
 
-		ID addEntity(Entity* entity, const std::string&  name);
-		void removeEntity(Entity entity); 
-		std::unordered_map<ID, Entity*>* getEntities();
-		Entity* getEntity(ID _id);
-		Entity* getEntity(const std::string&  name);
-		ID getID(const std::string&  name);
+		void addEntity(GameObject::Entity* entity);
+		void removeEntity(GameObject::Entity entity);
+		std::unordered_map<GUID, GameObject::Entity*>* getEntities();
+		GameObject::Entity* getEntity(uint32 _id);
 
 		// Network Functions
 
@@ -71,7 +67,7 @@ namespace Pro{
 
 		// Resource Functions
 		 
-		AnimatedSprite*	getSpriteAnimations(const std::string& name);
+		Asset::AnimatedSprite*	getSpriteAnimations(const std::string& name);
 
 		// Event Functions
 
@@ -82,15 +78,15 @@ namespace Pro{
 
 		// Map Functions
 
-		TileType* getMapTile(unsigned int x, unsigned int y);
-		std::vector<Entity*> pollMapTile(unsigned int x, unsigned int y);
-		std::vector<Entity*> pollMapTile(SDL_Rect pos);
+		
+		Scene::TileType* getMapTile(unsigned int x, unsigned int y);
+		std::vector<GameObject::Entity*> pollMapTile(unsigned int x, unsigned int y);
+		std::vector<GameObject::Entity*> pollMapTile(SDL_Rect pos);
 		void setActiveCamera(const std::string& name);
-		Camera* getActiveCamera();
-		Camera* getCamera(const std::string& name);
-		void addCamera(Camera*, const std::string& name);
-
-
+		Scene::Camera* getActiveCamera();
+		Scene::Camera* getCamera(const std::string& name);
+		void addCamera(Scene::Camera*);
+		 
 		static int lUpdate(lua_State*);
 	}; 
 }

@@ -1,14 +1,11 @@
 #include "Item.h"
-namespace Pro{
+using namespace Pro;
+using namespace GameObject;
+Item::Item()
+{
+}
 
 
-	Item::Item()
-	{
-	}
-
-
-	Item::~Item()
-	{
-	}
-
+Item::~Item()
+{
 }

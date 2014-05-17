@@ -1,13 +1,13 @@
 #pragma once
 #include "Entity.h"
 namespace Pro{
-
-	class Item :
-		public Entity
-	{
-	public:
-		Item();
-		~Item();
-	};
-
+	namespace GameObject{
+		class Item :
+			public Entity
+		{
+		public:
+			Item();
+			~Item();
+		};
+	}
 }
