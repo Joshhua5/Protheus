@@ -20,7 +20,7 @@ GUIContext::~GUIContext()
 void GUIContext::update(SDL_Event event){
 	for each(auto windows in windows)
 		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-			if (windows.second.isClickWithin(event.button.x, event.button.y))
+			if (windows.second.isClickWithin(event.button))
 				windows.second.update(event);
 }
 

@@ -1,24 +1,29 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+
 #pragma once
 #include "Scene.h"
 #include "Renderer.h"
 #include "Timer.h" 
 #include "Network.h"
 #include "GUIDLookup.h"
+#include "Math.h"
 #include "Window.h"
 #include "SpriteManager.h" 
 #include "EventHandeler.h"
 
 namespace Pro{ 
 	class Core
-	{
-		Scene::Scene* scene;
-		Networking::Network* network;
-		Graphics::Renderer* renderer;
-		Window* window;
-		Timer* timer;
-		Graphics::SpriteManager* sprite_manager;
-		EventHandeler* event_handeler;
-
+	{ 
 		bool running = false;
 
 		bool update();
@@ -42,33 +47,8 @@ namespace Pro{
 
 		// Change window details before Starting the engine
 		bool start();
-		bool cleanup();
-
-		// Game Functions
-
-		void addEntity(GameObject::Entity* entity);
-		void removeEntity(GameObject::Entity entity);
-		std::unordered_map<GUID, GameObject::Entity*>* getEntities();
-		GameObject::Entity* getEntity(uint32 _id);
-
-		// Network Functions
-
-		Networking::TCPConnection* netStartServer();
-		Networking::TCPConnection* netConnectToServer(const std::string &IP);
-
-		// returns the amount of bytes recieved
-		unsigned int netRecv(Networking::TCPConnection*, void *buffer);
-		// returns the amount of bytes recieved without clearing the buffer
-		unsigned int netPeek(Networking::TCPConnection*);
-		// sends the buffer through the connection
-		void netSend(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize);
-		/* sends the buffer through the connection and deletes the buffer  */
-		void netSendd(Networking::TCPConnection* connection, void* buffer, unsigned int bufferSize);
-
-		// Resource Functions
-		 
-		Asset::AnimatedSprite*	getSpriteAnimations(const std::string& name);
-
+		bool cleanup();  
+		  
 		// Event Functions
 
 		std::vector<SDL_Event>* pollKeyEvents();
@@ -77,15 +57,6 @@ namespace Pro{
 		std::vector<SDL_Event>* pollUserEvents();
 
 		// Map Functions
-
-		
-		Scene::TileType* getMapTile(unsigned int x, unsigned int y);
-		std::vector<GameObject::Entity*> pollMapTile(unsigned int x, unsigned int y);
-		std::vector<GameObject::Entity*> pollMapTile(SDL_Rect pos);
-		void setActiveCamera(const std::string& name);
-		Scene::Camera* getActiveCamera();
-		Scene::Camera* getCamera(const std::string& name);
-		void addCamera(Scene::Camera*);
 		 
 		static int lUpdate(lua_State*);
 	}; 

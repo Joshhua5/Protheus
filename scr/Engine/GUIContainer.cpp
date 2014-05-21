@@ -11,7 +11,7 @@ namespace Pro{
 
 		void GUIContainer::update(SDL_Event mouse_event){
 			for each(auto entities in window_entities){
-				if (entities->enabled()){
+				if (entities->isActive()){
 					switch (entities->type){
 					case GUI_ENTITY_TYPE::COLLAPSIBLE_MENU:
 						if (static_cast<GUIContainer*>(entities)->isClickWithin(mouse_event.button))

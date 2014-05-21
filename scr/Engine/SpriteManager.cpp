@@ -141,5 +141,22 @@ namespace Pro{
 		void SpriteManager::release(){
 			SDL_DestroyTexture(spriteSheet);
 		}
+
+
+		int SpriteManager::lLoadSpriteSheet(lua_State* L){
+			Util::luaP_registerget<SpriteManager>(L, "SPRITE_MANAGER")
+				->loadSpriteSheet(
+				Util::luaP_registerget<SDL_Renderer>(L, "SDL_RENDERER"),
+				lua_tostring(L, 1),
+				lua_tostring(L, 2));
+			return 0;
+		}
+		int SpriteManager::lLoadSpriteAnimations(lua_State* L){
+			Util::luaP_registerget<SpriteManager>(L, "SPRITE_MANAGER")
+				->loadAnimations(
+				Util::luaP_registerget<SDL_Renderer>(L, "SDL_RENDERER"),
+				lua_tostring(L, 1));
+			return 0;
+		}
 	}
 }

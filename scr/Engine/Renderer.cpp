@@ -1,35 +1,34 @@
 #include "Renderer.h"
 
 namespace Pro{
-	namespace Graphics{ 
-		Renderer::Renderer(SpriteManager* _spriteMng, Scene::Scene* _scene)
-		{ 
-			spriteMng = _spriteMng;
-			scene = _scene;
+	namespace Graphics{  
+		 
+		Renderer::Renderer(){
+
 		}
 
+		Renderer::Renderer(lua_State* lua_state){
+			SDL_Window* w = Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW");
+			renderer = SDL_CreateRenderer(w, -1,
+				SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (renderer == nullptr)
+				return;
+			Util::luaP_registerstore(lua_state, "SDL_RENDERER", renderer);
+			sprite_batcher = new SpriteBatcher(lua_state); 
+		}
 
 		Renderer::~Renderer()
 		{
 			delete sprite_batcher;
-		}
-
-		bool Renderer::init(SDL_Window* window){
-			renderer = SDL_CreateRenderer(window, -1,
-				SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if (renderer == nullptr)
-				return false;
-			sprite_batcher = new SpriteBatcher(renderer);
-			return true;
-		}
+		} 
 
 		SDL_Renderer* Renderer::getRenderer(){
 			return renderer;
 		}
 
-		void Renderer::renderScene(){
-			// Get data
-			Scene::Map* map = scene->getMap();
+		void Renderer::renderScene(Scene::Scene* scene, SpriteManager* spriteMng){
+			// Get data 
+			Scene::Map* map = scene->getMap(); 
 			//SDL_Point* cameraPos = scene->getActiveCamera()->getPosition();
 
 			//std::unordered_map<GUID, GameObject::Entity*>* entities = scene->getEntities();
@@ -87,6 +86,7 @@ namespace Pro{
 			//	continue;
 			//}
 			// calls the batcher to render all sprites
+
 			sprite_batcher->flush();
 		}
 

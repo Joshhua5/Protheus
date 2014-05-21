@@ -11,8 +11,8 @@ namespace Pro{
 		{
 		}
 
-		SpriteBatcher::SpriteBatcher(SDL_Renderer* _r){
-			renderer = _r; 
+		SpriteBatcher::SpriteBatcher(lua_State* L){
+			lua_state = L;
 		}
 
 		void SpriteBatcher::push(Asset::Sprite* _s, Math::Vector4 _r){

@@ -14,7 +14,7 @@ History:
 
 namespace Pro{ 
 
-	std::unordered_map<std::string, uint32>* getNameMapping(){
+	std::unordered_map<std::string, uint32>* GUIDLookup::getNameMapping(){
 		static std::unordered_map<std::string, uint32> nameMapping;
 		return &nameMapping;
 	}
@@ -43,3 +43,4 @@ namespace Pro{
 		return nullptr;
 	}
 }
+ 

@@ -15,14 +15,22 @@ History:
 
 namespace Pro{
 	namespace Math{
+
+#ifdef _MSC_VER
+		//__declspec(align(16))
+#endif
+
 		struct Vector2 {
 			float x, y;
 
 			Vector2(SDL_Point);
+			Vector2(unsigned int, unsigned int);
 			Vector2(float, float);
 			Vector2(int, int);
 			Vector2();
 			~Vector2();
+
+			bool contains(float&);
 
 			Vector2 operator=(SDL_Point&);
 			SDL_Point operator=(Vector2&);

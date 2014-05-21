@@ -31,51 +31,57 @@
     <Filter Include="Engine Header Files\Containers">
       <UniqueIdentifier>{d18ed4e1-0c15-45c5-a741-5ec609842454}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Header Files\Utils">
+      <UniqueIdentifier>{bd129de9-6a55-4b39-a356-13c668f08fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Utils">
+      <UniqueIdentifier>{04fa3506-6396-4d14-bfd8-a3deef00ca82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Math">
+      <UniqueIdentifier>{d1c0ae2d-2268-4354-b0e6-ada3fde7fe6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Math">
+      <UniqueIdentifier>{88fcd946-55a1-47c6-a155-075f696f08c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\ClassComponent">
+      <UniqueIdentifier>{f05ea48e-0cab-4c79-b32d-6eb62877411a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\ClassComponents">
+      <UniqueIdentifier>{329e4209-e1d3-412e-bef2-45238a672360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\GameObjects">
+      <UniqueIdentifier>{7f77c7c1-1779-4511-96b2-97100e151439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Graphics">
+      <UniqueIdentifier>{3e3a9cc7-dcdf-4234-9658-79fa8fc1a03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Graphics">
+      <UniqueIdentifier>{8d9653ff-bab8-45a0-99ac-9ca98dfe127e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\GameObjects">
+      <UniqueIdentifier>{fba0ceca-701b-4cd8-9bf7-d4a5f241d186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Lua">
+      <UniqueIdentifier>{568105b1-c30e-4f94-80ef-cf1c092b22da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Lua">
+      <UniqueIdentifier>{470eb881-206a-402d-b86b-632144043cfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\AnimatedEntity.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\AnimatedSprite.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Avatar.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Camera.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Entity.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\EventHandeler.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Name.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Network.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Renderer.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Sprite.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SpriteEntity.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\SpriteManager.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Tile.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Timer.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Window.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Map.cpp">
@@ -115,9 +121,6 @@
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Main.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Lua.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\lua\lapi.c">
@@ -219,31 +222,16 @@
     <ClCompile Include="Engine\Input.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Inventory.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Item.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Scene.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GraphicalUI.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SpriteBatcher.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GUIContainer.cpp">
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\MapSection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Core.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GUIDLookup.cpp">
@@ -255,60 +243,99 @@
     <ClCompile Include="Engine\CameraContainer.cpp">
       <Filter>Engine Source Files\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Position.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Volume.cpp">
-      <Filter>Engine Source Files</Filter>
+    <ClCompile Include="Engine\Timer.cpp">
+      <Filter>Engine Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Vector2.cpp">
-      <Filter>Engine Source Files</Filter>
+      <Filter>Engine Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Vector3.cpp">
-      <Filter>Engine Source Files</Filter>
+      <Filter>Engine Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Vector4.cpp">
-      <Filter>Engine Source Files</Filter>
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math.cpp">
+      <Filter>Engine Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Engine\CGUID.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Position.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Name.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Area.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ActiveState.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Matrix33.cpp">
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LuaCallback.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Avatar.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AnimatedEntity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AnimatedSprite.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Entity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SpriteEntity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Inventory.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Item.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SpriteBatcher.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Window.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SceneContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\WindowContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Lua.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LuaObjectFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LuaGlobalFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EventHandler.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\AnimatedEntity.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\AnimatedSprite.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Avatar.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Camera.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Entity.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\EventHandeler.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Input.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Inventory.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Item.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Name.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Network.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene.h">
@@ -317,19 +344,10 @@
     <ClInclude Include="Engine\Sprite.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SpriteEntity.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SpriteManager.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Tile.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Timer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Window.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Map.h">
@@ -369,9 +387,6 @@
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Main.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Lua.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\lua\lapi.h">
@@ -452,19 +467,10 @@
     <ClInclude Include="Engine\GraphicalUI.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SpriteBatcher.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\GUIContainer.h">
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\MapSection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Core.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GUIDLookup.h">
@@ -476,26 +482,95 @@
     <ClInclude Include="Engine\CameraContainer.h">
       <Filter>Engine Header Files\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Position.h">
-      <Filter>Engine Header Files</Filter>
+    <ClInclude Include="Engine\StringConverter.h">
+      <Filter>Engine Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Volume.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Vector3.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Vector2.h">
-      <Filter>Engine Header Files</Filter>
+    <ClInclude Include="Engine\Timer.h">
+      <Filter>Engine Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Vector4.h">
-      <Filter>Engine Header Files</Filter>
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector2.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector3.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math.h">
+      <Filter>Engine Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Engine\CGUID.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Name.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Position.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Area.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ActiveState.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Matrix33.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LuaCallback.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Avatar.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AnimatedEntity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AnimatedSprite.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Entity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Item.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteEntity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteBatcher.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Window.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Inventory.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SceneContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\WindowContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LuaUtils.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Lua.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LuaObjectFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LuaGlobalFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EventHandler.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Descriptor.txt" />
   </ItemGroup>
 </Project>

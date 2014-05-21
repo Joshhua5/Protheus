@@ -5,6 +5,7 @@ using namespace Math;
 
 
 Vector2::Vector2(int x, int y) : Vector2(static_cast<float>(x), static_cast<float>(y)) {}
+Vector2::Vector2(unsigned int x, unsigned int y) : Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
 Vector2::Vector2(float _x, float _y){
 	x = _x;
@@ -41,3 +42,9 @@ void Vector2::operator+=(Vector2& p){
 	y += p.y;
 }
 
+
+bool Vector2::contains(float& p){
+	if ((x > p && y < p) || (x < p && y > p))
+		return true;
+	return false;
+}

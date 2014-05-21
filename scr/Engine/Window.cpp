@@ -2,9 +2,18 @@
 
 namespace Pro{
 
+	Window::Window(const std::string& name, lua_State* L) :  CGUID(name)
+	{
+		lua_state = L;
+		windowTitle = name;
+		dim.w = 800;
+		dim.h = 600;
+	}
+
+
 	Window::Window()
 	{
-		windowTitle = "Core";
+		windowTitle = "Unnamed";
 		dim.w = 800;
 		dim.h = 600;
 	}
@@ -15,10 +24,11 @@ namespace Pro{
 	}
 
 	bool Window::createWindow(){
-		window = SDL_CreateWindow(windowTitle.c_str(), dim.x, dim.y, dim.w, dim.h,
+		window = SDL_CreateWindow(&windowTitle[0], dim.x, dim.y, dim.w, dim.h,
 			SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
 		if (window == nullptr)
 			return false;
+		Util::luaP_registerstore(lua_state, "SDL_WINDOW", window);
 		return true;
 	}
 

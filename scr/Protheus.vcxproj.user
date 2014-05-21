@@ -4,10 +4,14 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>s</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <RemoteDebuggerServerName>$(REMOTEDEV:4018)</RemoteDebuggerServerName>
     <RemoteDebuggerConnection>RemoteWithoutAuthentication</RemoteDebuggerConnection>
+    <LocalDebuggerEnvironment>$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <LocalDebuggerAmpDefaultAccelerator>
+    </LocalDebuggerAmpDefaultAccelerator>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>

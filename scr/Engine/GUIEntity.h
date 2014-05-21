@@ -2,6 +2,22 @@
 #include <SDL.h>
 #include <string> 
 #include "CGUID.h"
+#include "Area.h"
+#include "Position.h"
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+
+#include "LuaCallback.h"
+#include "ActiveState.h"
 #include "lua\lua.hpp"
 
 namespace Pro{ 
@@ -17,20 +33,14 @@ namespace Pro{
 		};
 
 		class GUIEntity : 
-			public CGUID
-		{
-			// relative position to the parent
-			SDL_Point position;
-			SDL_Point dimensions;
+			public Component::CGUID,
+			public Component::ActiveState,
+			public Component::Area,
+			public Component::Position,
+			public Component::LuaCallback
+		{ 
 			// pointer to the container of the GUI
-			GUIEntity* parent; 
-			// wether or not the entity is enabled and active
-			bool entity_enabled;
-
-			lua_State* lua_state;
-			std::string lua_callback;
-			unsigned char lua_arguments;
-			unsigned char lua_return;
+			GUIEntity* parent;  
 			 
 		public:
 			// of type GUI_ENTITY_TYPE
@@ -49,30 +59,15 @@ namespace Pro{
 
 			GUIEntity* getParent();
 			void setParent(GUIEntity*);
-			  
-			bool enabled();
-			void enabled(bool);
-
-			bool isClickWithin(int x, int y);
-			bool isClickWithin(SDL_MouseButtonEvent);
-
-			std::string* getCallback();
-			void setCallback(lua_State*, const std::string&, unsigned char args, unsigned char returns);
-			void callback(); 
-
+			    
+			bool isClickWithin(Math::Vector2& v);
+			bool isClickWithin(SDL_MouseButtonEvent&);
+			 
 			// Lua functions
 
-			static int lBindCallback(lua_State*);
-			static int lGetPosition(lua_State*);
-			static int lSetPosition(lua_State*);
-			static int lGetDimensions(lua_State*);
-			static int lSetDimensions(lua_State*);
 			static int lGetParent(lua_State*);
-			static int lSetParent(lua_State*); 
-			static int lGetName(lua_State*);
-			static int lEnable(lua_State*);
-			static int lDisable(lua_State*);
-			static int lIsEnabled(lua_State*);
+			static int lSetParent(lua_State*);
+
 		};
 	}
 }

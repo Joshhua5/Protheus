@@ -8,7 +8,7 @@ Stores and allocates GUID's to names provided.
 
 -------------------------------------------------------------------------
 History:
-- 17:05:2014 Waring J.
+- 17:05:2014 Waring J. 
 *************************************************************************/
 
 #pragma once
@@ -18,6 +18,8 @@ History:
 namespace Pro{  
 	typedef unsigned int uint32;
 	class GUIDLookup{
+	private:
+		static std::unordered_map<std::string, uint32>* getNameMapping();
 	public:
 		static uint32  newGUID(const std::string& name);
 		static void releaseGUID(const std::string& name);

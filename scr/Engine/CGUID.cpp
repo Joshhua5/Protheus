@@ -1,6 +1,7 @@
 #include "CGUID.h"
 
 using namespace Pro;
+using namespace Component;
 
 CGUID::CGUID(const std::string& name){
 	guid = GUIDLookup::getGUID(name);

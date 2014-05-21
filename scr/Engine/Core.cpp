@@ -7,15 +7,9 @@ namespace Pro{
 		window = new Window();
 	}
 
-	void Core::run(){ 
-		timer->startUpdate();
-		update(); 
-		timer->endUpdate();
-
-		timer->startRender();
-		render();
-		timer->endRender();
-		
+	void Core::run(){  
+		update();  
+		render(); 
 		timer->tick(); 
 	}
 
@@ -119,7 +113,7 @@ namespace Pro{
 	// Map Functions
 
 	Scene::TileType* Pro::Core::getMapTile(unsigned int x, unsigned int y){
-		return scene->getMap()->getTile(x, y);
+		return scene->getMap()->getTile(Math::Vector2(x, y));
 	}
 	std::vector<GameObject::Entity*> Pro::Core::pollMapTile(unsigned int x, unsigned int y){
 		return scene->pollTile(Math::Vector2(static_cast<int>(x), static_cast<int>(y)));
@@ -155,7 +149,7 @@ namespace Pro{
 	bool Core::start(){
 		scene = new Scene::Scene();
 		network = new Networking::Network();
-		timer = new Timer();
+		timer = new Util::Timer();
 		sprite_manager = new Graphics::SpriteManager();
 		event_handeler = new EventHandeler();
 		renderer = new Graphics::Renderer(sprite_manager, scene);

@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\ActiveState.cpp" />
     <ClCompile Include="Engine\CameraContainer.cpp" />
     <ClCompile Include="Engine\AnimatedEntity.cpp" />
     <ClCompile Include="Engine\AnimatedSprite.cpp" />
     <ClCompile Include="Engine\Avatar.cpp" />
     <ClCompile Include="Engine\Camera.cpp" />
-    <ClCompile Include="Engine\Core.cpp" />
     <ClCompile Include="Engine\GUIContainer.cpp" />
     <ClCompile Include="Engine\Entity.cpp" />
-    <ClCompile Include="Engine\EventHandeler.cpp" />
+    <ClCompile Include="Engine\EventHandler.cpp" />
     <ClCompile Include="Engine\GraphicalUI.cpp" />
     <ClCompile Include="Engine\GUIEntity.cpp" />
     <ClCompile Include="Engine\GUIDLookup.cpp" />
@@ -86,21 +86,27 @@
     <ClCompile Include="Engine\MapSection.cpp" />
     <ClCompile Include="Engine\EntityContainer.cpp" />
     <ClCompile Include="Engine\Position.cpp" />
-    <ClCompile Include="Engine\Volume.cpp" />
+    <ClCompile Include="Engine\Area.cpp" />
     <ClCompile Include="Engine\Vector2.cpp" />
     <ClCompile Include="Engine\Vector3.cpp" />
     <ClCompile Include="Engine\Vector4.cpp" />
     <ClCompile Include="Engine\CGUID.cpp" />
+    <ClCompile Include="Engine\LuaCallback.cpp" />
+    <ClCompile Include="Engine\Matrix33.cpp" />
+    <ClCompile Include="Engine\SceneContainer.cpp" />
+    <ClCompile Include="Engine\WindowContainer.cpp" />
+    <ClCompile Include="Engine\LuaObjectFactory.cpp" />
+    <ClCompile Include="Engine\LuaGlobalFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\ActiveState.h" />
     <ClInclude Include="Engine\CameraContainer.h" />
     <ClInclude Include="Engine\AnimatedEntity.h" />
     <ClInclude Include="Engine\AnimatedSprite.h" />
     <ClInclude Include="Engine\Avatar.h" />
     <ClInclude Include="Engine\Camera.h" />
-    <ClInclude Include="Engine\Core.h" />
     <ClInclude Include="Engine\Entity.h" />
-    <ClInclude Include="Engine\EventHandeler.h" />
+    <ClInclude Include="Engine\EventHandler.h" />
     <ClInclude Include="Engine\GraphicalUI.h" />
     <ClInclude Include="Engine\GUIEntity.h" />
     <ClInclude Include="Engine\GUIDLookup.h" />
@@ -161,14 +167,19 @@
     <ClInclude Include="Engine\MapSection.h" />
     <ClInclude Include="Engine\EntityContainer.h" />
     <ClInclude Include="Engine\Position.h" />
-    <ClInclude Include="Engine\Volume.h" />
+    <ClInclude Include="Engine\Area.h" />
     <ClInclude Include="Engine\Vector2.h" />
     <ClInclude Include="Engine\Vector3.h" />
     <ClInclude Include="Engine\Vector4.h" />
     <ClInclude Include="Engine\CGUID.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Descriptor.txt" />
+    <ClInclude Include="Engine\StringConverter.h" />
+    <ClInclude Include="Engine\LuaCallback.h" />
+    <ClInclude Include="Engine\Matrix33.h" />
+    <ClInclude Include="Engine\SceneContainer.h" />
+    <ClInclude Include="Engine\WindowContainer.h" />
+    <ClInclude Include="Engine\LuaObjectFactory.h" />
+    <ClInclude Include="Engine\LuaUtils.h" />
+    <ClInclude Include="Engine\LuaGlobalFactory.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

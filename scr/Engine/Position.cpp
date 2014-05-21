@@ -1,5 +1,7 @@
 #include "Position.h"
 
+using namespace Pro;
+using namespace Component;
 
 Position::Position()
 {
@@ -16,7 +18,7 @@ Math::Vector2 Position::getPosition(){
 Math::Vector2* Position::pGetPosition(){
 	return &position;
 }
-void Position::setPosition(Math::Vector2 p){
+void Position::setPosition(Math::Vector2& p){
 	position = p;
 }
 

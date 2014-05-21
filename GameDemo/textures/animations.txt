@@ -1,0 +1,1 @@
+player:textures\\animPlayer.txt;

@@ -11,16 +11,10 @@ Map::Map()
 Map::~Map()
 {
 }
-std::string Map::getString(const std::string& line){
+inline std::string getString(const std::string& line){
 	return line.substr(line.find(':') + 1, line.find(';') - line.find(':') - 1);
 }
-
-bool Map::getBoolean(const std::string& line){
-	if (line.substr(line.find(':') + 1, line.find(';') - line.find(':') - 1) == "true")
-		return true;
-	return false;
-}
-
+  
 bool Map::loadLevel(const std::string& file, const std::string& data){
 	if (loadLevelData(file) &&
 		loadLevelTileData(data))
@@ -42,16 +36,12 @@ bool Map::loadLevelData(const std::string& file){
 	char* buffer = new char[bufferSize];
 	while (stream.getline(buffer, bufferSize) && buffer[0] != ';'){
 		// read a horizontal line 
-		std::vector<char> horzLine;
-		int x = 0;
-		for (; buffer[x] != '\0'; x++)
-			horzLine.push_back(buffer[x]);
-		dimensions.w = x;
+		std::vector<char> horzLine; 
+		for (int x = 0; buffer[x] != '\0'; x++)
+			horzLine.push_back(buffer[x]); 
 		data.push_back(horzLine);
 	}
-	dimensions.w = data[0].size();
-	dimensions.h = data.size();
-	
+	dimensions = Math::Vector2(data[0].size(), data.size());  
 
 	if (stream.bad() == true){
 		stream.close();
@@ -65,10 +55,10 @@ bool Map::loadLevelData(const std::string& file){
 	while (stream.getline(buffer, bufferSize) && stream.eof() == false){
 		MapSection* mapSec = new MapSection();
 		std::vector<std::vector<char>> mapSecData;
-		SDL_Rect rect = getRect(buffer);
-		for (int x = rect.x; x < rect.w; x++){
+		Math::Vector4 rect = Util::stringToVec4(buffer);
+		for (int x = static_cast<int>(rect.x); x < static_cast<int>(rect.w); x++){
 			std::vector<char> dat;
-			for (int y = rect.y; y < rect.h; y++)
+			for (int y = static_cast<int>(rect.y); y < static_cast<int>(rect.w); y++)
 				dat.push_back(data.at(y).at(x));
 			mapSecData.push_back(dat);
 		}
@@ -99,8 +89,8 @@ bool Map::loadLevelTileData(const std::string& file){
 			// Get Tile ID
 			unsigned char x = 0;
 			while (line[x] != ']')
-				x++;
-			currentID = atoi(line.substr(1, x - 1).c_str());
+				x++; 
+			currentID = Util::stringToInt(line.substr(1, x - 1));
 			tileData.at(currentID).tileID = currentID;
 			continue;
 		}
@@ -111,7 +101,7 @@ bool Map::loadLevelTileData(const std::string& file){
 		switch (key[0]){
 		case 'p':
 			if (key == "passable"){
-				tileData[currentID].passable = getBoolean(line);
+				tileData[currentID].passable = Util::stringToBoolean(getString(line));
 			}
 			break;
 		case 's':
@@ -122,12 +112,12 @@ bool Map::loadLevelTileData(const std::string& file){
 			break;
 		case 'w':
 			if (key == "width"){
-				tileData[currentID].tileSize.w = atoi(getString(line).c_str());
+				tileData[currentID].tileSize.w = Util::stringToInt(getString(line));
 			}
 			break;
 		case 'h':
 			if (key == "height"){
-				tileData[currentID].tileSize.h = atoi(getString(line).c_str());
+				tileData[currentID].tileSize.h = Util::stringToInt(getString(line));
 
 			}
 		}
@@ -137,10 +127,10 @@ bool Map::loadLevelTileData(const std::string& file){
 	return true;
 }
 
-TileType* Map::getTile(unsigned int x, unsigned int y){
+TileType* Map::getTile(Math::Vector2 v){
 	char* ch = nullptr;
 	for each(const auto &section in mapSections)
-		if ((ch = section->contains(x, y)) != nullptr)
+		if ((ch = section->contains(v)) != nullptr)
 			return &tileData.at(*ch);
 	return nullptr;
 }
@@ -152,20 +142,7 @@ std::vector<MapSection*> Map::getVisibleSections(Camera* cam){
 			sections.push_back(sec);
 	return sections;
 }
-
-SDL_Rect Map::getRect(const std::string& line){
-	SDL_Rect out;
-	auto pos = line.find(' ');
-	auto pos1 = line.find(' ', pos + 1);
-	out.x = atoi(line.substr(0, pos).c_str());
-	out.y = atoi(line.substr(pos + 1, pos1 - pos).c_str());
-	pos = line.find(' ', pos1 + 1);
-	out.w = atoi(line.substr(pos1 + 1, pos - pos1).c_str());
-	out.h = atoi(line.substr(pos + 1, line.length() - pos).c_str());
-	return out;
-}
-
-
-TileType* Map::getTileType(char ch){
+   
+TileType* Map::getTileType(unsigned int ch){
 	return &tileData.at(ch);
 }

@@ -1,3 +1,15 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+
 #pragma once
 #include <SDL_events.h>
 #include <unordered_map>
@@ -9,7 +21,7 @@
 namespace Pro{
 	namespace GUI{
 		class GUIContext : 
-			public CGUID
+			public Component::CGUID
 		{
 		private:
 			std::unordered_map<uint32, GUIWindow> windows; 

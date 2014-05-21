@@ -13,6 +13,8 @@ namespace Pro{
 	}
 	void CameraContainer::addCamera(Scene::Camera* e){
 		stored_cameras.insert({ e->getGUID(), e });
+		if (active_camera == nullptr)
+			active_camera = e;
 	}
 	void CameraContainer::destoryCamera(uint32 i){
 		stored_cameras.erase(i);

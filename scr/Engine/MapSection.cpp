@@ -4,49 +4,32 @@ using namespace Pro;
 using namespace Scene;
 
 
-char MapSection::tileAt(unsigned int x, unsigned int y){
-	char* ch = contains(x, y);
+char MapSection::tileAt(Math::Vector2 v){
+	char* ch = contains(v);
 	if (ch != nullptr)
 		return *ch;
 	return 0;
 }
 
-char* MapSection::contains(int x, int y){
-	if (x > dimensions.x && dimensions.x + dimensions.w > x)
-		if (y > dimensions.y && dimensions.x + dimensions.h > y)
-			return &data[x][y];
+char* MapSection::contains(Math::Vector2 v){
+	if (Math::Vector4(position, dimensions).contains(v))
+			return &data[static_cast<int>(v.x)][static_cast<int>(v.y)];
 	return nullptr;
 }
-
-SDL_Rect MapSection::getDimensions(){
-	return dimensions;
-}
+ 
 
 void MapSection::setData(std::vector<std::vector<char>> dat){
 	data = dat;
 }
 
-bool MapSection::visible(Camera* cam){
-	Math::Vector2 pos = cam->getPosition();
-	Math::Vector2 dim = cam->getDimensions();
-#define d dimensions 
+bool MapSection::visible(Camera* cam){ 
 	// need to check if the camera can see the MapSection
-	// top bottom check 
-	if (d.x >= pos.x && d.x + d.w <= pos.x + dim.x){
-		if (d.y + d.h <= pos.y && d.y >= pos.y)
-			return true;
-		if (d.y + d.h > pos.y && d.y + d.h < pos.y + dim.y)
-			return true;
-	}
-	// check left and right
-	else if (d.y > pos.y && d.y + d.h < pos.y + dim.y){
-		if (d.x + d.w > pos.x && d.x + d.w < pos.x + dim.x)
-			return true;
-		if (d.x > pos.x + dim.x && d.x < pos.x + dim.x)
-			return true;
-	}
-	return false;
-#undef d
+	// top bottom check  
+
+	// Convert the position and dimensions into a Vector4 from 2(Vector2)
+	return Math::Vector4(position, dimensions).overlaps(
+		   Math::Vector4(cam->getPosition(), cam->getDimensions())
+		); 
 }
 
 std::vector<std::vector<char>> MapSection::getData(){

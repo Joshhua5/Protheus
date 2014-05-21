@@ -1,0 +1,38 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+#pragma once
+#include "lua\lua.hpp"
+
+namespace Pro{
+	namespace Component{ 
+
+		class ActiveState
+		{
+		protected:
+			bool active;
+		public:
+			ActiveState();
+			~ActiveState();
+
+			void activate();
+			void deactivate();
+			bool isActive();
+
+			// LUA Functions
+
+			static int lActivate(lua_State*);
+			static int lDeactivate(lua_State*);
+			static int lIsActive(lua_State*);
+		}; 
+	}
+}
+

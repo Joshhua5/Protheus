@@ -21,9 +21,10 @@ History:
 #include "Camera.h"
 #include "GUIDLookup.h"
 #include "CameraContainer.h"
-#include "EntityContainer.h"
+#include "EntityContainer.h"  
 #include "Math.h"
 #include "Map.h"
+#include "LuaUtils.h"
 #include "Tile.h"
 
 namespace Pro{
@@ -34,17 +35,24 @@ namespace Pro{
 		{
 			Map* tileData; 
 		public:
-			Scene();
+			lua_State* lua_state;
+			Scene(lua_State* lua_state);
 			~Scene();
 
 			bool loadSceneData(const std::string& path, const std::string& data);
 			bool addTileType(TileType);
+			void update();
 
 			// returns a list of entities found on a tile
 			std::vector<GameObject::Entity*> pollTile(Math::Vector2); 
 			 
 			// return the private storage of entities 
 			Map* getMap();
+
+			// LUA functions
+
+			static int lUpdate(lua_State*);
+			static int lLoadScene(lua_State*);
 		};
 	}
 }

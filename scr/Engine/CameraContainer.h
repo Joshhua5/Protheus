@@ -25,7 +25,7 @@ namespace Pro{
 		std::unordered_map<uint32, Scene::Camera*> stored_cameras;
 		Scene::Camera* active_camera;
 	public:
-		CameraContainer(){}
+		CameraContainer(){ active_camera = nullptr; }
 		~CameraContainer(){}
 		    
 		Scene::Camera* getCamera(uint32);

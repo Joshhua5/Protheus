@@ -16,6 +16,17 @@ History:
 using namespace Pro;
 using namespace Math;
 
+Vector4::Vector4(Vector2& pos, Vector2& dim) : Vector4(
+	pos.x, pos.y,
+	dim.x, dim.y){}
+
+Vector4::Vector4(double x, double y, double z, double w) : Vector4(
+	static_cast<float>(x),
+	static_cast<float>(y),
+	static_cast<float>(z),
+	static_cast<float>(w))
+{}
+
 Vector4::Vector4(SDL_Rect& p) : Vector4(
 	static_cast<float>(p.x),
 	static_cast<float>(p.y),
@@ -45,6 +56,28 @@ Vector4::Vector4()
 
 Vector4::~Vector4()
 {
+}
+
+bool Vector4::contains(Math::Vector2& v){
+	if (v.x > x &&
+		x + z > v.x &&
+		v.y > y &&
+		x + y > v.y)
+		return true;
+	return false;
+}
+
+bool Vector4::overlaps(Math::Vector4& v){
+	if ((x >= v.x && x + w <= v.x + v.x) &
+		((y + w <= v.y && y >= v.y) |
+		(y + w > v.y && y + w < v.y + v.y)))
+			return true; 
+	// check left and right
+	else if (y > v.y &&  y + w < v.y + v.y &&
+		((x + z > v.x &&  x + z < v.x + v.x)||
+		(x > v.x + v.x && x < v.x + v.x)))
+		return true; 
+	return false;
 }
 
 Vector4 Vector4::operator=(const SDL_Rect& p){ return Vector4(p.x, p.y, p.w, p.h); }

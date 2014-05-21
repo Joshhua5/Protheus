@@ -1,30 +1,33 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+
 #pragma once
 #include <chrono>
 namespace Pro{
+	namespace Util{
+		class Timer
+		{
+		private:
+			unsigned long long startTick;
+			unsigned long long lastTick;
+			unsigned long long currentTick;
+			double high_resolution_clock_period;
+		public:
+			Timer();
+			~Timer();
 
-	class Timer
-	{
-	private:
-		long long lastTick;
-		long long currentTick;
-		long long startUpdateTick;
-		long long endUpdateTick;
-		long long startRenderTick;
-		long long endRenderTick;
-		double high_resolution_clock_period;
-	public:
-		Timer();
-		~Timer();
-
-		double getDelta();
-		double getUpdateDelta();
-		double getRenderDelta();
-		unsigned int getFPS();
-		void tick();
-		void startUpdate();
-		void endUpdate();
-		void startRender();
-		void endRender();
-	};
-
+			double getTickDelta(); 
+			double getTicksPerSec();
+			void tick(); 
+		};
+	}
 }

@@ -1,3 +1,15 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 20:05:2014: Waring J.
+*************************************************************************/
+
 #pragma once
 #include <SDL.h>
 #include <string>
@@ -9,7 +21,7 @@ namespace Pro{
 	namespace Asset{
 
 		class Sprite : 
-			public CGUID
+			public Component::CGUID
 		{
 		private:
 			SDL_Texture* spriteSheet;

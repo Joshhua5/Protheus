@@ -13,17 +13,30 @@ History:
 
 #pragma once
 #include <SDL_rect.h>
+#include "Vector2.h"
 namespace Pro{
 	namespace Math{
+
+#ifdef _MSC_VER
+		//__declspec(align(16))
+#endif
+
 		struct Vector4{
 			float x, y, z, w;
 			
 			Vector4(SDL_Rect& p);
+
+			Vector4(Vector2&, Vector2&);
+			Vector4(double, double, double, double);
 			Vector4(float x, float y, float z, float w);
 			Vector4(int x, int y, int z, int w);
 			Vector4();
 			~Vector4();
 			
+			// z and w are width and height in that order.
+			bool contains(Vector2&);
+			bool overlaps(Vector4&);
+
 			Vector4 operator=(const SDL_Rect&);
 			SDL_Rect toSDL();
 		}; 
