@@ -1,8 +1,6 @@
 #include "Matrix33.h" 
 
-#ifdef __SSE
-#include <xmmintrin.h>
-#endif
+
 
 using namespace Pro;
 using namespace Math;
@@ -32,6 +30,7 @@ Matrix33 Matrix33::operator*(Matrix33& m){
 bool Matrix33::operator==(Matrix33& m){
 
 #ifdef __SSE
+	// SSE Code
 
 	__m128 a1 = _mm_cmpeq_ps(_mm_loadu_ps(&_m[0][0]), _mm_loadu_ps(&m._m[0][0]));
 	__m128 a2 = _mm_cmpeq_ps(_mm_loadu_ps(&_m[0][1]), _mm_loadu_ps(&m._m[0][1]));
@@ -43,7 +42,8 @@ bool Matrix33::operator==(Matrix33& m){
 		return true;
 	return false;
 
-#endif
+#else
+	// Scalar code
 
 	if (
 		_m[0][0] == m._m[0][0] &&
@@ -59,9 +59,11 @@ bool Matrix33::operator==(Matrix33& m){
 		_m[2][2] == m._m[2][2])
 		return true;
 	return false;
+#endif
 }
 void Matrix33::operator=(Matrix33& m){
 #ifdef __SSE
+	// SSE Code
 	_mm_storeu_ps(_m[0], _mm_loadu_ps(m._m[0]));
 	_mm_storeu_ps(_m[3], _mm_loadu_ps(m._m[3]));
 	__m128 p = _mm_loadu_ps(m._m[6]);
@@ -69,6 +71,7 @@ void Matrix33::operator=(Matrix33& m){
 	_m[2][1] = p.m128_f32[1];
 	_m[2][1] = p.m128_f32[2];
 #else
+	// Scalar code
 
 	for (char x = 0; x < 9; x++)
 		*_m[x] += *m._m[x];
@@ -78,20 +81,22 @@ void Matrix33::operator=(Matrix33& m){
 
 void Matrix33::operator/=(Matrix33& m){}
 void Matrix33::operator-=(Matrix33& m){
-#ifdef __SSE 
-
+#ifdef __SSE
+	// SSE Code
 	_mm_storeu_ps(_m[0], _mm_sub_ps(_mm_loadu_ps(_m[0]), _mm_loadu_ps(m._m[0])));
 	_mm_storeu_ps(_m[3], _mm_sub_ps(_mm_loadu_ps(_m[3]), _mm_loadu_ps(m._m[3])));
 	_mm_storeu_ps(_m[6], _mm_sub_ps(_mm_loadu_ps(_m[6]), _mm_loadu_ps(m._m[6])));
 
 	return;
 #else
+	// Scalar code
 	for (char x = 0; x < 9; x++)
 		*_m[x] += *m._m[x];
 #endif
 }
 void Matrix33::operator+=(Matrix33& m){
-#ifdef __SSE 
+#ifdef __SSE
+	// SSE Code
 
 	_mm_storeu_ps(_m[0], _mm_add_ps(_mm_loadu_ps(_m[0]), _mm_loadu_ps(m._m[0])));
 	_mm_storeu_ps(_m[3], _mm_add_ps(_mm_loadu_ps(_m[3]), _mm_loadu_ps(m._m[3])));
@@ -102,6 +107,7 @@ void Matrix33::operator+=(Matrix33& m){
 
 	return;
 #else
+	// Scalar code
 	for (char x = 0; x < 9; x++)
 		*_m[x] += *m._m[x];
 #endif
@@ -109,6 +115,7 @@ void Matrix33::operator+=(Matrix33& m){
 void Matrix33::operator*=(Matrix33& m){
 
 #ifdef __SSE
+	// SSE Code
 
 	__m128 row[3] = {
 		_mm_loadu_ps(&_m[0][0]),
@@ -136,6 +143,7 @@ void Matrix33::operator*=(Matrix33& m){
 	return;
 
 #else
+	// Scalar code
 
 	for (char y = 0; y < 3; y++){
 		float* row = &_m[0][y];
@@ -151,6 +159,7 @@ void Matrix33::operator*=(Matrix33& m){
 
 void Matrix33::transpose(){
 #ifdef __SSE
+	// SSE Code
 	__m128 col[3];
 
 	for (char x = 0; x < 3; x++){
@@ -168,6 +177,7 @@ void Matrix33::transpose(){
 
 	return;
 #else
+	// Scalar code
 	// Can't overrise the origin until
 	// the flip has finished
 	Matrix33 o;

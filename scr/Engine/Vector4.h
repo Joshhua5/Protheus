@@ -10,6 +10,10 @@ History:
 - 17:05:2014 Waring J.
 
 *************************************************************************/
+#define __SSE
+#ifdef __SSE
+#include <xmmintrin.h>
+#endif
 
 #pragma once
 #include <SDL_rect.h>
@@ -25,7 +29,7 @@ namespace Pro{
 			float x, y, z, w;
 			
 			Vector4(SDL_Rect& p);
-
+			Vector4(Vector4&);
 			Vector4(Vector2&, Vector2&);
 			Vector4(double, double, double, double);
 			Vector4(float x, float y, float z, float w);
@@ -37,7 +41,18 @@ namespace Pro{
 			bool contains(Vector2&);
 			bool overlaps(Vector4&);
 
+			Vector4 operator+(Vector4&);
+			Vector4 operator-(Vector4&);
+			Vector4 operator*(Vector4&);
+			Vector4 operator/(Vector4&);
+
 			Vector4 operator=(const SDL_Rect&);
+			Vector4 operator=(Vector4&);
+
+			void operator+=(Vector4&);
+			void operator-=(Vector4&);
+			void operator*=(Vector4&);
+			void operator/=(Vector4&);
 			SDL_Rect toSDL();
 		}; 
 	} 

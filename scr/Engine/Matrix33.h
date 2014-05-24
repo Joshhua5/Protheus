@@ -1,14 +1,14 @@
 
-//#ifdef __SSE3
-
-//#endif
+#ifdef __SSE
+#include <xmmintrin.h>
+#endif
 
 #pragma once
 namespace Pro{
 	namespace Math{
 		struct Matrix33
 		{
-		public:
+		public: 
 			float _m[3][3];
 
 		public:

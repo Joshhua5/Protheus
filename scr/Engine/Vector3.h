@@ -11,6 +11,10 @@ History:
 
 *************************************************************************/
 
+#ifdef __SSE
+#include <xmmintrin.h>
+#endif
+
 #pragma once
 namespace Pro{
 	namespace Math{
