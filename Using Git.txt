@@ -1,0 +1,23 @@
+Download : http://git-scm.com/downloads
+Open : Git Bash
+	-> git config --global user.name "USERNAME"
+	-> git config --global user.email "E@MAIL" 
+
+Open : Git GUI
+	-> Clone Existing Repository
+		-> Source Location : https://git.codeproject.com/joshhua123/protheus-studio
+		-> Target Location : Where to save
+	-> Clone
+	-> Enter Email as username and your CodeProject Password
+
+
+To Commit chages 
+	-> Rescan
+	-> Stage Changed
+	-> Enter changes into Commit Message
+	-> Sign off
+	-> Commit
+	-> Push
+
+
+
