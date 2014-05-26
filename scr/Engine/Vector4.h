@@ -22,10 +22,10 @@ namespace Pro{
 	namespace Math{
 
 #ifdef _MSC_VER
-		//__declspec(align(16))
+		__declspec(align(16))
 #endif
-
 		struct Vector4{
+
 			float x, y, z, w;
 			
 			Vector4(SDL_Rect& p);

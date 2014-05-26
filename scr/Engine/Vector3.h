@@ -20,7 +20,7 @@ namespace Pro{
 	namespace Math{
 
 #ifdef _MSC_VER
-	//	__declspec(align(16))
+	_declspec(align(16))
 #endif
 
 		struct Vector3{
