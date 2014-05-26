@@ -86,7 +86,7 @@ namespace Pro{
 				// required to form a correct definition (to prevent empty lines)
 				if (lines[x].length() < 10)
 					continue;
-				SDL_Rect rect;
+				
 
 				//unsigned int pos = lines[x].find('=') + 1;
 
@@ -112,10 +112,11 @@ namespace Pro{
 					pos += length;
 				}
 				// convert the elements into the integer
-				rect.x = atoi(elements.at(2).c_str());
-				rect.y = atoi(elements.at(3).c_str());
-				rect.w = atoi(elements.at(4).c_str());
-				rect.h = atoi(elements.at(5).c_str());
+				Math::Vector4 rect(
+					atoi(elements.at(2).c_str()),
+					atoi(elements.at(3).c_str()),
+					atoi(elements.at(4).c_str()),
+					atoi(elements.at(5).c_str())); 
 
 				Asset::Sprite sprite(elements.at(0), rect);
 				sprite.attachSpriteSheet(spriteSheet);

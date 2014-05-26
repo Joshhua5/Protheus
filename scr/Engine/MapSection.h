@@ -28,8 +28,8 @@ namespace Pro{
 		{ 
 			std::vector<std::vector<char>> data;
 		public:
-			char tileAt(Math::Vector2);
-			char* contains(Math::Vector2); 
+			char tileAt(Math::Vector2&);
+			char* contains(Math::Vector2&); 
 			void setData(std::vector<std::vector<char>>);
 			std::vector<std::vector<char>> getData();
 			bool visible(Camera* cam);

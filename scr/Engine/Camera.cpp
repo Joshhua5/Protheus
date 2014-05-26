@@ -14,7 +14,7 @@ Camera::~Camera()
 {
 }
 
-void Camera::move(Math::Vector2 v){
+void Camera::move(Math::Vector2& v){
 	position += v;
 }
    

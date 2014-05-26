@@ -34,7 +34,7 @@ namespace Pro{
 
 			void update(SDL_Event event);
 
-			void attachWindow(GUIWindow window);
+			void attachWindow(GUIWindow& window);
 			void detachWindow(uint32);
 			  
 			std::string* getContextName(); 

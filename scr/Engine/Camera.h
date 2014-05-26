@@ -30,7 +30,7 @@ namespace Pro{
 			Camera(const std::string& name);
 			Camera();
 			~Camera(); 
-			void move(Math::Vector2); 
+			void move(Math::Vector2&); 
 			  
 			// Lua Functions
 			 

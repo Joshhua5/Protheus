@@ -49,7 +49,7 @@ namespace Pro{
 
 			std::vector<MapSection*> getVisibleSections(Camera* cam);
 			bool loadLevel(const std::string& file, const std::string& data);
-			TileType* getTile(Math::Vector2);
+			TileType* getTile(Math::Vector2&);
 			TileType* getTileType(unsigned int);
 		};
 	} 

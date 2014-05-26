@@ -29,7 +29,7 @@ namespace Pro{
 			float x, y, z, w;
 			
 			Vector4(SDL_Rect& p);
-			Vector4(Vector4&);
+			Vector4(const Vector4&);
 			Vector4(Vector2&, Vector2&);
 			Vector4(double, double, double, double);
 			Vector4(float x, float y, float z, float w);

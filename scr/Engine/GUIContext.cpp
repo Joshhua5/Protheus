@@ -24,7 +24,7 @@ void GUIContext::update(SDL_Event event){
 				windows.second.update(event);
 }
 
-void GUIContext::attachWindow(GUIWindow window){
+void GUIContext::attachWindow(GUIWindow& window){
 	// Attach all objects with an ID 
 	windows.insert({ window.getGUID(), window });
 }

@@ -15,7 +15,7 @@ History:
 
 using namespace Pro;
 using namespace Math;
-Vector4::Vector4(Vector4& v) : Vector4(
+Vector4::Vector4(const Vector4& v) : Vector4(
 	v.x, v.y,
 	v.z, v.w){}
 

@@ -27,14 +27,14 @@ namespace Pro{
 			SDL_Texture* spriteSheet;
 			Math::Vector4 rect; 
 		public:
-			Sprite::Sprite(const std::string& name, Math::Vector4 rect);
+			Sprite::Sprite(const std::string& name, Math::Vector4& rect);
 			Sprite();
 			~Sprite();
 
 			void attachSpriteSheet(SDL_Texture*);
 			SDL_Texture* getSpriteSheet();
 			Math::Vector4 getRect();
-			void setRect(Math::Vector4);
+			void setRect(Math::Vector4&);
 		};
 	}
 }

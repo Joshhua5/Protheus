@@ -15,7 +15,7 @@ namespace Pro{
 			lua_state = L;
 		}
 
-		void SpriteBatcher::push(Asset::Sprite* _s, Math::Vector4 _r){
+		void SpriteBatcher::push(Asset::Sprite* _s, Math::Vector4& _r){
 			sprite_stack.push(_s);
 			rect_stack.push(_r);
 		}

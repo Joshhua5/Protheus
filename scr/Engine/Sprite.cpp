@@ -5,7 +5,7 @@ using namespace Asset;
 Sprite::Sprite()
 {
 }
-Sprite::Sprite(const std::string& name, Math::Vector4 _rect) : 
+Sprite::Sprite(const std::string& name, Math::Vector4& _rect) : 
 CGUID(name)
 { 
 	rect = _rect;
@@ -22,7 +22,7 @@ void Sprite::attachSpriteSheet(SDL_Texture* _spriteSheet){
 Math::Vector4 Sprite::getRect(){
 	return rect;
 }
-void Sprite::setRect(Math::Vector4 _rect){
+void Sprite::setRect(Math::Vector4& _rect){
 	rect = _rect;
 }
 

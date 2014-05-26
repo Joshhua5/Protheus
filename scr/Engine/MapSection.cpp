@@ -4,14 +4,14 @@ using namespace Pro;
 using namespace Scene;
 
 
-char MapSection::tileAt(Math::Vector2 v){
+char MapSection::tileAt(Math::Vector2& v){
 	char* ch = contains(v);
 	if (ch != nullptr)
 		return *ch;
 	return 0;
 }
 
-char* MapSection::contains(Math::Vector2 v){
+char* MapSection::contains(Math::Vector2& v){
 	if (Math::Vector4(position, dimensions).contains(v))
 			return &data[static_cast<int>(v.x)][static_cast<int>(v.y)];
 	return nullptr;

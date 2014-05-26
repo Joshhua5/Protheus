@@ -30,7 +30,7 @@ namespace Pro{
 			SpriteBatcher();
 			~SpriteBatcher();
 
-			void push(Asset::Sprite*, Math::Vector4);
+			void push(Asset::Sprite*, Math::Vector4&);
 			void flush();
 		};
 	}

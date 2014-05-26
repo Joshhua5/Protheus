@@ -127,7 +127,7 @@ bool Map::loadLevelTileData(const std::string& file){
 	return true;
 }
 
-TileType* Map::getTile(Math::Vector2 v){
+TileType* Map::getTile(Math::Vector2& v){
 	char* ch = nullptr;
 	for each(const auto &section in mapSections)
 		if ((ch = section->contains(v)) != nullptr)

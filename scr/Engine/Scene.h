@@ -44,7 +44,7 @@ namespace Pro{
 			void update();
 
 			// returns a list of entities found on a tile
-			std::vector<GameObject::Entity*> pollTile(Math::Vector2); 
+			std::vector<GameObject::Entity*> pollTile(Math::Vector2&); 
 			 
 			// return the private storage of entities 
 			Map* getMap();

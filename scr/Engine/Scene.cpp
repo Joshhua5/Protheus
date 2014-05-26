@@ -26,7 +26,7 @@ namespace Pro{
 		} 
 
 		// returns a list of entities found on a tile
-		std::vector<GameObject::Entity*>  Scene::pollTile(Math::Vector2 v){
+		std::vector<GameObject::Entity*>  Scene::pollTile(Math::Vector2& v){
 			std::vector<GameObject::Entity*> list;
 			for each(auto obj in stored_entities)
 				if (obj.second->getPosition() == v)

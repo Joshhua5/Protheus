@@ -18,11 +18,6 @@ History:
 #pragma once
 namespace Pro{
 	namespace Math{
-
-#ifdef _MSC_VER
-	_declspec(align(16))
-#endif
-
 		struct Vector3{
 			float x, y, z;
 
