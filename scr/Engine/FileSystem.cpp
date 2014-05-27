@@ -5,6 +5,7 @@ using namespace Util;
 
 FileSystem::FileSystem()
 {
+	rootDir = "";
 }
 
 

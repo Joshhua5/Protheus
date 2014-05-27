@@ -9,8 +9,8 @@ avatar = avatar_create("hero1")
 avatarPosition = avatar:getPosition()
 avatarPosition[1] = 300;
 
-while(!isCloseRequested()){
-	if(avatarPosition[0] > 500)
+while not isCloseRequested(){
+	if(avatarPosition[0] > 500
 		avatarPosition[0]++;
 	else
 		acatarPosition[0]--;

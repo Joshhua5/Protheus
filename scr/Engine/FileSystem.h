@@ -15,11 +15,12 @@ History:
 #pragma once
 #include "CFile.h" 
 #include <string>
+
 namespace Pro{
 	namespace Util{
 		class FileSystem
 		{
-			std::string rootDir;
+			std::string rootDir; 
 		public:
 			FileSystem();
 			~FileSystem();

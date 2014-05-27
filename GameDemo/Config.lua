@@ -1,8 +1,9 @@
-resource_path = "script\\Resources.lua"
-main_path = "script\\Main.lua"
+root_path = "..\\GameDemo\\"
+resource_path = "Resources.lua"
+main_path = "Main.lua"
 screen_width = 800
 screen_height = 600
 screen_position_x = 100
 screen_position_y = 100
 fullscreen = false
-title = "Demo" 
+window_title = "Demo" 

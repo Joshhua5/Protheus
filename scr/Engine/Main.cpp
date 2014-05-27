@@ -6,7 +6,7 @@ using namespace Pro;
 int main(int argc, char* args[])
 { 
 	Lua::CLua* lua = new Lua::CLua(); 
-	lua->loadConfig("script\\Config.lua");
+	lua->loadConfig("..\\GameDemo\\Config.lua");
 	SDL_Init(SDL_INIT_EVERYTHING);
 	
 	//core->start();

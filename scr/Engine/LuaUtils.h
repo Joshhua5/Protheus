@@ -32,15 +32,15 @@ namespace Pro{
 		}
 
 		static void luaP_registerstore(lua_State* L, const std::string& key, void* data){
-			lua_pushlightuserdata(L, (void*)&key[0]);
-			lua_pushlightuserdata(L, data);
+			lua_pushstring(L, &key[0]);
+			lua_pushlightuserdata(L, data);  
 			lua_settable(L, LUA_REGISTRYINDEX);
 		}
 
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){
-			lua_pushlightuserdata(L, (void*)&key[0]);
-			lua_settable(L, LUA_REGISTRYINDEX);
-			return (T*)lua_touserdata(L, -1);
+			lua_pushstring(L, &key[0]); 
+			lua_gettable(L, LUA_REGISTRYINDEX); 
+			return (T*)lua_touserdata(L, -1); 
 		}
 
 		static int dumpLuaStack(lua_State *L) {
@@ -72,5 +72,31 @@ namespace Pro{
 			printf("\n");  /* end the listing */
 			return 0;
 		}
+		 
+		#define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
+		#define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
+
+		#define luaP_setWindow(lua_state, data) Util::luaP_registerstore(lua_state, "WINDOW", data)
+		#define luaP_getWindow(lua_state) Util::luaP_registerget<Pro::Window>(lua_state, "WINDOW")
+
+		#define luaP_setRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "RENDERER", data)
+		#define luaP_getRenderer(lua_state) Util::luaP_registerget<Pro::Graphics::Renderer>(lua_state, "RENDERER")
+   
+		#define luaP_setScenes(lua_state, data) Util::luaP_registerstore(lua_state, "SCENES", data)
+		#define luaP_getScenes(lua_state) Util::luaP_registerget<Pro::SceneContainer>(lua_state, "SCENES")
+		 
+		#define luaP_setNetwork(lua_state, data) Util::luaP_registerstore(lua_state, "NETWORK", data)
+		#define luaP_getNetwork(lua_state) Util::luaP_registerget<Pro::Networking::Network>(lua_state, "NETWORK")
+		 
+		#define luaP_setEventHandler(lua_state, data) Util::luaP_registerstore(lua_state, "EVENT_HANDELER", data)
+		#define luaP_getEventHandler(lua_state) Util::luaP_registerget<Pro::EventHandler>(lua_state, "EVENT_HANDELER")
+		 
+		#define luaP_setSpriteManager(lua_state, data) Util::luaP_registerstore(lua_state, "SPRITE_MANAGER", data)
+		#define luaP_getSpriteManager(lua_state) Util::luaP_registerget<Pro::Graphics::SpriteManager>(lua_state, "SPRITE_MANAGER")
+ 
+		#define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
+		#define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
+
+
 	}
 }

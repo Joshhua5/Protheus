@@ -28,13 +28,13 @@ void CFile::setReadPosition(unsigned int pos){
 	file.seekg(pos);
 }
 unsigned int CFile::getReadPosition(){
-	file.tellg();
+	return static_cast<unsigned int>(file.tellg());
 }
 void CFile::setWritePosition(unsigned int pos){
 	file.seekp(pos);
 }
 unsigned int CFile::getWritePosition(){
-	file.tellp();
+	return static_cast<unsigned int>(file.tellp());
 }
 
 void CFile::write(CBuffer& buf){
@@ -60,6 +60,7 @@ CBuffer CFile::read(unsigned int size){
 char CFile::readByte(){
 	char c;
 	file.read(&c, 1);
+	return c;
 }
 
 float CFile::readFloat(){
@@ -101,7 +102,7 @@ bool CFile::isOpen(){
 }
 
 EFile CFile::peekError(){
-	switch (file.rdstate){
+	switch (file.rdstate()){
 	case std::ifstream::goodbit:
 		return flag;
 		break;

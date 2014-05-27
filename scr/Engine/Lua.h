@@ -4,6 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
+	Provdes an interface between the Lua API and Protheus,
+	also provides the API for Protheus for scripts for Protheus
 
 -------------------------------------------------------------------------
 History:
@@ -20,21 +22,19 @@ History:
 #include "WindowContainer.h"
 #include "Timer.h"
 #include "EventHandler.h"
+#include "FileSystem.h"
 
 #include "lua/lua.hpp"  
 #include "LuaObjectFactory.h"
 #include "LuaGlobalFactory.h" 
-
-
+ 
 namespace Pro{
 	namespace Lua{
-		static lua_State* lua_state; 
-		//static const luaL_Reg entity_func [];
+		static lua_State* lua_state;  
 		class CLua :
 			public LuaObjectFactory,
 			public LuaGlobalFactory
-		{ 
-			
+		{  
 			 
 			// No arguments
 			static int updateEngine(lua_State*);
@@ -48,11 +48,15 @@ namespace Pro{
 		public:
 			CLua();
 			~CLua(); 
+			// Returns the static lua state
 			lua_State* getLuaState();
-
-			static int dumpStack(lua_State*);   
+			// prints out all the contents inside of the lua stack
+			static int dumpStack(lua_State*);
+			// Loads the config.lua relative to the executable
 			void loadConfig(const std::string& path);
+			// loads the resource.lua relative to the FileSystem root
 			void loadResources();
+			// loads the main.lua relative to the FileSystem root
 			void loadMain();  
 		};
 	}
