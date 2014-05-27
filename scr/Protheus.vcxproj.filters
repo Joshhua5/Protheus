@@ -67,6 +67,12 @@
     <Filter Include="Engine Source Files\Lua">
       <UniqueIdentifier>{470eb881-206a-402d-b86b-632144043cfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Header Files\File System">
+      <UniqueIdentifier>{baf36940-ba5a-46f3-9c61-b7e3e2a19766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\File System">
+      <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Camera.cpp">
@@ -327,6 +333,12 @@
     <ClCompile Include="Engine\EventHandler.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\FileSystem.cpp">
+      <Filter>Engine Source Files\File System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CFile.cpp">
+      <Filter>Engine Source Files\File System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -571,6 +583,18 @@
     </ClInclude>
     <ClInclude Include="Engine\EventHandler.h">
       <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EFile.h">
+      <Filter>Engine Header Files\File System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CFile.h">
+      <Filter>Engine Header Files\File System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FileSystem.h">
+      <Filter>Engine Header Files\File System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CBuffer.h">
+      <Filter>Engine Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

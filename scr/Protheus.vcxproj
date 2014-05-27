@@ -97,8 +97,12 @@
     <ClCompile Include="Engine\WindowContainer.cpp" />
     <ClCompile Include="Engine\LuaObjectFactory.cpp" />
     <ClCompile Include="Engine\LuaGlobalFactory.cpp" />
+    <ClCompile Include="Engine\CFile.cpp" />
+    <ClCompile Include="Engine\FileSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\CBuffer.h" />
+    <ClInclude Include="Engine\EFile.h" />
     <ClInclude Include="Engine\ActiveState.h" />
     <ClInclude Include="Engine\CameraContainer.h" />
     <ClInclude Include="Engine\AnimatedEntity.h" />
@@ -180,6 +184,8 @@
     <ClInclude Include="Engine\LuaObjectFactory.h" />
     <ClInclude Include="Engine\LuaUtils.h" />
     <ClInclude Include="Engine\LuaGlobalFactory.h" />
+    <ClInclude Include="Engine\CFile.h" />
+    <ClInclude Include="Engine\FileSystem.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
