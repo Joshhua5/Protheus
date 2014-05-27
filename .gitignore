@@ -1,0 +1,16 @@
+*.obj
+*.sbr
+/scr/Protheus.tlog
+*.sdf
+*.user
+*.exe
+*.ilk
+*.bsc
+*.pdb
+*.lastbuildstate
+*.tlog
+*.v12.suo
+*.v11.suo
+*.suo
+/Debug
+/scr/Debug
