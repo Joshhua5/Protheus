@@ -23,6 +23,7 @@ namespace Pro{
 			// content inside the box
 			std::string content;
 		public:
+			GUIText(const std::string& name);
 			GUIText();
 			~GUIText();
 		};

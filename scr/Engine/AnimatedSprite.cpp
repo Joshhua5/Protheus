@@ -2,6 +2,8 @@
 
 using namespace Pro;
 using namespace Asset;
+
+AnimatedSprite::AnimatedSprite(const std::string& name) : CGUID(name){}
 AnimatedSprite::AnimatedSprite()
 {
 }

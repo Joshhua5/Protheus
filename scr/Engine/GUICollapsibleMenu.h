@@ -23,6 +23,7 @@ namespace Pro{
 			public GUIContainer
 		{
 		public:
+			GUICollapsibleMenu(const std::string& name);
 			GUICollapsibleMenu();
 			~GUICollapsibleMenu(); 
 		};

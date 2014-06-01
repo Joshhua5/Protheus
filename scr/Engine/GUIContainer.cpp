@@ -1,7 +1,7 @@
 #include "GUIContainer.h"
 namespace Pro{
 	namespace GUI{ 
-
+		GUIContainer::GUIContainer(const std::string& name) : GUIEntity(name){}
 		GUIContainer::GUIContainer(){}
 		GUIContainer::~GUIContainer(){}
 		 

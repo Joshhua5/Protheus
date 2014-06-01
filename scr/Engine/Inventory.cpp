@@ -2,10 +2,13 @@
 
 using namespace Pro;
 using namespace GameObject;
-Inventory::Inventory()
+Inventory::Inventory(const std::string& name) : CGUID(name)
 {
 }
 
+Inventory::Inventory()
+{
+}
 
 Inventory::~Inventory()
 {

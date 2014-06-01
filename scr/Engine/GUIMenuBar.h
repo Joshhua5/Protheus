@@ -16,10 +16,12 @@ History:
 #include "GUIDropDownMenu.h"
 namespace Pro{
 	namespace GUI{
-		class GUIMenuBar
+		class GUIMenuBar :
+			public GUIEntity
 		{
 			std::vector<GUIDropDownMenu> elements;
 		public:
+			GUIMenuBar(const std::string& name);
 			GUIMenuBar();
 			~GUIMenuBar();
 

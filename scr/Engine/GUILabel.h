@@ -18,6 +18,7 @@ namespace Pro{
 			public GUIEntity
 		{
 		public:
+			GUILabel(const std::string& name);
 			GUILabel();
 			~GUILabel();
 		};

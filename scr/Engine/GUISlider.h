@@ -25,6 +25,7 @@ namespace Pro{
 			// the current value of the slider
 			double value;
 		public:
+			GUISlider(const std::string& name);
 			GUISlider();
 			~GUISlider();
 		};

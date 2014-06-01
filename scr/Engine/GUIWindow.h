@@ -33,6 +33,7 @@ namespace Pro{
 			GUIMenuBar* menu_bar;
 
 		public:
+			GUIWindow(const std::string& name);
 			GUIWindow();
 			~GUIWindow();
 			 

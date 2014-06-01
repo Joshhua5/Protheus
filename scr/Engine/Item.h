@@ -18,6 +18,7 @@ namespace Pro{
 			public Entity
 		{
 		public:
+			Item(const std::string& name);
 			Item();
 			~Item();
 		};

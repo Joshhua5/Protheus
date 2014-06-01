@@ -17,7 +17,7 @@ namespace Pro{
 		class GUIButton :
 			 public GUIEntity
 		{
-		public:
+		public: 
 			GUIButton(const std::string& name);
 			GUIButton();
 			~GUIButton();

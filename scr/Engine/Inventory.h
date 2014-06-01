@@ -17,10 +17,12 @@ History:
 #include "Item.h"
 namespace Pro{
 	namespace GameObject{
-		class Inventory
+		class Inventory : 
+			Component::CGUID
 		{
 			std::vector<Item*> items;
 		public:
+			Inventory(const std::string& name);
 			Inventory();
 			~Inventory();
 

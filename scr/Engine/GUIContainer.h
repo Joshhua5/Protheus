@@ -23,7 +23,7 @@ namespace Pro{
 		{ 
 			std::vector<GUIEntity*> window_entities; 
 		public:
-
+			GUIContainer(const std::string& name);
 			GUIContainer();
 			~GUIContainer();
 			 

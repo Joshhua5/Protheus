@@ -11,11 +11,16 @@ History:
 *************************************************************************/
 
 #pragma once
+#include <string>
+#include "GUIContainer.h"
+
 namespace Pro{
 	namespace GUI{
-		class GUIDropDownMenu
+		class GUIDropDownMenu :
+			public GUIContainer
 		{
 		public:
+			GUIDropDownMenu(const std::string& name);
 			GUIDropDownMenu();
 			~GUIDropDownMenu();
 		};

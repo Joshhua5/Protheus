@@ -16,14 +16,16 @@ History:
 
 namespace Pro{
 	namespace Asset{
-		class AnimatedSprite
+		class AnimatedSprite : 
+			public Component::CGUID
 		{
 		private:
 			std::vector<Sprite*> frames;
 			unsigned short currentFrame;
 		public:
+			AnimatedSprite(const std::string& name);
 			AnimatedSprite();
-			virtual ~AnimatedSprite();
+			~AnimatedSprite();
 
 			void nextFrame();
 			Sprite* getFrame();
