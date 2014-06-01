@@ -17,15 +17,11 @@ History:
 #include <vector>
 #include <thread>
 #include <mutex>
+#include "CBuffer.h"
 namespace Pro{
 	namespace Networking{
 #define port 9910  
-
-		struct Buffer{
-			void* buffer;
-			unsigned int size;
-		};
-
+		 
 		struct TCPConnection{
 			TCPConnection(){
 				isServer = false;
@@ -35,8 +31,8 @@ namespace Pro{
 			std::mutex mutex;
 			TCPsocket serverSock;
 			TCPsocket clientSock;
-			std::stack<Buffer> inputStack;
-			std::stack<Buffer> outputStack;
+			std::stack<CBuffer> inputStack;
+			std::stack<CBuffer> outputStack;
 			IPaddress* serverAddress;
 			IPaddress* clientAddress;
 			bool isServer;
@@ -62,14 +58,11 @@ namespace Pro{
 			TCPConnection* connectToServer(const std::string &IP);
 
 			// returns the amount of bytes recieved
-			unsigned int recv(TCPConnection*, void *buffer);
+			unsigned int recv(TCPConnection&, CBuffer& buffer);
 			// returns the amount of bytes recieved without clearing the buffer
-			unsigned int peek(TCPConnection*);
+			unsigned int peek(TCPConnection&);
 			// sends the buffer through the connection
-			void send(TCPConnection* connection, void* buffer, unsigned int bufferSize);
-			/* sends the buffer through the connection and deletes the buffer
-			// can't release arrays */
-			void sendd(TCPConnection* connection, void* buffer, unsigned int bufferSize);
+			void send(TCPConnection& connection, CBuffer& buffer); 
 
 			void cleanup();
 		}; 

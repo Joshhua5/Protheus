@@ -4,8 +4,7 @@ namespace Pro{
 
 		Network::Network()
 		{
-			_server = nullptr;
-
+			_server = nullptr; 
 		}
 
 
@@ -15,17 +14,17 @@ namespace Pro{
 
 		void Network::connectionUpdate(TCPConnection* connection){
 			// wait for connection
-			if (connection->isServer){
-				while ((connection->clientSock = SDLNet_TCP_Accept(connection->serverSock)) == NULL){
+			if (connection->isServer)
+				// If there's no connection to accept as a server then Sleep
+				while ((connection->clientSock = SDLNet_TCP_Accept(connection->serverSock)) == NULL)
 					std::this_thread::sleep_for(std::chrono::milliseconds(10));
-				}
-			}
+
+				// If there's no connection to open as a client then Sleep
 			else
-			{
-				while (!(connection->serverSock = SDLNet_TCP_Open(connection->serverAddress))){
+				while (!(connection->serverSock = SDLNet_TCP_Open(connection->serverAddress)))
 					std::this_thread::sleep_for(std::chrono::milliseconds(10));
-				}
-			}
+				
+			
 
 			// Connected
 			// Get the remote IP
@@ -33,30 +32,27 @@ namespace Pro{
 				SDL_LogInfo(SDL_LOG_CATEGORY_RESERVED1, "Host Connected");
 			else
 				SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Host Connection Failed");
+			// use of mutex so we don't lock the connection threads
 			connection->mutex.lock();
 			connection->connected = true;
 			connection->mutex.unlock();
 
 			// Get data recieved
-			char* inputBuffer = new char[1024];
-			unsigned int inputBufferSize = 0;
+			CBuffer inputBuffer(1024); 
+			inputBuffer.size = 0;
 			while (connection->connected){
 				// Get Data Recieved
 				if (connection->isServer &&
-					(inputBufferSize = SDLNet_TCP_Recv(connection->clientSock, inputBuffer, 1024)) != -1){ 
-					Buffer buf;
-					buf.buffer = new char[inputBufferSize];
-					buf.size = inputBufferSize;
-					memcpy(buf.buffer, inputBuffer, inputBufferSize);
+					(inputBuffer.size = SDLNet_TCP_Recv(connection->clientSock, inputBuffer.data, 1024)) != -1){ 
+					CBuffer buf(inputBuffer.size); 
+					memcpy(buf.data, inputBuffer.data, inputBuffer.size);
 					mutex.lock();
 					connection->inputStack.push(buf);
 					mutex.unlock();
 				} 
-				else if ((inputBufferSize = SDLNet_TCP_Recv(connection->serverSock, inputBuffer, 1024)) != -1){ 
-					Buffer buf;
-					buf.buffer = new char[inputBufferSize];
-					buf.size = inputBufferSize;
-					memcpy(buf.buffer, inputBuffer, inputBufferSize);
+				else if ((inputBuffer.size = SDLNet_TCP_Recv(connection->serverSock, inputBuffer.data, 1024)) != -1){ 
+					CBuffer buf(inputBuffer.size); 
+					memcpy(buf.data, inputBuffer.data, inputBuffer.size);
 					mutex.lock();
 					connection->inputStack.push(buf);
 					mutex.unlock();
@@ -64,22 +60,20 @@ namespace Pro{
 
 				// Send Data submitted
 				if (connection->outputStack.size() != 0){
-					Buffer buffOut = connection->outputStack.top();
+					CBuffer buffOut = connection->outputStack.top();
 					if (connection->isServer){
-						if (SDLNet_TCP_Send(connection->clientSock, buffOut.buffer, buffOut.size) != sizeof(int))
+						if (SDLNet_TCP_Send(connection->clientSock, buffOut.data, buffOut.size) != sizeof(int))
 							SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Failure in sending packets");
 					}
 					else
-						if (SDLNet_TCP_Send(connection->serverSock, buffOut.buffer, buffOut.size) != sizeof(int))
+						if (SDLNet_TCP_Send(connection->serverSock, buffOut.data, buffOut.size) != sizeof(int))
 							SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Failure in sending packets");
 
-					delete[] buffOut.buffer;
+					delete[] buffOut.data;
 					connection->outputStack.pop();
 				}
 				std::this_thread::sleep_for(std::chrono::milliseconds(4));
-			}
-			delete[] inputBuffer;
-			return;
+			}  
 		}
 
 
@@ -94,14 +88,16 @@ namespace Pro{
 		TCPConnection* Network::startServer(){
 			_server = new TCPConnection();
 			_server->isServer = true;
+			// Creates an Address for the socket's creation
 			if (SDLNet_ResolveHost(_server->serverAddress, NULL, port)){
 				SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, "Network Listen Failure");
 				delete _server;
-				return false;
+				return nullptr;
 			}
+			// Opens the socket
 			if (!(_server->serverSock = SDLNet_TCP_Open(_server->serverAddress))){
 				delete _server;
-				return false;
+				return nullptr;
 			}
 			// Start listening for a port
 			std::thread* thread = new std::thread(&Network::connectionUpdate, this, _server);
@@ -123,22 +119,17 @@ namespace Pro{
 			return _connection;
 		}
 
-		unsigned int Network::recv(TCPConnection* _connection, void *buffer){
-			Buffer buf = _connection->inputStack.top();
-			_connection->inputStack.pop();
-			buffer = buf.buffer;
-			return buf.size;
+		unsigned int Network::recv(TCPConnection& _connection, CBuffer& buffer){ 
+			buffer = _connection.inputStack.top(); 
+			return buffer.size;
 		}
 		// send buffer
-		void Network::send(TCPConnection* _connection, void* _buffer, unsigned int _size){
-			Buffer buffOut;
-			// make copy of buffer
-			buffOut.buffer = new char[_size];
-			memcpy(buffOut.buffer, _buffer, _size);
-			buffOut.size = _size;
-			_connection->mutex.lock();
-			_connection->outputStack.push(buffOut);
-			_connection->mutex.unlock();
+		void Network::send(TCPConnection& _connection, CBuffer& _buffer){ 
+			// clones the buffer to be sent
+			CBuffer buf(_buffer); 
+			_connection.mutex.lock();
+			_connection.outputStack.push(buf);
+			_connection.mutex.unlock();
 		}
 		void Network::closeAll(){
 			if (_server != nullptr)
@@ -155,15 +146,10 @@ namespace Pro{
 			while (!connections.empty())
 				connections.erase(connections.begin());
 			SDLNet_Quit();
-		}
+		} 
 
-		void Network::sendd(TCPConnection* connection, void* buffer, unsigned int bufferSize){
-			send(connection, buffer, bufferSize);
-			delete buffer;
-		}
-
-		unsigned int Network::peek(TCPConnection* con){
-			return con->inputStack.top().size;
+		unsigned int Network::peek(TCPConnection& con){
+			return con.inputStack.top().size;
 		}
 	}
 }
