@@ -4,6 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
+	Provides a small wrapper around Lua to add functionality to simplify
+	intereaction with the stack and registry.
 
 -------------------------------------------------------------------------
 History:

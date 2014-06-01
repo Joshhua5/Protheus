@@ -4,7 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Contains data about a specific tile, such as it's size, physical
+	properites and the sprite assigned to the tile.
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.

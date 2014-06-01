@@ -4,7 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	The world map is broken down into sections
+	Each section is defined according to the datafile 
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -23,15 +24,6 @@ History:
 #include "MapSection.h"
 #include "Math.h"
 
-// Build to replace TileMap
-
-// Theory
-/**
-*	The world map is broken down into sections
-*	Each section is defined according to the datafile
-*	each sections has a active variable and will only update
-*	if the section is active
-*/
 namespace Pro{
 	namespace Scene{
 		class Map : 

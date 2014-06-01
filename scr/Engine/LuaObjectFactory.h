@@ -4,6 +4,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
+	assigns function pointers to Lua globals, so they can be called in
+	Lua, also defines the Object creation for Lua so C++ objects can be
+	created via Lua.
 
 -------------------------------------------------------------------------
 History:

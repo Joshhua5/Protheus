@@ -4,7 +4,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	A camera class, which holdes it's position and field of view(Area)
+	Contained inside a CameraContainer, multiple camera's can be created,
+	but only the active camera will be used.
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.

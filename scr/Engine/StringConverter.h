@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Provides functions to convert string's to other datatypes
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.

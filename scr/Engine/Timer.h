@@ -4,6 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
+	Counts the delta between ticks in nanaseconds and provides data 
+	abount the tick times
 
 -------------------------------------------------------------------------
 History:
