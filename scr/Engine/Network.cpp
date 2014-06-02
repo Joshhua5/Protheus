@@ -106,11 +106,13 @@ namespace Pro{
 		}
 
 		TCPConnection* Network::connectToServer(const std::string &IP){
+			// Create Connection
 			TCPConnection* _connection = new TCPConnection;
 
+			// Check the address for open socket to connect to
 			if (SDLNet_ResolveHost(_connection->serverAddress, IP.c_str(), port)){
 				SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Network Listen Failure");
-				return false;
+				return nullptr;
 			}
 			// start trying to connect to the server
 			std::thread* thread = new std::thread(&Network::connectionUpdate, this, _connection);
