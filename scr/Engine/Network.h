@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include "CBuffer.h"
-#include "TCPConnection.h"
+#include "TCPServer.h"
 #include <string> 
 #include <thread>
 #define port 9910   
