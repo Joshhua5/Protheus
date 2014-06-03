@@ -11,42 +11,23 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_net.h>
-#include <string>
-#include <stack>
-#include <vector>
-#include <thread>
-#include <mutex>
-#include "CBuffer.h"
-namespace Pro{
-	namespace Networking{
-#define port 9910  
-		 
-		struct TCPConnection{
-			TCPConnection(){
-				isServer = false;
-				connected = false;
-				serverAddress = new IPaddress();
-			}
-			std::mutex mutex;
-			TCPsocket serverSock;
-			TCPsocket clientSock;
-			std::stack<CBuffer> inputStack;
-			std::stack<CBuffer> outputStack;
-			IPaddress* serverAddress;
-			IPaddress* clientAddress;
-			bool isServer;
-			bool connected;
-		};
 
+#include "CBuffer.h"
+#include "TCPConnection.h"
+#include <string> 
+#include <thread>
+#define port 9910   
+namespace Pro{
+	namespace Networking{ 
 		class Network
 		{
 		private:
 			std::mutex mutex;
 			std::vector<TCPConnection*> connections;
 			TCPConnection* _server;
-
-			void connectionUpdate(TCPConnection* connection);
+			 
+			void serverUpdate(TCPConnection& connection);
+			void clientUpdate(TCPConnection& connection);
 			void connect();
 
 		public:
@@ -67,4 +48,4 @@ namespace Pro{
 			void cleanup();
 		}; 
 	}
-}
+} 

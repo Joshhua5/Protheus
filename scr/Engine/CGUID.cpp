@@ -9,7 +9,7 @@ CGUID::CGUID(const std::string& name){
 
 CGUID::CGUID()
 {
-	guid = NULL;
+	guid = GUIDLookup::newGUID("");
 }
 
 CGUID::~CGUID()

@@ -339,6 +339,9 @@
     <ClCompile Include="Engine\CFile.cpp">
       <Filter>Engine Source Files\File System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\TCPServer.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -595,6 +598,12 @@
     </ClInclude>
     <ClInclude Include="Engine\CBuffer.h">
       <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TCPConnection.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TCPServer.h">
+      <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
