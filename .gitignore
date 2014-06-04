@@ -1,12 +1,12 @@
 *.obj
 *.sbr
-/scr/Protheus.tlog
-/Protheus Engine.sdf
 *.sdf
 *.user
+*.idb
 *.exe
 *.ilk
 *.bsc
+*.log
 *.pdb
 *.lastbuildstate
 *.tlog
@@ -15,3 +15,5 @@
 *.suo
 /Debug
 /scr/Debug
+/scr/Protheus.tlog
+/Protheus Engine.sdf

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "Element.h"
 #include <Windows.h>
 #include <tchar.h> 

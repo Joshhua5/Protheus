@@ -6,7 +6,7 @@ using namespace std;
 
 class FileIndex
 {
-	FileBrowser* fs;
+	FileBrowser* fs; 
 	int processFiles();
 	int processFiles(Element* parent, wstring name);
 public:

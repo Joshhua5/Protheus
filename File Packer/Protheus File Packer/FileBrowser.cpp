@@ -31,7 +31,9 @@ stack<WIN32_FIND_DATA> FileBrowser::getFileList(){
 	return out;
 }
 wstring FileBrowser::getDir(){
-	return wstring(currentPath);
+	wstring str(currentPath);
+	str = str.substr(0, str.find_last_of('*'));
+	return str;
 }
 
 void FileBrowser::setDir(wstring p){

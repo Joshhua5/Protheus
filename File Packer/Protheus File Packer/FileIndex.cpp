@@ -10,6 +10,47 @@ FileIndex::~FileIndex()
 {
 }
 
+void FileIndex::createFile(){
+	// Get the processed size of the index (elements.count * 49)
+
+	fstream file(fs->getDir() + L"output.pro", ios::binary | ios::out);
+	if (file.bad())
+		return;
+	char* indexBuffer = new char[elements.size() * 49];
+	file.write(indexBuffer, elements.size() * 49);
+
+	// Iterate through the index, saving files in the file and update the offset
+
+	for each(Element* e in elements){
+		if (e->type == 0){
+			// This is a File
+			fstream otherFile(e->FilePath, ios::binary);
+			char* fileBuffer = new char[e->size];
+			otherFile.readsome(fileBuffer, e->size);
+			// Update file offset
+			e->offset = file.tellp();
+			file.write(fileBuffer, e->size);
+			delete[] fileBuffer;
+			otherFile.close();
+		}
+	}
+
+	// We left a gap at the front of the file to populate with the index
+
+	file.seekp(file.beg);
+	for each(Element* e in elements){
+		char* element = new char[49];
+		memcpy(element, &e->name[0], 32);
+		memcpy(element + 31, &e->size, sizeof(long));
+		memcpy(element + 39, &e->offset, sizeof(long));
+		element[48] = e->type; 
+		file.write(element, 49);
+		delete[] element;
+	}
+
+	file.close(); 
+}
+
 int FileIndex::processFiles(){ 
 	stack<WIN32_FIND_DATA> files = fs->getFileList();
 	int size = files.size();
