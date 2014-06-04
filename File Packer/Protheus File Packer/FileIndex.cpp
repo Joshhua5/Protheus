@@ -20,7 +20,7 @@ void FileIndex::createFile(){
 	file.write(indexBuffer, elements.size() * 49);
 
 	// Iterate through the index, saving files in the file and update the offset
-
+	cout << "\n Packing Files";
 	for each(Element* e in elements){
 		if (e->type == 0){
 			// This is a File
@@ -36,7 +36,7 @@ void FileIndex::createFile(){
 	}
 
 	// We left a gap at the front of the file to populate with the index
-
+	cout << "\n Writing Index";
 	file.seekp(file.beg);
 	for each(Element* e in elements){
 		char* element = new char[49];
@@ -49,6 +49,12 @@ void FileIndex::createFile(){
 	}
 
 	file.close(); 
+	cout << "\ Packing Complete";
+	string directory;
+	for (wchar_t x : fs->getDir())
+		directory += x; 
+
+	cout << "\n output: \n-->" << directory << "output.pro";
 }
 
 int FileIndex::processFiles(){ 
@@ -91,7 +97,7 @@ int FileIndex::processFiles(Element* parent, wstring name){
 	fs->enter(name);
 	stack<wstring> folders = fs->getFolderList();
 	int size = 0;
-	if (folders.empty() == false){
+	while (folders.empty() == false){
 		size += processFiles(f, folders.top());
 		folders.pop();
 	} 
@@ -106,5 +112,7 @@ int FileIndex::processFiles(Element* parent, wstring name){
 
 void FileIndex::createIndex(FileBrowser* _fs, wstring name){
 	fs = _fs;
+	cout << "\n Indexing files";
 	processFiles(nullptr, name);
+	cout << "\n Indexing complete: " << elements.size() << " Files/Folders found";
 }
