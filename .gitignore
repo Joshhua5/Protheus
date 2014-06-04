@@ -1,6 +1,7 @@
 *.obj
 *.sbr
 /scr/Protheus.tlog
+/Protheus Engine.sdf
 *.sdf
 *.user
 *.exe
