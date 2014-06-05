@@ -12,59 +12,59 @@ namespace Pro{
 		{ 
 		}
 
-		void Network::clientUpdate(TCPConnection& connection){
+		void Network::clientUpdate(TCPConnection* connection){
 			// wait for connection 
-			while (!(connection.serverSock = SDLNet_TCP_Open(connection.serverAddress)))
+			while (!(connection->serverSock = SDLNet_TCP_Open(connection->serverAddress)))
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			  
 			// Connected
 			// Get the remote IP
-			if ((connection.clientAddress = SDLNet_TCP_GetPeerAddress(connection.clientSock)))
+			if ((connection->clientAddress = SDLNet_TCP_GetPeerAddress(connection->clientSock)))
 				SDL_LogInfo(SDL_LOG_CATEGORY_RESERVED1, "Host Connected");
 			else
 				SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Host Connection Failed");
 			// use of mutex so we don't lock the connection threads
-			connection.mutex.lock();
-			connection.connected = true;
-			connection.mutex.unlock();
+			connection->mutex.lock();
+			connection->connected = true;
+			connection->mutex.unlock();
 
 			// Get data recieved 
-			if (connection.connected){
+			if (connection->connected){
 				CBuffer inputBuffer(1024);
 				inputBuffer.size = 0;
-				while (connection.connected){
+				while (connection->connected){
 					// Get Data Recieved
-					if ((inputBuffer.size = SDLNet_TCP_Recv(connection.serverSock, inputBuffer.data, 1024)) != -1){
+					if ((inputBuffer.size = SDLNet_TCP_Recv(connection->serverSock, inputBuffer.data, 1024)) != -1){
 						CBuffer buf(inputBuffer.size);
 						memcpy(buf.data, inputBuffer.data, inputBuffer.size);
 						mutex.lock();
-						connection.inputStack.push(buf);
+						connection->inputStack.push(buf);
 						mutex.unlock();
 					}
 
 					// Send Data submitted
-					if (connection.outputStack.size() != 0){
-						connection.mutex.lock();
-						CBuffer buffOut = connection.outputStack.top();
-						if (SDLNet_TCP_Send(connection.serverSock, buffOut.data, buffOut.size) != sizeof(int))
+					if (connection->outputStack.size() != 0){
+						connection->mutex.lock();
+						CBuffer buffOut = connection->outputStack.top();
+						if (SDLNet_TCP_Send(connection->serverSock, buffOut.data, buffOut.size) != sizeof(int))
 							SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Failure in sending packets");
 						delete[] buffOut.data;
-						connection.outputStack.pop();
-						connection.mutex.unlock();
+						connection->outputStack.pop();
+						connection->mutex.unlock();
 					}
 					std::this_thread::sleep_for(std::chrono::milliseconds(4));
 				}
 			}
 		}
 
-		void Network::serverUpdate(TCPConnection& connection){
+		void Network::serverUpdate(TCPConnection* connection){
 			// Await for the connection
-			while ((connection.clientSock = SDLNet_TCP_Accept(connection.serverSock)) == NULL)
+			while ((connection->clientSock = SDLNet_TCP_Accept(connection->serverSock)) == NULL)
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
 			// Connected
 			// Get the remote IP
-			if ((connection.clientAddress = SDLNet_TCP_GetPeerAddress(connection.clientSock)))
+			if ((connection->clientAddress = SDLNet_TCP_GetPeerAddress(connection->clientSock)))
 				SDL_LogInfo(SDL_LOG_CATEGORY_RESERVED1, "Host Connected");
 			else{
 				SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Host Connection Failed");
@@ -72,31 +72,31 @@ namespace Pro{
 			}
 
 			// use of mutex so we don't lock the connection threads
-			connection.mutex.lock();
-			connection.connected = true;
-			connection.mutex.unlock();
-			if (connection.connected){
+			connection->mutex.lock();
+			connection->connected = true;
+			connection->mutex.unlock();
+			if (connection->connected){
 				CBuffer inputBuffer(1024);
 				inputBuffer.size = 0;
-				while (connection.connected){
+				while (connection->connected){
 					// Get Data Recieved
-					if ((inputBuffer.size = SDLNet_TCP_Recv(connection.clientSock, inputBuffer.data, 1024)) != -1){
+					if ((inputBuffer.size = SDLNet_TCP_Recv(connection->clientSock, inputBuffer.data, 1024)) != -1){
 						CBuffer buf(inputBuffer.size);
 						memcpy(buf.data, inputBuffer.data, inputBuffer.size);
 						mutex.lock();
-						connection.inputStack.push(buf);
+						connection->inputStack.push(buf);
 						mutex.unlock();
 					}
 
 					// Send Data submitted
-					if (connection.outputStack.size() != 0){
-						connection.mutex.lock();
-						CBuffer buffOut = connection.outputStack.top();
-						if (SDLNet_TCP_Send(connection.clientSock, buffOut.data, buffOut.size) != sizeof(int))
+					if (connection->outputStack.size() != 0){
+						connection->mutex.lock();
+						CBuffer buffOut = connection->outputStack.top();
+						if (SDLNet_TCP_Send(connection->clientSock, buffOut.data, buffOut.size) != sizeof(int))
 							SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Failure in sending packets");
 						delete[] buffOut.data;
-						connection.outputStack.pop();
-						connection.mutex.unlock();
+						connection->outputStack.pop();
+						connection->mutex.unlock();
 					} 
 					// Check if connection is still open
 
@@ -150,17 +150,17 @@ namespace Pro{
 			return _connection;
 		}
 
-		unsigned int Network::recv(TCPConnection& _connection, CBuffer& buffer){
-			buffer = _connection.inputStack.top();
+		unsigned int Network::recv(TCPConnection* _connection, CBuffer& buffer){
+			buffer = _connection->inputStack.top();
 			return buffer.size;
 		}
 		// send buffer
-		void Network::send(TCPConnection& _connection, CBuffer& _buffer){
+		void Network::send(TCPConnection* _connection, CBuffer& _buffer){
 			// clones the buffer to be sent
 			CBuffer buf(_buffer);
-			_connection.mutex.lock();
-			_connection.outputStack.push(buf);
-			_connection.mutex.unlock();
+			_connection->mutex.lock();
+			_connection->outputStack.push(buf);
+			_connection->mutex.unlock();
 		}
 		void Network::closeAll(){
 			if (_server != nullptr)
@@ -179,8 +179,8 @@ namespace Pro{
 			SDLNet_Quit();
 		}
 
-		unsigned int Network::peek(TCPConnection& con){
-			return con.inputStack.top().size;
+		unsigned int Network::peek(TCPConnection* con){
+			return con->inputStack.top().size;
 		}
 	}
 }

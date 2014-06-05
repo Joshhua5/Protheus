@@ -13,7 +13,7 @@ History:
 *************************************************************************/
 
 #pragma once
-
+#include <iostream>
 using namespace std;
 
 namespace Pro{
@@ -41,8 +41,15 @@ namespace Pro{
 			lua_settable(L, LUA_REGISTRYINDEX);
 		}
 
-		inline void luaP_error(lua_State* L){
-			cout << lua_tostring(L, -1) << endl; 
+		inline void luaP_checkerror(lua_State* L, int error_code){
+			if (error_code != LUA_OK){
+				string error;
+				error += error_code;
+				error.reserve(65);
+				luaL_error(L, &error[1]);
+				cout << &error[0] << endl;
+				cout << lua_tostring(L, -1) << endl;
+			}
 		}
 
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){

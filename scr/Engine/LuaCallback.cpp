@@ -28,9 +28,7 @@ void LuaCallback::callback(){
 
 void LuaCallback::setCallback(lua_State* L, const std::string& func, unsigned char args, unsigned char returns){
 	lua_state = L;
-	lua_callback = func;
-	lua_arguments = args;
-	lua_return = returns;
+	lua_callback = func; 
 }
 
 

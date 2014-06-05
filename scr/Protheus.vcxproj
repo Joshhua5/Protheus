@@ -100,7 +100,6 @@
     <ClCompile Include="Engine\CFile.cpp" />
     <ClCompile Include="Engine\FileSystem.cpp" />
     <ClCompile Include="Engine\TCPServer.cpp" />
-    <ClCompile Include="Engine\CScriptable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CBuffer.h" />

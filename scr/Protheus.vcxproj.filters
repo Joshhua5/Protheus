@@ -342,9 +342,6 @@
     <ClCompile Include="Engine\TCPServer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\CScriptable.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">

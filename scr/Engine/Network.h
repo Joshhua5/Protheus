@@ -26,8 +26,8 @@ namespace Pro{
 			std::vector<TCPConnection*> connections;
 			TCPConnection* _server;
 			 
-			void serverUpdate(TCPConnection& connection);
-			void clientUpdate(TCPConnection& connection);
+			void serverUpdate(TCPConnection* connection);
+			void clientUpdate(TCPConnection* connection);
 			void connect();
 
 		public:
@@ -39,11 +39,11 @@ namespace Pro{
 			TCPConnection* connectToServer(const std::string &IP);
 
 			// returns the amount of bytes recieved
-			unsigned int recv(TCPConnection&, CBuffer& buffer);
+			unsigned int recv(TCPConnection*, CBuffer& buffer);
 			// returns the amount of bytes recieved without clearing the buffer
-			unsigned int peek(TCPConnection&);
+			unsigned int peek(TCPConnection*);
 			// sends the buffer through the connection
-			void send(TCPConnection& connection, CBuffer& buffer); 
+			void send(TCPConnection* connection, CBuffer& buffer); 
 
 			void cleanup();
 		}; 
