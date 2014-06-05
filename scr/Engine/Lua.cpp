@@ -26,6 +26,7 @@ namespace Pro{
 		void CLua::loadConfig(const std::string& _path){
 			// The config file must be next to the executable
 			// to define the root file paths
+
 			checkError(luaL_dofile(lua_state, &_path[0]));
 
 			// Create and load Window here

@@ -342,6 +342,9 @@
     <ClCompile Include="Engine\TCPServer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\CScriptable.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -605,5 +608,11 @@
     <ClInclude Include="Engine\TCPServer.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\CScriptable.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

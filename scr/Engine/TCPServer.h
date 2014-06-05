@@ -9,9 +9,7 @@ namespace Pro{
 			void listener(TCPServer&);
 		public:
 			TCPServer();
-			~TCPServer();
-
-
+			~TCPServer(); 
 		}; 
 	}
 }

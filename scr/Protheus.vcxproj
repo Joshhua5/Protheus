@@ -100,6 +100,7 @@
     <ClCompile Include="Engine\CFile.cpp" />
     <ClCompile Include="Engine\FileSystem.cpp" />
     <ClCompile Include="Engine\TCPServer.cpp" />
+    <ClCompile Include="Engine\CScriptable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\CBuffer.h" />
@@ -189,6 +190,10 @@
     <ClInclude Include="Engine\FileSystem.h" />
     <ClInclude Include="Engine\TCPConnection.h" />
     <ClInclude Include="Engine\TCPServer.h" />
+    <ClInclude Include="Engine\CScriptable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

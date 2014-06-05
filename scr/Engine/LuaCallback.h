@@ -18,15 +18,12 @@ namespace Pro{
 		class LuaCallback
 		{
 			lua_State* lua_state;
-			std::string lua_callback;
-			unsigned char lua_arguments;
-			unsigned char lua_return;
+			std::string lua_callback; 
 
 		public:
 			LuaCallback();
 			~LuaCallback();
-
-
+			 
 			std::string* getCallback();
 			void setCallback(lua_State*, const std::string&, unsigned char args, unsigned char returns);
 			void callback();

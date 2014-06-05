@@ -14,6 +14,8 @@ History:
 
 #pragma once
 
+using namespace std;
+
 namespace Pro{
 	namespace Util{
 		template<typename T> T* luaP_touserdata(lua_State* L, int idx){
@@ -27,16 +29,20 @@ namespace Pro{
 			*o = new T(lua_tostring(L, 1));
 			return o;
 		}
-
-		static void luaP_setmetatable(lua_State* L, const char* metatable, int idx){
+		// Assumes the object is on top of the stack
+		void luaP_setmetatable(lua_State* L, const char* metatable){
 			luaL_getmetatable(L, metatable);
 			lua_setmetatable(L, -2);
 		}
 
-		static void luaP_registerstore(lua_State* L, const std::string& key, void* data){
+		void luaP_registerstore(lua_State* L, const std::string& key, void* data){
 			lua_pushstring(L, &key[0]);
 			lua_pushlightuserdata(L, data);  
 			lua_settable(L, LUA_REGISTRYINDEX);
+		}
+
+		inline void luaP_error(lua_State* L){
+			cout << lua_tostring(L, -1) << endl; 
 		}
 
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){
@@ -45,7 +51,7 @@ namespace Pro{
 			return (T*)lua_touserdata(L, -1); 
 		}
 
-		static int dumpLuaStack(lua_State *L) {
+		int luaP_dumpLuaStack(lua_State *L) {
 			int i;
 			int top = lua_gettop(L);
 			for (i = 1; i <= top; i++) {  /* repeat for each level */
@@ -66,8 +72,7 @@ namespace Pro{
 
 				default:  /* other values */
 					printf("%s", lua_typename(L, t));
-					break;
-
+					break; 
 				}
 				printf("  ");  /* put a separator */
 			}
@@ -75,6 +80,17 @@ namespace Pro{
 			return 0;
 		}
 		 
+
+
+
+
+
+
+
+
+
+
+
 		#define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
 		#define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
 
@@ -98,7 +114,6 @@ namespace Pro{
  
 		#define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
 		#define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
-
 
 	}
 }

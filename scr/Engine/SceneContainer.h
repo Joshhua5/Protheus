@@ -27,11 +27,14 @@ namespace Pro{
 		~SceneContainer(){}
 
 		void addScene(Scene::Scene*); 
-		Scene::Scene* getScene(uint32); 
+		Scene::Scene* getScene(uint32);
+		Scene::Scene* getActiveScene(); 
+		void setActiveScene(uint32);
 		void destoryScene(uint32); 
 		 
 		static int lAddScene(lua_State*);
 		static int lSetActiveScene(lua_State*);
+		static int lGetActiveScene(lua_State*);
 		static int lGetScene(lua_State*);
 		static int lDestoryScene(lua_State*);
 	}; 
