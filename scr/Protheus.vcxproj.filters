@@ -608,8 +608,11 @@
     <ClInclude Include="Engine\CScriptable.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="Engine\BitCompare.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ClassFlags.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
