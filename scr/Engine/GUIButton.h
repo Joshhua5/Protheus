@@ -21,6 +21,11 @@ namespace Pro{
 			GUIButton(const std::string& name);
 			GUIButton();
 			~GUIButton();
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_button_metatable";
+			}
 		};
 	}
 }

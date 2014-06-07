@@ -30,8 +30,12 @@ namespace Pro{
 			return o;
 		}
 		// Assumes the object is on top of the stack
-		void luaP_setmetatable(lua_State* L, const char* metatable){
-			luaL_getmetatable(L, metatable);
+		//void luaP_setmetatable(lua_State* L, const char* metatable){
+		//	luaL_getmetatable(L, metatable);
+		//	lua_setmetatable(L, -2);
+		//}
+		void luaP_setmetatable(lua_State* L, const string& metatable){
+			luaL_getmetatable(L, &metatable[0]);
 			lua_setmetatable(L, -2);
 		}
 

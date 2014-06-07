@@ -13,21 +13,22 @@ History:
 #pragma once
 
 #include "CBuffer.h"
-#include "TCPServer.h"
+#include "CServerTCPConnection.h"
+#include "CClientTCPConnection.h"
+#include "CTCPServer.h"
 #include <string> 
 #include <thread>
-#define port 9910   
+
 namespace Pro{
 	namespace Networking{ 
 		class Network
 		{
 		private:
 			std::mutex mutex;
-			std::vector<TCPConnection*> connections;
-			TCPConnection* _server;
+			std::vector<CConnection*> connections; 
 			 
-			void serverUpdate(TCPConnection* connection);
-			void clientUpdate(TCPConnection* connection);
+			void serverUpdate(ServerTCPConnection* connection);
+			void clientUpdate(ClientTCPConnection* connection);
 			void connect();
 
 		public:
@@ -35,16 +36,14 @@ namespace Pro{
 			~Network();
 			bool init();
 			void closeAll();
-			TCPConnection* startServer();
-			TCPConnection* connectToServer(const std::string &IP);
-
-			// returns the amount of bytes recieved
-			unsigned int recv(TCPConnection*, CBuffer& buffer);
-			// returns the amount of bytes recieved without clearing the buffer
-			unsigned int peek(TCPConnection*);
-			// sends the buffer through the connection
-			void send(TCPConnection* connection, CBuffer& buffer); 
-
+			ServerTCPConnection* startServer();
+			ServerTCPConnection* startServer(int port);
+			ServerTCPConnection* startServer(const string* name, int port);
+			
+			ClientTCPConnection* connectToServer(const std::string &IP);
+			ClientTCPConnection* connectToServer(const std::string &IP, int port);
+			ClientTCPConnection* connectToServer(const std::string &IP, const string& name, int port);
+			 
 			void cleanup();
 		}; 
 	}

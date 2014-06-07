@@ -20,6 +20,11 @@ namespace Pro{
 		public:
 			void setName(const std::string& _name);
 			const std::string getName();
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "componenet_name_metatable";
+			}
 		};
 	}
 }

@@ -61,3 +61,7 @@ inline BIT operator|(BIT a, BIT b){
 inline BIT operator&(BIT a, BIT b){
 	return static_cast<BIT>(static_cast<long>(a) & static_cast<long>(b));
 }
+
+inline bool checkBit(int value, int bit){
+	return static_cast<bool>((value >> bit) & 1) ;
+}

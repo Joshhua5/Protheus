@@ -32,6 +32,11 @@ namespace Pro{
 			static int lActivate(lua_State*);
 			static int lDeactivate(lua_State*);
 			static int lIsActive(lua_State*);
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "component_active_state_metatable";
+			}
 		}; 
 	}
 }

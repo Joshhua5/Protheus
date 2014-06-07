@@ -73,12 +73,15 @@
     <Filter Include="Engine Source Files\File System">
       <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Header Files\Networking">
+      <UniqueIdentifier>{3fbfefe5-0b24-4d1a-904d-8d990de6e072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Networking">
+      <UniqueIdentifier>{1e98ced5-8442-4869-9bad-b27e74e43ad6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Camera.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Network.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Sprite.cpp">
@@ -339,8 +342,14 @@
     <ClCompile Include="Engine\CFile.cpp">
       <Filter>Engine Source Files\File System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\TCPServer.cpp">
-      <Filter>Engine Source Files</Filter>
+    <ClCompile Include="Engine\CNetwork.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CTCPServer.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,9 +357,6 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Input.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Network.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene.h">
@@ -599,12 +605,6 @@
     <ClInclude Include="Engine\CBuffer.h">
       <Filter>Engine Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\TCPConnection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\TCPServer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\CScriptable.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
@@ -613,6 +613,27 @@
     </ClInclude>
     <ClInclude Include="Engine\ClassFlags.h">
       <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LuaMetatableFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CClientTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CNetwork.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CServerTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CTCPServer.h">
+      <Filter>Engine Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

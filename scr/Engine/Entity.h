@@ -31,6 +31,11 @@ namespace Pro{
 			Entity(const std::string& name);
 			Entity();
 			~Entity();
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_entity_metatable";
+			}
 		};
 	}
 }

@@ -45,7 +45,11 @@ namespace Pro{
 			static int lDetachWindow(lua_State*);
 			static int lGetContextName(lua_State*); 
 
-			//static int 
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_context_metatable";
+			}
 		};
 	}
 }

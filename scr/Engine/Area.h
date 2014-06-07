@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+#include <string>
 #include "Math.h"
 #include "lua\lua.hpp"
 namespace Pro{
@@ -31,6 +32,11 @@ namespace Pro{
 
 			static int lGetDimensions(lua_State*);
 			static int lSetDimensions(lua_State*);
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "component_area_metatable";
+			}
 		};
 	}
 }

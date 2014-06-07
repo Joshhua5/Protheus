@@ -31,10 +31,17 @@ namespace Pro{
 			bool takeItem(Item*);
 			size_t inventorySize();
 
+			// LUA Functions
+
 			static int lCheckForItem(lua_State*);
 			static int lGiveItem(lua_State*);
 			static int lTakeItem(lua_State*);
 			static int lInventorySize(lua_State*);
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_inventory_metatable";
+			}
 		};
 	}
 }

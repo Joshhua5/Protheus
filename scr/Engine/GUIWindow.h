@@ -37,7 +37,13 @@ namespace Pro{
 			GUIWindow();
 			~GUIWindow();
 			 
-			void attachMenuBar(GUIMenuBar* component); 
+			void attachMenuBar(GUIMenuBar* component);
+
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_window_metatable";
+			}
 		};
 	}
 }

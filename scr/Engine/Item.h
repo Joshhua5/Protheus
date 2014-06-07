@@ -21,6 +21,11 @@ namespace Pro{
 			Item(const std::string& name);
 			Item();
 			~Item();
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_item_metatable";
+			}
 		};
 	}
 }

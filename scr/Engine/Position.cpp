@@ -37,3 +37,4 @@ int Position::lSetPosition(lua_State* L){
 		));
 	return 0;
 }
+ 

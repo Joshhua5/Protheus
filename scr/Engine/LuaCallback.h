@@ -31,6 +31,11 @@ namespace Pro{
 			// Lua functions
 
 			static int lBindCallback(lua_State*);
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "componenet_lua_callback_metatable";
+			}
 		};
 	}
 }

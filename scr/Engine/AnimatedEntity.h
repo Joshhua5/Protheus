@@ -36,6 +36,11 @@ namespace Pro{
 
 			static int lAddAnimation(lua_State*);
 			static int lActivateAnimation(lua_State*);
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_animated_entity_metatable";
+			}
 		};
 	}
 }

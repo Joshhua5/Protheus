@@ -39,6 +39,11 @@ namespace Pro{
 
 			static int lUpdate(lua_State*);
 			static int lAttachFunction(lua_State*);
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "componenet_scriptable_metatable";
+			}
 		}; 
 	}
 }

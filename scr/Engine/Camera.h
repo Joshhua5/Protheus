@@ -37,6 +37,11 @@ namespace Pro{
 			// Lua Functions
 			 
 			static int lMove(lua_State*); 
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "scene_camera_metatable";
+			}
 		};
 	}
 }

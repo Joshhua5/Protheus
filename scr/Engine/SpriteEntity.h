@@ -29,8 +29,15 @@ namespace Pro{
 
 			void setSprite(uint32 guid);
 
+			// Lua Functions
+
 			static int lSetSprite(lua_State*);
 			static int lGetSpriteGUID(lua_State*);
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_sprite_entity_metatable";
+			}
 		};
 	}
 }

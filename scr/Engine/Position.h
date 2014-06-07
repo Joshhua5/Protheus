@@ -27,7 +27,7 @@ History:
 #include "lua\lua.hpp"
 namespace Pro{
 	namespace Component{
-		class Position
+		class Position 
 		{
 		protected:
 			Math::Vector2 position;
@@ -43,6 +43,11 @@ namespace Pro{
 
 			static int lGetPosition(lua_State*);
 			static int lSetPosition(lua_State*);
+			 
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "componenet_posititon_metatable";
+			}
 		}; 
 	}
 }

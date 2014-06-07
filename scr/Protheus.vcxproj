@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\CTCPConnection.cpp" />
     <ClCompile Include="Engine\ActiveState.cpp" />
     <ClCompile Include="Engine\CameraContainer.cpp" />
     <ClCompile Include="Engine\AnimatedEntity.cpp" />
@@ -28,7 +29,7 @@
     <ClCompile Include="Engine\Item.cpp" />
     <ClCompile Include="Engine\Map.cpp" />
     <ClCompile Include="Engine\Name.cpp" />
-    <ClCompile Include="Engine\Network.cpp" />
+    <ClCompile Include="Engine\CNetwork.cpp" />
     <ClCompile Include="Engine\Renderer.cpp" />
     <ClCompile Include="Engine\Scene.cpp" />
     <ClCompile Include="Engine\Sprite.cpp" />
@@ -99,9 +100,11 @@
     <ClCompile Include="Engine\LuaGlobalFactory.cpp" />
     <ClCompile Include="Engine\CFile.cpp" />
     <ClCompile Include="Engine\FileSystem.cpp" />
-    <ClCompile Include="Engine\TCPServer.cpp" />
+    <ClCompile Include="Engine\CTCPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\CClientTCPConnection.h" />
+    <ClInclude Include="Engine\CConnection.h" />
     <ClInclude Include="Engine\ClassFlags.h" />
     <ClInclude Include="Engine\BitCompare.h" />
     <ClInclude Include="Engine\CBuffer.h" />
@@ -122,7 +125,7 @@
     <ClInclude Include="Engine\Item.h" />
     <ClInclude Include="Engine\Map.h" />
     <ClInclude Include="Engine\Name.h" />
-    <ClInclude Include="Engine\Network.h" />
+    <ClInclude Include="Engine\CNetwork.h" />
     <ClInclude Include="Engine\Renderer.h" />
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\Sprite.h" />
@@ -189,9 +192,11 @@
     <ClInclude Include="Engine\LuaGlobalFactory.h" />
     <ClInclude Include="Engine\CFile.h" />
     <ClInclude Include="Engine\FileSystem.h" />
-    <ClInclude Include="Engine\TCPConnection.h" />
-    <ClInclude Include="Engine\TCPServer.h" />
+    <ClInclude Include="Engine\CTCPConnection.h" />
+    <ClInclude Include="Engine\CTCPServer.h" />
     <ClInclude Include="Engine\CScriptable.h" />
+    <ClInclude Include="Engine\LuaMetatableFactory.h" />
+    <ClInclude Include="Engine\CServerTCPConnection.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

@@ -1,10 +1,9 @@
-#include "Network.h" 
+#include "CNetwork.h" 
 namespace Pro{
 	namespace Networking{
 
 		Network::Network()
-		{
-			_server = nullptr;
+		{ 
 		}
 
 
@@ -12,7 +11,7 @@ namespace Pro{
 		{ 
 		}
 
-		void Network::clientUpdate(TCPConnection* connection){
+		void Network::clientUpdate(ClientTCPConnection* connection){
 			// wait for connection 
 			while (!(connection->serverSock = SDLNet_TCP_Open(connection->serverAddress)))
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -57,7 +56,7 @@ namespace Pro{
 			}
 		}
 
-		void Network::serverUpdate(TCPConnection* connection){
+		void Network::serverUpdate(ServerTCPConnection* connection){
 			// Await for the connection
 			while ((connection->clientSock = SDLNet_TCP_Accept(connection->serverSock)) == NULL)
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -114,11 +113,10 @@ namespace Pro{
 			return true;
 		}
 
-		TCPConnection* Network::startServer(){
-			_server = new TCPConnection();
-			_server->isServer = true;
+		ServerTCPConnection* Network::startServer(){
+			auto _server = new ServerTCPConnection(); 
 			// Creates an Address for the socket's creation
-			if (SDLNet_ResolveHost(_server->serverAddress, NULL, port)){
+			if (SDLNet_ResolveHost(_server->serverAddress, NULL, 9910)){
 				SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, "Network Listen Failure");
 				delete _server;
 				return nullptr;
@@ -134,12 +132,12 @@ namespace Pro{
 			return _server;
 		}
 
-		TCPConnection* Network::connectToServer(const std::string &IP){
+		ClientTCPConnection* Network::connectToServer(const std::string &IP){
 			// Create Connection
-			TCPConnection* _connection = new TCPConnection;
+			ClientTCPConnection* _connection = new ClientTCPConnection;
 
 			// Check the address for open socket to connect to
-			if (SDLNet_ResolveHost(_connection->serverAddress, IP.c_str(), port)){
+			if (SDLNet_ResolveHost(_connection->serverAddress, IP.c_str(), 9910)){
 				SDL_LogError(SDL_LOG_CATEGORY_RESERVED1, "Network Listen Failure");
 				return nullptr;
 			}
@@ -150,37 +148,18 @@ namespace Pro{
 			return _connection;
 		}
 
-		unsigned int Network::recv(TCPConnection* _connection, CBuffer& buffer){
-			buffer = _connection->inputStack.top();
-			return buffer.size;
-		}
-		// send buffer
-		void Network::send(TCPConnection* _connection, CBuffer& _buffer){
-			// clones the buffer to be sent
-			CBuffer buf(_buffer);
-			_connection->mutex.lock();
-			_connection->outputStack.push(buf);
-			_connection->mutex.unlock();
-		}
-		void Network::closeAll(){
-			if (_server != nullptr)
-				_server->connected = false;
+
+		void Network::closeAll(){ 
 			for (unsigned int x = 0; x < connections.size(); x++){
 				connections[x]->connected = false;
 			}
 		}
 
-		void Network::cleanup(){
-			// close the server
-			delete _server;
+		void Network::cleanup(){ 
 			// close all client connections
 			while (!connections.empty())
 				connections.erase(connections.begin());
 			SDLNet_Quit();
-		}
-
-		unsigned int Network::peek(TCPConnection* con){
-			return con->inputStack.top().size;
-		}
+		} 
 	}
 }

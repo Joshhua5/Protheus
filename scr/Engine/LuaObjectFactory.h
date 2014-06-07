@@ -17,7 +17,9 @@ History:
 #include "Avatar.h"
 #include "SceneContainer.h" 
 #include "LuaUtils.h"
+#include "CScriptable.h"
 #include "ClassFlags.h"
+#include "Name.h"
 #include "GraphicalUI.h"
 
 using namespace std;
@@ -27,17 +29,19 @@ namespace Pro{
 		class CLua;
 
 		class LuaObjectFactory
-		{
-		protected:  
-			void defineMetatable(lua_State* L, string table_name, vector<luaL_Reg> fields);
-
+		{ 
 		public: 
-			LuaObjectFactory(){};
-			~LuaObjectFactory(){};
+			LuaObjectFactory(){ 
+				const luaL_Reg globalFunctions [] = {
+						{ "avatar_create", &LuaObjectFactory::createAvatar },
+						{ "camera_create", &LuaObjectFactory::createCamera }
+				};
 
-
-			void defineMetatables(lua_State*);
-
+				for each(auto i in globalFunctions)
+					lua_register(Lua::lua_state, i.name, i.func);
+			}; 
+			~LuaObjectFactory(){}
+ 
 			// Object Creation
 			static int createAvatar(lua_State*);
 			static int createCamera(lua_State*);

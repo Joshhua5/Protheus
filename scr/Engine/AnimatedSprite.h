@@ -34,6 +34,10 @@ namespace Pro{
 
 			// LUA Functions 
 
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_animated_sprite_metatable";
+			}
 		}; 
 	}
 }
