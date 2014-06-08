@@ -26,6 +26,11 @@ namespace Pro{
 			GUIText(const std::string& name);
 			GUIText();
 			~GUIText();
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_text_metatable";
+			}
 		};
 	}
 }

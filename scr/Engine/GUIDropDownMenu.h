@@ -23,6 +23,11 @@ namespace Pro{
 			GUIDropDownMenu(const std::string& name);
 			GUIDropDownMenu();
 			~GUIDropDownMenu();
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_dropdown_menu_metatable";
+			}
 		};
 	}
 }

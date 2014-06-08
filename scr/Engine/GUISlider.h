@@ -28,6 +28,11 @@ namespace Pro{
 			GUISlider(const std::string& name);
 			GUISlider();
 			~GUISlider();
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_slider_metatable";
+			}
 		};
 	}
 }

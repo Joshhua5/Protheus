@@ -13,6 +13,7 @@ History:
 #pragma once
 #include <string>
 #include "lua\lua.hpp"
+using namespace std;
 namespace Pro{
 	namespace Component{
 		class LuaCallback

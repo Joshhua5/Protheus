@@ -68,6 +68,11 @@ namespace Pro{
 			static int lGetParent(lua_State*);
 			static int lSetParent(lua_State*);
 
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_entity_metatable";
+			}
+
 		};
 	}
 }

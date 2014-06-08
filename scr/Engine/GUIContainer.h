@@ -33,6 +33,11 @@ namespace Pro{
 			// LUA Functions
 
 			static int lAddComponent(lua_State*);
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_container_metatable";
+			}
 		}; 
 	}
 }

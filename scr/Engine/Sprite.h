@@ -35,6 +35,12 @@ namespace Pro{
 			SDL_Texture* getSpriteSheet();
 			Math::Vector4 getRect();
 			void setRect(Math::Vector4&);
+
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "asset_sprite_metatable";
+			}
 		};
 	}
 }

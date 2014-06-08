@@ -26,6 +26,11 @@ namespace Pro{
 			GUICollapsibleMenu(const std::string& name);
 			GUICollapsibleMenu();
 			~GUICollapsibleMenu(); 
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_collapsible_menu_metatable";
+			}
 		};
 	}
 }

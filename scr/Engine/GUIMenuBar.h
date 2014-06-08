@@ -27,6 +27,11 @@ namespace Pro{
 
 			void attachMenu(GUIDropDownMenu* component);
 			void update(std::vector<SDL_Event> events);
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_menubar_metatable";
+			}
 		};
 	}
 }

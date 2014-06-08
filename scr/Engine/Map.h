@@ -43,6 +43,11 @@ namespace Pro{
 			bool loadLevel(const std::string& file, const std::string& data);
 			TileType* getTile(Math::Vector2&);
 			TileType* getTileType(unsigned int);
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "scene_map_metatable";
+			}
 		};
 	} 
 }

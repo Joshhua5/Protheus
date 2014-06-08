@@ -53,6 +53,11 @@ namespace Pro{
 
 			static int lUpdate(lua_State*);
 			static int lLoadScene(lua_State*);
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "scene_metatable";
+			}
 		};
 	}
 }

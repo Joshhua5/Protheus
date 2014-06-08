@@ -21,6 +21,11 @@ namespace Pro{
 			GUILabel(const std::string& name);
 			GUILabel();
 			~GUILabel();
+
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "gui_label_metatable";
+			}
 		};
 	}
 }
