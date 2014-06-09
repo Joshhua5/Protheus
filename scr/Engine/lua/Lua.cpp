@@ -14,7 +14,7 @@ namespace Pro{
 			luaP_setFileSystem(lua_state, new Util::FileSystem()); 
 
 			registerGlobals(lua_state);
-			defineMetatables(lua_state); 
+			LuaObjectFactory(lua_state);
 		}
 		CLua::~CLua() { lua_close(lua_state); }
 

@@ -12,9 +12,7 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_net.h>   
-#include <thread>
-#include "..\util\CBuffer.h"
+#include <SDL_net.h>    
 #include "CTCPConnection.h" 
 
 using namespace std;
@@ -24,19 +22,12 @@ namespace Pro{
 		struct ClientTCPConnection :
 			public TCPConnection
 		{  
-			void handshake(ClientTCPConnection * connection, thread & listener, thread & messenger);
-			void messenger(ClientTCPConnection* connection);
-			void listener(ClientTCPConnection* connection);
-
-			thread _handshaker;
-			thread _listener;
-			thread _messenger;
 
 		public:
 			ClientTCPConnection();
-			ClientTCPConnection(const string& name); 
-
+			ClientTCPConnection(const string& name);  
 			~ClientTCPConnection(){};
+
 		};
 	}
 }

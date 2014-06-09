@@ -12,9 +12,11 @@ History:
 
 #pragma once
 #include <unordered_map>
-
+#include <string>
 #include "..\graphics\AnimatedSprite.h"
 #include "Entity.h" 
+
+using namespace std;
 
 namespace Pro{
 	namespace GameObject{

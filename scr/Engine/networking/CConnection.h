@@ -11,8 +11,7 @@ History:
 *************************************************************************/
 #pragma once
 #include <SDL_net.h> 
-#include <stack>
-#include <vector>
+#include <stack> 
 #include <mutex>
 #include "..\util\CBuffer.h"
 #include "..\component\CGUID.h"

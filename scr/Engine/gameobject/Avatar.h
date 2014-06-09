@@ -11,9 +11,12 @@ History:
 *************************************************************************/
 
 #pragma once 
+#include <string>
 #include "AnimatedEntity.h"
-#include "Inventory.h"
-#include "SpriteEntity.h"
+#include "Inventory.h" 
+
+using namespace std;
+
 namespace Pro{
 	namespace GameObject{ 
 		class Avatar :

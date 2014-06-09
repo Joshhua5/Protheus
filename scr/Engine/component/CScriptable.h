@@ -10,7 +10,8 @@ History:
 - 05:06:2014 Waring J.
 *************************************************************************/
 #pragma once
-#include "..\lua\Lua.h"
+#include "..\lua\lib\Lua.hpp"
+#include "..\util\LuaUtils.h"
 #include <string>
 
 using namespace std;
@@ -24,8 +25,7 @@ namespace Pro{
 			~CScriptable(){}
 
 			// Calls the assigned Lua Script
-			void update(const string& metatable){
-				lua_State* L = Lua::lua_state;
+			void update(lua_State* L, const string& metatable){ 
 				lua_getglobal(L, &luaFunction[0]);
 				T** argument = Util::luaP_newuserdata<T>(L);
 				*argument = static_cast<T>(this);

@@ -13,8 +13,7 @@ History:
 #pragma once
 
 #include "gameobject\Avatar.h"
-#include "gameobject\AnimatedEntity.h"
-#include "gameobject\AnimatedSprite.h"
+#include "gameobject\AnimatedEntity.h" 
 #include "gameobject\Entity.h"
 #include "gameobject\Inventory.h"
 #include "gameobject\Item.h"

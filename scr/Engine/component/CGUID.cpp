@@ -1,4 +1,4 @@
-#include "..\component\CGUID.h"
+#include "CGUID.h"
 
 using namespace Pro;
 using namespace Component;

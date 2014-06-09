@@ -11,7 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
-#include "Math.h"
+#include "..\Math.h"
 #include <string>
 
 namespace Pro{

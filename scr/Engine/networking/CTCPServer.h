@@ -1,5 +1,5 @@
 #pragma once
-#include "CTCPConnection.h"
+#include "CServerTCPConnection.h"
 
 namespace Pro{
 	namespace Networking{

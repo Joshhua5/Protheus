@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Provides a small wrapper around Lua to add functionality to simplify
-	intereaction with the stack and registry.
+Provides a small wrapper around Lua to add functionality to simplify
+intereaction with the stack and registry.
 
 -------------------------------------------------------------------------
 History:
@@ -28,37 +28,38 @@ namespace Pro{
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
 			*o = new T(lua_tostring(L, 1));
 			return o;
-		} 
+		}
+		// Doesn't initialize the data and copies in the data passed
+		template<typename T> T** luaP_newuserdata(lua_State* L, T* data){
+			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
+			**o = *data;
+			return o;
+		}
 
-		void luaP_setmetatable(lua_State* L, const string& metatable){
+		inline void luaP_setmetatable(lua_State* L, const string& metatable){
 			luaL_getmetatable(L, &metatable[0]);
 			lua_setmetatable(L, -2);
 		}
 
-		void luaP_registerstore(lua_State* L, const std::string& key, void* data){
+		inline void luaP_registerstore(lua_State* L, const std::string& key, void* data){
 			lua_pushstring(L, &key[0]);
-			lua_pushlightuserdata(L, data);  
+			lua_pushlightuserdata(L, data);
 			lua_settable(L, LUA_REGISTRYINDEX);
 		}
 
 		inline void luaP_checkerror(lua_State* L, int error_code){
-			if (error_code != LUA_OK){
-				string error;
-				error += error_code;
-				error.reserve(65);
-				luaL_error(L, &error[1]);
-				cout << &error[0] << endl;
+			if (error_code != LUA_OK){   
 				cout << lua_tostring(L, -1) << endl;
 			}
 		}
 
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){
-			lua_pushstring(L, &key[0]); 
-			lua_gettable(L, LUA_REGISTRYINDEX); 
-			return (T*)lua_touserdata(L, -1); 
+			lua_pushstring(L, &key[0]);
+			lua_gettable(L, LUA_REGISTRYINDEX);
+			return (T*)lua_touserdata(L, -1);
 		}
 
-		int luaP_dumpLuaStack(lua_State *L) {
+		inline void luaP_dumpLuaStack(lua_State *L) {
 			int i;
 			int top = lua_gettop(L);
 			for (i = 1; i <= top; i++) {  /* repeat for each level */
@@ -79,48 +80,38 @@ namespace Pro{
 
 				default:  /* other values */
 					printf("%s", lua_typename(L, t));
-					break; 
+					break;
 				}
 				printf("  ");  /* put a separator */
 			}
-			printf("\n");  /* end the listing */
-			return 0;
+			printf("\n");  /* end the listing */ 
 		}
-		 
 
 
 
+#define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
+#define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
 
+#define luaP_setWindow(lua_state, data) Util::luaP_registerstore(lua_state, "WINDOW", data)
+#define luaP_getWindow(lua_state) Util::luaP_registerget<Pro::Window>(lua_state, "WINDOW")
 
+#define luaP_setRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "RENDERER", data)
+#define luaP_getRenderer(lua_state) Util::luaP_registerget<Pro::Graphics::Renderer>(lua_state, "RENDERER")
 
+#define luaP_setScenes(lua_state, data) Util::luaP_registerstore(lua_state, "SCENES", data)
+#define luaP_getScenes(lua_state) Util::luaP_registerget<Pro::SceneContainer>(lua_state, "SCENES")
 
+#define luaP_setNetwork(lua_state, data) Util::luaP_registerstore(lua_state, "NETWORK", data)
+#define luaP_getNetwork(lua_state) Util::luaP_registerget<Pro::Networking::Network>(lua_state, "NETWORK")
 
+#define luaP_setEventHandler(lua_state, data) Util::luaP_registerstore(lua_state, "EVENT_HANDELER", data)
+#define luaP_getEventHandler(lua_state) Util::luaP_registerget<Pro::EventHandler>(lua_state, "EVENT_HANDELER")
 
+#define luaP_setSpriteManager(lua_state, data) Util::luaP_registerstore(lua_state, "SPRITE_MANAGER", data)
+#define luaP_getSpriteManager(lua_state) Util::luaP_registerget<Pro::Graphics::SpriteManager>(lua_state, "SPRITE_MANAGER")
 
-
-		#define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
-		#define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
-
-		#define luaP_setWindow(lua_state, data) Util::luaP_registerstore(lua_state, "WINDOW", data)
-		#define luaP_getWindow(lua_state) Util::luaP_registerget<Pro::Window>(lua_state, "WINDOW")
-
-		#define luaP_setRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "RENDERER", data)
-		#define luaP_getRenderer(lua_state) Util::luaP_registerget<Pro::Graphics::Renderer>(lua_state, "RENDERER")
-   
-		#define luaP_setScenes(lua_state, data) Util::luaP_registerstore(lua_state, "SCENES", data)
-		#define luaP_getScenes(lua_state) Util::luaP_registerget<Pro::SceneContainer>(lua_state, "SCENES")
-		 
-		#define luaP_setNetwork(lua_state, data) Util::luaP_registerstore(lua_state, "NETWORK", data)
-		#define luaP_getNetwork(lua_state) Util::luaP_registerget<Pro::Networking::Network>(lua_state, "NETWORK")
-		 
-		#define luaP_setEventHandler(lua_state, data) Util::luaP_registerstore(lua_state, "EVENT_HANDELER", data)
-		#define luaP_getEventHandler(lua_state) Util::luaP_registerget<Pro::EventHandler>(lua_state, "EVENT_HANDELER")
-		 
-		#define luaP_setSpriteManager(lua_state, data) Util::luaP_registerstore(lua_state, "SPRITE_MANAGER", data)
-		#define luaP_getSpriteManager(lua_state) Util::luaP_registerget<Pro::Graphics::SpriteManager>(lua_state, "SPRITE_MANAGER")
- 
-		#define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
-		#define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
+#define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
+#define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
 
 	}
 }

@@ -12,8 +12,10 @@ Description:
 History:
 - 1:06:2014: Waring J.
 *************************************************************************/
-
 #pragma once
+
+#include <memory>
+
 struct CBuffer
 {  
 	unsigned int size; 

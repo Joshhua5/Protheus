@@ -13,6 +13,7 @@ History:
 #pragma once
 #include <SDL_rect.h>
 #include <SDL_events.h>
+#include <string>
 #include <vector> 
 #include "GUIButton.h"
 #include "GUISlider.h" 
@@ -20,6 +21,8 @@ History:
 #include "GUIContainer.h"
 #include "GUICollapsibleMenu.h"
 #include "GUIMenuBar.h"
+
+using namespace std;
 
 namespace Pro{
 	namespace GUI{

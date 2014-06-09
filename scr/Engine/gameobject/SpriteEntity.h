@@ -13,6 +13,9 @@ History:
 #pragma once
 #include <string>
 #include "Entity.h"
+
+using namespace std;
+
 namespace Pro{
 	namespace GameObject{
 		class SpriteEntity :

@@ -16,7 +16,7 @@ History:
 #include "Tile.h"
 #include "..\component\Position.h"
 #include "Camera.h"
-#include "Math.h"
+#include "..\Math.h"
 #include "..\component\Area.h"
 
 namespace Pro{

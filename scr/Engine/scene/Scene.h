@@ -18,19 +18,21 @@ History:
 #include <vector>
 
 #include "..\gameobject\Avatar.h"
-#include "Camera.h"
-#include "..\GUIDLookup.h"
-#include "..\Containers.h"
-#include "Math.h"
-#include "Map.h"
+#include "..\containers\EntityContainer.h"
+#include "..\containers\CameraContainer.h"
+#include "..\component\CGUID.h"
 #include "..\util\LuaUtils.h"
-#include "Tile.h"
+#include "..\Math.h"
 
+#include "Tile.h"
+#include "Map.h"
+#include "Camera.h"
 namespace Pro{
 	namespace Scene{
 		class Scene :
 			public EntityContainer,
-			public CameraContainer
+			public CameraContainer,
+			public Component::CGUID
 		{
 			Map* tileData; 
 		public:

@@ -13,7 +13,7 @@ History:
 #pragma once
 #include <stack>
 
-#include "Math.h"
+#include "..\Math.h"
 #include "Sprite.h"
 
 

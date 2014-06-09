@@ -25,9 +25,7 @@ namespace Pro{
 		private:
 			std::mutex mutex;
 			std::vector<CConnection*> connections; 
-			 
-
-			void clientUpdate(ClientTCPConnection* connection);
+			  
 			void connect();
 
 		public:

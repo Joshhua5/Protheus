@@ -14,7 +14,7 @@ History:
 #include <SDL.h>
 #include <string>
  
-#include "Math.h"
+#include "..\Math.h"
 #include "..\component\CGUID.h"
 
 namespace Pro{

@@ -12,6 +12,9 @@ History:
 
 #pragma once
 #include <string>
+
+using namespace std;
+
 namespace Pro{
 	namespace Component{
 		class Name

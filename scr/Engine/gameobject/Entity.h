@@ -12,9 +12,13 @@ History:
 
 #pragma once
 #include <SDL_rect.h>
+#include <string>
 #include "..\lua\lib\lua.hpp"
-#include "..\Components.h"
+#include "..\component\Position.h"
 #include "..\component\CGUID.h"
+#include "..\component\ActiveState.h"
+
+using namespace std;
 
 namespace Pro{
 	namespace GameObject{ 
@@ -32,7 +36,7 @@ namespace Pro{
 			~Entity();
 
 			// returns the Metatable's name assosiated with this object
-			static inline string lGetMetatable(){
+			inline static string lGetMetatable(){
 				return "gameobject_entity_metatable";
 			}
 		};

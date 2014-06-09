@@ -49,9 +49,7 @@ enum struct BIT{
 	_29 = (long) 0x10000000,
 	_30 = (long) 0x20000000,
 	_31 = (long) 0x40000000,
-	_32 = (long) 0x80000000,
-
-	
+	_32 = (long) 0x80000000, 
 };
 
 inline BIT operator|(BIT a, BIT b){

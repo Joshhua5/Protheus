@@ -15,8 +15,7 @@ History:
 #include <unordered_map>
 #include <vector>
 
-#include "GUIWindow.h" 
-#include "..\component\CGUID.h"
+#include "GUIWindow.h"  
 
 namespace Pro{
 	namespace GUI{

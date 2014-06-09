@@ -12,8 +12,11 @@ History:
 
 #pragma once
 #include <string>
-#include "Math.h"
+#include "..\Math.h"
 #include "..\lua\lib\lua.hpp"
+
+using namespace std;
+
 namespace Pro{
 	namespace Component {
 		class Area

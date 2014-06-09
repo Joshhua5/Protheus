@@ -15,7 +15,7 @@ History:
 #pragma once
 #include "lib\lua.hpp" 
 #include "..\gameobject\Avatar.h" 
-#include "..\util\LuaUtils.h"
+#include "..\util\LuaUtils.h" 
 #include "..\component\CScriptable.h" 
 #include "..\component\Name.h" 
 #include "..\containers\SceneContainer.h"
@@ -30,15 +30,16 @@ namespace Pro{
 		class LuaObjectFactory
 		{ 
 		public: 
-			LuaObjectFactory(){ 
+			LuaObjectFactory(lua_State* L){ 
 				const luaL_Reg globalFunctions [] = {
 						{ "avatar_create", &LuaObjectFactory::createAvatar },
 						{ "camera_create", &LuaObjectFactory::createCamera }
 				};
 
 				for each(auto i in globalFunctions)
-					lua_register(Lua::lua_state, i.name, i.func);
-			}; 
+					lua_register(L, i.name, i.func);
+			};
+			LuaObjectFactory(){}
 			~LuaObjectFactory(){}
  
 			// Object Creation

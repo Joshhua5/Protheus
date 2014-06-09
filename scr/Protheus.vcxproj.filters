@@ -67,9 +67,6 @@
     <Filter Include="Engine Source Files\Lua">
       <UniqueIdentifier>{470eb881-206a-402d-b86b-632144043cfb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine Source Files\File System">
-      <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine Header Files\Networking">
       <UniqueIdentifier>{3fbfefe5-0b24-4d1a-904d-8d990de6e072}</UniqueIdentifier>
     </Filter>
@@ -85,12 +82,15 @@
     <Filter Include="Engine Header Files\Group Headers">
       <UniqueIdentifier>{c05816ca-c912-45af-97a2-ecc52851aeae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Source Files\Scene">
+      <UniqueIdentifier>{861a6270-329d-4c6d-abbb-feab35a3078c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\IO">
+      <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gui\GraphicalUI.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\gui\GUIButton.cpp">
@@ -184,10 +184,10 @@
       <Filter>Engine Source Files\ClassComponents</Filter>
     </ClCompile>
     <ClCompile Include="Engine\io\CFile.cpp">
-      <Filter>Engine Source Files\File System</Filter>
+      <Filter>Engine Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="Engine\io\FileSystem.cpp">
-      <Filter>Engine Source Files\File System</Filter>
+      <Filter>Engine Source Files\IO</Filter>
     </ClCompile>
     <ClCompile Include="Engine\lua\Lua.cpp">
       <Filter>Engine Source Files\Lua</Filter>
@@ -200,18 +200,6 @@
     </ClCompile>
     <ClCompile Include="Engine\util\Timer.cpp">
       <Filter>Engine Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Camera.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Scene.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\MapSection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Map.cpp">
-      <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\containers\CameraContainer.cpp">
       <Filter>Engine Source Files\Containers</Filter>
@@ -228,35 +216,11 @@
     <ClCompile Include="Engine\graphics\Renderer.cpp">
       <Filter>Engine Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\graphics\Sprite.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\graphics\SpriteBatcher.cpp">
       <Filter>Engine Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\graphics\SpriteManager.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Tile.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\graphics\Window.cpp">
       <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\io\EventHandler.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\io\Input.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CConnection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CServerTCPConnection.cpp">
-      <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\lua\lib\lapi.c">
       <Filter>Lua Source</Filter>
@@ -362,6 +326,45 @@
     </ClCompile>
     <ClCompile Include="Engine\graphics\AnimatedSprite.cpp">
       <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CServerTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Camera.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Scene.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Tile.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Map.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\MapSection.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\EventHandler.cpp">
+      <Filter>Engine Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\Input.cpp">
+      <Filter>Engine Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\Sprite.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\SpriteManager.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GraphicalUI.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

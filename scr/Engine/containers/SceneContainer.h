@@ -12,16 +12,15 @@ History:
 
 #pragma once
 #include <unordered_map>
-#include "..\scene\Scene.h"
-#include "..\component\CGUID.h"
+#include "..\scene\Scene.h" 
 #include "..\util\LuaUtils.h"
 
 namespace Pro{
 	class SceneContainer
 	{
 	protected:
-		std::unordered_map<uint32, Scene::Scene*> stored_entities;
-
+		std::unordered_map<uint32, Scene::Scene*> stored_scenes;
+		Scene::Scene* active_scene = nullptr;
 	public:
 		SceneContainer(){}
 		~SceneContainer(){}

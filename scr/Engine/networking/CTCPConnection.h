@@ -11,8 +11,8 @@ History:
 *************************************************************************/
 
 #pragma once
-#include "CConnection.h"
-
+#include "CConnection.h" 
+#include <thread> 
 
 namespace Pro{
 	namespace Networking{
@@ -25,6 +25,15 @@ namespace Pro{
 			
 			IPaddress* serverAddress;
 			IPaddress* clientAddress; 
+
+			void handshake(TCPConnection* connection, thread** listener, thread** messenger);
+			void messenger(TCPConnection* connection);
+			void listener(TCPConnection* connection);
+
+			thread _handshaker;
+			thread* _listener;
+			thread* _messenger;
+			 
 		public:
 			TCPConnection() : CConnection("TCPConnection"){
 				serverAddress = new IPaddress();
@@ -34,6 +43,8 @@ namespace Pro{
 			}
 
 			~TCPConnection(){};
+			 
+			void startHandshake();
 
 		};
 	}
