@@ -7,7 +7,15 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 20:05:2014: Waring J.
+- 09:06:2014 Waring J.
+
 *************************************************************************/
- 
-#include "lua\Lua.h"
+#pragma once
+
+#include "component\ActiveState.h"
+#include "component\Area.h"
+#include "component\CGUID.h"
+#include "component\CScriptable.h"
+#include "component\LuaCallback.h"
+#include "component\Name.h"
+#include "component\Position.h"

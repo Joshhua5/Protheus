@@ -9,5 +9,23 @@ Description:
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
- 
-#include "lua\Lua.h"
+
+#pragma once
+#include <string>
+namespace Pro{
+	namespace Component{
+		class Name
+		{
+			std::string name;
+		public:
+			void setName(const std::string& _name);
+			const std::string getName();
+
+			// returns the Metatable assosiated with this object
+			static inline string lGetMetatable(){
+				return "component_name_metatable";
+			}
+		};
+	}
+}
+

@@ -9,5 +9,25 @@ Description:
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
- 
-#include "lua\Lua.h"
+
+#pragma once
+#include <SDL_events.h>
+#include <stack>
+
+using namespace std;
+
+namespace Pro{
+
+	class Input
+	{
+		stack<SDL_Event> event_stack;
+	public:
+		Input();
+		~Input();
+
+		void update(SDL_Event _event);
+		SDL_Event getInputEvent();
+		SDL_Event peekInputEvent();
+		bool hasEvent();
+	};
+} 

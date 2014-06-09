@@ -11,10 +11,10 @@ History:
 
 *************************************************************************/
 
-#pragma once
+#pragma once 
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix33.h" 
+#include "math\Vector2.h"
+#include "math\Vector3.h"
+#include "math\Vector4.h"
+#include "math\Matrix33.h" 
 

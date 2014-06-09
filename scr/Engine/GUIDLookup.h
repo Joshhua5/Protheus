@@ -15,6 +15,7 @@ History:
 #include <unordered_map>
 #include <stack>
 #include <iostream>
+
 namespace Pro{  
 	typedef unsigned int uint32;
 	class GUIDLookup{

@@ -7,7 +7,15 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 20:05:2014: Waring J.
+- 17:05:2014 Waring J.
+
 *************************************************************************/
- 
-#include "lua\Lua.h"
+#pragma once
+
+#include "gameobject\Avatar.h"
+#include "gameobject\AnimatedEntity.h"
+#include "gameobject\AnimatedSprite.h"
+#include "gameobject\Entity.h"
+#include "gameobject\Inventory.h"
+#include "gameobject\Item.h"
+#include "gameobject\SpriteEntity.h"

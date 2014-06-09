@@ -7,7 +7,12 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 20:05:2014: Waring J.
+- 09:06:2014 Waring J.
+
 *************************************************************************/
- 
-#include "lua\Lua.h"
+#pragma once
+
+#include "containers\CameraContainer.h"
+#include "containers\EntityContainer.h"
+#include "containers\SceneContainer.h"
+#include "containers\WindowContainer.h"

@@ -67,9 +67,6 @@
     <Filter Include="Engine Source Files\Lua">
       <UniqueIdentifier>{470eb881-206a-402d-b86b-632144043cfb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine Header Files\File System">
-      <UniqueIdentifier>{baf36940-ba5a-46f3-9c61-b7e3e2a19766}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine Source Files\File System">
       <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
     </Filter>
@@ -79,561 +76,582 @@
     <Filter Include="Engine Source Files\Networking">
       <UniqueIdentifier>{1e98ced5-8442-4869-9bad-b27e74e43ad6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Header Files\IO">
+      <UniqueIdentifier>{99c19e3d-ddf7-4736-a771-ccf71869ecd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Scene">
+      <UniqueIdentifier>{b413662b-9b3f-43b3-8848-e7186d248a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Group Headers">
+      <UniqueIdentifier>{c05816ca-c912-45af-97a2-ecc52851aeae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Camera.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Sprite.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SpriteManager.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tile.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Map.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIEntity.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIButton.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUICollapsibleMenu.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIEditor.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUILabel.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUISlider.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIText.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIWindow.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIContext.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIMenuBar.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIDropDownMenu.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Main.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\lua\lapi.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lauxlib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lbaselib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lbitlib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lcode.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lcorolib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lctype.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ldblib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ldebug.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ldo.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ldump.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lfunc.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lgc.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\linit.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\liolib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\llex.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lmathlib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lmem.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\loadlib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lobject.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lopcodes.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\loslib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lparser.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lstate.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lstring.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lstrlib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ltable.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ltablib.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\ltm.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lundump.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lvm.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\lzio.c">
-      <Filter>Lua Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Input.cpp">
+    <ClCompile Include="Engine\gui\GraphicalUI.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Scene.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GraphicalUI.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GUIContainer.cpp">
+    <ClCompile Include="Engine\gui\GUIButton.cpp">
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\MapSection.cpp">
+    <ClCompile Include="Engine\gui\GUICollapsibleMenu.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIContainer.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIContext.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIDropDownMenu.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIEditor.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIEntity.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUILabel.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIMenuBar.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUISlider.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIText.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GUIWindow.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\Vector2.cpp">
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\Vector3.cpp">
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\Vector4.cpp">
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\Matrix33.cpp">
+      <Filter>Engine Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CTCPServer.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CNetwork.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Avatar.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\AnimatedEntity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Entity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\SpriteEntity.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\ActiveState.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\Area.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\CGUID.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Item.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Inventory.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\Name.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\Position.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\CFile.cpp">
+      <Filter>Engine Source Files\File System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\FileSystem.cpp">
+      <Filter>Engine Source Files\File System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\Lua.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\LuaGlobalFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\LuaObjectFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\util\Timer.cpp">
+      <Filter>Engine Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Camera.cpp">
       <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Scene.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\MapSection.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Map.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\containers\CameraContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\containers\EntityContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\containers\WindowContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\containers\SceneContainer.cpp">
+      <Filter>Engine Source Files\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\Renderer.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\Sprite.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\SpriteBatcher.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\SpriteManager.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Tile.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\Window.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\EventHandler.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\Input.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CConnection.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CServerTCPConnection.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lapi.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lauxlib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lbaselib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lbitlib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lcode.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lcorolib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lctype.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ldblib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ldebug.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ldo.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ldump.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lfunc.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lgc.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\linit.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\liolib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\llex.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lmathlib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lmem.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\loadlib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lobject.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lopcodes.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\loslib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lparser.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lstate.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lstring.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lstrlib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ltable.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ltablib.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\ltm.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lundump.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lvm.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\lua\lib\lzio.c">
+      <Filter>Lua Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\LuaCallback.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GUIDLookup.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\EntityContainer.cpp">
-      <Filter>Engine Source Files\Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CameraContainer.cpp">
-      <Filter>Engine Source Files\Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Timer.cpp">
-      <Filter>Engine Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Vector2.cpp">
-      <Filter>Engine Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Vector3.cpp">
-      <Filter>Engine Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Vector4.cpp">
-      <Filter>Engine Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math.cpp">
-      <Filter>Engine Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CGUID.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Position.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Name.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Area.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ActiveState.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Matrix33.cpp">
-      <Filter>Engine Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LuaCallback.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Avatar.cpp">
+    <ClCompile Include="Engine\graphics\AnimatedSprite.cpp">
       <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\AnimatedEntity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\AnimatedSprite.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Entity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SpriteEntity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Inventory.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Item.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer.cpp">
-      <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SpriteBatcher.cpp">
-      <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Window.cpp">
-      <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SceneContainer.cpp">
-      <Filter>Engine Source Files\Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\WindowContainer.cpp">
-      <Filter>Engine Source Files\Containers</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Lua.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LuaObjectFactory.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LuaGlobalFactory.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\EventHandler.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\FileSystem.cpp">
-      <Filter>Engine Source Files\File System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CFile.cpp">
-      <Filter>Engine Source Files\File System</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CNetwork.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CTCPServer.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CTCPConnection.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Camera.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Scene.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Sprite.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SpriteManager.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tile.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Map.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIEntity.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIWindow.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIButton.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUICollapsibleMenu.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIEditor.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUILabel.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUISlider.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIText.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIContext.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIMenuBar.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIDropDownMenu.h">
-      <Filter>Engine Header Files\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Main.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\lua\lapi.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lauxlib.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lcode.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lctype.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\ldebug.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\ldo.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lfunc.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lgc.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\llex.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\llimits.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lmem.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lobject.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lopcodes.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lparser.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lstate.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lstring.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\ltable.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\ltm.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lua.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lua.hpp">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\luaconf.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lualib.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lundump.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lvm.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\lzio.h">
-      <Filter>Lua Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GraphicalUI.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GUIContainer.h">
+    <ClInclude Include="Engine\gui\GUIButton.h">
       <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\MapSection.h">
-      <Filter>Engine Header Files</Filter>
+    <ClInclude Include="Engine\gui\GUICollapsibleMenu.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIContainer.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIContext.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIDropDownMenu.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIEditor.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIEntity.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUILabel.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIMenuBar.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUISlider.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIText.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GUIWindow.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\Vector4.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\Vector2.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\Vector3.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\Matrix33.h">
+      <Filter>Engine Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CTCPServer.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CServerTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CNetwork.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\CClientTCPConnection.h">
+      <Filter>Engine Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Avatar.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\AnimatedEntity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Entity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\SpriteEntity.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\ActiveState.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\Area.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\CGUID.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\CScriptable.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Item.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Inventory.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\Name.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\Position.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\LuaGlobalFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\LuaMetatableFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\LuaObjectFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\Timer.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\LuaUtils.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\StringConverter.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\CBuffer.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\BitCompare.h">
+      <Filter>Engine Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\containers\CameraContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\containers\EntityContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\containers\WindowContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\containers\SceneContainer.h">
+      <Filter>Engine Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\Renderer.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\SpriteBatcher.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\Window.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\Input.h">
+      <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\EventHandler.h">
+      <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\CFile.h">
+      <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\EFile.h">
+      <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\FileSystem.h">
+      <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lapi.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lauxlib.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lcode.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lctype.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\ldebug.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\ldo.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lfunc.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lgc.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\llex.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\llimits.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lmem.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lobject.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lopcodes.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lparser.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lstate.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lstring.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\ltable.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\ltm.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lua.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lua.hpp">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\luaconf.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lualib.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lundump.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lvm.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\lua\lib\lzio.h">
+      <Filter>Lua Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\LuaCallback.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GUIDLookup.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\EntityContainer.h">
-      <Filter>Engine Header Files\Containers</Filter>
+    <ClInclude Include="Engine\graphics\AnimatedSprite.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\CameraContainer.h">
-      <Filter>Engine Header Files\Containers</Filter>
+    <ClInclude Include="Engine\scene\Camera.h">
+      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\StringConverter.h">
-      <Filter>Engine Header Files\Utils</Filter>
+    <ClInclude Include="Engine\scene\Scene.h">
+      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Timer.h">
-      <Filter>Engine Header Files\Utils</Filter>
+    <ClInclude Include="Engine\scene\MapSection.h">
+      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Vector4.h">
-      <Filter>Engine Header Files\Math</Filter>
+    <ClInclude Include="Engine\scene\Map.h">
+      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Vector2.h">
-      <Filter>Engine Header Files\Math</Filter>
+    <ClInclude Include="Engine\graphics\SpriteManager.h">
+      <Filter>Engine Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Vector3.h">
-      <Filter>Engine Header Files\Math</Filter>
+    <ClInclude Include="Engine\graphics\Sprite.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Containers.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjects.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Math.h">
-      <Filter>Engine Header Files\Math</Filter>
+      <Filter>Engine Header Files\Group Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\CGUID.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Name.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Position.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Area.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ActiveState.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Matrix33.h">
-      <Filter>Engine Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LuaCallback.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Avatar.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\AnimatedEntity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\AnimatedSprite.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Entity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Item.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SpriteEntity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer.h">
-      <Filter>Engine Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SpriteBatcher.h">
-      <Filter>Engine Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Window.h">
-      <Filter>Engine Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Inventory.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SceneContainer.h">
-      <Filter>Engine Header Files\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\WindowContainer.h">
-      <Filter>Engine Header Files\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LuaUtils.h">
-      <Filter>Engine Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Lua.h">
+    <ClInclude Include="Engine\lua\lua.h">
       <Filter>Engine Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\LuaObjectFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
+    <ClInclude Include="Engine\scene\Tile.h">
+      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\LuaGlobalFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\EventHandler.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\EFile.h">
-      <Filter>Engine Header Files\File System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CFile.h">
-      <Filter>Engine Header Files\File System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\FileSystem.h">
-      <Filter>Engine Header Files\File System</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CBuffer.h">
-      <Filter>Engine Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CScriptable.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\BitCompare.h">
-      <Filter>Engine Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ClassFlags.h">
-      <Filter>Engine Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LuaMetatableFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CConnection.h">
-      <Filter>Engine Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CClientTCPConnection.h">
-      <Filter>Engine Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CNetwork.h">
-      <Filter>Engine Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CServerTCPConnection.h">
-      <Filter>Engine Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CTCPConnection.h">
-      <Filter>Engine Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CTCPServer.h">
-      <Filter>Engine Header Files\Networking</Filter>
+    <ClInclude Include="Engine\gui\GraphicalUI.h">
+      <Filter>Engine Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
