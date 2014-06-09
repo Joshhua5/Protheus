@@ -11,7 +11,8 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_events.h>
+
+#include <SDL.h>
 #include <stack>
 
 using namespace std;

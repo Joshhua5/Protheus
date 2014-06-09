@@ -12,7 +12,7 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_net.h>
+ 
 #include "CTCPConnection.h"
 
 using namespace std;

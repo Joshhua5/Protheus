@@ -11,13 +11,15 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_rect.h>
+
+
 #include <vector> 
 #include "Tile.h"
 #include "..\component\Position.h"
 #include "Camera.h"
 #include "..\Math.h"
 #include "..\component\Area.h"
+#include <SDL.h>
 
 namespace Pro{
 	namespace Scene{

@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include "lib\lua.hpp" 
 
 namespace Pro{

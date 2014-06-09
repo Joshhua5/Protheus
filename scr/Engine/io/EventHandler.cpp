@@ -1,3 +1,4 @@
+
 #include "EventHandler.h"
 
 namespace Pro{
@@ -29,11 +30,11 @@ namespace Pro{
 			case SDL_EventType::SDL_MOUSEWHEEL:
 				mouseEvents.push_back(_event);
 				break;
-			default:
-				systemEvents.push_back(_event);
-				break;
 			case SDL_EventType::SDL_USEREVENT:
 				userEvents.push_back(_event);
+				break;
+			default:
+				systemEvents.push_back(_event);
 				break;
 			}
 		}

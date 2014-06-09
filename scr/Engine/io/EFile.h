@@ -4,12 +4,13 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Enumeration of file return and state types
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
+
 namespace Pro{
 	namespace Util{
 		enum struct EFile{

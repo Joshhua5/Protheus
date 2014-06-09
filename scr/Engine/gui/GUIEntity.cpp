@@ -1,3 +1,4 @@
+
 #include "GUIEntity.h"
 
 namespace Pro{
@@ -23,9 +24,6 @@ namespace Pro{
 		bool GUIEntity::isClickWithin(Math::Vector2& v){
 			return Math::Vector4(position, dimensions).contains(v); 
 		}
-		bool GUIEntity::isClickWithin(SDL_MouseButtonEvent& _mouse){ 
-			return isClickWithin(Math::Vector2(_mouse.x, _mouse.y));
-		} 
 
 		inline GUIEntity* getPointer(lua_State* L){
 			return *(static_cast<GUIEntity**>(lua_touserdata(L, 1)));

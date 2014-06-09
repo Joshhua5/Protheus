@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <vector>
  
 #include "GUIEntity.h"
@@ -26,7 +27,7 @@ namespace Pro{
 			GUIContainer();
 			~GUIContainer();
 			 
-			void update(SDL_Event); 
+			void update(SDL_Event);
 			void addComponent(GUIEntity*); 
 
 			// LUA Functions

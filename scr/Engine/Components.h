@@ -12,6 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 
+
 #include "component\ActiveState.h"
 #include "component\Area.h"
 #include "component\CGUID.h"

@@ -10,10 +10,10 @@ History:
 - 05:06:2014 Waring J.
 *************************************************************************/
 #pragma once
+
 #include "..\lua\lib\Lua.hpp"
 #include "..\util\LuaUtils.h"
 #include <string>
-
 using namespace std;
 
 namespace Pro{

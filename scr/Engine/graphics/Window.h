@@ -10,7 +10,8 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once
+#pragma once 
+
 #include <SDL.h>
 #include <string> 
 #include "..\component\CGUID.h"

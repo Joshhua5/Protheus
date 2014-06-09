@@ -11,8 +11,8 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <vector>
-#include <SDL_events.h>
 #include "GUIDropDownMenu.h"
 namespace Pro{
 	namespace GUI{

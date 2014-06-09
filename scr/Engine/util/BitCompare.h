@@ -14,6 +14,7 @@ History:
 
 #pragma once
 
+
 enum struct BIT{
 	_1 = (long) 0x1,
 	_2 = (long) 0x2,

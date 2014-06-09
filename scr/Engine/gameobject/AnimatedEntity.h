@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <unordered_map>
 #include <string>
 #include "..\graphics\AnimatedSprite.h"

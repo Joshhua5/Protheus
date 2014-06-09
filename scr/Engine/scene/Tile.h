@@ -11,8 +11,9 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once  
-#include <SDL_rect.h>
+#pragma once
+  
+#include <SDL.h>
 #include <vector> 
 namespace Pro{
 	namespace Scene{

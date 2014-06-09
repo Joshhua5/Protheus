@@ -11,7 +11,8 @@ History:
 
 *************************************************************************/
 #pragma once
-#include <SDL_rect.h>
+
+#include <SDL.h>
 
 namespace Pro{
 	namespace Math{

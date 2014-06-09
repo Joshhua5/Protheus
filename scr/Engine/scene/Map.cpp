@@ -1,3 +1,4 @@
+
 #include "Map.h"
 
 using namespace Pro;
@@ -24,7 +25,7 @@ bool Map::loadLevel(const std::string& file, const std::string& data){
 
 bool Map::loadLevelData(const std::string& file){
 	std::fstream stream(file.c_str(), std::fstream::in | std::fstream::binary);
-	std::vector<std::vector<char>> data;
+	vector<vector<char>> data;
 
 	if (stream.bad() == true){
 		stream.close();
@@ -36,7 +37,7 @@ bool Map::loadLevelData(const std::string& file){
 	char* buffer = new char[bufferSize];
 	while (stream.getline(buffer, bufferSize) && buffer[0] != ';'){
 		// read a horizontal line 
-		std::vector<char> horzLine; 
+		vector<char> horzLine; 
 		for (int x = 0; buffer[x] != '\0'; x++)
 			horzLine.push_back(buffer[x]); 
 		data.push_back(horzLine);
@@ -54,10 +55,10 @@ bool Map::loadLevelData(const std::string& file){
 
 	while (stream.getline(buffer, bufferSize) && stream.eof() == false){
 		MapSection* mapSec = new MapSection();
-		std::vector<std::vector<char>> mapSecData;
+		vector<vector<char>> mapSecData;
 		Math::Vector4 rect = Util::stringToVec4(buffer);
 		for (int x = static_cast<int>(rect.x); x < static_cast<int>(rect.w); x++){
-			std::vector<char> dat;
+			vector<char> dat;
 			for (int y = static_cast<int>(rect.y); y < static_cast<int>(rect.w); y++)
 				dat.push_back(data.at(y).at(x));
 			mapSecData.push_back(dat);

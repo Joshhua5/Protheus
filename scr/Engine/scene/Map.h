@@ -12,17 +12,16 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <SDL.h>
 #include <string>
 #include <fstream>
 #include <vector>
 
-#include "Camera.h"
-#include "Tile.h"
-#include "..\component\Area.h"
 #include "..\util\StringConverter.h"
 #include "MapSection.h"
-#include "..\Math.h"
+
+using namespace std;
 
 namespace Pro{
 	namespace Scene{
@@ -30,8 +29,8 @@ namespace Pro{
 			public Component::Area
 		{
 		private:  
-			std::vector<MapSection*> mapSections;
-			std::vector<TileType> tileData; 
+			vector<MapSection*> mapSections;
+			vector<TileType> tileData; 
 
 			bool loadLevelData(const std::string& file);
 			bool loadLevelTileData(const std::string&file);
@@ -39,7 +38,7 @@ namespace Pro{
 			Map();
 			~Map();
 
-			std::vector<MapSection*> getVisibleSections(Camera* cam);
+			vector<MapSection*> getVisibleSections(Camera* cam);
 			bool loadLevel(const std::string& file, const std::string& data);
 			TileType* getTile(Math::Vector2&);
 			TileType* getTileType(unsigned int);

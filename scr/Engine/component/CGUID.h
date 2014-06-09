@@ -11,10 +11,10 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include "..\lua\lib\lua.hpp" 
 #include "..\util\LuaUtils.h"
 #include "..\GUIDLookup.h"
-
 namespace Pro{
 	namespace Component{
 		typedef unsigned int uint32;

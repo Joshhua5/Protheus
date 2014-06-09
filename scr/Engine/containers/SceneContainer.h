@@ -11,10 +11,10 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <unordered_map>
 #include "..\scene\Scene.h" 
 #include "..\util\LuaUtils.h"
-
 namespace Pro{
 	class SceneContainer
 	{

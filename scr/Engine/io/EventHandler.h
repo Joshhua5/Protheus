@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <vector>
 #include "Input.h" 
 #include "..\lua\lib\lua.hpp"
@@ -32,9 +33,9 @@ namespace Pro{
 
 		void update();
 		std::vector<SDL_Event>* EventHandler::pollKeyEvents();
-		std::vector<SDL_Event>* EventHandler::pollMouseEvents(); 
+		std::vector<SDL_Event>* EventHandler::pollMouseEvents();
 		std::vector<SDL_Event>* EventHandler::pollSystemEvents();
-		std::vector<SDL_Event>* EventHandler::pollUserEvents(); 
+		std::vector<SDL_Event>* EventHandler::pollUserEvents();
 
 		static int lUpdate(lua_State*);
 	}; 

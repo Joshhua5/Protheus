@@ -11,10 +11,10 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <unordered_map>
 #include "..\graphics\Window.h" 
 #include "..\util\LuaUtils.h"
-
 namespace Pro{
 	class WindowContainer
 	{

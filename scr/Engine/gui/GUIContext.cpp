@@ -1,3 +1,4 @@
+
 #include "GUIContext.h"
 
 using namespace Pro;
@@ -19,8 +20,8 @@ GUIContext::~GUIContext()
 
 void GUIContext::update(SDL_Event event){
 	for each(auto windows in windows)
-		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-			if (windows.second.isClickWithin(event.button))
+		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN) 
+			if (windows.second.isClickWithin(Math::Vector2(event.button.x, event.button.y)))
 				windows.second.update(event);
 }
 

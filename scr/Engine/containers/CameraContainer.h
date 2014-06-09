@@ -12,10 +12,10 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <unordered_map> 
 #include <iostream>
 #include <string>
-
 #include "..\GUIDLookup.h"
 #include "..\scene\Camera.h"
 

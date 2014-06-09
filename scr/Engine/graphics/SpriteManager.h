@@ -11,13 +11,13 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <string>
 #include <vector> 
 #include <unordered_map>
 #include <thread>
-#include <fstream>
+#include <fstream>  
 #include <SDL_image.h>
-#include <SDL.h> 
 #include "..\graphics\AnimatedSprite.h"  
 #include "..\util\LuaUtils.h"
 

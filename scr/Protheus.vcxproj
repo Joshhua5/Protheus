@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\audio\CCAudioDevice.cpp" />
+    <ClCompile Include="Engine\audio\CAudioMixer.cpp" />
+    <ClCompile Include="Engine\audio\CAudioSignal.cpp" />
     <ClCompile Include="Engine\networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Engine\networking\CConnection.cpp" />
     <ClCompile Include="Engine\networking\CServerTCPConnection.cpp" />
@@ -105,6 +108,10 @@
     <ClCompile Include="Engine\networking\CTCPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\audio\CAudioDevice.h" />
+    <ClInclude Include="Engine\audio\CAudioMixer.h" />
+    <ClInclude Include="Engine\audio\CAudioSignal.h" />
+    <ClInclude Include="Engine\audio\CAudioTrack.h" />
     <ClInclude Include="Engine\Components.h" />
     <ClInclude Include="Engine\lua\lua.h" />
     <ClInclude Include="Engine\networking\CClientTCPConnection.h" />
@@ -124,7 +131,6 @@
     <ClInclude Include="Engine\gui\GUIEntity.h" />
     <ClInclude Include="Engine\GameObjects.h" />
     <ClInclude Include="Engine\Containers.h" />
-    <ClInclude Include="Engine\GUIDLookup.h" />
     <ClInclude Include="Engine\io\Input.h" />
     <ClInclude Include="Engine\gameobject\Inventory.h" />
     <ClInclude Include="Engine\gameobject\Item.h" />
@@ -201,6 +207,8 @@
     <ClInclude Include="Engine\component\CScriptable.h" />
     <ClInclude Include="Engine\lua\LuaMetatableFactory.h" />
     <ClInclude Include="Engine\networking\CServerTCPConnection.h" />
+    <ClInclude Include="Engine\audio\IAudioEffect.h" />
+    <ClInclude Include="Engine\audio\IBitstreamDecoder.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
@@ -234,7 +242,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
-    <LinkIncremental>true</LinkIncremental>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -252,16 +259,27 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
       <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>16Bytes</StructMemberAlignment>
+      <CreateHotpatchableImage>true</CreateHotpatchableImage>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>false</Profile>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <Manifest>
+      <GenerateCategoryTags>true</GenerateCategoryTags>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

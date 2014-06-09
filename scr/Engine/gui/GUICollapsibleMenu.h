@@ -11,7 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_events.h>
+ 
 #include <vector>
 #include "GUIEntity.h" 
 #include "GUIContainer.h"

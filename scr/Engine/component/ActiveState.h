@@ -10,9 +10,9 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 #pragma once
+
 #include <string>
 #include "..\lua\lib\lua.hpp"
-
 using namespace std;
 
 namespace Pro{

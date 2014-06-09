@@ -11,6 +11,7 @@ History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
+
 #include "EFile.h"
 #include "..\util\CBuffer.h"
 

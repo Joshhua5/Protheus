@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CServerTCPConnection.h"
 
 namespace Pro{

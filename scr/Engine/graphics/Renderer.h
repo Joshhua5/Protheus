@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once 
+
 #include "..\scene\Scene.h"
 #include <unordered_map>
 #include "SpriteManager.h" 

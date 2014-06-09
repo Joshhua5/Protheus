@@ -11,10 +11,9 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_events.h>
+ 
 #include <unordered_map>
-#include <vector>
-
+#include <vector> 
 #include "GUIWindow.h"  
 
 namespace Pro{

@@ -13,8 +13,9 @@ History:
 #pragma once
 
 #include <vector>
-#include <SDL_rect.h>
+#include <SDL.h>
 #include "Item.h"
+
 namespace Pro{
 	namespace GameObject{
 		class Inventory : 

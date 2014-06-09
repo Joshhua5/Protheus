@@ -1,3 +1,4 @@
+
 #include "SpriteManager.h"
 namespace Pro{
 	namespace Graphics{

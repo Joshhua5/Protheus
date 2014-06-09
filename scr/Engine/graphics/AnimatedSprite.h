@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include <vector>
 #include "..\graphics\Sprite.h"
 

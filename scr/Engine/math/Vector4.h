@@ -10,13 +10,14 @@ History:
 - 17:05:2014 Waring J.
 
 *************************************************************************/
+#pragma once
+
 #define __SSE
 #ifdef __SSE
 #include <xmmintrin.h>
 #endif
-
-#pragma once
-#include <SDL_rect.h>
+ 
+#include <SDL.h>
 #include "Vector2.h"
 namespace Pro{
 	namespace Math{

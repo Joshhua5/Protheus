@@ -1,3 +1,4 @@
+
 #include "GUIContainer.h"
 namespace Pro{
 	namespace GUI{ 
@@ -14,11 +15,11 @@ namespace Pro{
 				if (entities->isActive()){
 					switch (entities->type){
 					case GUI_ENTITY_TYPE::COLLAPSIBLE_MENU:
-						if (static_cast<GUIContainer*>(entities)->isClickWithin(mouse_event.button))
+						if (static_cast<GUIContainer*>(entities)->isClickWithin(Math::Vector2(mouse_event.button.x, mouse_event.button.y)))
 							static_cast<GUIContainer*>(entities)->update(mouse_event);
 						break;
 					default:
-						if (entities->isClickWithin(mouse_event.button))
+						if (entities->isClickWithin(Math::Vector2(mouse_event.button.x, mouse_event.button.y)))
 							entities->callback();
 						break;
 					}

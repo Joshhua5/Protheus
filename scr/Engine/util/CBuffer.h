@@ -14,6 +14,7 @@ History:
 *************************************************************************/
 #pragma once
 
+
 #include <memory>
 
 struct CBuffer

@@ -11,6 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
+
 #include "GUIEntity.h"
 namespace Pro{
 	namespace GUI{

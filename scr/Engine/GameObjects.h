@@ -12,6 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 
+
 #include "gameobject\Avatar.h"
 #include "gameobject\AnimatedEntity.h" 
 #include "gameobject\Entity.h"

@@ -13,7 +13,7 @@ Description:
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
- 
+
 #include "..\GUIDLookup.h"
 #include "..\Components.h"
 #include "..\lua\lib\lua.hpp"
@@ -49,17 +49,16 @@ namespace Pro{
 			~GUIEntity();
 
 			// position includes the width and height
-			SDL_Point getPosition();
-			void setPosition(SDL_Point);
+			Math::Vector2 getPosition();
+			void setPosition(Math::Vector2);
 
-			SDL_Point getDimensions();
-			void setDimensions(SDL_Point);
+			Math::Vector2 getDimensions();
+			void setDimensions(Math::Vector2);
 
 			GUIEntity* getParent();
 			void setParent(GUIEntity*);
 			    
 			bool isClickWithin(Math::Vector2& v);
-			bool isClickWithin(SDL_MouseButtonEvent&);
 			 
 			// Lua functions
 

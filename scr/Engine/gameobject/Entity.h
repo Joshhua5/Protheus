@@ -11,7 +11,8 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_rect.h>
+
+#include <SDL.h>
 #include <string>
 #include "..\lua\lib\lua.hpp"
 #include "..\component\Position.h"

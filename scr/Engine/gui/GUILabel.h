@@ -10,7 +10,9 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
+ 
 #pragma once
+
 #include "GUIEntity.h"
 namespace Pro{
 	namespace GUI{

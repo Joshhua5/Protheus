@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Engine Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -87,6 +83,12 @@
     </Filter>
     <Filter Include="Engine Source Files\IO">
       <UniqueIdentifier>{39e723c3-bc81-4153-ad2f-f02d7d20e30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Header Files\Audio">
+      <UniqueIdentifier>{a7dcb5c4-cf30-4be2-a929-20816ac1568f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Audio">
+      <UniqueIdentifier>{a0d09031-1268-40ee-8926-d615b84c5dc3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +368,15 @@
     <ClCompile Include="Engine\gui\GraphicalUI.cpp">
       <Filter>Engine Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\audio\CCAudioDevice.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CAudioMixer.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CAudioSignal.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -611,9 +622,6 @@
     <ClInclude Include="Engine\component\LuaCallback.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\GUIDLookup.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\graphics\AnimatedSprite.h">
       <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
@@ -655,6 +663,24 @@
     </ClInclude>
     <ClInclude Include="Engine\gui\GraphicalUI.h">
       <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\IBitstreamDecoder.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioDevice.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioMixer.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioSignal.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioTrack.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\IAudioEffect.h">
+      <Filter>Engine Header Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

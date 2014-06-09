@@ -11,8 +11,7 @@ History:
 *************************************************************************/
 
 #pragma once
-#include <SDL_rect.h>
-#include <SDL_events.h>
+
 #include <string>
 #include <vector> 
 #include "GUIButton.h"

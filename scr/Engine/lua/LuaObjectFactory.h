@@ -13,6 +13,7 @@ History:
 - 21:05:2014 Waring J.
 *************************************************************************/
 #pragma once
+
 #include "lib\lua.hpp" 
 #include "..\gameobject\Avatar.h" 
 #include "..\util\LuaUtils.h" 

@@ -10,6 +10,7 @@ History:
 - 07:06:2014: Waring J.
 *************************************************************************/
 #pragma once
+
 #include <SDL_net.h> 
 #include <stack> 
 #include <mutex>
