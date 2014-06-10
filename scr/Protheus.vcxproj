@@ -26,7 +26,7 @@
     <ClCompile Include="Engine\scene\Camera.cpp" />
     <ClCompile Include="Engine\gui\GUIContainer.cpp" />
     <ClCompile Include="Engine\gameobject\Entity.cpp" />
-    <ClCompile Include="Engine\io\EventHandler.cpp" />
+    <ClCompile Include="Engine\event\EventHandler.cpp" />
     <ClCompile Include="Engine\gui\GraphicalUI.cpp" />
     <ClCompile Include="Engine\gui\GUIEntity.cpp" />
     <ClCompile Include="Engine\GUIDLookup.cpp" />
@@ -113,6 +113,15 @@
     <ClInclude Include="Engine\audio\CAudioSignal.h" />
     <ClInclude Include="Engine\audio\CAudioTrack.h" />
     <ClInclude Include="Engine\Components.h" />
+    <ClInclude Include="Engine\event\CKeyboardEvent.h" />
+    <ClInclude Include="Engine\event\CMouseButton.h" />
+    <ClInclude Include="Engine\event\CMouseMotion.h" />
+    <ClInclude Include="Engine\event\EKeyboardKey.h" />
+    <ClInclude Include="Engine\event\EMouseButton.h" />
+    <ClInclude Include="Engine\event\IEvent.h" />
+    <ClInclude Include="Engine\GUIDLookup.h" />
+    <ClInclude Include="Engine\event\CEvent.h" />
+    <ClInclude Include="Engine\event\EEvent.h" />
     <ClInclude Include="Engine\lua\lua.h" />
     <ClInclude Include="Engine\networking\CClientTCPConnection.h" />
     <ClInclude Include="Engine\networking\CConnection.h" />
@@ -126,7 +135,7 @@
     <ClInclude Include="Engine\gameobject\Avatar.h" />
     <ClInclude Include="Engine\scene\Camera.h" />
     <ClInclude Include="Engine\gameobject\Entity.h" />
-    <ClInclude Include="Engine\io\EventHandler.h" />
+    <ClInclude Include="Engine\event\EventHandler.h" />
     <ClInclude Include="Engine\gui\GraphicalUI.h" />
     <ClInclude Include="Engine\gui\GUIEntity.h" />
     <ClInclude Include="Engine\GameObjects.h" />

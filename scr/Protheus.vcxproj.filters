@@ -90,6 +90,12 @@
     <Filter Include="Engine Source Files\Audio">
       <UniqueIdentifier>{a0d09031-1268-40ee-8926-d615b84c5dc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Header Files\Event">
+      <UniqueIdentifier>{73e54b99-bd75-45a1-8f21-d62d81240523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Source Files\Event">
+      <UniqueIdentifier>{e70f0669-bf7b-456c-aabd-df5c99075cd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -191,15 +197,6 @@
     <ClCompile Include="Engine\io\FileSystem.cpp">
       <Filter>Engine Source Files\IO</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\lua\Lua.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\LuaGlobalFactory.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lua\LuaObjectFactory.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\util\Timer.cpp">
       <Filter>Engine Source Files\Utils</Filter>
     </ClCompile>
@@ -223,6 +220,63 @@
     </ClCompile>
     <ClCompile Include="Engine\graphics\Window.cpp">
       <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\LuaCallback.cpp">
+      <Filter>Engine Source Files\ClassComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUIDLookup.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\AnimatedSprite.cpp">
+      <Filter>Engine Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CServerTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Camera.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Scene.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Tile.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\networking\CConnection.cpp">
+      <Filter>Engine Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\Map.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\MapSection.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\Sprite.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphics\SpriteManager.cpp">
+      <Filter>Engine Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gui\GraphicalUI.cpp">
+      <Filter>Engine Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CCAudioDevice.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CAudioMixer.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CAudioSignal.cpp">
+      <Filter>Engine Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\Input.cpp">
+      <Filter>Engine Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\event\EventHandler.cpp">
+      <Filter>Engine Source Files\Event</Filter>
     </ClCompile>
     <ClCompile Include="Engine\lua\lib\lapi.c">
       <Filter>Lua Source</Filter>
@@ -320,62 +374,14 @@
     <ClCompile Include="Engine\lua\lib\lzio.c">
       <Filter>Lua Source</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\component\LuaCallback.cpp">
-      <Filter>Engine Source Files\ClassComponents</Filter>
+    <ClCompile Include="Engine\lua\Lua.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GUIDLookup.cpp">
-      <Filter>Engine Source Files</Filter>
+    <ClCompile Include="Engine\lua\LuaGlobalFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\graphics\AnimatedSprite.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CServerTCPConnection.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Camera.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Scene.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Tile.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\networking\CConnection.cpp">
-      <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Map.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\MapSection.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\io\EventHandler.cpp">
-      <Filter>Engine Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\io\Input.cpp">
-      <Filter>Engine Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\graphics\Sprite.cpp">
-      <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\graphics\SpriteManager.cpp">
-      <Filter>Engine Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gui\GraphicalUI.cpp">
-      <Filter>Engine Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\audio\CCAudioDevice.cpp">
-      <Filter>Engine Source Files\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\audio\CAudioMixer.cpp">
-      <Filter>Engine Source Files\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\audio\CAudioSignal.cpp">
-      <Filter>Engine Source Files\Audio</Filter>
+    <ClCompile Include="Engine\lua\LuaObjectFactory.cpp">
+      <Filter>Engine Source Files\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,15 +490,6 @@
     <ClInclude Include="Engine\component\Position.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\lua\LuaGlobalFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\LuaMetatableFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lua\LuaObjectFactory.h">
-      <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\util\Timer.h">
       <Filter>Engine Header Files\Utils</Filter>
     </ClInclude>
@@ -529,12 +526,6 @@
     <ClInclude Include="Engine\graphics\Window.h">
       <Filter>Engine Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\io\Input.h">
-      <Filter>Engine Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\io\EventHandler.h">
-      <Filter>Engine Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\io\CFile.h">
       <Filter>Engine Header Files\IO</Filter>
     </ClInclude>
@@ -543,6 +534,96 @@
     </ClInclude>
     <ClInclude Include="Engine\io\FileSystem.h">
       <Filter>Engine Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\LuaCallback.h">
+      <Filter>Engine Header Files\ClassComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\AnimatedSprite.h">
+      <Filter>Engine Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\Camera.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\Scene.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\MapSection.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\Map.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\SpriteManager.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\Sprite.h">
+      <Filter>Engine Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Containers.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjects.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\Tile.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gui\GraphicalUI.h">
+      <Filter>Engine Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\IBitstreamDecoder.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioDevice.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioMixer.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioSignal.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioTrack.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\IAudioEffect.h">
+      <Filter>Engine Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUIDLookup.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\CKeyboardEvent.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\CMouseButton.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\CMouseMotion.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\EEvent.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\EKeyboardKey.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\EMouseButton.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\IEvent.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\EventHandler.h">
+      <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\Input.h">
+      <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\lua\lib\lapi.h">
       <Filter>Lua Header</Filter>
@@ -619,68 +700,20 @@
     <ClInclude Include="Engine\lua\lib\lzio.h">
       <Filter>Lua Header</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\component\LuaCallback.h">
-      <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\graphics\AnimatedSprite.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Camera.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Scene.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\MapSection.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Map.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\graphics\SpriteManager.h">
-      <Filter>Engine Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\graphics\Sprite.h">
-      <Filter>Engine Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Containers.h">
-      <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObjects.h">
-      <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Components.h">
-      <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math.h">
-      <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\lua\lua.h">
       <Filter>Engine Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\scene\Tile.h">
-      <Filter>Engine Header Files\Scene</Filter>
+    <ClInclude Include="Engine\lua\LuaGlobalFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\gui\GraphicalUI.h">
-      <Filter>Engine Header Files\GUI</Filter>
+    <ClInclude Include="Engine\lua\LuaMetatableFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\audio\IBitstreamDecoder.h">
-      <Filter>Engine Header Files\Audio</Filter>
+    <ClInclude Include="Engine\lua\LuaObjectFactory.h">
+      <Filter>Engine Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\audio\CAudioDevice.h">
-      <Filter>Engine Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\audio\CAudioMixer.h">
-      <Filter>Engine Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\audio\CAudioSignal.h">
-      <Filter>Engine Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\audio\CAudioTrack.h">
-      <Filter>Engine Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\audio\IAudioEffect.h">
-      <Filter>Engine Header Files\Audio</Filter>
+    <ClInclude Include="Engine\event\CEvent.h">
+      <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

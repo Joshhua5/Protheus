@@ -14,6 +14,7 @@ History:
 
 #include <vector>
 #include "Input.h" 
+#include <SDL.h>
 #include "..\lua\lib\lua.hpp"
 #include "..\util\LuaUtils.h"
 
