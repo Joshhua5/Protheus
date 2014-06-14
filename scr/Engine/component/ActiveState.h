@@ -12,6 +12,7 @@ History:
 #pragma once
 
 #include <string>
+#include <vector>
 #include "..\lua\lib\lua.hpp"
 using namespace std;
 
@@ -40,6 +41,14 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "component_active_state_metatable";
 			}
+
+			template<typename T> 
+			static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "activate", (lua_CFunction)&T::lActivate });
+				fields.push_back({ "deactivate", (lua_CFunction)&T::lDeactivate });
+				fields.push_back({ "isActive", (lua_CFunction)&T::lIsActive });
+			}
+
 		}; 
 	}
 }

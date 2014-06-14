@@ -2,7 +2,7 @@
 #include "MapSection.h"
 
 using namespace Pro;
-using namespace Scene;
+using namespace GameObject;
 
 
 char MapSection::tileAt(Math::Vector2& v){

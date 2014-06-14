@@ -17,21 +17,23 @@ History:
 #include <iostream>
 #include <string>
 #include "..\GUIDLookup.h"
-#include "..\scene\Camera.h"
+#include "..\gameobject\Camera.h"
 
 namespace Pro{ 
+	using namespace GameObject;
+
 	class CameraContainer
 	{
-		std::unordered_map<uint32, Scene::Camera*> stored_cameras;
-		Scene::Camera* active_camera;
+		std::unordered_map<uint32, Camera*> stored_cameras;
+		Camera* active_camera;
 	public:
 		CameraContainer(){ active_camera = nullptr; }
 		~CameraContainer(){}
 		    
-		Scene::Camera* getCamera(uint32);
-		Scene::Camera* getActiveCamera();
+		Camera* getCamera(uint32);
+		Camera* getActiveCamera();
 		void setActiveCamera(uint32);
-		void addCamera(Scene::Camera*);
+		void addCamera(Camera*);
 		void destoryCamera(uint32);
 	}; 
 }

@@ -27,9 +27,9 @@ namespace Pro{
 			return renderer;
 		}
 
-		void Renderer::renderScene(Scene::Scene* scene, SpriteManager* spriteMng){
+		void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 			// Get data 
-			Scene::Map* map = scene->getMap(); 
+			Map* map = scene->getMap(); 
 			//SDL_Point* cameraPos = scene->getActiveCamera()->getPosition();
 
 			//std::unordered_map<GUID, GameObject::Entity*>* entities = scene->getEntities();
@@ -47,7 +47,7 @@ namespace Pro{
 					if (col[0] == '\r')
 						continue;
 					for each(const auto& row in col){
-						Scene::TileType* tile = map->getTileType(row - 48);
+						TileType* tile = map->getTileType(row - 48);
 						// check if textured
 						if (!tile->isTextured)
 							continue;

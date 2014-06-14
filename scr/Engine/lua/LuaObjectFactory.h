@@ -31,19 +31,22 @@ namespace Pro{
 		class LuaObjectFactory
 		{ 
 		public: 
-			LuaObjectFactory(lua_State* L){ 
+			LuaObjectFactory(lua_State** L){ 
+				*L = luaL_newstate();
 				const luaL_Reg globalFunctions [] = {
 						{ "avatar_create", &LuaObjectFactory::createAvatar },
-						{ "camera_create", &LuaObjectFactory::createCamera }
+						{ "camera_create", &LuaObjectFactory::createCamera },
+						{ "scene_create", &LuaObjectFactory::createScene }
 				};
 
 				for each(auto i in globalFunctions)
-					lua_register(L, i.name, i.func);
+					lua_register(*L, i.name, i.func);
 			};
 			LuaObjectFactory(){}
 			~LuaObjectFactory(){}
  
 			// Object Creation
+			static int createScene(lua_State* L);
 			static int createAvatar(lua_State*);
 			static int createCamera(lua_State*);
 			static int createGUIButton(lua_State*);

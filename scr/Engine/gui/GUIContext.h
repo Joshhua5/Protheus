@@ -48,6 +48,12 @@ namespace Pro{
 			static string lGetMetatable(){
 				return "gui_context_metatable";
 			}
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "attachWindow", (lua_CFunction)&T::lAttachWindow });
+				fields.push_back({ "detachWindow", (lua_CFunction)&T::lDetachWindow });
+				fields.push_back({ "getContextName", (lua_CFunction)&T::lGetContextName });
+			}
 		};
 	}
 }

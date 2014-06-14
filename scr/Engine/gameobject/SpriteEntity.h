@@ -10,8 +10,7 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once
-#include <string>
+#pragma once 
 #include "Entity.h"
 
 using namespace std;
@@ -40,6 +39,11 @@ namespace Pro{
 			// returns the Metatable's name assosiated with this object
 			static inline string lGetMetatable(){
 				return "gameobject_sprite_entity_metatable";
+			}
+
+			template<typename T> static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "setSprite", (lua_CFunction)&T::lSetSprite });
+				fields.push_back({ "getSprite", (lua_CFunction)&T::lGetSpriteGUID });
 			}
 		};
 	}

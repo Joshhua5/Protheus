@@ -13,21 +13,23 @@ History:
 #pragma once
 
 #include <unordered_map>
-#include "..\scene\Scene.h" 
+#include "..\gameobject\Scene.h" 
 #include "..\util\LuaUtils.h"
+
 namespace Pro{
+	using namespace GameObject;
 	class SceneContainer
 	{
 	protected:
-		std::unordered_map<uint32, Scene::Scene*> stored_scenes;
-		Scene::Scene* active_scene = nullptr;
+		std::unordered_map<uint32, Scene*> stored_scenes;
+		Scene* active_scene = nullptr;
 	public:
 		SceneContainer(){}
 		~SceneContainer(){}
 
-		void addScene(Scene::Scene*); 
-		Scene::Scene* getScene(uint32);
-		Scene::Scene* getActiveScene(); 
+		void addScene(Scene*); 
+		Scene* getScene(uint32);
+		Scene* getActiveScene(); 
 		void setActiveScene(uint32);
 		void destoryScene(uint32); 
 		 

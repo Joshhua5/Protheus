@@ -1,7 +1,7 @@
 
 #include "Scene.h" 
 namespace Pro{
-	namespace Scene{
+	namespace GameObject{
 
 		Scene::Scene(lua_State* L) : 
 			EntityContainer(),
@@ -22,8 +22,7 @@ namespace Pro{
 		bool Scene::loadSceneData(const std::string& path, const std::string& data){
 			// Load Tile Data
 			tileData = new Map();
-			tileData->loadLevel(path, data);
-			return 0;
+			return tileData->loadLevel(path, data);
 		} 
 
 		// returns a list of entities found on a tile
@@ -39,10 +38,10 @@ namespace Pro{
 			return tileData;
 		}  
 
-		int Scene::lLoadScene(lua_State* L){
-			Scene* s = Util::luaP_touserdata<Scene>(L, 1);
-			s->loadSceneData(lua_tostring(L, 1), lua_tostring(L, 2));
-			return 0;
+		int Scene::lLoadScene(lua_State* L){ 
+			Scene* s = Util::luaP_touserdata<Scene>(L, 1);  
+			lua_toboolean(L, s->loadSceneData(lua_tostring(L, 2), lua_tostring(L, 3))); 
+			return 1;
 		} 	
 
 		int Scene::lUpdate(lua_State* L){

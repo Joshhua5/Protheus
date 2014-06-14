@@ -70,6 +70,11 @@ namespace Pro{
 				return "gui_entity_metatable";
 			}
 
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "getParent", (lua_CFunction)&T::lGetParent });
+				fields.push_back({ "setParent", (lua_CFunction)&T::lSetParent });
+			}
 		};
 	}
 }

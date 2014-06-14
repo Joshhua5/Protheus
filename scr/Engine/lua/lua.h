@@ -22,11 +22,12 @@ History:
 #include "..\networking\CNetwork.h"
 #include "..\graphics\Renderer.h" 
 #include "..\util\Timer.h"
-#include "..\io\EventHandler.h"
+#include "..\event\EventHandler.h"
 #include "..\io\FileSystem.h"
 #include "lib\lua.hpp"  
 
 #include "LuaObjectFactory.h"
+#include "LuaMetatableFactory.h"
 #include "LuaGlobalFactory.h" 
  
 namespace Pro{
@@ -34,7 +35,8 @@ namespace Pro{
 		static lua_State* lua_state;  
 		class CLua :
 			public LuaObjectFactory,
-			public LuaGlobalFactory
+			public LuaGlobalFactory,
+			public LuaMetatableFactory
 		{  
 			 
 			// No arguments

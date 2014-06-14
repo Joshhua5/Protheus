@@ -13,6 +13,7 @@ History:
 #pragma once
 
 #include <string>
+#include <vector>
 #include "..\lua\lib\lua.hpp"
 using namespace std;
 namespace Pro{
@@ -37,6 +38,10 @@ namespace Pro{
 			// returns the Metatable assosiated with this object
 			static inline string lGetMetatable(){
 				return "component_lua_callback_metatable";
+			}
+			template<typename T> 
+			inline static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "bindCallback", (lua_CFunction)&T::lBindCallback });
 			}
 		};
 	}

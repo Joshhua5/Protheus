@@ -26,9 +26,8 @@ namespace Pro{
 		}
 		
 		// String format of "x y z w" 
-		inline Math::Vector4 stringToVec4(const std::string& str){
-			
-			unsigned char pos[3];
+		inline Math::Vector4 stringToVec4(const std::string& str){ 
+			size_t pos[3];
 			pos[0] = str.find(' ');
 			pos[1] = str.find(' ', pos[0] + 1);
 			pos[2] = str.find_last_of(' ');

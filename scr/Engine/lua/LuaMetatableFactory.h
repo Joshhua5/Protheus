@@ -13,93 +13,26 @@ History:
 #pragma once
 
 #include "lib\lua.hpp" 
+#include "..\GameObjects.h"
+#include "..\Components.h"
+#include "..\gui\GUIContext.h"
+#include "..\gameobject\Scene.h"
+
+#include <vector>
+
+using namespace std;
+
 
 namespace Pro{
+	using namespace Component;
+	using namespace GameObject; 
+	using namespace GUI; 
+
 	namespace Lua{
 		class LuaMetatableFactory{
-			//  Purpose of this function is to reduce the dupilicated function defitions between metatables	 
-			template<typename T> vector<luaL_Reg> createMetatable(){
-				vector<luaL_Reg> out;
-				T object;
-				if (dynamic_cast<Component::ActiveState*>(&object)){
-					out.push_back({ "activate", &T::lActivate });
-					out.push_back({ "deactivate", &T::lDeactivate });
-					out.push_back({ "isActive", &T::lIsActive });
-				}
-				if (dynamic_cast<Component::Area*>(&object)){
-					out.push_back({ "getDimensions", &T::lGetDimensions });
-					out.push_back({ "setDimensions", &T::lSetDimensions });
-				}
-				if (dynamic_cast<Component::CGUID*>(&object)){
-					out.push_back({ "getGUID", &T::lGetGUID });
-				}
-				if (dynamic_cast<Component::CScriptable*>(&object)){
-					out.push_back({ "update", &T::lUpdate });
-					out.push_back({ "attachFunction", &T::lAttachFunction });
-				}
-				if (dynamic_cast<Component::LuaCallback*>(&object)){
-					out.push_back({ "bindCallback", &T::lBindCallback });
-				}
-				if (dynamic_cast<Component::Name*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<Component::Position*>(&object)){
-					out.push_back({ "getPosition", &T::lGetPosition });
-					out.push_back({ "setPosition", &T::lSetPosition });
-				}
-				if (dynamic_cast<GameObject::Entity*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<GameObject::CScriptable*>(&object)){
-					out.push_back({ "checkForItem", &T::lCheckForItem });
-					out.push_back({ "giveItem", &T::lGiveItem });
-					out.push_back({ "inventorySize", &T::lInventorySize });
-					out.push_back({ "takeItem", &T::lTakeItem });
-				}
-				if (dynamic_cast<GameObject::Item*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<GameObject::SpriteEntity*>(&object)){
-					out.push_back({ "setSprite", &T::lSetSprite });
-					out.push_back({ "getSprite", &T::lGetSprite });
-				}
-				if (dynamic_cast<GameObject::AnimatedEntity*>(&object)){
-					out.push_back({ "activateAnimation", &T::lActivateAnimation });
-					out.push_back({ "addAnimation", &T::lAddAnimation });
-				}
-				if (dynamic_cast<GameObject::Avatar*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<Asset::AnimatedSprite*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<Asset::Sprite*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<Scene::Camera*>(&object)){
-					out.push_back({ "move", &T::lMove });
-				}
-				if (dynamic_cast<GUI::GUIButton*>(&object)){
-					// No Lua Functions
-				}
-				if (dynamic_cast<GUI::GUIEntity*>(&object)){
-					out.push_back({ "getParent", &T::lGetParent });
-					out.push_back({ "setParent", &T::lSetParent });
-				}
-				if (dynamic_cast<GUI::GUIContext*>(&object)){
-					out.push_back({ "attachWindow", &T::lAttachWindow });
-					out.push_back({ "detachWindow", &T::lDetachWindow });
-					out.push_back({ "getContextName", &T::lGetContextName });
-				}
-				if (dynamic_cast<GUI::GUIContainer*>(&object)){
-					out.push_back({ "addComponent", &T::lAddComponent });
-				}
-				return out;
-			}
-
-			template<typename T> void defineMetatable(lua_State* L){
-
-				auto fields = createMetatable<T>();
+			typedef std::vector<luaL_Reg> Metatable;
+			   
+			template<typename T> void saveMetatable(lua_State* L, Metatable& fields){
 				luaL_newmetatable(L, &T::lGetMetatable()[0]);
 
 				for each(auto field in fields){
@@ -111,19 +44,135 @@ namespace Pro{
 				lua_pushvalue(L, -2);
 				lua_settable(L, -3);
 			}
-		
-		public:
-			// Produces all metatables for Lua's integration
-			void defineMetatables(lua_State* L){
-
-				defineMetatable<GameObject::Avatar>(L);
-				defineMetatable<Scene::Camera>(L);
-				defineMetatable<GUI::GUIButton>(L);
-				defineMetatable<GUI::GUIContext>(L);
-				defineMetatable<GUI::GUIContext>(L);
-				defineMetatable<GUI::GUIWindow>(L);
+			
+			template<typename T> void defineMetatable(lua_State* L){
+				Metatable fields;
+				T::lGetFunctions<T>(fields);
+				saveMetatable<T>(L, fields);
 			}
-			 
+
+			template<> void defineMetatable<ActiveState>(lua_State* L){
+				Metatable fields;
+				ActiveState::lGetFunctions<ActiveState>(fields);
+				saveMetatable<ActiveState>(L, fields);
+			}
+
+			template<> void defineMetatable<Area>(lua_State* L){
+				Metatable fields;
+				Area::lGetFunctions<Area>(fields);
+				saveMetatable<Area>(L, fields);
+			}
+
+			template<> void defineMetatable<CGUID>(lua_State* L){
+				Metatable fields;
+				CGUID::lGetFunctions<CGUID>(fields);
+				saveMetatable<CGUID>(L, fields);
+			}
+
+			template<> void defineMetatable<CScriptable>(lua_State* L){
+				Metatable fields;
+				CScriptable::lGetFunctions<CScriptable>(fields);
+				saveMetatable<CScriptable>(L, fields);
+			}
+
+			template<> void defineMetatable<LuaCallback>(lua_State* L){
+				Metatable fields;
+				LuaCallback::lGetFunctions<LuaCallback>(fields);
+				saveMetatable<LuaCallback>(L, fields);
+			}
+
+			template<> void defineMetatable<Name>(lua_State* L){
+				Metatable fields;
+				Name::lGetFunctions<Name>(fields);
+				saveMetatable<Name>(L, fields);
+			}
+
+			template<> void defineMetatable<Position>(lua_State* L){
+				Metatable fields;
+				Position::lGetFunctions<Position>(fields);
+				saveMetatable<Position>(L, fields);
+			}
+
+			template<> void defineMetatable<Avatar>(lua_State* L){
+				Metatable fields; 
+				Avatar::lGetFunctions<Avatar>(fields);
+				CGUID::lGetFunctions<Avatar>(fields);
+				Position::lGetFunctions<Avatar>(fields);
+				Inventory::lGetFunctions<Avatar>(fields);
+				AnimatedEntity::lGetFunctions<Avatar>(fields); 
+				saveMetatable<Avatar>(L, fields);
+			}
+
+			template<> void defineMetatable<Camera>(lua_State* L){
+				Metatable fields;
+				Camera::lGetFunctions<Camera>(fields);
+				CGUID::lGetFunctions<Camera>(fields);
+				Position::lGetFunctions<Camera>(fields);
+				Area::lGetFunctions<Camera>(fields);
+				saveMetatable<Camera>(L, fields);
+			}
+
+			template<> void defineMetatable<Scene>(lua_State* L){
+				Metatable fields;
+				Scene::lGetFunctions<Scene>(fields);
+				CGUID::lGetFunctions<Scene>(fields); 
+
+				saveMetatable<Scene>(L, fields);
+			}
+		public:
+			LuaMetatableFactory(lua_State* L){
+
+				// Components
+
+				defineMetatable<ActiveState>(L);
+				defineMetatable<Area>(L);
+				defineMetatable<CGUID>(L);
+				defineMetatable<CScriptable>(L);
+				defineMetatable<LuaCallback>(L);
+				defineMetatable<Name>(L);
+				defineMetatable<Position>(L);
+
+				// Game Objects
+
+				defineMetatable<Avatar>(L);
+				defineMetatable<Camera>(L);
+				defineMetatable<Scene>(L);
+				/*defineMetatable<AnimatedEntity>(L);
+				defineMetatable<Entity>(L);
+				defineMetatable<Inventory>(L);
+				defineMetatable<Item>(L);
+				defineMetatable<Map>(L);
+				defineMetatable<MapSection>(L);
+				defineMetatable<SpriteEntity>(L);
+				defineMetatable<TileType>(L);*/
+
+				// GUI
+
+				//defineMetatable<GUIButton>(L);
+				//defineMetatable<GUIContext>(L);
+				//defineMetatable<GUIContext>(L);
+				//defineMetatable<GUIWindow>(L);
+
+				// Audio
+
+				// Event
+
+				// IO
+
+				// Graphics
+
+				// Containers
+				 
+				// Math
+
+				// Scene
+
+				// Networking
+
+
+				//  
+			}
+			LuaMetatableFactory(); 
 		};
 	}
 }

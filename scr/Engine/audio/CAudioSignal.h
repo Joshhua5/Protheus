@@ -25,8 +25,9 @@ namespace Pro{
 		{
 		public:
 			CBuffer stream;
-			char channels;
-			char resolution;
+			unsigned char channels;
+			unsigned int format;
+			unsigned int frequency;
 			unsigned int sample_rate;
 			Math::Vector2 position;
 			std::vector<IAudioEffect> effects;

@@ -29,7 +29,7 @@ History:
 #include "Map.h"
 #include "Camera.h"
 namespace Pro{
-	namespace Scene{
+	namespace GameObject{
 		class Scene :
 			public EntityContainer,
 			public CameraContainer,
@@ -39,6 +39,7 @@ namespace Pro{
 		public:
 			lua_State* lua_state;
 			Scene(lua_State* lua_state);
+			Scene(){};
 			~Scene();
 
 			bool loadSceneData(const std::string& path, const std::string& data);
@@ -59,6 +60,12 @@ namespace Pro{
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "scene_metatable";
+			}
+
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "update", (lua_CFunction)&T::lUpdate });
+				fields.push_back({ "loadScene", (lua_CFunction)&T::lLoadScene });
 			}
 		};
 	}

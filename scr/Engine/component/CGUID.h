@@ -15,6 +15,7 @@ History:
 #include "..\lua\lib\lua.hpp" 
 #include "..\util\LuaUtils.h"
 #include "..\GUIDLookup.h"
+
 namespace Pro{
 	namespace Component{
 		typedef unsigned int uint32;
@@ -22,6 +23,7 @@ namespace Pro{
 		{
 		protected:
 			uint32 guid;
+			virtual void polymorphic(){};
 		public:
 			CGUID(const std::string& name);
 			CGUID();
@@ -34,6 +36,10 @@ namespace Pro{
 			// returns the Metatable assosiated with this object
 			static inline string lGetMetatable(){
 				return "component_guid_metatable";
+			}
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "getGUID", (lua_CFunction)&T::lGetGUID });
 			}
 		};
 	}

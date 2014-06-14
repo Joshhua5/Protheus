@@ -16,9 +16,13 @@ namespace Pro{
 			UNKNOWN = 0,
 			LEFT,
 			MIDDLE,
-			RIGHT,
-			SCROLL_UP,
-			SCROLL_DOWN
+			RIGHT
 		};
+
+		EMouseButton inline toMouseButton(SDL_MouseButtonEvent& _event){
+			EMouseButton out;
+			out = static_cast<EMouseButton>(_event.button);
+			return out;
+		}
 	}
 }

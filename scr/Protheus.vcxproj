@@ -1,19 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\audio\CAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CCAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CAudioMixer.cpp" />
     <ClCompile Include="Engine\audio\CAudioSignal.cpp" />
+    <ClCompile Include="Engine\component\CScriptable.cpp" />
     <ClCompile Include="Engine\networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Engine\networking\CConnection.cpp" />
     <ClCompile Include="Engine\networking\CServerTCPConnection.cpp" />
@@ -23,7 +41,7 @@
     <ClCompile Include="Engine\gameobject\AnimatedEntity.cpp" />
     <ClCompile Include="Engine\graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Engine\gameobject\Avatar.cpp" />
-    <ClCompile Include="Engine\scene\Camera.cpp" />
+    <ClCompile Include="Engine\gameobject\Camera.cpp" />
     <ClCompile Include="Engine\gui\GUIContainer.cpp" />
     <ClCompile Include="Engine\gameobject\Entity.cpp" />
     <ClCompile Include="Engine\event\EventHandler.cpp" />
@@ -33,15 +51,15 @@
     <ClCompile Include="Engine\io\Input.cpp" />
     <ClCompile Include="Engine\gameobject\Inventory.cpp" />
     <ClCompile Include="Engine\gameobject\Item.cpp" />
-    <ClCompile Include="Engine\scene\Map.cpp" />
+    <ClCompile Include="Engine\gameobject\Map.cpp" />
     <ClCompile Include="Engine\component\Name.cpp" />
     <ClCompile Include="Engine\networking\CNetwork.cpp" />
     <ClCompile Include="Engine\graphics\Renderer.cpp" />
-    <ClCompile Include="Engine\scene\Scene.cpp" />
+    <ClCompile Include="Engine\gameobject\Scene.cpp" />
     <ClCompile Include="Engine\graphics\Sprite.cpp" />
     <ClCompile Include="Engine\gameobject\SpriteEntity.cpp" />
     <ClCompile Include="Engine\graphics\SpriteManager.cpp" />
-    <ClCompile Include="Engine\scene\Tile.cpp" />
+    <ClCompile Include="Engine\gameobject\Tile.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
     <ClCompile Include="Engine\graphics\Window.cpp" />
     <ClCompile Include="Engine\gui\GUIButton.cpp" />
@@ -89,7 +107,7 @@
     <ClCompile Include="Engine\lua\lib\lzio.c" />
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\graphics\SpriteBatcher.cpp" />
-    <ClCompile Include="Engine\scene\MapSection.cpp" />
+    <ClCompile Include="Engine\gameobject\MapSection.cpp" />
     <ClCompile Include="Engine\containers\EntityContainer.cpp" />
     <ClCompile Include="Engine\component\Position.cpp" />
     <ClCompile Include="Engine\component\Area.cpp" />
@@ -102,12 +120,12 @@
     <ClCompile Include="Engine\containers\SceneContainer.cpp" />
     <ClCompile Include="Engine\containers\WindowContainer.cpp" />
     <ClCompile Include="Engine\lua\LuaObjectFactory.cpp" />
-    <ClCompile Include="Engine\lua\LuaGlobalFactory.cpp" />
     <ClCompile Include="Engine\io\CFile.cpp" />
     <ClCompile Include="Engine\io\FileSystem.cpp" />
     <ClCompile Include="Engine\networking\CTCPServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\audio\CAudioBuffer.h" />
     <ClInclude Include="Engine\audio\CAudioDevice.h" />
     <ClInclude Include="Engine\audio\CAudioMixer.h" />
     <ClInclude Include="Engine\audio\CAudioSignal.h" />
@@ -116,6 +134,7 @@
     <ClInclude Include="Engine\event\CKeyboardEvent.h" />
     <ClInclude Include="Engine\event\CMouseButton.h" />
     <ClInclude Include="Engine\event\CMouseMotion.h" />
+    <ClInclude Include="Engine\event\CMouseWheel.h" />
     <ClInclude Include="Engine\event\EKeyboardKey.h" />
     <ClInclude Include="Engine\event\EMouseButton.h" />
     <ClInclude Include="Engine\event\IEvent.h" />
@@ -133,7 +152,7 @@
     <ClInclude Include="Engine\gameobject\AnimatedEntity.h" />
     <ClInclude Include="Engine\graphics\AnimatedSprite.h" />
     <ClInclude Include="Engine\gameobject\Avatar.h" />
-    <ClInclude Include="Engine\scene\Camera.h" />
+    <ClInclude Include="Engine\gameobject\Camera.h" />
     <ClInclude Include="Engine\gameobject\Entity.h" />
     <ClInclude Include="Engine\event\EventHandler.h" />
     <ClInclude Include="Engine\gui\GraphicalUI.h" />
@@ -143,15 +162,15 @@
     <ClInclude Include="Engine\io\Input.h" />
     <ClInclude Include="Engine\gameobject\Inventory.h" />
     <ClInclude Include="Engine\gameobject\Item.h" />
-    <ClInclude Include="Engine\scene\Map.h" />
+    <ClInclude Include="Engine\gameobject\Map.h" />
     <ClInclude Include="Engine\component\Name.h" />
     <ClInclude Include="Engine\networking\CNetwork.h" />
     <ClInclude Include="Engine\graphics\Renderer.h" />
-    <ClInclude Include="Engine\scene\Scene.h" />
+    <ClInclude Include="Engine\gameobject\Scene.h" />
     <ClInclude Include="Engine\graphics\Sprite.h" />
     <ClInclude Include="Engine\gameobject\SpriteEntity.h" />
     <ClInclude Include="Engine\graphics\SpriteManager.h" />
-    <ClInclude Include="Engine\scene\Tile.h" />
+    <ClInclude Include="Engine\gameobject\Tile.h" />
     <ClInclude Include="Engine\util\Timer.h" />
     <ClInclude Include="Engine\graphics\Window.h" />
     <ClInclude Include="Engine\gui\GUIButton.h" />
@@ -193,7 +212,7 @@
     <ClInclude Include="Engine\graphics\SpriteBatcher.h" />
     <ClInclude Include="Engine\Math.h" />
     <ClInclude Include="Engine\gui\GUIContainer.h" />
-    <ClInclude Include="Engine\scene\MapSection.h" />
+    <ClInclude Include="Engine\gameobject\MapSection.h" />
     <ClInclude Include="Engine\containers\EntityContainer.h" />
     <ClInclude Include="Engine\component\Position.h" />
     <ClInclude Include="Engine\component\Area.h" />
@@ -231,7 +250,33 @@
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -244,7 +289,19 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -254,7 +311,31 @@
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\SDL2\source;$(SourcePath)</SourcePath>
+    <ExecutablePath>C:\SDL2\lib\x86;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\SDL2\source;$(SourcePath)</SourcePath>
+    <ExecutablePath>C:\SDL2\lib\x86;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\SDL2\source;$(SourcePath)</SourcePath>
@@ -290,7 +371,107 @@
       <GenerateCategoryTags>true</GenerateCategoryTags>
     </Manifest>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+      <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>16Bytes</StructMemberAlignment>
+      <CreateHotpatchableImage>true</CreateHotpatchableImage>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>false</Profile>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Manifest>
+      <GenerateCategoryTags>true</GenerateCategoryTags>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+      <EnablePREfast>false</EnablePREfast>
+      <StructMemberAlignment>16Bytes</StructMemberAlignment>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>false</Profile>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <Manifest>
+      <GenerateCategoryTags>true</GenerateCategoryTags>
+    </Manifest>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>

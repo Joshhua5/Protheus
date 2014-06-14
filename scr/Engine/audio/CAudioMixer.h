@@ -13,19 +13,31 @@ History:
 *************************************************************************/
 #pragma once 
 
-
+#include <atomic>
+#include <thread>
+#include "CAudioBuffer.h"
 #include "CAudioSignal.h"
 
 namespace Pro{
 	namespace Audio{
+		using namespace std;
+
 		class CAudioMixer
 		{
-			Uint8* output_stream;
-			std::vector<CAudioSignal> signals;
+			CAudioBuffer* output_stream; 
+			atomic<bool> stream_ready;
+			atomic<bool> stream_refill;
+			vector<CAudioSignal> signals;
+			/*
+			*/
+			void process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready);
+			thread stream_processor;
 		public:
 			CAudioMixer();
 			~CAudioMixer();
-			 
+			CAudioBuffer* getStream();
+			bool isStreamReady();
+			void refillStream();
 			void playTrack(CAudioSignal);
 			// Will create a signal from the track
 			void playTrack(CAudioTrack);

@@ -22,7 +22,7 @@ History:
 #include <SDL.h>
 
 namespace Pro{
-	namespace Scene{
+	namespace GameObject{
 
 		class MapSection : 
 			public Component::Area,

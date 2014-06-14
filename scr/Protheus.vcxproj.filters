@@ -236,23 +236,8 @@
     <ClCompile Include="Engine\networking\CClientTCPConnection.cpp">
       <Filter>Engine Source Files\Networking</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\scene\Camera.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Scene.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Tile.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\networking\CConnection.cpp">
       <Filter>Engine Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\Map.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\scene\MapSection.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\graphics\Sprite.cpp">
       <Filter>Engine Source Files\Graphics</Filter>
@@ -377,11 +362,29 @@
     <ClCompile Include="Engine\lua\Lua.cpp">
       <Filter>Engine Source Files\Lua</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\lua\LuaGlobalFactory.cpp">
-      <Filter>Engine Source Files\Lua</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\lua\LuaObjectFactory.cpp">
       <Filter>Engine Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\CScriptable.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Camera.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Map.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\MapSection.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Scene.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\Tile.cpp">
+      <Filter>Engine Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\audio\CAudioDevice.cpp">
+      <Filter>Engine Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,18 +544,6 @@
     <ClInclude Include="Engine\graphics\AnimatedSprite.h">
       <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\scene\Camera.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Scene.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\MapSection.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Map.h">
-      <Filter>Engine Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\graphics\SpriteManager.h">
       <Filter>Engine Header Files\Graphics</Filter>
     </ClInclude>
@@ -570,9 +561,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Math.h">
       <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\scene\Tile.h">
-      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\gui\GraphicalUI.h">
       <Filter>Engine Header Files\GUI</Filter>
@@ -714,6 +702,27 @@
     </ClInclude>
     <ClInclude Include="Engine\event\CEvent.h">
       <Filter>Engine Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\event\CMouseWheel.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Camera.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Map.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\MapSection.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Scene.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\Tile.h">
+      <Filter>Engine Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\CAudioBuffer.h">
+      <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

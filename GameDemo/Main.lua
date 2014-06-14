@@ -5,26 +5,15 @@ camera:setPosition(0, 0)
 camera:setDimensions(18, 18)
 
 avatar = avatar_create("hero1") 
+avatar:setPosition(12, 10) 
+avatarPos = avatar:getPosition() 
 
-avatarPosition = avatar:getPosition()
-avatarPosition[1] = 300;
-
-while not isCloseRequested(){
-	if(avatarPosition[0] > 500
-		avatarPosition[0]++;
+while true do
+	if avatarPos[0] > 500 then
+		avatarPos[0] = avatarPos[0] + 1;
 	else
-		acatarPosition[0]--;
-	avatar:setPosition(avatarPosition[0], avatarPosition[1]);
+		avatarPos[0] = avatarPos[0] - 1;
+	end
+	avatar:setPosition(avatarPos[0], avatarPos[1]);
 	returnToEngine();
-}
-
-
-
-
-while(sscanFile.hasNextLine())
-  {  
-    scanFile.nextLine();
-    wordNum++;
-    System.out.println(wordNum);
-    ver = 1; 
-  }
+end

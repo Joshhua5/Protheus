@@ -14,6 +14,7 @@ History:
 
 #include <SDL.h>
 #include <string>
+#include <vector>
 #include "..\lua\lib\lua.hpp"
 #include "..\component\Position.h"
 #include "..\component\CGUID.h"
@@ -28,9 +29,7 @@ namespace Pro{
 			public Component::Position,
 			public Component::CGUID,
 			public Component::ActiveState
-		{
-		protected: 
-			bool active;
+		{ 
 		public:
 			Entity(const std::string& name);
 			Entity();

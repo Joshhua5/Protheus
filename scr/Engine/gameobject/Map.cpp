@@ -2,7 +2,7 @@
 #include "Map.h"
 
 using namespace Pro;
-using namespace Scene;
+using namespace GameObject;
 
 Map::Map()
 {
@@ -31,6 +31,7 @@ bool Map::loadLevelData(const std::string& file){
 		stream.close();
 		std::string err = "Failed to load level data " + file;
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, err.c_str());
+		return false;
 	}
 
 	const unsigned int bufferSize = 9068;
@@ -42,12 +43,15 @@ bool Map::loadLevelData(const std::string& file){
 			horzLine.push_back(buffer[x]); 
 		data.push_back(horzLine);
 	}
+	if (data.empty())
+		return false;
 	dimensions = Math::Vector2(data[0].size(), data.size());  
 
 	if (stream.bad() == true){
 		stream.close();
 		std::string err = "Failed to load level, Phase 2: " + file;
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, err.c_str());
+		return false;
 	}
 
 	// Load Map Section Data

@@ -12,7 +12,7 @@ History:
 
 #pragma once 
 
-#include "..\scene\Scene.h"
+#include "..\gameobject\Scene.h"
 #include <unordered_map>
 #include "SpriteManager.h" 
 #include "SpriteBatcher.h"
@@ -31,7 +31,7 @@ namespace Pro{
 			 
 			SDL_Renderer* getRenderer();
 
-			void renderScene(Scene::Scene*, Graphics::SpriteManager*);
+			void renderScene(Scene*, Graphics::SpriteManager*);
 		};
 	}
 }

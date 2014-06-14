@@ -4,28 +4,27 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Contains data about a specific tile, such as it's size, physical
-	properites and the sprite assigned to the tile.
+
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once
-  
-#include <SDL.h>
-#include <vector> 
-namespace Pro{
-	namespace Scene{
-		struct TileType
-		{
-			SDL_Rect tileSize;
-			char tileID;
-			bool passable = true;
+#pragma once   
 
-			bool isTextured = false;
-			std::string spriteName;
-			void* spriteCache = nullptr;
+#include "..\math\Vector2.h"
+#include "IEvent.h"
+#include "EMouseButton.h"
+
+namespace Pro{
+	namespace Event{
+		struct MouseWheel : IEvent{
+			// which button is being pressed
+			EMouseButton type;
+			// if the button is being pressed this is true
+			bool scroll_down;
+			// if the button is being released this is true
+			bool scroll_up;
 		};
 	}
 }

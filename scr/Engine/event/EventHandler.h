@@ -13,30 +13,33 @@ History:
 #pragma once
 
 #include <vector>
-#include "Input.h" 
+#include "..\io\input.h" 
 #include <SDL.h>
+#include "CEvent.h"
 #include "..\lua\lib\lua.hpp"
 #include "..\util\LuaUtils.h"
 
-namespace Pro{
 
+
+namespace Pro{
+	using namespace Event;
 	class EventHandler
 	{
 	private:
 		Input* input;
-		std::vector<SDL_Event> keyboardEvents;
-		std::vector<SDL_Event> mouseEvents;
-		std::vector<SDL_Event> systemEvents;
-		std::vector<SDL_Event> userEvents;
+		std::vector<CEvent> keyboardEvents;
+		std::vector<CEvent> mouseEvents;
+		std::vector<CEvent> systemEvents;
+		std::vector<CEvent> userEvents;
 	public:
 		EventHandler();
 		~EventHandler();
 
 		void update();
-		std::vector<SDL_Event>* EventHandler::pollKeyEvents();
-		std::vector<SDL_Event>* EventHandler::pollMouseEvents();
-		std::vector<SDL_Event>* EventHandler::pollSystemEvents();
-		std::vector<SDL_Event>* EventHandler::pollUserEvents();
+		std::vector<CEvent>* EventHandler::pollKeyEvents();
+		std::vector<CEvent>* EventHandler::pollMouseEvents();
+		std::vector<CEvent>* EventHandler::pollSystemEvents();
+		std::vector<CEvent>* EventHandler::pollUserEvents();
 
 		static int lUpdate(lua_State*);
 	}; 

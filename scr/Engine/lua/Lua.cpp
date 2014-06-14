@@ -3,8 +3,9 @@
 
 namespace Pro{
 	namespace Lua{
-		CLua::CLua(){
-			lua_state = luaL_newstate();
+		CLua::CLua() : LuaObjectFactory(&lua_state) , LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){ 
+			// lua_state is created in object factory
+			// because it's constructer is the first called upon
 			luaL_openlibs(lua_state);  
 
 			luaP_setScenes(lua_state, new SceneContainer());
@@ -12,10 +13,7 @@ namespace Pro{
 			luaP_setEventHandler(lua_state, new EventHandler()); 
 			luaP_setSpriteManager(lua_state, new Graphics::SpriteManager()); 
 			luaP_setTimer(lua_state, new Util::Timer()); 
-			luaP_setFileSystem(lua_state, new Util::FileSystem()); 
-
-			registerGlobals(lua_state);
-			LuaObjectFactory(lua_state);
+			luaP_setFileSystem(lua_state, new Util::FileSystem());  
 		}
 		CLua::~CLua() { lua_close(lua_state); }
 

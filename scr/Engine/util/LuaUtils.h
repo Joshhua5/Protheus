@@ -13,7 +13,7 @@ History:
 *************************************************************************/
 
 #pragma once
-
+#include "..\lua\lib\lua.hpp"
 #include <iostream>
 using namespace std;
 
@@ -21,26 +21,30 @@ namespace Pro{
 	namespace Util{
 		template<typename T> T* luaP_touserdata(lua_State* L, int idx){
 			return *static_cast<T**>(lua_touserdata(L, idx));
-		}
-
-		// Creates a user data on the Lua stack, assuming that there's a name passed as the first argument
-		// also assuming that the Class accepts a name for GUID generation
-		template<typename T> T** luaP_newuserdata(lua_State* L){
-			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			*o = new T(lua_tostring(L, 1));
-			return o;
-		}
-		// Doesn't initialize the data and copies in the data passed
-		template<typename T> T** luaP_newuserdata(lua_State* L, T* data){
-			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			**o = *data;
-			return o;
-		}
-
+		}		
+		
 		inline void luaP_setmetatable(lua_State* L, const string& metatable){
 			luaL_getmetatable(L, &metatable[0]);
 			lua_setmetatable(L, -2);
 		}
+
+		// Creates a user data on the Lua stack, assuming that there's a name passed as the first argument
+		// also assuming that the Class accepts a name for GUID generation
+		
+		template<typename T> T** luaP_newuserdata(lua_State* L, T* data){
+			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
+			// Does not copy the data, only remembers reference to it
+			*o = data;
+			return o;
+		}
+
+		// Automaticallys binds the metatable
+		template<typename T> T** luaP_newobject(lua_State*, T* data) {
+			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
+			*o = data;
+			lua_setmetatable(L, T::lGetMetatable());
+			return o;
+		} 
 
 		inline void luaP_registerstore(lua_State* L, const std::string& key, void* data){
 			lua_pushstring(L, &key[0]);
@@ -57,7 +61,10 @@ namespace Pro{
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){
 			lua_pushstring(L, &key[0]);
 			lua_gettable(L, LUA_REGISTRYINDEX);
-			return (T*)lua_touserdata(L, -1);
+			auto pointer = static_cast<T*>(lua_touserdata(L, -1));
+			lua_pop(L, 1);
+			return pointer;
+
 		}
 
 		inline void luaP_dumpLuaStack(lua_State *L) {

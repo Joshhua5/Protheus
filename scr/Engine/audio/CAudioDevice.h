@@ -10,8 +10,7 @@ History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
-
-
+ 
 #include "CAudioMixer.h"
 #include <SDL.h>
 
@@ -19,10 +18,12 @@ namespace Pro{
 	namespace Audio{
 		class CAudioDevice
 		{ 
-			void audio_callback(CAudioMixer*, Uint8* stream, int length);
+			//void audio_callback(CAudioMixer*, Uint8* stream, int length);
+			unsigned int deviceID;
 			CAudioMixer mixer;
+			SDL_AudioSpec spec;
 		public:
-			CAudioDevice(SDL_AudioSpec&);
+			CAudioDevice(SDL_AudioSpec);
 			CAudioDevice();
 			~CAudioDevice();
 

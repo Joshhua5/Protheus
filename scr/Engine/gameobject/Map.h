@@ -24,7 +24,7 @@ History:
 using namespace std;
 
 namespace Pro{
-	namespace Scene{
+	namespace GameObject{
 		class Map : 
 			public Component::Area
 		{

@@ -4,26 +4,28 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Contains data about a specific tile, such as it's size, physical
+	properites and the sprite assigned to the tile.
 -------------------------------------------------------------------------
 History:
-- 10:06:2014: Waring J.
+- 20:05:2014: Waring J.
 *************************************************************************/
-#pragma once 
 
-#include "EEvent.h" 
-#include "IEvent.h"
-#include "CMouseButton.h"
-#include "CMouseMotion.h"
-#include "CMouseWheel.h"
-#include "CKeyboardEvent.h"
-
+#pragma once
+  
+#include <SDL.h>
+#include <vector> 
 namespace Pro{
-	namespace Event{
-		struct CEvent{
-			EEvent type;
-			// use the type to cast the event and retrieve it's data
-			IEvent* event; 
+	namespace GameObject{
+		struct TileType
+		{
+			SDL_Rect tileSize;
+			char tileID;
+			bool passable = true;
+
+			bool isTextured = false;
+			std::string spriteName;
+			void* spriteCache = nullptr;
 		};
 	}
 }

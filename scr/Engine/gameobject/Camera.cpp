@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 using namespace Pro;
-using namespace Scene;
+using namespace GameObject;
 
 Camera::Camera(const std::string& name) : CGUID(name){ 
 }

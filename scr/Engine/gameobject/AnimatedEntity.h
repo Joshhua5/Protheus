@@ -44,6 +44,11 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "gameobject_animated_entity_metatable";
 			}
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "activateAnimation", (lua_CFunction)&T::lActivateAnimation });
+				fields.push_back({ "addAnimation", (lua_CFunction)&T::lAddAnimation });
+			}
 		};
 	}
 }

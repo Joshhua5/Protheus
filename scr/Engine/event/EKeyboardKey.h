@@ -156,5 +156,9 @@ namespace Pro{
 			APOSTROPHE = '\'',
 			FULLSTOP = '.',
 		};
+ 
+		EKeyboardKey inline toKeyboardKey(SDL_Scancode& key){
+			return static_cast<EKeyboardKey>(SDL_GetKeyFromScancode(key));
+		}
 	}
 }

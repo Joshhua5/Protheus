@@ -38,6 +38,11 @@ namespace Pro{
 			static string lGetMetatable(){
 				return "gui_container_metatable";
 			}
+
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "addComponent", (lua_CFunction)&T::lAddComponent });
+			}
 		}; 
 	}
 }

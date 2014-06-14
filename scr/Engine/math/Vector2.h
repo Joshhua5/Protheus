@@ -20,6 +20,7 @@ namespace Pro{
 			float x, y;
 
 			Vector2(SDL_Point);
+			Vector2(unsigned long long, unsigned long long);
 			Vector2(unsigned int, unsigned int);
 			Vector2(float, float);
 			Vector2(int, int);
