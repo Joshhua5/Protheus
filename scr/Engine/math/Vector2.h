@@ -13,9 +13,12 @@ History:
 #pragma once
 
 #include <SDL.h>
+#include <cmath>
 
 namespace Pro{
 	namespace Math{
+		float PI = 3.14159265359f;
+
 		struct Vector2 {
 			float x, y;
 
@@ -28,6 +31,7 @@ namespace Pro{
 			~Vector2();
 
 			bool contains(float&);
+			float hypotenuse();
 
 			Vector2 operator=(SDL_Point&);
 			SDL_Point operator=(Vector2&);

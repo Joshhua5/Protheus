@@ -27,9 +27,7 @@ namespace Pro{
 			CAudioBuffer* output_stream; 
 			atomic<bool> stream_ready;
 			atomic<bool> stream_refill;
-			vector<CAudioSignal> signals;
-			/*
-			*/
+			vector<CAudioSignal> signals; 
 			void process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready);
 			thread stream_processor;
 		public:

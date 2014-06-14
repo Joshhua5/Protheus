@@ -25,6 +25,7 @@ namespace Pro{
 		{
 		public:
 			CBuffer stream;
+			float power;
 			unsigned char channels;
 			unsigned int format;
 			unsigned int frequency;

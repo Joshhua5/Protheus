@@ -21,25 +21,31 @@ CAudioMixer::~CAudioMixer()
 *
 **/
 
+float inline getDropoff(Math::Vector2& pos){
+	// Inverse Square Law  = P / 4 * PI * R * R
+	// R : distance
+	// P : Power 
+	float distance = pos.hypotenuse();
+	return 1.0f / (4.0f *  Math::PI * (distance * distance));
+}
+
 void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready){
 	while (true){
 		if (stream_refill.load()){
 			// populate stream with silence
 			switch (stream->channels){
-			case 1:
+			case 1: // Mono
 				memset(stream->mono, 0, stream->mono->size);
-			}
-			for each(auto signal in *signals){
-				// Signal Processing
-				switch (signal.channels){
-				case 1: // mono
+				for each(auto signal in *signals)
 					for (unsigned int x = 0; x < stream->mono->size; x++)
+						static_cast<float*>(stream->mono->data)[x] += 
+							static_cast<float*>(signal.stream.data)[x] * getDropoff(signal.position);
+				break;
+			case 2: // Sterio
 
-					break;
-				case 2: // sterio
-					break;
-				}
+				break;
 			}
+			 
 			stream_ready.store(true);
 			stream_refill.store(false);
 		}

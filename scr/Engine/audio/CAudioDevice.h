@@ -27,6 +27,7 @@ namespace Pro{
 			CAudioDevice();
 			~CAudioDevice();
 
+			SDL_AudioSpec getSpec(); 
 			CAudioMixer* getMixer();
 			SDL_AudioStatus getDeviceState();
 		}; 

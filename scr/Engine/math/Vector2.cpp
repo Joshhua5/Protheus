@@ -20,7 +20,6 @@ Vector2::Vector2()
 	y = 0;
 }
 
-
 Vector2::~Vector2(){}
 
 Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
@@ -48,4 +47,8 @@ bool Vector2::contains(float& p){
 	if ((x > p && y < p) || (x < p && y > p))
 		return true;
 	return false;
+}
+
+float Vector2::hypotenuse(){
+	return sqrtf((x * x) + (y * y));
 }
