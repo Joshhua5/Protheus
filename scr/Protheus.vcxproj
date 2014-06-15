@@ -123,6 +123,7 @@
     <ClCompile Include="Engine\io\CFile.cpp" />
     <ClCompile Include="Engine\io\FileSystem.cpp" />
     <ClCompile Include="Engine\networking\CTCPServer.cpp" />
+    <ClCompile Include="Engine\audio\WavDecoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\audio\CAudioBuffer.h" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Engine\networking\CServerTCPConnection.h" />
     <ClInclude Include="Engine\audio\IAudioEffect.h" />
     <ClInclude Include="Engine\audio\IBitstreamDecoder.h" />
+    <ClInclude Include="Engine\audio\WavDecoder.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

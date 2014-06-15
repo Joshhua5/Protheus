@@ -24,8 +24,8 @@ namespace Pro{
 		public:
 			IBitstreamDecoder();
 			~IBitstreamDecoder();
-			virtual CAudioTrack load(Util::CFile& file) = 0;
-			virtual CAudioTrack load(CBuffer& buffer) = 0;
+			virtual CAudioTrack* load(Util::CFile& file) = 0;
+			virtual CAudioTrack* load(CBuffer& buffer) = 0;
 		};
 	}
 }

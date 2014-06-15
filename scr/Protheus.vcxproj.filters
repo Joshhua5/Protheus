@@ -386,6 +386,9 @@
     <ClCompile Include="Engine\audio\CAudioDevice.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\audio\WavDecoder.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -722,6 +725,9 @@
       <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\audio\CAudioBuffer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\WavDecoder.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,6 +33,9 @@ namespace Pro{
 			/*  Returns if there's more data to be read */
 			bool isEndOfFile();
 
+			/* Returns the size of the file in bytes*/
+			unsigned int getSize();
+
 			/*  Set's the offset inside the file to read */
 			void setReadPosition(unsigned int);
 

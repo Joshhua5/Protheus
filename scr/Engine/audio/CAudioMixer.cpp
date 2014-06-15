@@ -42,7 +42,13 @@ void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* sig
 							static_cast<float*>(signal.stream.data)[x] * getDropoff(signal.position);
 				break;
 			case 2: // Sterio
-
+				memset(stream->mono, 0, stream->mono->size);
+				break;
+			case 4: // 4.0
+				memset(stream->mono, 0, stream->mono->size);
+				break;
+			case 6: // 5.1
+				memset(stream->mono, 0, stream->mono->size);
 				break;
 			}
 			 

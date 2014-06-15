@@ -22,9 +22,16 @@ namespace Pro{
 		struct CAudioTrack
 		{
 			CBuffer stream;
+
 			char channels;
-			char resolution;
+
+			unsigned int chunkSize;
+			unsigned int BitsPerSample;
 			unsigned int sample_rate;
+			unsigned int sample_count;
+
+			// reserved for decoding
+			unsigned int audioFormat; 
 		};
 	}
 }
