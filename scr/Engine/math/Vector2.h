@@ -16,8 +16,7 @@ History:
 #include <cmath>
 
 namespace Pro{
-	namespace Math{
-		float PI = 3.14159265359f;
+	namespace Math{ 
 
 		struct Vector2 {
 			float x, y;

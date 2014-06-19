@@ -31,7 +31,8 @@ namespace Pro{
 			unsigned int sample_count;
 
 			// reserved for decoding
-			unsigned int audioFormat; 
+			unsigned int audioFormat;
+			unsigned int headerSize;
 		};
 	}
 }

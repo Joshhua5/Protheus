@@ -62,6 +62,14 @@ namespace Pro{
 				lua_tostring(lua_state, -1);
 			// execute file
 			checkError(luaL_dofile(lua_state, &path[0]));
+
+			lua_getglobal(lua_state, "script_engine_mode");
+			while (lua_toboolean(lua_state, -1) == true){
+				lua_getglobal(lua_state, "update");
+				if (lua_pcall(lua_state, 0, 0, 0) != 0)
+					return; 
+				lua_getglobal(lua_state, "script_engine_mode");
+			}
 		} 
 	}
 }

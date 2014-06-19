@@ -5,5 +5,6 @@ screen_width = 800
 screen_height = 600
 screen_position_x = 100
 screen_position_y = 100
+script_engine_mode = true;
 fullscreen = false
 window_title = "Demo" 

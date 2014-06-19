@@ -8,33 +8,47 @@ using namespace Audio;
 CAudioTrack* decodeHeader(CBuffer& header){
 	/*
 	WAVE header
-	0 - Chunk ID, contains "RIFF"
-	4 - Chunk Size
-	8 - Format, contains "WAVE"
-	12 - Subchunk1ID, contains "fmt "
-	16 - Subchunk1Size, contains the size of the subchunk
-	20 - AudioFormat, PCM = 1
-	22 - NumChannels
-	24 - SampleRate
-	28 - ByteRate
-	32 - BlockAlign
-	34 - BitsPerSample
-	36 - Subchunk2ID, contains "data"
-	40 - Subchunk2Size, conatins the size of the file, following
+	0  : Chunk ID, contains "RIFF"
+	4  : Chunk Size
+	8  : Format, contains "WAVE"
+	12 : Subchunk1ID, contains "fmt "
+	16 : Subchunk1Size, contains the size of the subchunk
+	20 : AudioFormat, PCM = 1
+	22 : NumChannels
+	24 : SampleRate
+	28 : ByteRate
+	32 : BlockAlign
+	34 : BitsPerSample
+	40 : ExtraData
+	SubChunk1Size :
+	     Subchunk2ID, contains "data" 
+	SubChunk1Size + 4 :
+	     Subchunk2Size, conatins the size of the file, following
 		 The header
-	44 - Data
+	SubChunk1Size + 8 :
+	     Data
 	*/
 
+	char* charHeader = static_cast<char*>(header.data);
+
+	// the size of the first subchunk, can change depending on what's stored
+	// in the header
+	int subChunkSize1 =
+		*(int*)(charHeader + 4);
+	// 1 for PCM, anything else means there's some form on compression
+	// and can't be read with this decoder
 	short AudioFormat = 
-		static_cast<short>(static_cast<char*>(header.data)[20]);
+		*(short*)(charHeader + 20); 
 	short numChannels = 
-		static_cast<short>(static_cast<char*>(header.data)[22]);
+		*(short*)(charHeader + 22);
 	int sampleRate = 
-		static_cast<int>(static_cast<char*>(header.data)[24]);
+		*(int*)(charHeader + 14);
 	short bitsPerSample = 
-		static_cast<short>(static_cast<char*>(header.data)[34]);
-	int Subchunksize2 =
-		static_cast<int>(static_cast<char*>(header.data)[40]);
+		*(short*)(charHeader + 34);
+	// subChunkSize2 indicated the size of the file after the header
+	// can be used to determine how many samples are present in the file
+	int subChunksize2 =
+		*(int*)(charHeader + subChunkSize1 + 4);
 
 
 	CAudioTrack* out = new CAudioTrack;
@@ -42,7 +56,9 @@ CAudioTrack* decodeHeader(CBuffer& header){
 	out->sample_rate = sampleRate;
 	out->BitsPerSample = bitsPerSample;
 	out->audioFormat = AudioFormat;
-	out->sample_count = Subchunksize2 / numChannels / (bitsPerSample / 8);
+	out->sample_count = subChunksize2 / numChannels / (bitsPerSample / 8);
+	// + 8 for the size of the second subchunk
+	out->headerSize = subChunkSize1 + 8;
 }
 
 // uses the headerData to read the samples

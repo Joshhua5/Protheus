@@ -142,6 +142,7 @@
     <ClInclude Include="Engine\GUIDLookup.h" />
     <ClInclude Include="Engine\event\CEvent.h" />
     <ClInclude Include="Engine\event\EEvent.h" />
+    <ClInclude Include="Engine\IGame.h" />
     <ClInclude Include="Engine\lua\lua.h" />
     <ClInclude Include="Engine\networking\CClientTCPConnection.h" />
     <ClInclude Include="Engine\networking\CConnection.h" />

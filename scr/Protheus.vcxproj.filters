@@ -730,5 +730,8 @@
     <ClInclude Include="Engine\audio\WavDecoder.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\IGame.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
