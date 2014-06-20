@@ -4,22 +4,33 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+Provides a interface for the engine to have two classes, one for
+game mode and script mode
 -------------------------------------------------------------------------
 History:
-- 17:05:2014 Waring J.
+- 20:06:2014 Waring J.
 
 *************************************************************************/
-
-#pragma once 
-
-#include "math\Vector2.h"
-#include "math\Vector3.h"
-#include "math\Vector4.h"
-#include "math\Matrix33.h" 
+#pragma once
+#include "IGame.h"
+#include "lua\lib\lua.hpp"
 
 namespace Pro{
-	namespace Math{
-#define PI (float)3.141592653
-	}
+	class DataGame :
+		public IGame
+	{
+	private:
+		lua_State* lua_state;
+	public:
+		DataGame(lua_State* L);
+		DataGame();
+		~DataGame();
+
+		int update();
+		int render();
+		int initialize();
+		int cleanup();
+		int gameLoop();
+	};
 }
+

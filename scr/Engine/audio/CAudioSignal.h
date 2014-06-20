@@ -14,10 +14,9 @@ History:
 #pragma once
 
 
-#include "IAudioEffect.h"
-#include "CAudioTrack.h"
+#include "IAudioEffect.h" 
 #include <vector>
-#include "..\math\Vector2.h"
+#include "..\Math.h"
 
 namespace Pro{
 	namespace Audio{

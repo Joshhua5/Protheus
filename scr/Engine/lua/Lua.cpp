@@ -6,14 +6,14 @@ namespace Pro{
 		CLua::CLua() : LuaObjectFactory(&lua_state) , LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){ 
 			// lua_state is created in object factory
 			// because it's constructer is the first called upon
-			luaL_openlibs(lua_state);  
+			luaL_openlibs(lua_state);
 
 			luaP_setScenes(lua_state, new SceneContainer());
 			luaP_setNetwork(lua_state, new Networking::Network());
-			luaP_setEventHandler(lua_state, new EventHandler()); 
-			luaP_setSpriteManager(lua_state, new Graphics::SpriteManager()); 
-			luaP_setTimer(lua_state, new Util::Timer()); 
-			luaP_setFileSystem(lua_state, new Util::FileSystem());  
+			luaP_setEventHandler(lua_state, new EventHandler());
+			luaP_setSpriteManager(lua_state, new Graphics::SpriteManager());
+			luaP_setTimer(lua_state, new Util::Timer());
+			luaP_setFileSystem(lua_state, new Util::FileSystem());
 		}
 		CLua::~CLua() { lua_close(lua_state); }
 
@@ -22,7 +22,7 @@ namespace Pro{
 				std::cout << "Lua Error: " << lua_tostring(lua_state, -1) << std::endl;
 		} 
 
-		void CLua::loadConfig(const std::string& _path){
+		IGame* CLua::loadConfig(const std::string& _path){
 			// The config file must be next to the executable
 			// to define the root file paths
 
@@ -42,6 +42,12 @@ namespace Pro{
 			luaP_setWindow(lua_state, new Window(lua_tostring(lua_state, -1), lua_state));
 			// Create the renderer and set it in the registery
 			luaP_setRenderer(lua_state, new Graphics::Renderer(lua_state)); 
+
+			lua_getglobal(lua_state, "script_engine_mode");
+			if (lua_toboolean(lua_state, -1))
+				return new ScriptGame(lua_state);
+			else
+				return new DataGame(lua_state); 
 		}
 		void CLua::loadResources(){
 			// grab the path to the resource.lua
@@ -61,15 +67,7 @@ namespace Pro{
 				luaP_getFileSystem(lua_state)->getRootDir() +
 				lua_tostring(lua_state, -1);
 			// execute file
-			checkError(luaL_dofile(lua_state, &path[0]));
-
-			lua_getglobal(lua_state, "script_engine_mode");
-			while (lua_toboolean(lua_state, -1) == true){
-				lua_getglobal(lua_state, "update");
-				if (lua_pcall(lua_state, 0, 0, 0) != 0)
-					return; 
-				lua_getglobal(lua_state, "script_engine_mode");
-			}
+			checkError(luaL_dofile(lua_state, &path[0])); 
 		} 
 	}
 }

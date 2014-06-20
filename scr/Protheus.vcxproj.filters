@@ -389,6 +389,12 @@
     <ClCompile Include="Engine\audio\WavDecoder.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ScriptGame.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DataGame.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -731,6 +737,12 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\IGame.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ScriptGame.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DataGame.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

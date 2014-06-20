@@ -23,5 +23,7 @@ namespace Pro{
 		virtual int initialize() = 0;
 		// cleans up the system
 		virtual int cleanup() = 0;
+		// game loop
+		virtual int gameLoop() = 0; 
 	};
 }

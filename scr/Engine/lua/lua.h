@@ -24,6 +24,8 @@ History:
 #include "..\util\Timer.h"
 #include "..\event\EventHandler.h"
 #include "..\io\FileSystem.h"
+#include "..\ScriptGame.h"
+#include "..\DataGame.h"
 #include "lib\lua.hpp"  
 
 #include "LuaObjectFactory.h"
@@ -56,7 +58,7 @@ namespace Pro{
 			// prints out all the contents inside of the lua stack
 			static int dumpStack(lua_State*);
 			// Loads the config.lua relative to the executable
-			void loadConfig(const std::string& path);
+			IGame* loadConfig(const std::string& path);
 			// loads the resource.lua relative to the FileSystem root
 			void loadResources();
 			// loads the main.lua relative to the FileSystem root

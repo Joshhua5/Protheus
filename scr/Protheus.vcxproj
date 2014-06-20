@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\DataGame.cpp" />
     <ClCompile Include="Engine\audio\CAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CCAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CAudioMixer.cpp" />
@@ -124,8 +125,10 @@
     <ClCompile Include="Engine\io\FileSystem.cpp" />
     <ClCompile Include="Engine\networking\CTCPServer.cpp" />
     <ClCompile Include="Engine\audio\WavDecoder.cpp" />
+    <ClCompile Include="Engine\ScriptGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\DataGame.h" />
     <ClInclude Include="Engine\audio\CAudioBuffer.h" />
     <ClInclude Include="Engine\audio\CAudioDevice.h" />
     <ClInclude Include="Engine\audio\CAudioMixer.h" />
@@ -240,6 +243,7 @@
     <ClInclude Include="Engine\audio\IAudioEffect.h" />
     <ClInclude Include="Engine\audio\IBitstreamDecoder.h" />
     <ClInclude Include="Engine\audio\WavDecoder.h" />
+    <ClInclude Include="Engine\ScriptGame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
@@ -309,8 +313,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Engine\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)Engine\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\SDL2\lib\x86\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>

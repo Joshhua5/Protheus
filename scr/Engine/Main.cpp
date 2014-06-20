@@ -5,13 +5,31 @@ using namespace Pro;
 
 int main(int argc, char* args[])
 { 
-	Lua::CLua* lua = new Lua::CLua();
-	lua->loadConfig("..\\GameDemo\\Config.lua");
 	SDL_Init(SDL_INIT_EVERYTHING);
+	Lua::CLua* lua = new Lua::CLua();
+	IGame* game = nullptr;
+	game = lua->loadConfig("..\\GameDemo\\Config.lua");
+	 
+	ScriptGame* sGame = dynamic_cast<ScriptGame*>(game);
+	DataGame* dGame = dynamic_cast<DataGame*>(game);
 
-	lua->loadResources();
-	lua->loadMain();
+	if (sGame != nullptr){
+		lua->loadResources();
+		lua->loadMain();
 
+		sGame->initialize(); 
+		sGame->gameLoop();
+		sGame->cleanup();
+	}
+	 
+	if (dGame != nullptr){
+		dGame->initialize();
+		dGame->gameLoop();
+		dGame->cleanup();
+	}
+
+	delete dGame;
 	delete lua;
+	 
 	return 0;
 }

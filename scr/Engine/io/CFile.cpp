@@ -102,6 +102,14 @@ bool CFile::isOpen(){
 	return file.is_open();
 }
 
+unsigned int CFile::getSize(){
+	auto current_position = getReadPosition();
+	file.seekg(0, std::ios::end);
+	auto ending_position = getReadPosition();
+	setReadPosition(current_position);
+	return ending_position;
+}
+
 EFile CFile::peekError(){
 	switch (file.rdstate()){
 	case std::ifstream::goodbit:

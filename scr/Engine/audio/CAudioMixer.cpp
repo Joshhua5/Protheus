@@ -26,7 +26,7 @@ float inline getDropoff(Math::Vector2& pos){
 	// R : distance
 	// P : Power 
 	float distance = pos.hypotenuse();
-	return 1.0f / (4.0f *  Math::PI * (distance * distance));
+	return 1.0f / (4.0f * PI * (distance * distance));
 }
 
 void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready){
