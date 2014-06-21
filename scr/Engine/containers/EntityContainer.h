@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-Stores entities with reference from their GUID's
+	Stores entities with reference from their GUID's
 
 -------------------------------------------------------------------------
 History:

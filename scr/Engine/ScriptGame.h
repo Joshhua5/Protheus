@@ -4,17 +4,15 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-Provides a interface for the engine to have two classes, one for
-game mode and script mode
+	Execute the update and render function defined by the user in main.lua
+	ScriptGame will be executed if engine is in script mode.
 -------------------------------------------------------------------------
 History:
 - 20:06:2014 Waring J.
-
 *************************************************************************/
 #pragma once
 #include "IGame.h"
-#include "util\LuaUtils.h"
-#include "lua\lib\lua.hpp"
+#include "util\LuaUtils.h" 
 
 namespace Pro{
 	class ScriptGame :

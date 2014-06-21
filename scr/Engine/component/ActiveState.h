@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Stores a boolean value to determine if something is active or not
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.

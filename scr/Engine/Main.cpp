@@ -9,10 +9,12 @@ int main(int argc, char* args[])
 	Lua::CLua* lua = new Lua::CLua();
 	IGame* game = nullptr;
 	game = lua->loadConfig("..\\GameDemo\\Config.lua");
-	 
+	
+	// check for the parent type of game
 	ScriptGame* sGame = dynamic_cast<ScriptGame*>(game);
 	DataGame* dGame = dynamic_cast<DataGame*>(game);
 
+	// execute if engine is ScriptDriven
 	if (sGame != nullptr){
 		lua->loadResources();
 		lua->loadMain();
@@ -21,7 +23,7 @@ int main(int argc, char* args[])
 		sGame->gameLoop();
 		sGame->cleanup();
 	}
-	 
+	// execute if engine is DataDriven
 	if (dGame != nullptr){
 		dGame->initialize();
 		dGame->gameLoop();

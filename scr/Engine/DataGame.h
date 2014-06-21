@@ -4,8 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-Provides a interface for the engine to have two classes, one for
-game mode and script mode
+	Handles all parts of the system, loads and executes a game file
 -------------------------------------------------------------------------
 History:
 - 20:06:2014 Waring J.

@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Stores which button was pressed in a Mouse event
 -------------------------------------------------------------------------
 History:
 - 10:06:2014: Waring J.

@@ -31,8 +31,7 @@ namespace Pro{
 
 
 		// LUA Functions
-
-
+		 
 		static int lGetWindow(lua_State*);
 		static int lAddWindow(lua_State*);
 		static int lDestroyWindow(lua_State*);

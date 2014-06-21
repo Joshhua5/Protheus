@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-Stores entities with reference from their GUID's
-
+	Stores cameras with reference from their GUID's
+	also contains a active_camera which will be used for rendering
 -------------------------------------------------------------------------
 History:
 - 17:05:2014 Waring J.
