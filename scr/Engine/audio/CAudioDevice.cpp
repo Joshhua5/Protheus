@@ -4,37 +4,10 @@
 using namespace Pro;
 using namespace Audio;
 
-CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
-	_spec.callback = audio_callback;
-	_spec.userdata = this;
-	if (SDL_OpenAudio(&_spec, &spec) < 0){
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError()); 
-	}
-}
-
-CAudioDevice::CAudioDevice(){
-	SDL_AudioSpec _spec;
-	_spec.channels = 2;
-	_spec.format = AUDIO_S16;
-	_spec.freq = 44100;
-	_spec.samples = 1024;
-	_spec.callback = audio_callback;
-	_spec.userdata = this;
-
-	if (SDL_OpenAudio(&_spec, &spec) < 0){
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-		CAudioDevice();
-	}
-
-}
-CAudioDevice::~CAudioDevice(){ 
-	SDL_CloseAudioDevice(deviceID);
-}
-
 void convertStream(CBuffer* buffer, CAudioDevice* dev, int channels, unsigned int inFreq){
-	SDL_AudioCVT cvt;  
+	SDL_AudioCVT cvt;
 	SDL_BuildAudioCVT(&cvt, AUDIO_F32, channels, inFreq, dev->getSpec().format, channels, dev->getSpec().freq);
-	SDL_assert(cvt.needed); 
+	SDL_assert(cvt.needed);
 	cvt.buf = static_cast<Uint8*>(buffer->data);
 	cvt.len = buffer->size;
 	SDL_ConvertAudio(&cvt);
@@ -69,7 +42,32 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 	}
 }
 
+CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
+	_spec.callback = audio_callback;
+	_spec.userdata = this;
+	if (SDL_OpenAudio(&_spec, &spec) < 0){
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError()); 
+	}
+}
 
+CAudioDevice::CAudioDevice(){
+	SDL_AudioSpec _spec;
+	_spec.channels = 2;
+	_spec.format = AUDIO_S16;
+	_spec.freq = 44100;
+	_spec.samples = 1024;
+	_spec.callback = &audio_callback;
+	_spec.userdata = this;
+
+	if (SDL_OpenAudio(&_spec, &spec) < 0){
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+		CAudioDevice();
+	}
+
+}
+CAudioDevice::~CAudioDevice(){ 
+	SDL_CloseAudioDevice(deviceID);
+}
 
 CAudioMixer* CAudioDevice::getMixer(){
 	return &mixer;
@@ -77,5 +75,9 @@ CAudioMixer* CAudioDevice::getMixer(){
 
 SDL_AudioStatus CAudioDevice::getDeviceState(){
 	return SDL_GetAudioStatus();
+}
+
+SDL_AudioSpec CAudioDevice::getSpec(){
+	return spec;
 }
 

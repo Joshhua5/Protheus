@@ -13,6 +13,8 @@ History:
 #pragma once
 
 #include <string>
+#include <vector>
+#include "..\lua\lib\lua.hpp"
 
 using namespace std;
 
@@ -20,10 +22,10 @@ namespace Pro{
 	namespace Component{
 		class Name
 		{
-			std::string name;
+			string name;
 		public:
-			void setName(const std::string& _name);
-			const std::string getName();
+			void setName(const string& _name);
+			const string getName();
 
 			// returns the Metatable assosiated with this object
 			static inline string lGetMetatable(){
@@ -31,7 +33,7 @@ namespace Pro{
 			}
 
 			template<typename T>
-			inline static void lGetFunctions(std::vector<luaL_Reg>& fields){
+			inline static void lGetFunctions(vector<luaL_Reg>& fields){
 				//fields.push_back({ "", (lua_CFunction) &T:: });
 			}
 		};

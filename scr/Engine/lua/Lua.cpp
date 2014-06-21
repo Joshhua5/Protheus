@@ -26,7 +26,7 @@ namespace Pro{
 			// The config file must be next to the executable
 			// to define the root file paths
 
-			checkError(luaL_dofile(lua_state, &_path[0]));
+			Util::checkError(lua_state, luaL_dofile(lua_state, &_path[0]));
 
 			// Create and load Window here
 			// The window must be created first to register SDL_WINDOW

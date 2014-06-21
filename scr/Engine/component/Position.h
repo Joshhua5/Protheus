@@ -71,8 +71,7 @@ namespace Pro{
 			template<typename T> static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getPosition", (lua_CFunction)&T::lGetPosition<T> });
 				fields.push_back({ "setPosition", (lua_CFunction)&T::lSetPosition<T> });
-			}
-
+			} 
 		}; 
 	}
 }

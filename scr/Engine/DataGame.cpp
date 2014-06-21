@@ -2,8 +2,14 @@
 
 using namespace Pro;
 
+DataGame::DataGame(lua_State* L)
+{
+	lua_state = L;
+}
+
 DataGame::DataGame()
 {
+	lua_state = nullptr;
 }
 
 

@@ -1,7 +1,7 @@
 avatar = avatar_create("hero1") 
 camera = camera_create("camera")
-
-function Update()
+avatarPos = avatar:getPosition()
+function Update() 
 	if avatarPos[0] > 500 then
 		avatarPos[0] = avatarPos[0] + 1;
 	else

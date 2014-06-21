@@ -19,6 +19,12 @@ using namespace std;
 
 namespace Pro{
 	namespace Util{
+
+		inline void checkError(lua_State* L, int error){
+			if (error)
+				std::cout << "Lua Error: " << lua_tostring(L, -1) << std::endl;
+		}
+
 		template<typename T> T* luaP_touserdata(lua_State* L, int idx){
 			return *static_cast<T**>(lua_touserdata(L, idx));
 		}		

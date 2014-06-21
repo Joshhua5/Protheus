@@ -29,7 +29,6 @@
   <ItemGroup>
     <ClCompile Include="Engine\DataGame.cpp" />
     <ClCompile Include="Engine\audio\CAudioDevice.cpp" />
-    <ClCompile Include="Engine\audio\CCAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CAudioMixer.cpp" />
     <ClCompile Include="Engine\audio\CAudioSignal.cpp" />
     <ClCompile Include="Engine\component\CScriptable.cpp" />
