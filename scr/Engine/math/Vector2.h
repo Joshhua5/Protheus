@@ -14,6 +14,7 @@ History:
 
 #include <SDL.h>
 #include <cmath>
+#include "..\util\LuaUtils.h"
 
 namespace Pro{
 	namespace Math{ 
@@ -37,6 +38,34 @@ namespace Pro{
 			bool operator==(Vector2&);
 			void operator+=(Vector2&); 
 
+
+			// LUA Functions
+
+			static int lContains(lua_State*);
+			static int lHypotenuse(lua_State*);
+			static int lGetX(lua_State*);
+			static int lGetY(lua_State*); 
+			static int lSetX(lua_State*);
+			static int lSetY(lua_State*);
+			static int lGetXY(lua_State*);
+			static int lSetXY(lua_State*);
+			 
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "vector2_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "contains", (lua_CFunction) &T::lContains });
+				fields.push_back({ "hypotenuse", (lua_CFunction) &T::lHypotenuse });
+				fields.push_back({ "getX", (lua_CFunction) &T::lGetX });
+				fields.push_back({ "getY", (lua_CFunction) &T::lGetY });
+				fields.push_back({ "setX", (lua_CFunction) &T::lSetX });
+				fields.push_back({ "setY", (lua_CFunction) &T::lSetY });
+				fields.push_back({ "getXY", (lua_CFunction) &T::lGetXY });
+				fields.push_back({ "setXY", (lua_CFunction) &T::lSetXY });
+			}
 		}; 
 	}
 }

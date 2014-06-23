@@ -14,6 +14,7 @@ History:
 
 #pragma once
 #include "..\lua\lib\lua.hpp"
+#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -25,10 +26,27 @@ namespace Pro{
 				std::cout << "Lua Error: " << lua_tostring(L, -1) << std::endl;
 		}
 
+		template<typename T>
+		struct luaP_array{
+			vector<T> elements;
+			void add(T& value){
+				elements.push_back(value);
+			}
+		};
+
+		template<typename T>
+		inline void luaP_pusharray(lua_State* L, vector<T>& elements){
+			lua_createtable(lua_state, 0, 0);
+			for (int x = 0; x < elements.size(); x++){
+				lua_pushnumber(L, elements[x]);
+				lua_setfield(L, -1, '0' + x);
+			}
+		}
+
 		template<typename T> T* luaP_touserdata(lua_State* L, int idx){
 			return *static_cast<T**>(lua_touserdata(L, idx));
-		}		
-		
+		}
+
 		inline void luaP_setmetatable(lua_State* L, const string& metatable){
 			luaL_getmetatable(L, &metatable[0]);
 			lua_setmetatable(L, -2);
@@ -36,7 +54,7 @@ namespace Pro{
 
 		// Creates a user data on the Lua stack, assuming that there's a name passed as the first argument
 		// also assuming that the Class accepts a name for GUID generation
-		
+
 		template<typename T> T** luaP_newuserdata(lua_State* L, T* data){
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
 			// Does not copy the data, only remembers reference to it
@@ -50,7 +68,7 @@ namespace Pro{
 			*o = data;
 			lua_setmetatable(L, T::lGetMetatable());
 			return o;
-		} 
+		}
 
 		inline void luaP_registerstore(lua_State* L, const std::string& key, void* data){
 			lua_pushstring(L, &key[0]);
@@ -59,7 +77,7 @@ namespace Pro{
 		}
 
 		inline void luaP_checkerror(lua_State* L, int error_code){
-			if (error_code != LUA_OK){   
+			if (error_code != LUA_OK){
 				cout << lua_tostring(L, -1) << endl;
 			}
 		}
@@ -98,7 +116,7 @@ namespace Pro{
 				}
 				printf("  ");  /* put a separator */
 			}
-			printf("\n");  /* end the listing */ 
+			printf("\n");  /* end the listing */
 		}
 
 
