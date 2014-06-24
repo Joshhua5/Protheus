@@ -42,8 +42,9 @@ namespace Pro{
 			}
 
 			template<typename T> static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "setSprite", (lua_CFunction)&T::lSetSprite });
-				fields.push_back({ "getSprite", (lua_CFunction)&T::lGetSpriteGUID });
+				Entity::lGetFunctions<T>(fields);
+				fields.push_back({ "setSprite", &T::lSetSprite });
+				fields.push_back({ "getSprite", &T::lGetSpriteGUID });
 			}
 		};
 	}

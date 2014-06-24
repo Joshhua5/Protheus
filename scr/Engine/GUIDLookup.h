@@ -15,6 +15,7 @@ History:
 #include <unordered_map>
 #include <stack>
 #include <iostream>
+#include "lua\lib\lua.hpp"
 
 namespace Pro{  
 	typedef unsigned int uint32;
@@ -27,5 +28,8 @@ namespace Pro{
 		static void releaseGUID(uint32);
 		static uint32  getGUID(const std::string& name);
 		static std::string* getName(uint32 _id);
+		 
+		static int lGetGUID(lua_State*);
+		static int lGetName(lua_State*);
 	};
 }

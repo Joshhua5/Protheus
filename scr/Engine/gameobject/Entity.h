@@ -39,6 +39,15 @@ namespace Pro{
 			inline static string lGetMetatable(){
 				return "gameobject_entity_metatable";
 			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				Position::lGetFunctions<T>(fields);
+				CGUID::lGetFunctions<T>(fields);
+				ActiveState::lGetFunctions<T>(fields);
+
+				//fields.push_back({ "checkForItem", (lua_CFunction)&T::lCheckForItem });
+			}
 		};
 	}
 }

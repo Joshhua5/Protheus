@@ -39,8 +39,8 @@ namespace Pro{
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "activateAnimation", (lua_CFunction)&T::lActivateAnimation });
-				fields.push_back({ "addAnimation", (lua_CFunction)&T::lAddAnimation });
+				AnimatedEntity::lGetFunctions<T>(fields);
+				Inventory::lGetFunctions<T>(fields);
 			}
 		};
 	}

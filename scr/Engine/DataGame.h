@@ -12,7 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 #include "IGame.h"
-#include "lua\lib\lua.hpp"
+#include "util\LuaUtils.h" 
 
 namespace Pro{
 	class DataGame :

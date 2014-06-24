@@ -14,6 +14,9 @@ History:
 
 #include "lib\lua.hpp" 
 #include "..\GameObjects.h"
+#include "..\Math.h"
+#include "..\graphics\Renderer.h"
+#include "..\graphics\Sprite.h"
 #include "..\Components.h"
 #include "..\gui\GUIContext.h"
 #include "..\gameobject\Scene.h"
@@ -26,13 +29,16 @@ using namespace std;
 namespace Pro{
 	using namespace Component;
 	using namespace GameObject; 
-	using namespace GUI; 
+	using namespace Graphics;
+	using namespace GUI;
+	using namespace Math;
+	using namespace Asset;
 
 	namespace Lua{
 		class LuaMetatableFactory{
 			typedef std::vector<luaL_Reg> Metatable;
 			   
-			template<typename T> void saveMetatable(lua_State* L, Metatable& fields){
+			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
 				luaL_newmetatable(L, &T::lGetMetatable()[0]);
 
 				for each(auto field in fields){
@@ -45,80 +51,12 @@ namespace Pro{
 				lua_settable(L, -3);
 			}
 			
-			template<typename T> void defineMetatable(lua_State* L){
+			template<typename T> inline void defineMetatable(lua_State* L){
 				Metatable fields;
 				T::lGetFunctions<T>(fields);
 				saveMetatable<T>(L, fields);
 			}
 
-			template<> void defineMetatable<ActiveState>(lua_State* L){
-				Metatable fields;
-				ActiveState::lGetFunctions<ActiveState>(fields);
-				saveMetatable<ActiveState>(L, fields);
-			}
-
-			template<> void defineMetatable<Area>(lua_State* L){
-				Metatable fields;
-				Area::lGetFunctions<Area>(fields);
-				saveMetatable<Area>(L, fields);
-			}
-
-			template<> void defineMetatable<CGUID>(lua_State* L){
-				Metatable fields;
-				CGUID::lGetFunctions<CGUID>(fields);
-				saveMetatable<CGUID>(L, fields);
-			}
-
-			template<> void defineMetatable<CScriptable>(lua_State* L){
-				Metatable fields;
-				CScriptable::lGetFunctions<CScriptable>(fields);
-				saveMetatable<CScriptable>(L, fields);
-			}
-
-			template<> void defineMetatable<LuaCallback>(lua_State* L){
-				Metatable fields;
-				LuaCallback::lGetFunctions<LuaCallback>(fields);
-				saveMetatable<LuaCallback>(L, fields);
-			}
-
-			template<> void defineMetatable<Name>(lua_State* L){
-				Metatable fields;
-				Name::lGetFunctions<Name>(fields);
-				saveMetatable<Name>(L, fields);
-			}
-
-			template<> void defineMetatable<Position>(lua_State* L){
-				Metatable fields;
-				Position::lGetFunctions<Position>(fields);
-				saveMetatable<Position>(L, fields);
-			}
-
-			template<> void defineMetatable<Avatar>(lua_State* L){
-				Metatable fields; 
-				Avatar::lGetFunctions<Avatar>(fields);
-				CGUID::lGetFunctions<Avatar>(fields);
-				Position::lGetFunctions<Avatar>(fields);
-				Inventory::lGetFunctions<Avatar>(fields);
-				AnimatedEntity::lGetFunctions<Avatar>(fields); 
-				saveMetatable<Avatar>(L, fields);
-			}
-
-			template<> void defineMetatable<Camera>(lua_State* L){
-				Metatable fields;
-				Camera::lGetFunctions<Camera>(fields);
-				CGUID::lGetFunctions<Camera>(fields);
-				Position::lGetFunctions<Camera>(fields);
-				Area::lGetFunctions<Camera>(fields);
-				saveMetatable<Camera>(L, fields);
-			}
-
-			template<> void defineMetatable<Scene>(lua_State* L){
-				Metatable fields;
-				Scene::lGetFunctions<Scene>(fields);
-				CGUID::lGetFunctions<Scene>(fields); 
-
-				saveMetatable<Scene>(L, fields);
-			}
 		public:
 			LuaMetatableFactory(lua_State* L){
 
@@ -137,14 +75,14 @@ namespace Pro{
 				defineMetatable<Avatar>(L);
 				defineMetatable<Camera>(L);
 				defineMetatable<Scene>(L);
-				/*defineMetatable<AnimatedEntity>(L);
+				defineMetatable<AnimatedEntity>(L); 
 				defineMetatable<Entity>(L);
 				defineMetatable<Inventory>(L);
 				defineMetatable<Item>(L);
 				defineMetatable<Map>(L);
 				defineMetatable<MapSection>(L);
 				defineMetatable<SpriteEntity>(L);
-				defineMetatable<TileType>(L);*/
+				defineMetatable<TileType>(L);
 
 				// GUI
 
@@ -161,9 +99,19 @@ namespace Pro{
 
 				// Graphics
 
+				defineMetatable<Sprite>(L); 
+				defineMetatable<AnimatedSprite>(L);
+				defineMetatable<SpriteManager>(L);
+				defineMetatable<SpriteBatcher>(L);
+				defineMetatable<Renderer>(L);
+
 				// Containers
 				 
 				// Math
+
+				defineMetatable<Vector2>(L);
+				defineMetatable<Vector3>(L);
+				defineMetatable<Vector4>(L);
 
 				// Scene
 

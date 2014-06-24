@@ -15,6 +15,9 @@ History:
   
 #include <SDL.h>
 #include <vector> 
+#include <string>
+#include "..\util\LuaUtils.h"
+
 namespace Pro{
 	namespace GameObject{
 		struct TileType
@@ -26,6 +29,15 @@ namespace Pro{
 			bool isTextured = false;
 			std::string spriteName;
 			void* spriteCache = nullptr;
+
+			static std::string lGetMetatable(){
+				return "tile_type_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				 
+			}
 		};
 	}
 }

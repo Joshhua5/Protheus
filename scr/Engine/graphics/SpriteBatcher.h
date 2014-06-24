@@ -15,6 +15,7 @@ History:
 #include <stack>
 
 #include "..\Math.h"
+#include "..\util\LuaUtils.h"
 #include "Sprite.h"
 
 
@@ -33,6 +34,21 @@ namespace Pro{
 
 			void push(Asset::Sprite*, Math::Vector4&);
 			void flush();
+
+			// Lua Functions
+
+			static int lPush(lua_State*);
+			static int lFlush(lua_State*);
+			 
+			static inline string lGetMetatable(){
+				return "sprite_batcher_metatable";
+			}
+
+			template<typename T>
+			static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "push", &T::lPush });
+				fields.push_back({ "flush", &T::lFlush });
+			}
 		};
 	}
 }

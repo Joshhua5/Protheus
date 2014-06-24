@@ -30,6 +30,11 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "gameobject_item_metatable";
 			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				Entity::lGetFunctions<T>(fields);
+			}
 		};
 	}
 }

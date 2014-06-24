@@ -18,7 +18,7 @@ DataGame::~DataGame()
 }
 
 
-int DataGame::update(){
+int DataGame::update(){ 
 	return 0;
 }
 

@@ -392,6 +392,9 @@
     <ClCompile Include="Engine\DataGame.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\io\gamefile\GameFileLoader.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -740,6 +743,9 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\DataGame.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\GameFileLoader.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

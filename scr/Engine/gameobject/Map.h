@@ -47,6 +47,11 @@ namespace Pro{
 			static string lGetMetatable(){
 				return "scene_map_metatable";
 			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				Area::lGetFunctions<T>(fields);
+			}
 		};
 	} 
 }

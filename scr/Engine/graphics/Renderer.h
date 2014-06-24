@@ -32,6 +32,21 @@ namespace Pro{
 			SDL_Renderer* getRenderer();
 
 			void renderScene(Scene*, Graphics::SpriteManager*);
+
+			// Lua Functions
+
+			static int lGetBatcher(lua_State*);
+			static int lRenderScene(lua_State*);
+
+			static inline string lGetMetatable(){
+				return "renderer_metatable";
+			}
+
+			template<typename T>
+			static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "getBatcher", (lua_CFunction)&T::lGetBatcher });
+				fields.push_back({ "renderScene", (lua_CFunction)&T::lRenderScene });
+			}
 		};
 	}
 }

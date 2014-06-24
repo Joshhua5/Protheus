@@ -125,6 +125,7 @@
     <ClCompile Include="Engine\networking\CTCPServer.cpp" />
     <ClCompile Include="Engine\audio\WavDecoder.cpp" />
     <ClCompile Include="Engine\ScriptGame.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DataGame.h" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Engine\audio\IBitstreamDecoder.h" />
     <ClInclude Include="Engine\audio\WavDecoder.h" />
     <ClInclude Include="Engine\ScriptGame.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileLoader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

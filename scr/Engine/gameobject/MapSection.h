@@ -35,6 +35,16 @@ namespace Pro{
 			void setData(std::vector<std::vector<char>>);
 			std::vector<std::vector<char>> getData();
 			bool visible(Camera* cam);
+
+			static string lGetMetatable(){
+				return "map_section_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				Area::lGetFunctions<T>(fields);
+				Position::lGetFunctions<T>(fields); 
+			}
 		};
 	}
 }

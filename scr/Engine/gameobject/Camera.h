@@ -48,6 +48,10 @@ namespace Pro{
 
 			template<typename T> 
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				Position::lGetFunctions<T>(fields);
+				Area::lGetFunctions<T>(fields);
+				CGUID::lGetFunctions<T>(fields);
+
 				fields.push_back({ "move", (lua_CFunction)&T::lMove });
 			}
 		};

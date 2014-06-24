@@ -43,5 +43,20 @@ namespace Pro{
 				return &std::string(elm.first);
 		return nullptr;
 	}
+
+	static int lGetGUID(lua_State* L){
+		lua_pushnumber(
+			L, 
+			GUIDLookup::getGUID(lua_tostring(L, 1))
+			);
+		return 1;
+	}
+	static int lGetName(lua_State* L){
+		lua_pushstring(
+			L, 
+			GUIDLookup::getName(lua_tonumber(L, 1))->c_str()
+			);
+		return 1;
+	}
 }
  

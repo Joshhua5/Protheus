@@ -34,12 +34,33 @@ namespace Pro{
 			}
 		};
 
+		// The first part of the pair will be used as the key and the second as the data
 		template<typename T>
-		inline void luaP_pusharray(lua_State* L, vector<T>& elements){
-			lua_createtable(lua_state, 0, 0);
+		inline void luaP_pushtoarray(lua_State* L, std::string table_name, char* key, T data){
+			lua_pushstring(L, &table_name[0]);
+			lua_gettable(L, -1);
+			lua_pushstring(L, key); 
+			lua_pushnumber(L, data);
+			lua_settable(L, -3);
+		}
+
+		template<typename T>
+		inline void luaP_pusharray(lua_State* L, vector<std::pair<std::string, T>>& elements){
+			lua_createtable(L, 0, 0);
 			for (int x = 0; x < elements.size(); x++){
-				lua_pushnumber(L, elements[x]);
-				lua_setfield(L, -1, '0' + x);
+				lua_pushstring(L, elements.at(x)[0]);
+				lua_pushnumber(L, elements.at(x)[1]);
+				lua_settable(L, -3);
+			}
+		} 
+
+		template<typename T>
+		inline void luaP_pusharray(lua_State* L, T* data, unsigned int size){  
+			lua_createtable(L, 0, 0);
+			for (int x = 0; x < size; x++){
+				lua_pushnumber(L, x);
+				lua_pushnumber(L, data[x]);
+				lua_settable(L, -3);
 			}
 		}
 
@@ -63,10 +84,10 @@ namespace Pro{
 		}
 
 		// Automaticallys binds the metatable
-		template<typename T> T** luaP_newobject(lua_State*, T* data) {
+		template<typename T> T** luaP_newobject(lua_State* L, T* data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			*o = data;
-			lua_setmetatable(L, T::lGetMetatable());
+			*o = data; 
+			luaP_setmetatable(L, T::lGetMetatable());
 			return o;
 		}
 

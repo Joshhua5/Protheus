@@ -28,8 +28,7 @@ namespace Pro{
 		void addWindow(Window*);
 		Window* getWindow(uint32);
 		void destoryWindow(uint32);
-
-
+		 
 		// LUA Functions
 		 
 		static int lGetWindow(lua_State*);

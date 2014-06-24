@@ -21,7 +21,7 @@ namespace Pro{
 		class LuaCallback
 		{
 			lua_State* lua_state;
-			std::string lua_callback; 
+			std::string lua_callback;
 
 		public:
 			LuaCallback();

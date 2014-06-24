@@ -47,21 +47,8 @@ namespace Pro{
 
 			// LUA Functions
 
-			template<typename T> static int lGetPosition(lua_State* L){
-				auto p = Util::luaP_touserdata<T>(L, 1);
-				auto v = p->getPosition();
-				lua_pushnumber(L, v.x);
-				lua_pushnumber(L, v.y);
-				return 0;
-			}
-
-			template<typename T> static int lSetPosition(lua_State* L){
-				auto p = Util::luaP_touserdata<T>(L, 1);
-				auto v = Math::Vector2(static_cast<int>(lua_tonumber(L, 2)),
-					static_cast<int>(lua_tonumber(L, 3)));
-				p->setPosition(v);
-				return 0;
-			}
+			static int lGetPosition(lua_State* L);
+			static int lSetPosition(lua_State* L);
 
 			// returns the Metatable assosiated with this object
 			static inline string lGetMetatable(){
@@ -69,8 +56,8 @@ namespace Pro{
 			}
 
 			template<typename T> static void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "getPosition", (lua_CFunction)&T::lGetPosition<T> });
-				fields.push_back({ "setPosition", (lua_CFunction)&T::lSetPosition<T> });
+				fields.push_back({ "getPosition", &T::lGetPosition });
+				fields.push_back({ "setPosition", &T::lSetPosition });
 			} 
 		}; 
 	}

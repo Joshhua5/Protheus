@@ -55,6 +55,38 @@ namespace Pro{
 			void operator*=(Vector4&);
 			void operator/=(Vector4&);
 			SDL_Rect toSDL();
+
+			// Lua Functions
+
+			static int lGetX(lua_State*);
+			static int lGetY(lua_State*);
+			static int lGetZ(lua_State*);
+			static int lGetW(lua_State*);
+			static int lSetX(lua_State*);
+			static int lSetY(lua_State*);
+			static int lSetZ(lua_State*);
+			static int lSetW(lua_State*);
+			static int lGetXYZW(lua_State*);
+			static int lSetXYZW(lua_State*);
+			  
+			// returns the Metatable's name assosiated with this object
+			static string lGetMetatable(){
+				return "vector4_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+				fields.push_back({ "getX", (lua_CFunction)&T::lGetX });
+				fields.push_back({ "getY", (lua_CFunction)&T::lGetY });
+				fields.push_back({ "getZ", (lua_CFunction)&T::lGetZ }); 
+				fields.push_back({ "getW", (lua_CFunction)&T::lGetW });
+				fields.push_back({ "setX", (lua_CFunction)&T::lSetX });
+				fields.push_back({ "setY", (lua_CFunction)&T::lSetY });
+				fields.push_back({ "setZ", (lua_CFunction)&T::lSetZ }); 
+				fields.push_back({ "setW", (lua_CFunction)&T::lSetW });
+				fields.push_back({ "getXYZW", (lua_CFunction)&T::lGetXYZW });
+				fields.push_back({ "setXYZW", (lua_CFunction)&T::lSetXYZW });
+			}
 		}; 
 	} 
 }

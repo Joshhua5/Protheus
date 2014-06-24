@@ -39,7 +39,7 @@ namespace Pro{
 			}
 			template<typename T> 
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "getGUID", (lua_CFunction)&T::lGetGUID });
+				fields.push_back({ "getGUID", &T::lGetGUID });
 			}
 		};
 	}

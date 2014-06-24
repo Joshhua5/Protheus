@@ -30,7 +30,7 @@ namespace Pro{
 			Vector2();
 			~Vector2();
 
-			bool contains(float&);
+			bool contains(float);
 			float hypotenuse();
 
 			Vector2 operator=(SDL_Point&);

@@ -42,6 +42,11 @@ namespace Pro{
 			static string lGetMetatable(){
 				return "asset_sprite_metatable";
 			}
+
+			template<typename T>
+			static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				//fields.push_back({ "push", &T::lPush });
+			}
 		};
 	}
 }

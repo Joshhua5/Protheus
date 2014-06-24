@@ -181,3 +181,54 @@ SDL_Rect Vector4::toSDL(){
 	o.h = static_cast<int>(w);
 	return o;
 }
+
+int Vector4::lGetX(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	lua_pushnumber(L, v->x);
+	return 1;
+}
+int Vector4::lGetY(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	lua_pushnumber(L, v->y);
+	return 1;
+}
+int Vector4::lGetZ(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	lua_pushnumber(L, v->z);
+	return 1;
+}
+int Vector4::lGetW(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	lua_pushnumber(L, v->w);
+	return 1;
+}
+int Vector4::lSetX(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	v->x = lua_tonumber(L, 2); 
+	return 0;
+}
+int Vector4::lSetY(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	v->x = lua_tonumber(L, 2);
+	return 0;
+}
+int Vector4::lSetZ(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	v->x = lua_tonumber(L, 2);
+	return 0;
+}
+int Vector4::lSetW(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	v->x = lua_tonumber(L, 2);
+	return 0;
+}
+int Vector4::lGetXYZW(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	lua_pushnumber(L, v->w);
+	return 1;
+}
+int Vector4::lSetXYZW(lua_State* L){
+	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
+	v->x = lua_tonumber(L, 2);
+	return 0;
+}
