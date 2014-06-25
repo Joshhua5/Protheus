@@ -25,10 +25,8 @@ void Position::setPosition(Math::Vector2& p){
   
 int Position::lGetPosition(lua_State* L){
 	auto p = Util::luaP_touserdata<Position>(L, 1);
-	auto v = p->getPosition();
-	lua_pushnumber(L, v.x);
-	lua_pushnumber(L, v.y);
-	return 0;
+	Util::luaP_newobject<Math::Vector2>(L, &p->getPosition()); 
+	return 1;
 }
 
 int Position::lSetPosition(lua_State* L){

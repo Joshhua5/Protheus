@@ -15,12 +15,10 @@ AnimatedSprite::~AnimatedSprite()
 }
 
 void AnimatedSprite::nextFrame(){
-	if (currentFrame != frames.size()){
+	if (currentFrame != frames.size())
 		currentFrame++;
-	}
-	else{
+	else
 		currentFrame = 0;
-	}
 }
 
 Sprite* AnimatedSprite::getFrame(){
