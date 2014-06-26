@@ -25,6 +25,14 @@ namespace Pro{
 			bool scroll_down;
 			// if the button is being released this is true
 			bool scroll_up;
+
+			static inline string lGetMetatable(){
+				return "mouse_wheel_event_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			}
 		};
 	}
 }

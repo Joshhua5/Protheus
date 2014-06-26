@@ -4,40 +4,24 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description: 
-	
+	Data hiding of a game file chunk
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
 *************************************************************************/
-
 #pragma once
 
+#include "..\..\util\CBuffer.h"
+#include "EGameFileChunkType.h"
 namespace Pro{
 	namespace IO{
-		class GameFileLoader
+		class GameFileChunk
 		{
 		public:
-			GameFileLoader();
-			~GameFileLoader();
+			int chunkID;
+			EChunkType chunkType;
+			CBuffer chunkData;
 		};
+
 	}
 }
-/*
-Header{
-	Config Script ID
-	Image Index Offset : 0 if non exist
-	Script Index Offset : 0 if non exist
-	Audio Index Offset : 0 if non exist
-	Object Index Offset : 0 if non exist
-	Map Index Offset : 0 if non exist
-	Raw Index Offset : 0 if non exist
-	Name Index Offset : contains a translation between an ID and name in the file
-}
-
-Data{
-	ChunkID
-	ChunkType
-	ChunkSize
-} 
-
-*/

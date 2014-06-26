@@ -4,30 +4,32 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A Wavedecoder, which loads a WAVE file from a Buffer or CFile
-	and returns track.
+	Enumeration of chunk types
 -------------------------------------------------------------------------
 History:
-- 19:06:2014 Waring J.
-
+- 25:06:2014: Waring J.
 *************************************************************************/
 #pragma once
-#include "IBitstreamDecoder.h"
-#include <SDL.h>
-
 namespace Pro{
-	namespace Audio{
-		class CWavDecoder :
-			public IBitstreamDecoder
+	namespace IO{
+		enum struct EChunkType
 		{
-		public:
-			CWavDecoder();
-			~CWavDecoder();
+			IMAGE_INDEX,
+			SCRIPT_INDEX,
+			AUDIO_INDEX,
+			MAP_TILE_INDEX,
+			OBJECT_INDEX,
+			MAP_INDEX,
+			RAW_INDEX,
+			ID_NAME_INDEX,
+			IMAGE,
+			SCRIPT,
+			TILE,
+			AUDIO,
+			OBJECT,
+			MAP,
+			RAW
+		};
 
-			CAudioTrack* load(Util::CFile& file);
-			CAudioTrack* load(CBuffer& buffer);
-
-		}; 
 	}
 }
-

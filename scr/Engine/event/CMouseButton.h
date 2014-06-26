@@ -27,6 +27,14 @@ namespace Pro{
 			bool button_up;
 			// Position of the mouse relative to the window
 			Math::Vector2 window_position;
+
+			static inline string lGetMetatable(){
+				return "mouse_button_event_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+			}
 		};
 	}
 }

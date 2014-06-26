@@ -26,5 +26,19 @@ public:
 	CBuffer(unsigned int _size) { size = _size; data = new char[size]; }
 	CBuffer() { size = 0; data = nullptr; }
 	~CBuffer() { delete[] data; } 
+
+	void init(void* _data, unsigned int _size){
+		if (data == nullptr)
+			delete[] data;
+		data = _data;
+		size = _size;
+	}
+
+	void init(unsigned int _size){
+		if (data == nullptr)
+			delete[] data;
+		data = new char[_size];
+		size = _size;
+	}
 };
 

@@ -30,7 +30,7 @@ namespace Pro{
 		{
 		private:  
 			vector<MapSection*> mapSections;
-			vector<TileType> tileData; 
+			vector<TileType> tileData;
 
 			bool loadLevelData(const std::string& file);
 			bool loadLevelTileData(const std::string&file);
@@ -38,11 +38,19 @@ namespace Pro{
 			Map();
 			~Map();
 
+			// returns a single map section which contains 
+			// all map data
+			MapSection* condenseMap();
+			vector<MapSection*> getSections(){ return mapSections; }
 			vector<MapSection*> getVisibleSections(Camera* cam);
-			bool loadLevel(const std::string& file, const std::string& data);
-			TileType* getTile(Math::Vector2&);
-			TileType* getTileType(unsigned int);
 
+			bool loadLevel(const std::string& file, const std::string& data);
+
+			// returns the tile which is at a position
+			TileType* getTile(Math::Vector2&); 
+			TileType* getTileType(unsigned int);
+			// returns the whole TileData vector
+			vector<TileType> getTileData();
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "scene_map_metatable";

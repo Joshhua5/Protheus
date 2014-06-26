@@ -16,6 +16,7 @@ History:
 #include <vector> 
 #include "GUIButton.h"
 #include "GUISlider.h" 
+#include "GUILabel.h"
 #include "GUIText.h"  
 #include "GUIContainer.h"
 #include "GUICollapsibleMenu.h"
@@ -39,8 +40,7 @@ namespace Pro{
 			~GUIWindow();
 			 
 			void attachMenuBar(GUIMenuBar* component);
-
-
+			 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_window_metatable";

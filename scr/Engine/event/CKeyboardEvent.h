@@ -27,6 +27,14 @@ namespace Pro{
 			bool key_up;
 			// true if the key hasn't been released yet
 			bool repeat;
+
+			static inline string lGetMetatable(){
+				return "event_keyboard_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			}
 		};
 	} 
 } 

@@ -22,6 +22,14 @@ namespace Pro{
 			Math::Vector2 window_position;
 			// Position relative to the original position
 			Math::Vector2 relative_position;
+
+			static inline string lGetMetatable(){
+				return "mouse_motion_event_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			}
 		};
 	}
 }

@@ -395,6 +395,15 @@
     <ClCompile Include="Engine\io\gamefile\GameFileLoader.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\io\gamefile\GameFileMap.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\io\gamefile\GameFileScript.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\util\BufferWriter.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -746,6 +755,24 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\io\gamefile\GameFileLoader.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\GameFileHeader.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\GameFileChunk.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\EGameFileChunkType.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\GameFileMap.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\io\gamefile\GameFileScript.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\BufferWriter.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

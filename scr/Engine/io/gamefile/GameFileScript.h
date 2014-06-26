@@ -4,30 +4,31 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A Wavedecoder, which loads a WAVE file from a Buffer or CFile
-	and returns track.
+	Class to process the map data from the file, provides a translation layer
+	between GameObject::Map and the Game File 
 -------------------------------------------------------------------------
 History:
-- 19:06:2014 Waring J.
-
+- 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
-#include "IBitstreamDecoder.h"
-#include <SDL.h>
+
+#include "..\..\util\CBuffer.h"
 
 namespace Pro{
-	namespace Audio{
-		class CWavDecoder :
-			public IBitstreamDecoder
+	namespace IO{
+		class GameFileScript
 		{
+			unsigned int scriptID;
+			char* script;
+
 		public:
-			CWavDecoder();
-			~CWavDecoder();
+			GameFileScript();
+			~GameFileScript();
 
-			CAudioTrack* load(Util::CFile& file);
-			CAudioTrack* load(CBuffer& buffer);
+			char* getScript();
+			void executeScript();
 
-		}; 
+			void setScript(CBuffer buffer);
+		};
 	}
 }
-

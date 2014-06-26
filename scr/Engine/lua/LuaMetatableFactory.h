@@ -15,8 +15,10 @@ History:
 #include "lib\lua.hpp" 
 #include "..\GameObjects.h"
 #include "..\Math.h"
+#include "..\audio\CAudioDevice.h"
 #include "..\graphics\Renderer.h"
 #include "..\graphics\Sprite.h"
+#include "..\event\EventHandler.h"
 #include "..\Components.h"
 #include "..\gui\GUIContext.h"
 #include "..\gameobject\Scene.h"
@@ -32,6 +34,7 @@ namespace Pro{
 	using namespace Graphics;
 	using namespace GUI;
 	using namespace Math;
+	using namespace Audio;
 	using namespace Asset;
 
 	namespace Lua{
@@ -86,14 +89,32 @@ namespace Pro{
 
 				// GUI
 
-				//defineMetatable<GUIButton>(L);
-				//defineMetatable<GUIContext>(L);
-				//defineMetatable<GUIContext>(L);
-				//defineMetatable<GUIWindow>(L);
+				defineMetatable<GUIButton>(L);
+				defineMetatable<GUICollapsibleMenu>(L);
+				defineMetatable<GUIContainer>(L);
+				defineMetatable<GUIDropDownMenu>(L);
+				defineMetatable<GUIEntity>(L);
+				defineMetatable<GUILabel>(L);
+				defineMetatable<GUIMenuBar>(L);
+				defineMetatable<GUISlider>(L);
+				defineMetatable<GUIText>(L);
+				defineMetatable<GUIContext>(L); 
+				defineMetatable<GUIWindow>(L);
 
 				// Audio
 
+				defineMetatable<CAudioDevice>(L);
+				defineMetatable<CAudioMixer>(L);
+				defineMetatable<CAudioSignal>(L);
+
 				// Event
+
+				defineMetatable<EventHandler>(L);
+				defineMetatable<MouseWheel>(L);
+				defineMetatable<MouseMotion>(L);
+				defineMetatable<MouseButton>(L);
+				defineMetatable<KeyboardEvent>(L);
+				defineMetatable<CEvent>(L);
 
 				// IO
 

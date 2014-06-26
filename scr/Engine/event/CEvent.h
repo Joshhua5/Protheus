@@ -24,6 +24,14 @@ namespace Pro{
 			EEvent type;
 			// use the type to cast the event and retrieve it's data
 			IEvent* event; 
+
+			static inline string lGetMetatable(){
+				return "event_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			}
 		};
 	}
 }

@@ -37,6 +37,15 @@ namespace Pro{
 			~CAudioSignal();
 
 			void addEffect(IAudioEffect); 
+
+			static inline string lGetMetatable(){
+				return "audio_signal_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				//fields.push_back({ "addEffect", &T::lAddEffect });
+			}
 		};
 	}
 }

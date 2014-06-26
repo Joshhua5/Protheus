@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\util\BufferWriter.cpp" />
     <ClCompile Include="Engine\DataGame.cpp" />
     <ClCompile Include="Engine\audio\CAudioDevice.cpp" />
     <ClCompile Include="Engine\audio\CAudioMixer.cpp" />
@@ -126,8 +127,11 @@
     <ClCompile Include="Engine\audio\WavDecoder.cpp" />
     <ClCompile Include="Engine\ScriptGame.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileLoader.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileMap.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\util\BufferWriter.h" />
     <ClInclude Include="Engine\DataGame.h" />
     <ClInclude Include="Engine\audio\CAudioBuffer.h" />
     <ClInclude Include="Engine\audio\CAudioDevice.h" />
@@ -146,6 +150,8 @@
     <ClInclude Include="Engine\event\CEvent.h" />
     <ClInclude Include="Engine\event\EEvent.h" />
     <ClInclude Include="Engine\IGame.h" />
+    <ClInclude Include="Engine\io\gamefile\EGameFileChunkType.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileChunk.h" />
     <ClInclude Include="Engine\lua\lua.h" />
     <ClInclude Include="Engine\networking\CClientTCPConnection.h" />
     <ClInclude Include="Engine\networking\CConnection.h" />
@@ -245,6 +251,9 @@
     <ClInclude Include="Engine\audio\WavDecoder.h" />
     <ClInclude Include="Engine\ScriptGame.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileLoader.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileHeader.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileMap.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileScript.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

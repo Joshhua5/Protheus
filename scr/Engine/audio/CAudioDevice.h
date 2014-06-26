@@ -12,6 +12,7 @@ History:
 #pragma once
  
 #include "CAudioMixer.h"
+#include "IBitstreamDecoder.h"
 #include <SDL.h>
 
 namespace Pro{
@@ -30,6 +31,17 @@ namespace Pro{
 			SDL_AudioSpec getSpec(); 
 			CAudioMixer* getMixer();
 			SDL_AudioStatus getDeviceState();
+
+			// Lua Functions
+
+			static inline string lGetMetatable(){
+				return "audio_device_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				//fields.push_back({ "update", &T::lUpdate });
+			}
 		}; 
 	}
 }

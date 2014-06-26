@@ -42,5 +42,14 @@ namespace Pro{
 		std::vector<CEvent>* EventHandler::pollUserEvents();
 
 		static int lUpdate(lua_State*);
+
+		static inline string lGetMetatable(){
+			return "event_handler_metatable";
+		}
+
+		template<typename T>
+		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){  
+			fields.push_back({ "update", &T::lUpdate });
+		}
 	}; 
 }

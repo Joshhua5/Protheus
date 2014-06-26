@@ -42,6 +42,17 @@ namespace Pro{
 			void pause();
 			void resume();
 			void stop();
+
+			// LUA Functions
+
+			static inline string lGetMetatable(){
+				return "audio_mixer_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				//fields.push_back({ "update", &T::lUpdate });
+			}
 		};
 	}
 }
