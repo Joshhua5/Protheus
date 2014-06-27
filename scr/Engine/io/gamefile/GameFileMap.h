@@ -23,12 +23,19 @@ namespace Pro{
 	namespace IO{
 		class GameFileMap
 		{
-			GameFileChunk chunk;
+			// contains the raw information about the
+			// map
+			GameFileChunk dataChunk;
+			// contains information about the
+			// map divisions and properties
+			GameFileChunk headerChunk;
 		public: 
 			GameFileMap();
 			~GameFileMap();
 
-			GameFileChunk* getChunk();
+			GameFileChunk* getDataChunk();
+			GameFileChunk* getHeaderChunk();
+
 			// stores a map into a gamefile chunk
 			void store(GameObject::Map*);
 			// loads a map from a gamefile chunk

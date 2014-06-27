@@ -15,46 +15,43 @@ GameFileMap::~GameFileMap()
 {
 }
 
-
 // stores a map into a gamefile chunk
 void GameFileMap::store(GameObject::Map* map){ 
 	
 	// count how many tiles are in the map
 	auto condensedMap = map->condenseMap();
 
-	unsigned int totalTiles = 
-		condensedMap->getDimensions().x *
-		condensedMap->getDimensions().y;
-
 	// use how many tiles there are to determin if we need
 	// a byte or a short
 
-	unsigned char byte_per_tile;
-	if (map->getTileData().size() <= 255)
-		byte_per_tile = 1;
-	else
-		byte_per_tile = 2;
-	
+	unsigned char byte_per_tile = 
+		map->getTileData().size() <= 255 ? 1 : 2;  
+
 	// populate and define the chunk
+	dataChunk.chunkType = EChunkType::MAP_DATA;
+	dataChunk.chunkID = -1;
+	dataChunk.chunkData.init(condensedMap->getVolume() * byte_per_tile);
+	 
+	headerChunk.chunkType = EChunkType::MAP_HEADER;
+	headerChunk.chunkID = -1;
+	headerChunk.chunkData.init(1 + (sizeof(Math::Vector2) * 2));
 
-	chunk.chunkType = EChunkType::MAP;
-	chunk.chunkID = -1;
-	chunk.chunkData.init(1 + (totalTiles * byte_per_tile));
+	// create Bufferwriters for the chunks
 
-	// fill the chunk's data with tile data
+	CBufferWriter dataWriter(dataChunk.chunkData);
+	CBufferWriter headerWriter(headerChunk.chunkData);
 
-	CBufferWriter writer(chunk.chunkData);
-	// write the byte_per_tile
-	writer.write(&byte_per_tile, 1);
+	// write the chunk header
+	headerWriter.write(&byte_per_tile, 1);
+	headerWriter.write(&condensedMap->getPosition(), sizeof(Math::Vector2));
+	headerWriter.write(&condensedMap->getDimensions(), sizeof(Math::Vector2));
 
-	auto tileData = condensedMap->getData();
-	for (int x = condensedMap->getPosition().x; x < condensedMap->getDimensions().x; x++){
-		for (int y = condensedMap->getPosition().y; y < condensedMap->getDimensions().y; y++){
-			// writes the tile data to the buffer
-			writer.write(&tileData.at(x).at(y), byte_per_tile); 
-		} 
-	}
+	// write all tiles into the buffer
+	for each(auto col in condensedMap->getData())
+		for each (auto field in col)
+			dataWriter.write(&field, byte_per_tile); 
 }
+
 // loads a map from a gamefile chunk
 GameObject::Map* GameFileMap::load(){
 	return nullptr;

@@ -30,6 +30,8 @@ namespace Pro{
 
 			Math::Vector2 getDimensions();
 			Math::Vector2* pGetDimensions();
+			float getVolume();
+
 			void setDimensions(Math::Vector2&);
 
 			// LUA Functions

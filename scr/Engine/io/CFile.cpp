@@ -3,13 +3,14 @@
 
 using namespace Pro;
 using namespace Util;
+using namespace std;
 
 CFile::CFile(const std::string& filePath)
 {
 	file.open(filePath,
-		std::fstream::binary |
-		std::fstream::in |
-		std::fstream::out);
+		fstream::binary |
+		fstream::in |
+		fstream::out);
 }
 
 CFile::CFile()
@@ -77,20 +78,20 @@ int CFile::readInt(){
 }
 
 std::string CFile::readToken(char delim){
-	std::string s;
-	std::getline(file, s, delim);
+	string s;
+	getline(file, s, delim);
 	return s;
 }
 
 std::string CFile::readLine(){
-	std::string s;
-	std::getline(file, s, '\n');
+	string s;
+	getline(file, s, '\n');
 	return s;
 }
 
 std::string CFile::readString(){
-	std::string s;
-	std::getline(file, s, '\0');
+	string s;
+	getline(file, s, '\0');
 	return s;
 }
 
@@ -112,16 +113,16 @@ unsigned int CFile::getSize(){
 
 EFile CFile::peekError(){
 	switch (file.rdstate()){
-	case std::ifstream::goodbit:
+	case ifstream::goodbit:
 		return flag;
 		break;
-	case std::ifstream::eofbit:
+	case ifstream::eofbit:
 		flag = EFile::END_OF_FILE;
 		break;
-	case std::ifstream::failbit:
+	case ifstream::failbit:
 		flag = EFile::FILE_FAILED;
 		break;
-	case std::ifstream::badbit:
+	case ifstream::badbit:
 		flag = EFile::FILE_INVALID_OPERATION;
 		break;
 
