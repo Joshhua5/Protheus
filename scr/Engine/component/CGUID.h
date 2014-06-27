@@ -4,7 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	A global unique id procided to objects,
+	To look up a ID for the assosiated name, use the GUIDLookup
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.

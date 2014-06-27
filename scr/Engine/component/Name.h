@@ -33,8 +33,7 @@ namespace Pro{
 			}
 
 			template<typename T>
-			inline static void lGetFunctions(vector<luaL_Reg>& fields){
-				//fields.push_back({ "", (lua_CFunction) &T:: });
+			inline static void lGetFunctions(vector<luaL_Reg>& fields){ 
 			}
 		};
 	}

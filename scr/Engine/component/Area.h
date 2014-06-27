@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Used to provideo an object with volume
 -------------------------------------------------------------------------
 History:
 - 17:05:2014 Waring J.

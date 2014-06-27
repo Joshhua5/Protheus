@@ -10,6 +10,7 @@ CBufferWriter::CBufferWriter(CBuffer* _buffer){
 
 CBufferWriter::~CBufferWriter()
 {
+	buffer = nullptr;
 }
 
 void CBufferWriter::write(void* value, int size){

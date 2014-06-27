@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	Provides a component to attach scripts to an object
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -28,7 +28,7 @@ namespace Pro{
 			~LuaCallback();
 			 
 			std::string* getCallback();
-			void setCallback(lua_State*, const std::string&, unsigned char args, unsigned char returns);
+			void setCallback(lua_State* lua_state, const std::string& functionName);
 			void callback();
 
 			// Lua functions
