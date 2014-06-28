@@ -17,24 +17,21 @@ History:
 
 #include "..\..\gameobject\map.h"
 #include "..\..\util\BufferWriter.h"
+#include "..\..\util\BufferReader.h"
 #include "GameFileChunk.h"
 
 namespace Pro{
 	namespace IO{
 		class GameFileMap
 		{
-			// contains the raw information about the
-			// map
-			GameFileChunk dataChunk;
-			// contains information about the
-			// map divisions and properties
-			GameFileChunk headerChunk;
+			// contains the information about the map
+			GameFileChunk dataChunk; 
 		public: 
+			GameFileMap(GameObject::Map*);
 			GameFileMap();
 			~GameFileMap();
 
-			GameFileChunk* getDataChunk();
-			GameFileChunk* getHeaderChunk();
+			GameFileChunk* getChunk(); 
 
 			// stores a map into a gamefile chunk
 			void store(GameObject::Map*);

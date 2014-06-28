@@ -404,6 +404,9 @@
     <ClCompile Include="Engine\util\BufferWriter.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\util\BufferReader.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -773,6 +776,12 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\util\BufferWriter.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\BufferReader.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\BufferIO.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

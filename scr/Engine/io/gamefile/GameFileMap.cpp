@@ -3,56 +3,95 @@
 
 using namespace Pro;
 using namespace IO;
- 
-
-GameFileMap::GameFileMap()
-{
-
-}
+using namespace Math;
+using namespace GameObject;
 
 
-GameFileMap::~GameFileMap()
-{
-}
+GameFileMap::GameFileMap(Map* map){ store(map);} 
+GameFileMap::GameFileMap(){}  
+GameFileMap::~GameFileMap(){}
 
 // stores a map into a gamefile chunk
-void GameFileMap::store(GameObject::Map* map){ 
-	
-	// count how many tiles are in the map
-	auto condensedMap = map->condenseMap();
-
-	// use how many tiles there are to determin if we need
-	// a byte or a short
-
-	unsigned char byte_per_tile = 
-		map->getTileData().size() <= 255 ? 1 : 2;  
-
+void GameFileMap::store(Map* map){ 
+	  
 	// populate and define the chunk
 	dataChunk.chunkType = EChunkType::MAP_DATA;
 	dataChunk.chunkID = -1;
-	dataChunk.chunkData.init(condensedMap->getVolume() * byte_per_tile);
-	 
-	headerChunk.chunkType = EChunkType::MAP_HEADER;
-	headerChunk.chunkID = -1;
-	headerChunk.chunkData.init(1 + (sizeof(Math::Vector2) * 2));
 
-	// create Bufferwriters for the chunks
+	// define the chunk size and 
+	// initialize the dataChunk
 
-	CBufferWriter dataWriter(dataChunk.chunkData);
-	CBufferWriter headerWriter(headerChunk.chunkData);
+	int chunkDataSize = 0;
+	// first int that's used for the section count
+	chunkDataSize += sizeof(int);
+	// size for section definitions
+	chunkDataSize += map->getSectionCount() * (sizeof(int) + sizeof(Vector2) + sizeof(Vector2));
+	// size for the section data
+	chunkDataSize += map->getVolume() * sizeof(short);
+	dataChunk.chunkData.init(chunkDataSize);
+	    
+	// create Bufferwriters for the chunk
+	BufferWriter dataWriter(&dataChunk.chunkData); 
 
-	// write the chunk header
-	headerWriter.write(&byte_per_tile, 1);
-	headerWriter.write(&condensedMap->getPosition(), sizeof(Math::Vector2));
-	headerWriter.write(&condensedMap->getDimensions(), sizeof(Math::Vector2));
+	// write the chunk header 
+	int count = map->getSectionCount();
+	dataWriter.write(&count, sizeof(int)); 
 
-	// write all tiles into the buffer
-	for each(auto col in condensedMap->getData())
-		for each (auto field in col)
-			dataWriter.write(&field, byte_per_tile); 
-}
+	// writes the sections into the data buffer
+	for each(auto section in map->getSections()){
+		dataWriter.write(static_cast<int>(section->getVolume()));
+		dataWriter.write<Vector2>(section->getPosition());
+		dataWriter.write<Vector2>(section->getDimensions()); 
+
+		for each(auto col in section->getData())
+			for each(auto row in col)
+				dataWriter.write(row); 
+	} 
+} 
 
 // loads a map from a gamefile chunk
 GameObject::Map* GameFileMap::load(){
-	return nullptr;
-}
+	auto map = new Map();
+
+	BufferReader dataReader(&dataChunk.chunkData);
+
+	int sectionCount = dataReader.read<int>();
+	  
+	// Process each section
+	for (int x = 0; x < sectionCount; x++){
+		MapSection section; 
+		
+		// In the buffer each section is as follows
+		// 1 sectionSize : int
+		// 2 position : vector2
+		// 3 dimensions : vector2
+		// 4 sectionData : short * sectionSize
+		// next section
+
+		auto sectionSize = dataReader.read<int>(); 
+		auto sectionPosititon = dataReader.read<Vector2>(); 
+		auto sectionDimension = dataReader.read<Vector2>();
+		
+		section.setPosition(sectionPosititon);
+		section.setDimensions(sectionDimension); 
+
+		// load in the section data from a 1D short array
+		// to a 2D short vector
+		vector<vector<short>> sectionData(sectionDimension.x); 
+		for (auto x = 0; sectionDimension.x; x++){ 
+			vector<short> rowData(sectionDimension.y);
+
+			for (auto y = 0; sectionDimension.y; y++)
+				rowData.push_back(dataReader.read<short>());
+
+			// we move because we'll never need rowData again
+			// so it's safe not to duplicated it into the array
+			sectionData.push_back(move(rowData));
+		}
+		section.setData(sectionData);
+		// add section to the map
+		map->addSection(section);
+	}  
+
+	return map;
+} 

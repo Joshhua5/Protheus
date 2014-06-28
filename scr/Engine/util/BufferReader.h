@@ -4,31 +4,34 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-A class to provide writing functions to a buffer
+	A class to provide reading functions to a buffer
 
+	Note: Possile optimisaton, replace memcpy with 
+	buffer casts
 -------------------------------------------------------------------------
 History:
-- 1:06:2014: Waring J.
+- 28:06:2014: Waring J.
 *************************************************************************/
 #pragma once
 
 #include "BufferIO.h"
 
-class BufferWriter :
+class BufferReader :
 	public BufferIO
 {
-public:
-	BufferWriter(CBuffer* buffer);
-	~BufferWriter();
+public: 
+	BufferReader(CBuffer* buffer); 
+	~BufferReader();
 
-	// writes a value to the buffer at the writer,
-	// of the size specified
-	void write(void* value, int size); 
-
+	// returns a pointer to the internal buffer
+	// doesn't skip memory once read
+	char* read_raw();
+	// returns a char* to a copy of data
+	char* read(int size);
+ 
 	template<typename T>
-	void inline write(T){
-		T data;
-		write(&data, sizeof(T));
+	inline T read(){
+		return *(T*) read(sizeof(T));
 	}
 };
 

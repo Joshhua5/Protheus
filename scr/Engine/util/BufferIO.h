@@ -4,31 +4,29 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-A class to provide writing functions to a buffer
+	A class to provide io base functions for buffer writer/reader
 
 -------------------------------------------------------------------------
 History:
 - 1:06:2014: Waring J.
 *************************************************************************/
 #pragma once
+#include "CBuffer.h"
 
-#include "BufferIO.h"
-
-class BufferWriter :
-	public BufferIO
+class BufferIO
 {
-public:
-	BufferWriter(CBuffer* buffer);
-	~BufferWriter();
+protected:
+	unsigned int head;
+	CBuffer* buffer;
+public: 
 
-	// writes a value to the buffer at the writer,
-	// of the size specified
-	void write(void* value, int size); 
+	// sets the position of the writer
+	void setPosition(unsigned int);
+	// returns the position of the writer
+	unsigned int getPosition();
+	// skips over the current writing position
+	void skip(int);
+	// get's the internal buffers size
+	unsigned int getBufferSize();
 
-	template<typename T>
-	void inline write(T){
-		T data;
-		write(&data, sizeof(T));
-	}
 };
-

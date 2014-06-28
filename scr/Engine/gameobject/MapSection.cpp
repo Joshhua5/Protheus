@@ -5,21 +5,21 @@ using namespace Pro;
 using namespace GameObject;
 
 
-char MapSection::tileAt(Math::Vector2& v){
+short MapSection::tileAt(Math::Vector2& v){
 	char* ch = contains(v);
 	if (ch != nullptr)
 		return *ch;
 	return 0;
 }
 
-char* MapSection::contains(Math::Vector2& v){
+short* MapSection::contains(Math::Vector2& v){
 	if (Math::Vector4(position, dimensions).contains(v))
 			return &data[static_cast<int>(v.x)][static_cast<int>(v.y)];
 	return nullptr;
 }
  
 
-void MapSection::setData(std::vector<std::vector<char>> dat){
+void MapSection::setData(std::vector<std::vector<short>> dat){
 	data = dat;
 }
 
@@ -33,6 +33,6 @@ bool MapSection::visible(Camera* cam){
 		); 
 }
 
-std::vector<std::vector<char>> MapSection::getData(){
+std::vector<std::vector<short>> MapSection::getData(){
 	return data;
 }

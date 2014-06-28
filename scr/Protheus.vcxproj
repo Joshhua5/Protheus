@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\util\BufferReader.cpp" />
     <ClCompile Include="Engine\util\BufferWriter.cpp" />
     <ClCompile Include="Engine\DataGame.cpp" />
     <ClCompile Include="Engine\audio\CAudioDevice.cpp" />
@@ -131,6 +132,8 @@
     <ClCompile Include="Engine\io\gamefile\GameFileScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\util\BufferIO.h" />
+    <ClInclude Include="Engine\util\BufferReader.h" />
     <ClInclude Include="Engine\util\BufferWriter.h" />
     <ClInclude Include="Engine\DataGame.h" />
     <ClInclude Include="Engine\audio\CAudioBuffer.h" />

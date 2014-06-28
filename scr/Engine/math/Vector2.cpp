@@ -42,6 +42,11 @@ void Vector2::operator+=(Vector2& p){
 	y += p.y;
 }
 
+Vector2 Pro::Math::Vector2::operator-(Vector2& other)
+{
+	return Vector2(x - other.x, y - other.y);
+}
+
 bool Vector2::contains(float p){
 	if ((x > p && y < p) || (x < p && y > p))
 		return true;
@@ -95,3 +100,4 @@ int Vector2::lSetXY(lua_State* L){
 	v->y = lua_tonumber(L, 3);
 	return 0;
 }
+

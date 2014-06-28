@@ -27,8 +27,7 @@ namespace Pro{
 			TILE,
 			AUDIO,
 			OBJECT,
-			MAP_DATA,
-			MAP_HEADER,
+			MAP_DATA, 
 			RAW
 		};
 

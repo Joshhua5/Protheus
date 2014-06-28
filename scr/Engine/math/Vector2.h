@@ -37,6 +37,7 @@ namespace Pro{
 			SDL_Point operator=(Vector2&);
 			bool operator==(Vector2&);
 			void operator+=(Vector2&); 
+			Vector2 operator-(Vector2&);
 
 
 			// LUA Functions

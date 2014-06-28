@@ -28,12 +28,13 @@ namespace Pro{
 			public Component::Area,
 			public Component::Position
 		{ 
-			std::vector<std::vector<char>> data;
+			std::vector<std::vector<short>> data;
 		public:
 			char tileAt(Math::Vector2&);
 			char* contains(Math::Vector2&); 
-			void setData(std::vector<std::vector<char>>);
-			std::vector<std::vector<char>> getData();
+			void setData(std::vector<std::vector<short>>);
+			void setData(short*); 
+			std::vector<std::vector<short>> getData();
 			bool visible(Camera* cam);
 
 			static string lGetMetatable(){
