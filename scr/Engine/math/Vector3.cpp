@@ -31,17 +31,17 @@ int Vector3::lGetZ(lua_State* L){
 }
 int Vector3::lSetX(lua_State* L){
 	Vector3* v = Util::luaP_touserdata<Vector3>(L, 1);
-	v->x = lua_tonumber(L, 2); 
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector3::lSetY(lua_State* L){
 	Vector3* v = Util::luaP_touserdata<Vector3>(L, 1);
-	v->y = lua_tonumber(L, 2);
+	v->y = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector3::lSetZ(lua_State* L){
 	Vector3* v = Util::luaP_touserdata<Vector3>(L, 1);
-	v->z = lua_tonumber(L, 2);
+	v->z = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector3::lGetXYZ(lua_State* L){
@@ -52,8 +52,8 @@ int Vector3::lGetXYZ(lua_State* L){
 }
 int Vector3::lSetXYZ(lua_State* L){
 	Vector3* v = Util::luaP_touserdata<Vector3>(L, 1);
-	v->x = lua_tonumber(L, 1);
-	v->y = lua_tonumber(L, 2);
-	v->z = lua_tonumber(L, 3);
+	v->x = static_cast<float>(lua_tonumber(L, 1));
+	v->y = static_cast<float>(lua_tonumber(L, 2));
+	v->z = static_cast<float>(lua_tonumber(L, 3));
 	return 0;
 }

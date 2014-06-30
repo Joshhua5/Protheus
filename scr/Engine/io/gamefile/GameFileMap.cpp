@@ -27,7 +27,7 @@ void GameFileMap::store(Map* map){
 	// size for section definitions
 	chunkDataSize += map->getSectionCount() * (sizeof(int) + sizeof(Vector2) + sizeof(Vector2));
 	// size for the section data
-	chunkDataSize += map->getVolume() * sizeof(short);
+	chunkDataSize += static_cast<int>(map->getVolume() * sizeof(short));
 	dataChunk.chunkData.init(chunkDataSize);
 	    
 	// create Bufferwriters for the chunk
@@ -77,9 +77,9 @@ GameObject::Map* GameFileMap::load(){
 
 		// load in the section data from a 1D short array
 		// to a 2D short vector
-		vector<vector<short>> sectionData(sectionDimension.x); 
+		vector<vector<short>> sectionData(static_cast<int>(sectionDimension.x));
 		for (auto x = 0; sectionDimension.x; x++){ 
-			vector<short> rowData(sectionDimension.y);
+			vector<short> rowData(static_cast<int>(sectionDimension.y));
 
 			for (auto y = 0; sectionDimension.y; y++)
 				rowData.push_back(dataReader.read<short>());

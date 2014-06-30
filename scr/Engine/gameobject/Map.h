@@ -32,8 +32,6 @@ namespace Pro{
 			vector<MapSection*> mapSections;
 			vector<TileType> tileData;
 
-			bool loadLevelData(const std::string& file);
-			bool loadLevelTileData(const std::string&file);
 		public:
 			Map();
 			~Map();
@@ -44,8 +42,6 @@ namespace Pro{
 			// function used in loading data
 			// Accepts a MapSection and moves it in
 			void addSection(MapSection&);
-
-			bool loadLevel(const std::string& file, const std::string& data);
 
 			// returns the tile which is at a position
 			TileType* getTile(Math::Vector2&); 

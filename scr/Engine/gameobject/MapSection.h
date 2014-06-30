@@ -30,10 +30,12 @@ namespace Pro{
 		{ 
 			std::vector<std::vector<short>> data;
 		public:
-			char tileAt(Math::Vector2&);
-			char* contains(Math::Vector2&); 
+			short tileAt(Math::Vector2&);
+			// returns a pointer so we can return nullptr if
+			// a tile isn't found
+			short* contains(Math::Vector2&); 
 			void setData(std::vector<std::vector<short>>);
-			void setData(short*); 
+			//void setData(short*); 
 			std::vector<std::vector<short>> getData();
 			bool visible(Camera* cam);
 

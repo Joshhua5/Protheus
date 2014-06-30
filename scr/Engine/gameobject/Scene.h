@@ -42,7 +42,6 @@ namespace Pro{
 			Scene(){};
 			~Scene();
 
-			bool loadSceneData(const std::string& path, const std::string& data);
 			bool addTileType(TileType);
 			void update();
 
@@ -55,7 +54,6 @@ namespace Pro{
 			// LUA functions
 
 			static int lUpdate(lua_State*);
-			static int lLoadScene(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
@@ -66,7 +64,6 @@ namespace Pro{
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				CGUID::lGetFunctions<T>(fields);
 				fields.push_back({ "update", (lua_CFunction)&T::lUpdate });
-				fields.push_back({ "loadScene", (lua_CFunction)&T::lLoadScene });
 			}
 		};
 	}

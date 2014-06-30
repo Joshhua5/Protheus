@@ -57,7 +57,7 @@ namespace Pro{
 		template<typename T>
 		inline void luaP_pusharray(lua_State* L, T* data, unsigned int size){  
 			lua_createtable(L, 0, 0);
-			for (int x = 0; x < size; x++){
+			for (unsigned int x = 0; x < size; x++){
 				lua_pushnumber(L, x);
 				lua_pushnumber(L, data[x]);
 				lua_settable(L, -3);

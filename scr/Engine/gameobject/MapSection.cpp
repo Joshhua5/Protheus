@@ -6,7 +6,7 @@ using namespace GameObject;
 
 
 short MapSection::tileAt(Math::Vector2& v){
-	char* ch = contains(v);
+	short* ch = contains(v);
 	if (ch != nullptr)
 		return *ch;
 	return 0;

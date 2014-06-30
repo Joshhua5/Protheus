@@ -19,12 +19,6 @@ namespace Pro{
 
 		}
 
-		bool Scene::loadSceneData(const std::string& path, const std::string& data){
-			// Load Tile Data
-			tileData = new Map();
-			return tileData->loadLevel(path, data);
-		} 
-
 		// returns a list of entities found on a tile
 		std::vector<GameObject::Entity*>  Scene::pollTile(Math::Vector2& v){
 			std::vector<GameObject::Entity*> list;
@@ -37,12 +31,6 @@ namespace Pro{
 		Map* Scene::getMap(){
 			return tileData;
 		}  
-
-		int Scene::lLoadScene(lua_State* L){ 
-			Scene* s = Util::luaP_touserdata<Scene>(L, 1);  
-			lua_toboolean(L, s->loadSceneData(lua_tostring(L, 2), lua_tostring(L, 3))); 
-			return 1;
-		} 	
 
 		int Scene::lUpdate(lua_State* L){
 			Scene* s = Util::luaP_touserdata<Scene>(L, 1);

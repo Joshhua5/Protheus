@@ -204,22 +204,22 @@ int Vector4::lGetW(lua_State* L){
 }
 int Vector4::lSetX(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = lua_tonumber(L, 2); 
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector4::lSetY(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = lua_tonumber(L, 2);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector4::lSetZ(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = lua_tonumber(L, 2);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector4::lSetW(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = lua_tonumber(L, 2);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector4::lGetXYZW(lua_State* L){
@@ -229,6 +229,6 @@ int Vector4::lGetXYZW(lua_State* L){
 }
 int Vector4::lSetXYZW(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = lua_tonumber(L, 2);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }

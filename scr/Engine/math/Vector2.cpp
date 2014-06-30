@@ -60,7 +60,9 @@ float Vector2::hypotenuse(){
  
 int Vector2::lContains(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	lua_pushboolean(L, v->contains(lua_tonumber(L, 2)));
+	lua_pushboolean(L, 
+		static_cast<bool>(v->contains(static_cast<float>(lua_tonumber(L, 2))))
+		);
 	return 1;
 }
 int Vector2::lHypotenuse(lua_State* L){
@@ -80,24 +82,24 @@ int Vector2::lGetY(lua_State* L){
 }
 int Vector2::lSetX(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	v->x = lua_tonumber(L, 2);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector2::lSetY(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	v->y = lua_tonumber(L, 2);
+	v->y = static_cast<float>(lua_tonumber(L, 2));
 	return 0;
 }
 int Vector2::lGetXY(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	float dat[] = { v->x, v->y };
-	Util::luaP_pusharray<float>(L, dat, 2); 
+	float packed_data[] = { v->x, v->y };
+	Util::luaP_pusharray<float>(L, packed_data, 2);
 	return 1;
 }
 int Vector2::lSetXY(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	v->x = lua_tonumber(L, 2);
-	v->y = lua_tonumber(L, 3);
+	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->y = static_cast<float>(lua_tonumber(L, 3));
 	return 0;
 }
 

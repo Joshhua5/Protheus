@@ -27,20 +27,14 @@ void LuaCallback::callback(){
 	return;
 }
 
-void LuaCallback::setCallback(lua_State* L, const std::string& func, unsigned char args, unsigned char returns){
+void LuaCallback::setCallback(lua_State* L, const std::string& func){
 	lua_state = L;
 	lua_callback = func; 
 }
 
-
-
 int  LuaCallback::lBindCallback(lua_State* L){ 
 	LuaCallback* p = *(static_cast<LuaCallback**>(lua_touserdata(L, 1)));
 
-	p->setCallback(L,
-		lua_tostring(L, 2),
-		0,//static_cast<unsigned char>(lua_tonumber(L, 3)),
-		0//static_cast<unsigned char>(lua_tonumber(L, 4))
-		);
+	p->setCallback(L, lua_tostring(L, 2));
 	return 0;
 }
