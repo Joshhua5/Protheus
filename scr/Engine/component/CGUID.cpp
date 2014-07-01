@@ -18,7 +18,7 @@ CGUID::~CGUID()
 }
 
 int CGUID::lGetGUID(lua_State* L){
-	CGUID* p = *static_cast<CGUID**>(lua_touserdata(L, 1));
+	const auto p = *static_cast<CGUID**>(lua_touserdata(L, 1));
 	lua_pushnumber(L, p->getGUID());
 	return 1;
 }

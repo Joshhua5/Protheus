@@ -44,9 +44,7 @@ namespace Pro{
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				Position::lGetFunctions<T>(fields);
 				CGUID::lGetFunctions<T>(fields);
-				ActiveState::lGetFunctions<T>(fields);
-
-				//fields.push_back({ "checkForItem", (lua_CFunction)&T::lCheckForItem });
+				ActiveState::lGetFunctions<T>(fields); 
 			}
 		};
 	}

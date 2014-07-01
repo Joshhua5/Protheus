@@ -16,22 +16,32 @@ History:
 
 #include "BufferIO.h"
 
-class BufferReader :
-	public BufferIO
-{
-public: 
-	BufferReader(CBuffer* buffer); 
-	~BufferReader();
+namespace Pro{
+	namespace Util{
+		class BufferReader :
+			public BufferIO
+		{
+		public: 
+			BufferReader(CBuffer* buffer); 
+			~BufferReader();
 
-	// returns a pointer to the internal buffer
-	// doesn't skip memory once read
-	char* read_raw();
-	// returns a char* to a copy of data
-	char* read(int size);
+			// returns a pointer to the internal buffer
+			// doesn't skip memory once read
+			char* read_raw();
+			// returns a char* to a copy of data
+			char* read(int size);
  
-	template<typename T>
-	inline T read(){
-		return *(T*) read(sizeof(T));
+			template<typename T>
+			inline T read(){
+				return *(T*) read(sizeof(T));
+			}
+
+			template<typename T>
+			inline T* read_array(unsigned int size){
+				return (T*) read(sizeof(T) * size);
+			}
+		};
 	}
-};
+}
+
 

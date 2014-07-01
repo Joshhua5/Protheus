@@ -40,5 +40,15 @@ public:
 		data = new char[_size];
 		size = _size;
 	}
+
+	// removes the internet reference
+	// to prevent the data from being deleted 
+	// when CBuffer is deleted.
+	// don't dereference unless the data pointer
+	// has been stored somewhere else (memory leak)
+	void dereference(){
+		data = nullptr;
+		size = 0;
+	}
 };
 

@@ -1,4 +1,5 @@
 
+
 #include "Camera.h"
 
 using namespace Pro;
@@ -20,7 +21,7 @@ void Camera::move(Math::Vector2& v){
 }
    
 int Camera::lMove(lua_State* L){
-	Camera* p = *(static_cast<Camera**>(lua_touserdata(L, 1)));
+	const auto p = *(static_cast<Camera**>(lua_touserdata(L, 1)));
 	p->move(Math::Vector2(
 		static_cast<int>(lua_tonumber(L, 2)),
 		static_cast<int>(lua_tonumber(L, 3))

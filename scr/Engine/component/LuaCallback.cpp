@@ -33,7 +33,7 @@ void LuaCallback::setCallback(lua_State* L, const std::string& func){
 }
 
 int  LuaCallback::lBindCallback(lua_State* L){ 
-	LuaCallback* p = *(static_cast<LuaCallback**>(lua_touserdata(L, 1)));
+	const auto p = *(static_cast<LuaCallback**>(lua_touserdata(L, 1)));
 
 	p->setCallback(L, lua_tostring(L, 2));
 	return 0;

@@ -13,20 +13,29 @@ History:
 #pragma once
 #include "CBuffer.h"
 
-class BufferIO
-{
-protected:
-	unsigned int head;
-	CBuffer* buffer;
-public: 
+namespace Pro{
+	namespace Util{
+		class BufferIO
+		{
+		protected:
+			unsigned int head;
+			CBuffer* buffer;
+		public: 
 
-	// sets the position of the writer
-	void setPosition(unsigned int);
-	// returns the position of the writer
-	unsigned int getPosition();
-	// skips over the current writing position
-	void skip(int);
-	// get's the internal buffers size
-	unsigned int getBufferSize();
+			// sets the position of the writer
+			void setPosition(unsigned int);
 
-};
+			// returns the position of the writer
+			unsigned int getPosition();
+
+			// skips over the current writing position
+			void skip(int);
+
+			// get's the internal buffers size
+			unsigned int getBufferSize();
+
+		};
+	}
+}
+
+

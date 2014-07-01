@@ -38,10 +38,7 @@ namespace Pro{
 			unsigned int mapIndexOffset;
 			// provides a index to raw data, which have no specified 
 			// type
-			unsigned int rawIndexOffset;
-			// provides a translation between ID's and a 
-			// 32 char string
-			unsigned int nameIndexOffset;
+			unsigned int rawIndexOffset; 
 		};
 
 	}

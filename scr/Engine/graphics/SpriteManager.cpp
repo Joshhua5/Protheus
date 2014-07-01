@@ -1,5 +1,7 @@
 
+
 #include "SpriteManager.h"
+
 using namespace Pro;
 using namespace Graphics;
 using namespace Asset;
@@ -52,7 +54,7 @@ bool SpriteManager::loadAnimations(SDL_Renderer *renderer, const std::string& pa
 		// Key:Path;
 		stream.getline(&line[0], 512);
 
-		uint32 key = GUIDLookup::newGUID(line.substr(0, line.find_first_of(':')));
+		auto key = GUIDLookup::newGUID(line.substr(0, line.find_first_of(':')));
 
 		Asset::AnimatedSprite anim = loadAnimation(renderer,
 			line.substr(line.find_first_of(':') + 1, line.find(';') - line.find(':') - 1));
@@ -71,7 +73,7 @@ bool SpriteManager::loadSpriteSheet(SDL_Renderer *renderer, const std::string &p
 		return 1;
 	}
 
-	char* buffer = new char[512];
+	auto buffer = new char[512];
 
 	while (!stream.eof()){
 		stream.getline(buffer, 512);
@@ -84,7 +86,7 @@ bool SpriteManager::loadSpriteSheet(SDL_Renderer *renderer, const std::string &p
 
 	// decode the data 
 
-	for (unsigned int x = 0; x < lines.size(); x++){
+	for (size_t x = 0; x < lines.size(); x++){
 		// Check if the line at least matchs the minimum characters
 		// required to form a correct definition (to prevent empty lines)
 		if (lines[x].length() < 10)
@@ -100,15 +102,14 @@ bool SpriteManager::loadSpriteSheet(SDL_Renderer *renderer, const std::string &p
 		std::vector<std::string> elements;
 		// break string down into elements
 		//name = x y w h 
-		int pos = 0;
-		int length;
+		auto pos = 0; 
 		// Get name
 		elements.push_back(lines[x].substr(0, lines[x].find_first_of(' ', 0)));
 		// find the first ' '
 		pos = lines[x].find(' ', pos);
-		for (int i = 0; i < 6; i++){
+		for (auto i = 0; i < 6; i++){
 			// grab the length between ' '
-			length = lines[x].find(' ', pos + 1) - pos;
+			auto length = lines[x].find(' ', pos + 1) - pos;
 			elements.push_back(
 				lines[x].substr(pos + 1, length));
 			// move the position for the next value

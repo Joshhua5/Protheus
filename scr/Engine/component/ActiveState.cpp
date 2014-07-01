@@ -30,14 +30,17 @@ bool ActiveState::isActive(){
 
 
 int ActiveState::lActivate(lua_State* L){
-	(*static_cast<ActiveState**>(lua_touserdata(L, 1)))->activate();
+	const auto a = *static_cast<ActiveState**>(lua_touserdata(L, 1));
+	a->activate();
 	return 0;
 }
 int ActiveState::lDeactivate(lua_State* L){
-	(*static_cast<ActiveState**>(lua_touserdata(L, 1)))->deactivate();
+	const auto a = *static_cast<ActiveState**>(lua_touserdata(L, 1));
+	a->deactivate();
 	return 0;
 }
 int ActiveState::lIsActive(lua_State* L){
-	lua_pushboolean(L, (*static_cast<ActiveState**>(lua_touserdata(L, 1)))->isActive());
+	const auto a = *static_cast<ActiveState**>(lua_touserdata(L, 1));
+	lua_pushboolean(L, a->isActive());
 	return 1;
 }

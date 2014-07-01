@@ -35,7 +35,7 @@ namespace Pro{
 		int Scene::lUpdate(lua_State* L){
 			Scene* s = Util::luaP_touserdata<Scene>(L, 1);
 			s->update();
-			return 0;
+			return 0; 
 		}
 	}
 }

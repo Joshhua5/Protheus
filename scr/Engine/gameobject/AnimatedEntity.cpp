@@ -1,7 +1,9 @@
 
+
 #include "AnimatedEntity.h"
-namespace Pro{
-	namespace GameObject{
+
+using namespace Pro;
+using namespace GameObject;
 
 		AnimatedEntity::AnimatedEntity(const std::string& name) : 
 			Entity(name)
@@ -40,6 +42,4 @@ namespace Pro{
 			AnimatedEntity* p = *(static_cast<AnimatedEntity**>(lua_touserdata(L, 1)));
 			p->activateAnimation(static_cast<unsigned int>(lua_tonumber(L, 2)));
 			return 0;
-		}
-	}
-}
+		} 

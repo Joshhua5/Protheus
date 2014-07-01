@@ -12,16 +12,20 @@ History:
 #pragma once
 
 #include "..\..\util\CBuffer.h"
+#include "..\..\util\BufferReader.h"
+#include "..\..\util\BufferWriter.h"
 #include "EGameFileChunkType.h"
+#include <string>
+
 namespace Pro{
 	namespace IO{
+		using namespace std;
 		class GameFileChunk
 		{
 		public:
-			int chunkID;
+			string chunkName;
 			EChunkType chunkType;
 			CBuffer chunkData;
-		};
-
+		}; 
 	}
 }

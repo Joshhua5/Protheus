@@ -16,13 +16,13 @@ void CScriptable::attachFunction(const string& function){
 }
 
 int CScriptable::lUpdate(lua_State* L){
-	auto scriptable = Util::luaP_touserdata<CScriptable>(L, 1);
+	const auto scriptable = Util::luaP_touserdata<CScriptable>(L, 1);
 	scriptable->update(L);
 	return 0;
 }
 
 int CScriptable::lAttachFunction(lua_State* L){
-	auto scriptable = Util::luaP_touserdata<CScriptable>(L, 1);
+	const auto scriptable = Util::luaP_touserdata<CScriptable>(L, 1);
 	scriptable->attachFunction(lua_tostring(L, 2));
 	return 0; 
 }

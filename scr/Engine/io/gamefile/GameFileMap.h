@@ -16,27 +16,28 @@ History:
 #pragma once
 
 #include "..\..\gameobject\map.h"
-#include "..\..\util\BufferWriter.h"
-#include "..\..\util\BufferReader.h"
-#include "GameFileChunk.h"
+#include "GameFileBase.h" 
 
 namespace Pro{
 	namespace IO{
-		class GameFileMap
+		using namespace GameObject;
+
+		class GameFileMap :
+			public GameFileBase
 		{
-			// contains the information about the map
-			GameFileChunk dataChunk; 
+			// contains the information about the map 
+			Map* map;
 		public: 
-			GameFileMap(GameObject::Map*);
+			GameFileMap(Map*);
 			GameFileMap();
 			~GameFileMap();
-
-			GameFileChunk* getChunk(); 
-
+			  
 			// stores a map into a gamefile chunk
-			void store(GameObject::Map*);
+			void pack(Map*);
 			// loads a map from a gamefile chunk
-			GameObject::Map* load();
+			void unpack(GameFileChunk& chunk);
+
+			Map* getMap(); 
 		};
 	}
 }

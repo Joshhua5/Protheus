@@ -21,9 +21,8 @@ History:
 namespace Pro{
 	namespace GameObject{
 		struct TileType
-		{
-			SDL_Rect tileSize;
-			char tileID;
+		{ 
+			unsigned short tileID;
 			bool passable = true;
 
 			bool isTextured = false;

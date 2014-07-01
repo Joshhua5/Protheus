@@ -1,5 +1,8 @@
+
 #include "BufferReader.h"
 
+using namespace Pro;
+using namespace Util;
 
 BufferReader::BufferReader(CBuffer* _buffer){
 	buffer = _buffer;

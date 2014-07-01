@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\util\BufferIO.cpp" />
     <ClCompile Include="Engine\util\BufferReader.cpp" />
     <ClCompile Include="Engine\util\BufferWriter.cpp" />
     <ClCompile Include="Engine\DataGame.cpp" />
@@ -130,6 +131,9 @@
     <ClCompile Include="Engine\io\gamefile\GameFileLoader.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileMap.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileScript.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileMapTile.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileBase.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileIndex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\util\BufferIO.h" />
@@ -257,6 +261,9 @@
     <ClInclude Include="Engine\io\gamefile\GameFileHeader.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileMap.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileScript.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileMapTile.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileBase.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileIndex.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

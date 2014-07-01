@@ -29,7 +29,7 @@ namespace Pro{
 	}
 
 	uint32 GUIDLookup::newGUID(const std::string& name){
-		static uint32 allocatedBitCount = 1; 
+		static auto allocatedBitCount = 1; 
 		getNameMapping()->insert({ name, allocatedBitCount++ });
 		return allocatedBitCount;
 	}
@@ -38,7 +38,7 @@ namespace Pro{
 	}
 
 	std::string* GUIDLookup::getName(uint32 _id){
-		for each(auto elm in *getNameMapping())
+		for each(const auto elm in *getNameMapping())
 			if (elm.second == _id)
 				return &std::string(elm.first);
 		return nullptr;
@@ -54,7 +54,7 @@ namespace Pro{
 	static int lGetName(lua_State* L){
 		lua_pushstring(
 			L, 
-			GUIDLookup::getName(lua_tonumber(L, 1))->c_str()
+			GUIDLookup::getName(static_cast<uint32>(lua_tonumber(L, 1)))->c_str()
 			);
 		return 1;
 	}

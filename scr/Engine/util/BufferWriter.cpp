@@ -1,6 +1,9 @@
+
 #include "BufferWriter.h"
 
- 
+using namespace Pro;
+using namespace Util;
+
 BufferWriter::BufferWriter(CBuffer* _buffer){
 	buffer = _buffer;
 } 
@@ -10,7 +13,7 @@ BufferWriter::~BufferWriter()
 	buffer = nullptr;
 }
 
-inline void BufferWriter::write(void* value, int size){
+void BufferWriter::write(void* value, unsigned int size){
 	if (buffer == nullptr)
 		throw "NullBuffer";
 	if (getPosition() > buffer->size - size)

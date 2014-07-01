@@ -35,3 +35,12 @@ std::vector<MapSection*> Map::getVisibleSections(Camera* cam){
 TileType* Map::getTileType(unsigned int ch){
 	return &tileData.at(ch);
 }
+
+
+void Map::addSection(MapSection* section){
+	mapSections.push_back(section);
+}
+
+unsigned int Map::getSectionCount(){
+	return mapSections.size();
+}

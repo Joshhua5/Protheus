@@ -26,7 +26,8 @@ using namespace std;
 namespace Pro{
 	namespace GameObject{
 		class Map : 
-			public Component::Area
+			public Component::Area,
+			public Component::CGUID
 		{
 		private:  
 			vector<MapSection*> mapSections;
@@ -41,7 +42,7 @@ namespace Pro{
 			vector<MapSection*> getVisibleSections(Camera* cam);
 			// function used in loading data
 			// Accepts a MapSection and moves it in
-			void addSection(MapSection&);
+			void addSection(MapSection*);
 
 			// returns the tile which is at a position
 			TileType* getTile(Math::Vector2&); 
