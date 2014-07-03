@@ -134,6 +134,10 @@
     <ClCompile Include="Engine\io\gamefile\GameFileMapTile.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileBase.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileIndex.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileRaw.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileImage.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileAudio.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\util\BufferIO.h" />
@@ -264,6 +268,10 @@
     <ClInclude Include="Engine\io\gamefile\GameFileMapTile.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileBase.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileIndex.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileRaw.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileImage.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileAudio.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

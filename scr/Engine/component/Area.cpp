@@ -3,11 +3,16 @@
 
 using namespace Pro;
 using namespace Component;
+using namespace Math;
+
+Area::Area(Vector2& dim){
+	dimensions = dim;
+}
+
 Area::Area()
 {
 }
-
-
+ 
 Area::~Area()
 {
 }
@@ -27,15 +32,12 @@ float Area::getVolume(){
 }
 
 int Area::lGetDimensions(lua_State* L){
-	const auto p = *(static_cast<Area**>(lua_touserdata(L, 1)));
-	Util::luaP_newobject<Math::Vector2>(L, p->pGetDimensions()); 
+	const auto p = Util::luaP_touserdata<Area>(L, 1); 
+	Util::luaP_newobject<Vector2>(L, p->pGetDimensions()); 
 	return 1;
 }
 int Area::lSetDimensions(lua_State* L){
 	const auto p = *(static_cast<Area**>(lua_touserdata(L, 1)));
-	p->setDimensions(Math::Vector2(
-		static_cast<int>(lua_tonumber(L, 2)),
-		static_cast<int>(lua_tonumber(L, 3))
-		));
+	p->setDimensions(Vector2(lua_tonumber(L, 2),lua_tonumber(L, 3)));
 	return 0;
 }

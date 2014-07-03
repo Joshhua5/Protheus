@@ -12,6 +12,7 @@ History:
 #pragma once
 
 #include <vector>
+#include <string>
 #include "GameFileChunk.h"  
 #include "..\..\util\BufferReader.h"
 #include "..\..\util\BufferWriter.h"
@@ -23,11 +24,17 @@ namespace Pro{
 		{
 		protected:
 			GameFileChunk chunk;
+
 		public:
-			GameFileBase();
-			~GameFileBase();
-			 
+			GameFileBase(){};
+
 			GameFileChunk getChunk();
+
+			// Returns the chunk, but ruins the internal
+			// chunk
+			GameFileChunk extractChunk();
+
+			const std::string getName();
 		};
 	}
 }

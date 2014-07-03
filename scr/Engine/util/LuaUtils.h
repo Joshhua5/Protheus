@@ -151,6 +151,9 @@ namespace Pro{
 #define luaP_setRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "RENDERER", data)
 #define luaP_getRenderer(lua_state) Util::luaP_registerget<Pro::Graphics::Renderer>(lua_state, "RENDERER")
 
+#define luaP_setSDLRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "SDL_RENDERER", data)
+#define	luaP_getSDLRenderer(lua_state) Util::luaP_registerget<SDL_Renderer>(lua_state, "SDL_RENDERER")
+
 #define luaP_setScenes(lua_state, data) Util::luaP_registerstore(lua_state, "SCENES", data)
 #define luaP_getScenes(lua_state) Util::luaP_registerget<Pro::SceneContainer>(lua_state, "SCENES")
 

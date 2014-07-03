@@ -13,7 +13,7 @@ History:
 
 #include <string>
 #include <vector>
-#include "..\lua\lib\lua.hpp"
+#include "..\util\LuaUtils.h"
 using namespace std;
 
 namespace Pro{

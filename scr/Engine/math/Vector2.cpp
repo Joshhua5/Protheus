@@ -5,22 +5,29 @@ using namespace Pro;
 using namespace Math;
 
 
-Vector2::Vector2(int x, int y) : Vector2(static_cast<float>(x), static_cast<float>(y)) {}
-Vector2::Vector2(unsigned int x, unsigned int y) : Vector2(static_cast<float>(x), static_cast<float>(y)) {}
+Vector2::Vector2(int x, int y) 
+	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
+
+Vector2::Vector2(unsigned int x, unsigned int y) 
+	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
+
+Vector2::Vector2(double x, double y) 
+	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
 Vector2::Vector2(float _x, float _y){
 	x = _x;
 	y = _y;
 }
-
-
-Vector2::Vector2()
-{
-	x = 0;
-	y = 0;
+ 
+Vector2::Vector2(const Vector2& vec){
+	x = vec.x;
+	y = vec.y;
 }
 
-Vector2::~Vector2(){}
+Vector2::Vector2(Vector2&& vec){
+	x = std::move(vec.x);
+	y = std::move(vec.y);
+}
 
 Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
 

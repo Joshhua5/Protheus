@@ -25,9 +25,8 @@ namespace Pro{
 			char* script; 
 		public:
 			// Accepts a buffer pass to setScript
-			GameFileScript(GameFileChunk);
-			GameFileScript();
-			~GameFileScript();
+			GameFileScript(GameFileChunk); 
+			GameFileScript(){}
 
 			// Returns a pointer to the script
 			// is of type char* because the script may be

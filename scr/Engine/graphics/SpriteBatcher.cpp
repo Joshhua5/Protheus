@@ -18,23 +18,20 @@ SpriteBatcher::SpriteBatcher(lua_State* L){
 }
 
 void SpriteBatcher::push(Asset::Sprite* _s, Math::Vector4& _r){
-	sprite_stack.push(_s);
-	rect_stack.push(_r);
+	render_stack.push({ _s, _r }); 
 }
 
-void SpriteBatcher::flush(){
-	Asset::Sprite* spt;
-	for (int x = sprite_stack.size(); x != 0; x--){
-		spt = sprite_stack.top();
-		SDL_RenderCopy(renderer, spt->getSpriteSheet(), &spt->getRect().toSDL(), &rect_stack.top().toSDL());
-		sprite_stack.pop();
-		rect_stack.pop();
+void SpriteBatcher::flush(){  
+	for (auto x = render_stack.size(); x != 0; x--){
+		const auto pair = &render_stack.top(); 
+		SDL_RenderCopy(renderer, pair->first->getTexture(), NULL, &pair->second.toSDL());
+		render_stack.pop();
 	}
 }
 
 
 int SpriteBatcher::lPush(lua_State* L){
-	SpriteBatcher* sb = Util::luaP_touserdata<SpriteBatcher>(L, 1);
+	const auto sb = Util::luaP_touserdata<SpriteBatcher>(L, 1);
 	sb->push(
 		Util::luaP_touserdata<Asset::Sprite>(L, 2),
 		*Util::luaP_touserdata<Math::Vector4>(L, 3)
@@ -43,7 +40,7 @@ int SpriteBatcher::lPush(lua_State* L){
 }
 
 int SpriteBatcher::lFlush(lua_State* L){
-	SpriteBatcher* sb = Util::luaP_touserdata<SpriteBatcher>(L, 1);
+	const auto sb = Util::luaP_touserdata<SpriteBatcher>(L, 1);
 	sb->flush();
 	return 0;
 }

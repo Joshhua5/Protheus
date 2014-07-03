@@ -15,24 +15,31 @@ History:
 #include <string>
 #include <vector>
 #include "..\Math.h"
-#include "..\lua\lib\lua.hpp"
+#include "..\util\LuaUtils.h"
 using namespace std;
 
 namespace Pro{
 	namespace Component {
+		using namespace Math;
+
 		class Area
 		{
 		protected:
-			Math::Vector2 dimensions;
+			Vector2 dimensions;
 		public:
+			Area(Vector2& dimensions);
 			Area();
 			~Area();
 
-			Math::Vector2 getDimensions();
-			Math::Vector2* pGetDimensions();
+			Vector2 getDimensions();
+
+			// returns a pointer to the internal dimension
+			Vector2* pGetDimensions();
+
+			// the width and height multiplied together
 			float getVolume();
 
-			void setDimensions(Math::Vector2&);
+			void setDimensions(Vector2&);
 
 			// LUA Functions
 

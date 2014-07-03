@@ -4,6 +4,7 @@
 
 using namespace Pro;
 using namespace Math;
+
 Vector4::Vector4(const Vector4& v) : Vector4(
 	v.x, v.y,
 	v.z, v.w){}
@@ -39,15 +40,12 @@ Vector4::Vector4(float _x, float _y, float _z, float _w){
 	z = _z;
 	w = _w;
 }
-
-Vector4::Vector4()
-{
-	x = y = z = w = 0;
-}
-
-
-Vector4::~Vector4()
-{
+  
+Vector4::Vector4(Vector4&& vec){
+	x = move(vec.x);
+	y = move(vec.y);
+	z = move(vec.z);
+	w = move(vec.w);
 }
 
 bool Vector4::contains(Math::Vector2& v){
@@ -82,8 +80,8 @@ Vector4 Vector4::operator-(Vector4& v){
 	return o;
 }
 Vector4 Vector4::operator*(Vector4& v){
-	Vector4 o(*this);
-	o *= v;
+	Vector4 o(v);
+	o *= *this; 
 	return o;
 }
 Vector4 Vector4::operator/(Vector4& v){

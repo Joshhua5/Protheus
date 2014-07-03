@@ -22,10 +22,9 @@ namespace Pro{
 	namespace Math{
 		struct Vector3{
 			float x, y, z;
-
+			  
 			Vector3();
-			~Vector3();
-			 
+
 			// LUA Functions
 			 
 			static int lGetX(lua_State*);

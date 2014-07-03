@@ -4,14 +4,12 @@ using namespace Pro;
 using namespace IO;
 using namespace Util;
 
-GameFileMapTile::GameFileMapTile()
+GameFileMapTile::GameFileMapTile(GameFileChunk& buffer)
 {
+	unpack(buffer);
 }
 
-
-GameFileMapTile::~GameFileMapTile()
-{
-}
+ 
 
 
 // unpacks a chunk into tile data

@@ -24,9 +24,7 @@ namespace Pro{
 		public:
 			LuaGlobalFactory(lua_State* L){
 				const luaL_Reg globalFunctions[] = {
-						{ "passBackToEngine", &EventHandler::lUpdate },
-						{ "load_spritesheet", &Graphics::SpriteManager::lLoadSpriteSheet },
-						{ "load_spriteanimations", &Graphics::SpriteManager::lLoadSpriteAnimations }, 
+						{ "passBackToEngine", &EventHandler::lUpdate }
 				};
 
 				for each(auto i in globalFunctions)

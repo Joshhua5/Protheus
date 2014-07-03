@@ -10,6 +10,7 @@ History:
 - 25:06:2014: Waring J.
 *************************************************************************/
 #pragma once
+
 namespace Pro{
 	namespace IO{
 		enum struct EChunkType
@@ -21,13 +22,13 @@ namespace Pro{
 			OBJECT_INDEX, //
 			MAP_INDEX, //
 			RAW_INDEX, //
-			IMAGE,
+			IMAGE, //
 			SCRIPT, //
 			TILE, //
-			AUDIO,
+			AUDIO, //
 			OBJECT,
 			MAP_DATA, //
-			RAW
+			RAW //
 		};
 
 	}

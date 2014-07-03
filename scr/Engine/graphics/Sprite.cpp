@@ -5,30 +5,15 @@
 using namespace Pro;
 using namespace Asset;
 
-Sprite::Sprite()
-{
-}
-Sprite::Sprite(const std::string& name, Math::Vector4& _rect) : 
-CGUID(name)
-{ 
-	rect = _rect;
+Sprite::Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex) : CGUID(name) , Area(dimensions){
+	texture = tex;
 }
 
 Sprite::~Sprite()
 {
+	SDL_DestroyTexture(texture);
 }
-
-void Sprite::attachSpriteSheet(SDL_Texture* _spriteSheet){
-	spriteSheet = _spriteSheet;
-}
-
-Math::Vector4 Sprite::getRect(){
-	return rect;
-}
-void Sprite::setRect(Math::Vector4& _rect){
-	rect = _rect;
-}
-
-SDL_Texture* Sprite::getSpriteSheet(){
-	return spriteSheet;
+  
+SDL_Texture* Sprite::getTexture(){
+	return texture;
 }

@@ -19,32 +19,31 @@ History:
 #include <fstream>  
 #include <SDL_image.h>
 #include "..\graphics\AnimatedSprite.h"  
+#include "..\util\CBuffer.h"
 #include "..\util\LuaUtils.h"
 
 namespace Pro{
 	namespace Graphics{
 		class SpriteManager
 		{
+			lua_State* lua_state;
+			SDL_Renderer* renderer = nullptr;
 			SDL_Texture* spriteSheet;
 			std::unordered_map<uint32, Asset::Sprite> sprites;
 			std::unordered_map<uint32, Asset::AnimatedSprite> animations;
 
-			Asset::AnimatedSprite loadAnimation(SDL_Renderer *renderer, const std::string& path);
+			Asset::AnimatedSprite loadAnimation(const std::string& path);
 		public:
-			SpriteManager();
+			SpriteManager(lua_State* lua_state);
 			~SpriteManager();
 
 			Asset::Sprite* getSprite(uint32);
 			Asset::AnimatedSprite* getAnim(uint32);
-			SDL_Texture* getSpriteSheet();
 
-			bool loadSpriteSheet(SDL_Renderer *renderer, const std::string& image, const std::string& data);
-			bool loadAnimations(SDL_Renderer* renderer, const std::string& path);
-			void release();
+			uint32 loadSprite(const std::string& name,const CBuffer data);
+			void release(uint32); 
 
 			// LUA Functions
-			static int lLoadSpriteSheet(lua_State* L);
-			static int lLoadSpriteAnimations(lua_State* L); 
 			static int lGetSprite(lua_State*);
 			static int lGetAnimation(lua_State*);
 
@@ -54,8 +53,6 @@ namespace Pro{
 
 			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "loadSpriteSheet", &T::lLoadSpriteSheet });
-				fields.push_back({ "loadSpriteAnimations", &T::lLoadSpriteAnimations });
 				fields.push_back({ "getSprite", &T::lGetSprite });
 				fields.push_back({ "getAnimation", &T::lGetAnimation });
 			}

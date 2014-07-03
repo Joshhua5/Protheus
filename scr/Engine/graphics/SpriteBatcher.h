@@ -14,19 +14,22 @@ History:
 
 #include <stack>
 
-#include "..\Math.h"
+#include "..\math\Vector4.h"
 #include "..\util\LuaUtils.h"
 #include "Sprite.h"
 
 
 namespace Pro{
 	namespace Graphics {
+		using namespace std;
+		using namespace Asset;
+		using namespace Math;
+
 		class SpriteBatcher
 		{ 
 			lua_State* lua_state;
 			SDL_Renderer* renderer;
-			std::stack<Asset::Sprite*> sprite_stack;
-			std::stack<Math::Vector4> rect_stack;
+			stack<pair<Sprite*, Vector4>> render_stack; 
 		public:
 			SpriteBatcher(lua_State* lua_state);
 			SpriteBatcher();

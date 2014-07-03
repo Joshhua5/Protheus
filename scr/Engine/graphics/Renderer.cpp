@@ -43,8 +43,8 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 
 	int x(0), y(0);
 
-	for each(const auto& section in sections){
-		for each(const auto& col in section->getData()){
+	for each(const auto section in sections){
+		for each(const auto col in section->getData()){
 			if (col[0] == '\r')
 				continue;
 			for each(const auto& row in col){
@@ -56,10 +56,9 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 				if (static_cast<Asset::Sprite*>(tile->spriteCache) == nullptr)
 					tile->spriteCache = spriteMng->getSprite(GUIDLookup::getGUID(tile->spriteName));
 
-				Math::Vector4 spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getRect();
-				spriteRect.x *= spriteRect.z;
-				spriteRect.y *= spriteRect.w;
-				sprite_batcher->push(static_cast<Asset::Sprite*>(tile->spriteCache), spriteRect);
+				auto spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getDimensions(); 
+				auto position = Vector2(spriteRect.x * x, spriteRect.y * y); 
+				sprite_batcher->push(static_cast<Asset::Sprite*>(tile->spriteCache), Vector4(position, spriteRect));
 				y++;
 			}
 			x++;

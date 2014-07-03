@@ -22,13 +22,19 @@ namespace Pro{
 		struct Vector2 {
 			float x, y;
 
+			// Copy constructor
+			Vector2(const Vector2&);
+			// Move Constructor
+			Vector2(Vector2&&);
+
+			Vector2(){};
+
 			Vector2(SDL_Point);
+			Vector2(double, double);
 			Vector2(unsigned long long, unsigned long long);
 			Vector2(unsigned int, unsigned int);
 			Vector2(float, float);
-			Vector2(int, int);
-			Vector2();
-			~Vector2();
+			Vector2(int, int); 
 
 			bool contains(float);
 			float hypotenuse();

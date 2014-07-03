@@ -6,16 +6,8 @@ using namespace IO;
 GameFileIndex::GameFileIndex(GameFileChunk& chunk){
 	unpack(chunk);
 }
-
-GameFileIndex::GameFileIndex()
-{
-}
-
-
-GameFileIndex::~GameFileIndex()
-{
-}
-
+  
+  
 void GameFileIndex::pack(vector<pair<string, unsigned int>> indexes, EChunkType type){
 	chunk.chunkName = "";
 	chunk.chunkType = type;

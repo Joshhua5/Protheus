@@ -29,14 +29,16 @@ namespace Pro{
 
 			float x, y, z, w;
 			
-			Vector4(SDL_Rect& p);
+			// Copy Constructor
 			Vector4(const Vector4&);
-			Vector4(Vector2&, Vector2&);
-			Vector4(double, double, double, double);
-			Vector4(float x, float y, float z, float w);
-			Vector4(int x, int y, int z, int w);
-			Vector4();
-			~Vector4();
+			// Move Constructor
+			Vector4(Vector4&&);
+			
+			Vector4(SDL_Rect& xyzw); 
+			Vector4(Vector2& xy, Vector2& zw);
+			Vector4(double x, double y, double z, double w);
+			Vector4(float x, float y, float z, float w); 
+			Vector4(int x, int y, int z, int w); 
 			
 			// z and w are width and height in that order.
 			bool contains(Vector2&);

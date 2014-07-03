@@ -4,41 +4,39 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	A raw chunk, has no understanding of the data it contains,
+	A buffer will be returned of the data contained inside the chunk
 -------------------------------------------------------------------------
 History:
-- 25:06:2014: Waring J.
+- 02:07:2014: Waring J.
 *************************************************************************/
-
 #pragma once
 
-#include "GameFileChunk.h"
 #include "GameFileBase.h"
-#include <unordered_map>
-#include <string>
 
 namespace Pro{
 	namespace IO{
 		using namespace std;
-		class GameFileIndex : 
+
+		class GameFileRaw :
 			public GameFileBase
-		{ 
-			unordered_map<string, unsigned int> indexes; 
+		{
+		protected:
+			CBuffer* data;
 		public:
-			GameFileIndex(GameFileChunk& chunk); 
-			GameFileIndex(){}
+			GameFileRaw(const string& name, CBuffer* buffer); 
+			GameFileRaw(GameFileChunk& chunk);
+			GameFileRaw(){}
 
-			// packs a vector of names and offsets
-			// into a game file chunk
-			void pack(vector<pair<string, unsigned int>> indexes, EChunkType type);
+			// Packs a CBuffer into a chunk
+			void pack(const string& name, CBuffer* buffer);
+			void pack(string&& name, CBuffer* buffer);
 
-			// reads a chunk and extracts
-			// the index
+			// extracts a CBuffer from the chunk
 			void unpack(GameFileChunk& chunk);
 
-			// returns the offset of a chunk
-			// which has the name
-			unsigned int getOffset(const string& name); 
-		};
+			// returns the unpacked data
+			CBuffer* getData();
+		}; 
 	}
 }

@@ -9,9 +9,7 @@ using namespace GameObject;
 using namespace Util;
 
 
-GameFileMap::GameFileMap(Map* map){ pack(map);} 
-GameFileMap::GameFileMap(){}  
-GameFileMap::~GameFileMap(){}
+GameFileMap::GameFileMap(Map* map){ pack(map);}  
 
 // stores a map into a gamefile chunk
 void GameFileMap::pack(Map* map){ 

@@ -2,16 +2,16 @@
 
 using namespace Pro;
 using namespace IO;
-
-GameFileBase::GameFileBase()
-{
-}
-
-
-GameFileBase::~GameFileBase()
-{
-}
+ 
  
 GameFileChunk GameFileBase::getChunk(){
 	return chunk;
+}
+
+GameFileChunk GameFileBase::extractChunk(){
+	return move(chunk);
+}
+
+const string GameFileBase::getName(){
+	return chunk.chunkName;
 }

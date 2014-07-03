@@ -16,9 +16,9 @@ namespace Pro{
 	namespace IO{
 		class GameFileLoader
 		{
-		public:
-			GameFileLoader();
-			~GameFileLoader();
+		public: 
+			GameFileLoader(){}
+
 		};
 	}
 }

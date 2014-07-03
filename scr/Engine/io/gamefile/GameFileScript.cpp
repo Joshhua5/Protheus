@@ -4,14 +4,11 @@
 using namespace Pro;
 using namespace IO;
 
-GameFileScript::GameFileScript()
+GameFileScript::GameFileScript(GameFileChunk)
 {
 }
 
-
-GameFileScript::~GameFileScript()
-{
-}
+ 
 
 char* GameFileScript::getScript(){
 	return script;

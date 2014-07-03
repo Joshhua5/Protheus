@@ -17,27 +17,29 @@ History:
  
 #include "..\Math.h"
 #include "..\component\CGUID.h"
+#include "..\component\Area.h"
+#include <SDL_render.h>
 
 namespace Pro{
 	namespace Asset{
+		using namespace std;
+		using namespace Math;
 
 		class Sprite : 
-			public Component::CGUID
+			public Component::CGUID,
+			public Component::Area
 		{
-		private:
-			SDL_Texture* spriteSheet;
-			Math::Vector4 rect; 
+		private: 
+			Vector2 rect; 
+			SDL_Texture* texture;
 		public:
-			Sprite::Sprite(const std::string& name, Math::Vector4& rect);
+			Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex);
 			Sprite();
 			~Sprite();
-
-			void attachSpriteSheet(SDL_Texture*);
-			SDL_Texture* getSpriteSheet();
-			Math::Vector4 getRect();
-			void setRect(Math::Vector4&);
-
-
+			  
+			SDL_Texture* getTexture();
+			
+			 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "asset_sprite_metatable";

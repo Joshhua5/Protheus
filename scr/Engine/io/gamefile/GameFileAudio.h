@@ -4,38 +4,29 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	
+	Audio doesn't support packing, the unpacked data is unprocessed
+	and is required to be processed by a IBitstreamDecoder
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
 
-#include <vector>
-#include "GameFileBase.h"
-#include "..\..\gameobject\Tile.h"  
+#include "GameFileRaw.h"
 
 namespace Pro{
 	namespace IO{
-		using namespace std;
-		using namespace GameObject;
-		class GameFileMapTile : 
-			public GameFileBase
+		class GameFileAudio : 
+			protected GameFileRaw
 		{
-			vector<TileType> tiles; 
 		public:
-			GameFileMapTile(GameFileChunk& buffer); 
-			GameFileMapTile(){}
+			GameFileAudio(GameFileChunk&);
+			GameFileAudio(){}
 
-			// unpacks a chunk into tile data
-			void unpack(GameFileChunk& buffer);
-
-			// packs tile data into a chunk
-			void pack(vector<TileType>& tiles);
-
-			vector<TileType> getTileData(); 
-		};
+			void unpack(GameFileChunk& _chunk);
+			
+			CBuffer* getAudio();
+		}; 
 	}
 }
-
 
