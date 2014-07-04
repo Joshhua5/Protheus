@@ -26,6 +26,23 @@ namespace Pro{
 		public:
 			StaticEntity();
 			~StaticEntity();
+
+
+			// LUA Functions
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+				return "gameobject_static_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+				Position::lGetFunctions<T>(fields);
+				Area::lGetFunctions<T>(fields);
+				Textured::lGetFunctions<T>(fields);
+				Animated::lGetFunctions<T>(fields);
+				CGUID::lGetFunctions<T>(fields);
+			}
 		}; 
 	}
 }

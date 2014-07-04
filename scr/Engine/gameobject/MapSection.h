@@ -15,8 +15,7 @@ History:
 
 #include <vector> 
 #include "Tile.h"
-#include "..\component\Position.h"
-#include "Camera.h"
+#include "..\component\Position.h" 
 #include "..\Math.h"
 #include "..\component\Area.h"
 #include <SDL.h>
