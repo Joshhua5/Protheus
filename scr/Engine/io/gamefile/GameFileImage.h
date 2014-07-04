@@ -25,10 +25,7 @@ namespace Pro{
 		public:
 			//GameFileImage(Sprite* sprite); 
 			GameFileImage(){}
-
-			// packs a sprite into a chunk 
-			//void pack(Sprite* sprite);
-
+			  
 			// unpacks a chunk and loads the sprite into the 
 			// sprite manager, the sprite's id can be 
 			// returned with getSpriteID

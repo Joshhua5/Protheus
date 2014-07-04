@@ -30,7 +30,7 @@ namespace Pro{
 			SDL_Renderer* renderer = nullptr;
 			SDL_Texture* spriteSheet;
 			std::unordered_map<uint32, Asset::Sprite> sprites;
-			std::unordered_map<uint32, Asset::AnimatedSprite> animations;
+			std::unordered_map<uint32, Asset::AnimatedSprite*> animations;
 
 			Asset::AnimatedSprite loadAnimation(const std::string& path);
 		public:

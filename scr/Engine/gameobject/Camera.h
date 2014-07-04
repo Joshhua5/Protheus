@@ -17,19 +17,17 @@ History:
 #include <string>
 #include <vector>
 #include "..\Math.h"
-#include "..\lua\lib\lua.hpp"
-#include "..\component\Position.h"
+#include "..\lua\lib\lua.hpp" 
 #include "..\component\Area.h"
-#include "..\component\CGUID.h"
+#include "Entity.h"
 
 using namespace std;
 
 namespace Pro{
 	namespace GameObject{
 		class Camera : 
-			public Component::Position,
-			public Component::Area,
-			public Component::CGUID
+			public GameObject::Entity,
+			public Component::Area
 		{  
 		public:
 			Camera(const std::string& name);
@@ -48,9 +46,8 @@ namespace Pro{
 
 			template<typename T> 
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				Position::lGetFunctions<T>(fields);
-				Area::lGetFunctions<T>(fields);
-				CGUID::lGetFunctions<T>(fields);
+				Entity::lGetFunctions<T>(fields);
+				Area::lGetFunctions<T>(fields); 
 
 				fields.push_back({ "move", (lua_CFunction)&T::lMove });
 			}

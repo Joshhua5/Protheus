@@ -21,8 +21,7 @@ namespace Pro{
 			public Component::CGUID
 		{
 		private:
-			std::vector<Sprite*> frames;
-			unsigned short currentFrame;
+			std::vector<Sprite*> frames; 
 		public:
 			AnimatedSprite(const std::string& name);
 			AnimatedSprite();

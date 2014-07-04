@@ -12,14 +12,26 @@ History:
 #pragma once
 
 #include "GameFileBase.h"
+#include "..\..\gameobject\Avatar.h"
+#include "..\..\gameobject\Camera.h"
+#include "..\..\gameobject\SpriteEntity.h"
 
 namespace Pro{
 	namespace IO{
+		using namespace GameObject;
 		class GameFileObject : 
 			public GameFileBase
 		{
+			Entity* object = nullptr;
 		public:
-			GameFileObject(); 
+			GameFileObject();
+
+			template<typename T>
+			void pack(const string& name, T* obj){/* Template Specialization */ }
+
+			void unpack(GameFileChunk& chunk);
+
+			Entity* getObject();
 		};
 	}
 } 

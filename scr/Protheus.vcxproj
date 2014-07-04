@@ -27,6 +27,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\gameobject\DataEntity.cpp" />
+    <ClCompile Include="Engine\component\Animated.cpp" />
+    <ClCompile Include="Engine\gameobject\DynamicEntity.cpp" />
     <ClCompile Include="Engine\util\BufferIO.cpp" />
     <ClCompile Include="Engine\util\BufferReader.cpp" />
     <ClCompile Include="Engine\util\BufferWriter.cpp" />
@@ -41,7 +44,6 @@
     <ClCompile Include="Engine\networking\CTCPConnection.cpp" />
     <ClCompile Include="Engine\component\ActiveState.cpp" />
     <ClCompile Include="Engine\containers\CameraContainer.cpp" />
-    <ClCompile Include="Engine\gameobject\AnimatedEntity.cpp" />
     <ClCompile Include="Engine\graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Engine\gameobject\Avatar.cpp" />
     <ClCompile Include="Engine\gameobject\Camera.cpp" />
@@ -60,7 +62,6 @@
     <ClCompile Include="Engine\graphics\Renderer.cpp" />
     <ClCompile Include="Engine\gameobject\Scene.cpp" />
     <ClCompile Include="Engine\graphics\Sprite.cpp" />
-    <ClCompile Include="Engine\gameobject\SpriteEntity.cpp" />
     <ClCompile Include="Engine\graphics\SpriteManager.cpp" />
     <ClCompile Include="Engine\gameobject\Tile.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
@@ -138,8 +139,13 @@
     <ClCompile Include="Engine\io\gamefile\GameFileImage.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileAudio.cpp" />
     <ClCompile Include="Engine\io\gamefile\GameFileObject.cpp" />
+    <ClCompile Include="Engine\gameobject\StaticEntity.cpp" />
+    <ClCompile Include="Engine\component\Textured.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\gameobject\DataEntity.h" />
+    <ClInclude Include="Engine\component\Animated.h" />
+    <ClInclude Include="Engine\gameobject\DynamicEntity.h" />
     <ClInclude Include="Engine\util\BufferIO.h" />
     <ClInclude Include="Engine\util\BufferReader.h" />
     <ClInclude Include="Engine\util\BufferWriter.h" />
@@ -171,7 +177,6 @@
     <ClInclude Include="Engine\io\EFile.h" />
     <ClInclude Include="Engine\component\ActiveState.h" />
     <ClInclude Include="Engine\containers\CameraContainer.h" />
-    <ClInclude Include="Engine\gameobject\AnimatedEntity.h" />
     <ClInclude Include="Engine\graphics\AnimatedSprite.h" />
     <ClInclude Include="Engine\gameobject\Avatar.h" />
     <ClInclude Include="Engine\gameobject\Camera.h" />
@@ -190,7 +195,6 @@
     <ClInclude Include="Engine\graphics\Renderer.h" />
     <ClInclude Include="Engine\gameobject\Scene.h" />
     <ClInclude Include="Engine\graphics\Sprite.h" />
-    <ClInclude Include="Engine\gameobject\SpriteEntity.h" />
     <ClInclude Include="Engine\graphics\SpriteManager.h" />
     <ClInclude Include="Engine\gameobject\Tile.h" />
     <ClInclude Include="Engine\util\Timer.h" />
@@ -272,6 +276,8 @@
     <ClInclude Include="Engine\io\gamefile\GameFileImage.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileAudio.h" />
     <ClInclude Include="Engine\io\gamefile\GameFileObject.h" />
+    <ClInclude Include="Engine\gameobject\StaticEntity.h" />
+    <ClInclude Include="Engine\component\Textured.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>

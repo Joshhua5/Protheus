@@ -7,45 +7,44 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 20:05:2014: Waring J.
+- 25:06:2014: Waring J.
 *************************************************************************/
+#pragma once
 
-#pragma once 
-#include "Entity.h"
 
-using namespace std;
+#include "CGUID.h"
+#include "..\util\LuaUtils.h"
 
 namespace Pro{
-	namespace GameObject{
-		class SpriteEntity :
-			public Entity
+	namespace Component{
+		class Textured
 		{
 		protected:
 			uint32 sprite_guid;
-		public:
-			SpriteEntity(const std::string& name);
-			SpriteEntity();
-			~SpriteEntity();
+		public: 
 
-			uint32 getSpriteGUID();
+			uint32 getSprite();
 
 			void setSprite(uint32 guid);
-
-			// Lua Functions
+			 
+			// LUA Functions
 
 			static int lSetSprite(lua_State*);
 			static int lGetSpriteGUID(lua_State*);
-
+	 
 			// returns the Metatable's name assosiated with this object
 			static inline string lGetMetatable(){
-				return "gameobject_sprite_entity_metatable";
+				return "component_textured_metatable";
 			}
 
-			template<typename T> static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				Entity::lGetFunctions<T>(fields);
+			template<typename T> 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
 				fields.push_back({ "setSprite", &T::lSetSprite });
 				fields.push_back({ "getSprite", &T::lGetSpriteGUID });
 			}
 		};
 	}
-}
+} 
+ 
+
+

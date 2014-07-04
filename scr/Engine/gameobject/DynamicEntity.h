@@ -7,18 +7,30 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 09:06:2014 Waring J.
-
+- 25:06:2014: Waring J.
 *************************************************************************/
 #pragma once
 
+#include "..\Components.h"
 
-#include "component\ActiveState.h"
-#include "component\Area.h"
-#include "component\CGUID.h"
-#include "component\CScriptable.h"
-#include "component\LuaCallback.h"
-#include "component\Name.h"
-#include "component\Textured.h"
-#include "component\Animated.h"
-#include "component\Position.h"
+namespace Pro{
+	namespace GameObject{
+		using namespace Component;
+		class DynamicEntity :
+			Position,
+			Area,
+			ActiveState,
+			CScriptable,
+			Textured,
+			Animated,
+			CGUID
+
+		{
+		public:
+			DynamicEntity();
+			~DynamicEntity();
+		};
+	}
+}
+
+

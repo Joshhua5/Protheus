@@ -161,13 +161,7 @@
     <ClCompile Include="Engine\gameobject\Avatar.cpp">
       <Filter>Engine Source Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\gameobject\AnimatedEntity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\gameobject\Entity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gameobject\SpriteEntity.cpp">
       <Filter>Engine Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Engine\component\ActiveState.cpp">
@@ -431,6 +425,21 @@
     <ClCompile Include="Engine\io\gamefile\GameFileObject.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\gameobject\StaticEntity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\DynamicEntity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\Animated.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\component\Textured.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\gameobject\DataEntity.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -505,13 +514,7 @@
     <ClInclude Include="Engine\gameobject\Avatar.h">
       <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\gameobject\AnimatedEntity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\gameobject\Entity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\gameobject\SpriteEntity.h">
       <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Engine\component\ActiveState.h">
@@ -827,6 +830,21 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\io\gamefile\GameFileObject.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\StaticEntity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\DynamicEntity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\Animated.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\component\Textured.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\gameobject\DataEntity.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
