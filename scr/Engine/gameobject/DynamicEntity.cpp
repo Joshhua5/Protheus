@@ -1,11 +1,9 @@
 #include "DynamicEntity.h"
 
+using namespace Pro;
+using namespace GameObject;
 
-DynamicEntity::DynamicEntity()
-{
-}
+DynamicEntity::DynamicEntity(const string& name) : CGUID(name){}
+DynamicEntity::DynamicEntity(){}
 
-
-DynamicEntity::~DynamicEntity()
-{
-}
+ 

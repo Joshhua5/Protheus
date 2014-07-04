@@ -17,8 +17,7 @@ History:
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include "..\gameobject\Avatar.h"
+ 
 #include "..\containers\EntityContainer.h"
 #include "..\containers\CameraContainer.h"
 #include "..\component\CGUID.h"
@@ -26,8 +25,7 @@ History:
 #include "..\Math.h"
 
 #include "Tile.h"
-#include "Map.h"
-#include "Camera.h"
+#include "Map.h" 
 namespace Pro{
 	namespace GameObject{
 		class Scene :

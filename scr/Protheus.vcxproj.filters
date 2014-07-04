@@ -158,12 +158,6 @@
     <ClCompile Include="Engine\networking\CNetwork.cpp">
       <Filter>Engine Source Files\Networking</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\gameobject\Avatar.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gameobject\Entity.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\component\ActiveState.cpp">
       <Filter>Engine Source Files\ClassComponents</Filter>
     </ClCompile>
@@ -172,12 +166,6 @@
     </ClCompile>
     <ClCompile Include="Engine\component\CGUID.cpp">
       <Filter>Engine Source Files\ClassComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gameobject\Item.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\gameobject\Inventory.cpp">
-      <Filter>Engine Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Engine\component\Name.cpp">
       <Filter>Engine Source Files\ClassComponents</Filter>
@@ -359,9 +347,6 @@
     <ClCompile Include="Engine\component\CScriptable.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\gameobject\Camera.cpp">
-      <Filter>Engine Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\gameobject\Map.cpp">
       <Filter>Engine Source Files\Scene</Filter>
     </ClCompile>
@@ -511,12 +496,6 @@
     <ClInclude Include="Engine\networking\CClientTCPConnection.h">
       <Filter>Engine Header Files\Networking</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\gameobject\Avatar.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\gameobject\Entity.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\component\ActiveState.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
     </ClInclude>
@@ -528,12 +507,6 @@
     </ClInclude>
     <ClInclude Include="Engine\component\CScriptable.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\gameobject\Item.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\gameobject\Inventory.h">
-      <Filter>Engine Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Engine\component\Name.h">
       <Filter>Engine Header Files\ClassComponent</Filter>
@@ -753,9 +726,6 @@
     </ClInclude>
     <ClInclude Include="Engine\event\CMouseWheel.h">
       <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\gameobject\Camera.h">
-      <Filter>Engine Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\gameobject\Map.h">
       <Filter>Engine Header Files\Scene</Filter>
