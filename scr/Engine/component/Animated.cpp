@@ -4,11 +4,11 @@ using namespace Pro;
 using namespace Component;
 
 
-uint32 Animated::getAnimation(){
+game_id Animated::getAnimation(){
 	return activeAnimation;
 }
 
-void Animated::setAnimation(uint32 animationID, unsigned int Steps){
+void Animated::setAnimation(game_id animationID, unsigned int Steps){
 	activeAnimation = animationID;
 	maxStep = Steps;
 	currentStep = 0;
@@ -23,8 +23,10 @@ void Animated::step(){
 }
 
 int Animated::lSetAnimation(lua_State* L){
-	auto as = Util::luaP_touserdata<Animated>(L, 1);
-	as->setAnimation(lua_tonumber(L, 2)); 
+	const auto as = Util::luaP_touserdata<Animated>(L, 1);
+	const auto sm = luaP_getSpriteManager(L);
+	const auto anim_id = static_cast<game_id>(lua_tonumber(L, 2));
+	as->setAnimation(anim_id, sm->getAnim(anim_id)->getStepCount()); 
 	return 0;
 }
 

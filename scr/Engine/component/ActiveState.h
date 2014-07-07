@@ -23,9 +23,7 @@ namespace Pro{
 		{
 		protected:
 			bool active;
-		public:
-			ActiveState();
-			~ActiveState();
+		public: 
 
 			void activate();
 			void deactivate();

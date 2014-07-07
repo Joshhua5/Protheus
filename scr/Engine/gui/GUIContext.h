@@ -22,7 +22,7 @@ namespace Pro{
 			public Component::CGUID
 		{
 		private:
-			std::unordered_map<uint32, GUIWindow> windows; 
+			std::unordered_map<game_id, GUIWindow> windows; 
 
 			GUIEntity* focusedEntity; 
 		public:
@@ -33,7 +33,7 @@ namespace Pro{
 			void update(SDL_Event event);
 
 			void attachWindow(GUIWindow& window);
-			void detachWindow(uint32);
+			void detachWindow(game_id);
 			  
 			std::string* getContextName(); 
 

@@ -20,12 +20,12 @@ namespace Pro{
 		class Textured
 		{
 		protected:
-			uint32 sprite_guid;
+			game_id sprite_guid;
 		public: 
 
-			uint32 getSprite();
+			game_id getSprite();
 
-			void setSprite(uint32 guid);
+			void setSprite(game_id guid);
 			 
 			// LUA Functions
 
@@ -38,7 +38,7 @@ namespace Pro{
 			}
 
 			template<typename T> 
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "setSprite", &T::lSetSprite });
 				fields.push_back({ "getSprite", &T::lGetSpriteGUID });
 			}

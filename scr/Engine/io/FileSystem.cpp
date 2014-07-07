@@ -16,8 +16,9 @@ FileSystem::~FileSystem()
 }
 
 
-CFile FileSystem::openFile(const std::string& file){ 
-	return CFile(rootDir + file);
+CFile& FileSystem::openFile(const std::string& file){
+	
+	return *new CFile(rootDir + file);
 }
 void FileSystem::setRootDir(const std::string& dir){
 	rootDir = dir;

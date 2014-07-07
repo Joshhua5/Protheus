@@ -26,7 +26,7 @@ namespace Pro{
 			public GameFileBase
 		{
 			// contains the information about the map 
-			Map* map;
+			Map* m_map;
 		public: 
 			GameFileMap(Map*); 
 			GameFileMap(){}

@@ -17,23 +17,27 @@ History:
 #include <iostream>
 #include <string>
 #include "..\GUIDLookup.h"
-#include "..\gameobject\Entity.h"
-
+#include "..\GameObjects.h"
 
 namespace Pro{   
+
+	using namespace std;
+	using namespace GameObject;
+
 	class EntityContainer{
 	protected:
-		std::unordered_map<uint32, GameObject::Entity*> stored_entities;
+		unordered_map<game_id, StaticEntity*> m_static_entities;
+		unordered_map<game_id, DynamicEntity*> m_dynamic_entities;
+		unordered_map<game_id, DataEntity*> m_data_entities;
 
 	public: 
-		EntityContainer(){}
-		~EntityContainer(){}
+		EntityContainer(){} 
 
 		void addEntity(GameObject::Entity*);
 
-		GameObject::Entity* getEntity(uint32);
+		GameObject::Entity* getEntity(game_id);
 
-		void destoryEntity(uint32);
+		void destoryEntity(game_id);
 
 	};
 }

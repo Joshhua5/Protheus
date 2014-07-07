@@ -21,17 +21,17 @@ namespace Pro{
 	class SceneContainer
 	{
 	protected:
-		std::unordered_map<uint32, Scene*> stored_scenes;
+		std::unordered_map<game_id, Scene*> stored_scenes;
 		Scene* active_scene = nullptr;
 	public:
 		SceneContainer(){}
 		~SceneContainer(){}
 
 		void addScene(Scene*); 
-		Scene* getScene(uint32);
+		Scene* getScene(game_id);
 		Scene* getActiveScene(); 
-		void setActiveScene(uint32);
-		void destoryScene(uint32); 
+		void setActiveScene(game_id);
+		void destoryScene(game_id); 
 		 
 		static int lAddScene(lua_State*);
 		static int lSetActiveScene(lua_State*);

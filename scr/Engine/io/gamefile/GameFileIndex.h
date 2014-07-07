@@ -23,7 +23,7 @@ namespace Pro{
 		class GameFileIndex : 
 			public GameFileBase
 		{ 
-			unordered_map<string, unsigned int> indexes; 
+			unordered_map<string, unsigned int> m_indexes; 
 		public:
 			GameFileIndex(GameFileChunk& chunk); 
 			GameFileIndex(){}

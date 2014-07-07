@@ -9,15 +9,15 @@ GameFileIndex::GameFileIndex(GameFileChunk& chunk){
   
   
 void GameFileIndex::pack(vector<pair<string, unsigned int>> indexes, EChunkType type){
-	chunk.chunkName = "";
-	chunk.chunkType = type;
+	m_chunk.chunkName = "";
+	m_chunk.chunkType = type;
 
 	auto structSize = 0;
 	structSize += sizeof(unsigned int);
 	structSize += sizeof(char) * 32;
 
-	chunk.chunkData.init(structSize * indexes.size());
-	Util::BufferWriter writer(&chunk.chunkData);
+	m_chunk.chunkData.init(structSize * indexes.size());
+	Util::BufferWriter writer(&m_chunk.chunkData);
 
 	for each(auto index in indexes){
 		writer.write<unsigned int>(index.second);
@@ -40,10 +40,10 @@ void GameFileIndex::unpack(GameFileChunk& _chunk){
 		pair<string, unsigned int> index;
 		index.second = reader.read<unsigned int>();
 		index.first = reader.read_array<char>(32);
-		indexes.insert(index);
+		m_indexes.insert(index);
 	}
 }
 
 unsigned int GameFileIndex::getOffset(const string& name){
-	return indexes.at(name);
+	return m_indexes.at(name);
 }

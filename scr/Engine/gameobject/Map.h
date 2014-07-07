@@ -20,6 +20,8 @@ History:
 
 #include "..\util\StringConverter.h"
 #include "MapSection.h"
+#include "DataEntity.h"
+#include "..\component\CGUID.h"
 
 using namespace std;
 
@@ -34,12 +36,11 @@ namespace Pro{
 			vector<TileType> tileData;
 
 		public:
-			Map();
-			~Map();
+			Map(); 
 			 
 			vector<MapSection*> getSections(){ return mapSections; }
 			unsigned int getSectionCount();
-			vector<MapSection*> getVisibleSections(Camera* cam);
+			vector<MapSection*> getVisibleSections(DataEntity& cam);
 			// function used in loading data
 			// Accepts a MapSection and moves it in
 			void addSection(MapSection*);

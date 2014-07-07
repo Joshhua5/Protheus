@@ -15,6 +15,7 @@ CGUID::CGUID()
 
 CGUID::~CGUID()
 {
+	GUIDLookup::releaseGUID(guid);
 }
 
 int CGUID::lGetGUID(lua_State* L){
@@ -23,6 +24,6 @@ int CGUID::lGetGUID(lua_State* L){
 	return 1;
 }
 
-unsigned int CGUID::getGUID(){
+game_id CGUID::getGUID(){
 	return guid;
 }

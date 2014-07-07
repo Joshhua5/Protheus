@@ -38,8 +38,8 @@ namespace Pro{
 		void setInactive(const std::string& name);
 
 		void addContext(GUI::GUIContext* context);
-		GUI::GUIContext* getContext(uint32 contextID);
-		void removeContext(uint32);
+		GUI::GUIContext* getContext(game_id contextID);
+		void removeContext(game_id);
 	};
 
 }

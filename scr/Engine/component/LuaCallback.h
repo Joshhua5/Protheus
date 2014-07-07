@@ -24,11 +24,10 @@ namespace Pro{
 			std::string lua_callback;
 
 		public:
-			LuaCallback();
-			~LuaCallback();
+			LuaCallback(); 
 			 
 			std::string* getCallback();
-			void setCallback(lua_State* lua_state, const std::string& functionName);
+			void setCallback(lua_State* luaState, const std::string& functionName);
 			void callback();
 
 			// Lua functions

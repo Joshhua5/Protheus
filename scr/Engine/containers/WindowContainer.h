@@ -19,15 +19,15 @@ namespace Pro{
 	class WindowContainer
 	{
 	protected:
-		std::unordered_map<uint32, Window*> stored_windows;
+		std::unordered_map<game_id, Window*> stored_windows;
 
 	public:
 		WindowContainer(){}
 		~WindowContainer(){}
 
 		void addWindow(Window*);
-		Window* getWindow(uint32);
-		void destoryWindow(uint32);
+		Window* getWindow(game_id);
+		void destoryWindow(game_id);
 		 
 		// LUA Functions
 		 

@@ -23,7 +23,7 @@ namespace Pro{
 		class GameFileBase
 		{
 		protected:
-			GameFileChunk chunk;
+			GameFileChunk m_chunk;
 
 		public:
 			GameFileBase(){};

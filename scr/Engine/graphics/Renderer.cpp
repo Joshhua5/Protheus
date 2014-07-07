@@ -12,7 +12,7 @@ Renderer::Renderer(){
 Renderer::Renderer(lua_State* lua_state){
 	SDL_Window* w = Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW");
 	renderer = SDL_CreateRenderer(w, -1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); 
 	if (renderer == nullptr)
 		return;
 	Util::luaP_registerstore(lua_state, "SDL_RENDERER", renderer);
@@ -37,7 +37,7 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 
 	// Render the Map, only sections visible to the camera
 
-	auto sections = map->getVisibleSections(scene->getActiveCamera());
+	auto sections = map->getVisibleSections(*scene->getActiveCamera());
 
 	// render the tiles
 

@@ -22,7 +22,7 @@ namespace Pro{
 			public Component::CGUID ,
 			public GameFileBase
 		{ 
-			char* script; 
+			char* m_script; 
 		public:
 			// Accepts a buffer pass to setScript
 			GameFileScript(GameFileChunk); 

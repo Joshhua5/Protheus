@@ -20,10 +20,10 @@ void EntityContainer::addEntity(GameObject::Entity* e){
 	stored_entities.insert({ e->getGUID(), e });
 }
 
-GameObject::Entity* EntityContainer::getEntity(uint32  i){
+GameObject::Entity* EntityContainer::getEntity(game_id  i){
 	return stored_entities.at(i);
 }
 
-void EntityContainer::destoryEntity(uint32  i){
+void EntityContainer::destoryEntity(game_id  i){
 	stored_entities.erase(i);
 }

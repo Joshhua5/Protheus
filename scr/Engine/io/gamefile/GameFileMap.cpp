@@ -15,8 +15,8 @@ GameFileMap::GameFileMap(Map* map){ pack(map);}
 void GameFileMap::pack(Map* map){ 
 	  
 	// populate and define the chunk
-	chunk.chunkType = EChunkType::MAP_DATA;
-	chunk.chunkName = *GUIDLookup::getName(map->getGUID()); 
+	m_chunk.chunkType = EChunkType::MAP_DATA;
+	m_chunk.chunkName = *GUIDLookup::getName(map->getGUID()); 
 
 	// define the chunk size and 
 	// initialize the dataChunk
@@ -28,10 +28,10 @@ void GameFileMap::pack(Map* map){
 	chunkDataSize += map->getSectionCount() * (sizeof(int) + sizeof(Vector2) + sizeof(Vector2));
 	// size for the section data
 	chunkDataSize += static_cast<int>(map->getVolume() * sizeof(short));
-	chunk.chunkData.init(chunkDataSize); 
+	m_chunk.chunkData.init(chunkDataSize);
 	    
 	// create Bufferwriters for the chunk
-	BufferWriter dataWriter(&chunk.chunkData);
+	BufferWriter dataWriter(&m_chunk.chunkData);
 
 	// write the chunk header 
 	int count = map->getSectionCount();
@@ -51,14 +51,14 @@ void GameFileMap::pack(Map* map){
 
 // loads a map from a gamefile chunk
 void GameFileMap::unpack(GameFileChunk& chunk){
-	map = new Map();
+	m_map = new Map();
 
 	BufferReader dataReader(&chunk.chunkData);
 
-	auto sectionCount = dataReader.read<int>();
+	const auto sectionCount = dataReader.read<int>();
 	  
 	// Process each section
-	for (int x = 0; x < sectionCount; x++){
+	for (int sectionID = 0; sectionID < sectionCount; sectionID++){
 		auto section = new MapSection();
 		
 		// In the buffer each section is as follows
@@ -90,10 +90,10 @@ void GameFileMap::unpack(GameFileChunk& chunk){
 		}
 		section->setData(sectionData);
 		// add section to the map
-		map->addSection(section);
+		m_map->addSection(section);
 	}   
 } 
  
 Map* GameFileMap::getMap(){
-	return map;
+	return m_map;
 }

@@ -15,12 +15,12 @@ History:
 
 namespace Pro{ 
 
-	std::unordered_map<std::string, uint32>* GUIDLookup::getNameMapping(){
-		static std::unordered_map<std::string, uint32> nameMapping;
+	std::unordered_map<std::string, game_id>* GUIDLookup::getNameMapping(){
+		static std::unordered_map<std::string, game_id> nameMapping;
 		return &nameMapping;
 	}
 
-	void GUIDLookup::releaseGUID(uint32 i){
+	void GUIDLookup::releaseGUID(const game_id i){
 		getNameMapping()->erase(*getName(i)); 
 	}
 
@@ -28,16 +28,16 @@ namespace Pro{
 		releaseGUID(getNameMapping()->at(name));
 	}
 
-	uint32 GUIDLookup::newGUID(const std::string& name){
+	game_id GUIDLookup::newGUID(const std::string& name){
 		static auto allocatedBitCount = 1; 
 		getNameMapping()->insert({ name, allocatedBitCount++ });
 		return allocatedBitCount;
 	}
-	uint32 GUIDLookup::getGUID(const std::string& name){
+	game_id GUIDLookup::getGUID(const std::string& name){
 		return getNameMapping()->at(name);
 	}
 
-	std::string* GUIDLookup::getName(uint32 _id){
+	std::string* GUIDLookup::getName(const game_id _id){
 		for each(const auto elm in *getNameMapping())
 			if (elm.second == _id)
 				return &std::string(elm.first);
@@ -54,7 +54,7 @@ namespace Pro{
 	static int lGetName(lua_State* L){
 		lua_pushstring(
 			L, 
-			GUIDLookup::getName(static_cast<uint32>(lua_tonumber(L, 1)))->c_str()
+			GUIDLookup::getName(static_cast<game_id>(lua_tonumber(L, 1)))->c_str()
 			);
 		return 1;
 	}

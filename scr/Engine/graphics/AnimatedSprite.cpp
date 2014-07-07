@@ -14,35 +14,37 @@ AnimatedSprite::AnimatedSprite()
 AnimatedSprite::~AnimatedSprite()
 {
 }
-
-void AnimatedSprite::nextFrame(){
-	if (currentFrame != frames.size())
-		currentFrame++;
-	else
-		currentFrame = 0;
-}
-
-Sprite* AnimatedSprite::getFrame(){
-	return frames[currentFrame];
-}
-
-Sprite* AnimatedSprite::getFrame(int value){
-	return frames[value];
-}
-
-void AnimatedSprite::addFrame(Sprite* sprite){
-	frames.push_back(sprite);
-}
-
-int AnimatedSprite::lNextFrame(lua_State* L){
-	AnimatedSprite* as = Util::luaP_touserdata<AnimatedSprite>(L, 1);
-	as->nextFrame();
-	return 0;
-}
+//
+//void AnimatedSprite::nextFrame(){
+//	if (currentFrame != frames.size())
+//		currentFrame++;
+//	else
+//		currentFrame = 0;
+//}
+//
+//Sprite* AnimatedSprite::getFrame(){
+//	return frames[currentFrame];
+//}
+//
+//Sprite* AnimatedSprite::getFrame(int value){
+//	return frames[value];
+//}
+//
+//void AnimatedSprite::addFrame(Sprite* sprite){
+//	frames.push_back(sprite);
+//}
+//
+//int AnimatedSprite::lNextFrame(lua_State* L){
+//	AnimatedSprite* as = Util::luaP_touserdata<AnimatedSprite>(L, 1);
+//	as->nextFrame();
+//	return 0;
+//}
 
 int AnimatedSprite::lGetFrame(lua_State* L){
 	AnimatedSprite* as = Util::luaP_touserdata<AnimatedSprite>(L, 1);
-	Util::luaP_newobject<Sprite>(L, as->getFrame());
+	Util::luaP_newobject<Sprite>(L, as->getFrame(
+		static_cast<unsigned int>(lua_tonumber(L, 2))
+		));
 	return 0;
 }
 

@@ -9,7 +9,7 @@ void SceneContainer::addScene(Scene* scene){
 	stored_scenes.insert(make_pair(scene->getGUID(), scene));
 }
 
-Scene* SceneContainer::getScene(uint32 id){
+Scene* SceneContainer::getScene(game_id id){
 	return stored_scenes.at(id);
 }
 
@@ -17,11 +17,11 @@ Scene* SceneContainer::getActiveScene(){
 	return active_scene;
 }
 
-void SceneContainer::setActiveScene(uint32 id){
+void SceneContainer::setActiveScene(game_id id){
 	active_scene = getScene(id);
 }
 
-void SceneContainer::destoryScene(uint32 id){
+void SceneContainer::destoryScene(game_id id){
 	stored_scenes.erase(id);
 }
 
@@ -40,18 +40,18 @@ int SceneContainer::lGetActiveScene(lua_State* L){
 
 int SceneContainer::lGetScene(lua_State* L){
 	SceneContainer* sc = Util::luaP_touserdata<SceneContainer>(L, -2);
-	Util::luaP_newuserdata<Scene>(L, sc->getScene(static_cast<uint32>(lua_tonumber(L, -1))));
+	Util::luaP_newuserdata<Scene>(L, sc->getScene(static_cast<game_id>(lua_tonumber(L, -1))));
 	return 1;
 }
 
 int SceneContainer::lDestoryScene(lua_State* L){
 	SceneContainer* sc = Util::luaP_touserdata<SceneContainer>(L, -2);
-	sc->destoryScene(static_cast<uint32>(lua_tonumber(L, -1)));
+	sc->destoryScene(static_cast<game_id>(lua_tonumber(L, -1)));
 	return 0;
 }
 
 int SceneContainer::lSetActiveScene(lua_State* L){ 
 	SceneContainer* sc = Util::luaP_touserdata<SceneContainer>(L, -2);
-	sc->setActiveScene(static_cast<uint32>(lua_tonumber(L, -1)));
+	sc->setActiveScene(static_cast<game_id>(lua_tonumber(L, -1)));
 	return 0;
 }

@@ -8,12 +8,7 @@ LuaCallback::LuaCallback()
 	lua_callback = "\0";
 	lua_state = nullptr;
 }
-
-
-LuaCallback::~LuaCallback()
-{  
-}
-
+ 
 
 std::string* LuaCallback::getCallback(){
 	return &lua_callback;

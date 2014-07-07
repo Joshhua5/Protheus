@@ -30,20 +30,21 @@ History:
 #include "..\util\LuaUtils.h"
 
 using namespace std;
+using namespace Pro::Math;
 
 namespace Pro{
 	namespace Component{
+		
 		class Position
 		{
 		protected:
-			Math::Vector2 position;
+			Vector2 position;
 		public:
 			Position();
 			~Position();
 
-			Math::Vector2 getPosition();
-			Math::Vector2* pGetPosition();
-			void setPosition(Math::Vector2&);
+			Vector2 getPosition(); 
+			void setPosition(Vector2&);
 
 			// LUA Functions
 
@@ -55,7 +56,8 @@ namespace Pro{
 				return "component_posititon_metatable";
 			}
 
-			template<typename T> static void lGetFunctions(std::vector<luaL_Reg>& fields){
+			template<typename T> 
+			static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getPosition", &T::lGetPosition });
 				fields.push_back({ "setPosition", &T::lSetPosition });
 			} 

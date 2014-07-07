@@ -12,26 +12,26 @@ History:
 #pragma once
 
 #include "..\Components.h"
+#include "Entity.h"
 
 namespace Pro{
 	namespace GameObject{
 		using namespace Component;
 		class StaticEntity : 
-			Position,
-			Area,
-			Textured,
-			Animated,
-			CGUID
+			public Position,
+			public Area,
+			public Textured,
+			public Animated, 
+			public Entity
 		{
 		public:
-			StaticEntity();
-			~StaticEntity();
-
-
+			StaticEntity(const string& name);
+			StaticEntity(); 
+			 
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object
-			static inline string lGetMetatable(){
+			static inline const string lGetMetatable(){
 				return "gameobject_static_metatable";
 			}
 

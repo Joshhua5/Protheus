@@ -22,9 +22,7 @@ namespace Pro{
 	namespace Component{
 		class CScriptable{
 			string luaFunction = "";
-		public:
-			CScriptable(){}
-			~CScriptable(){}
+		public: 
 
 			// Calls the assigned Lua Script
 			void update(lua_State* L);

@@ -3,6 +3,7 @@
 
 using namespace Pro;
 using namespace Component;
+using namespace Math;
 
 Position::Position()
 {
@@ -13,13 +14,11 @@ Position::~Position()
 {
 }
 
-Math::Vector2 Position::getPosition(){
+Vector2 Position::getPosition(){
 	return position;
-}
-Math::Vector2* Position::pGetPosition(){
-	return &position;
-}
-void Position::setPosition(Math::Vector2& p){
+} 
+
+void Position::setPosition(Vector2& p){
 	position = p;
 }
   

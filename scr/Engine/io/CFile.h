@@ -20,15 +20,18 @@ History:
 
 namespace Pro{
 	namespace Util{ 
+
+		using namespace std;
 		class CFile
 		{
 		private:
-			std::fstream file;
+			fstream file;
+			string m_file_path;
 			EFile flag;
 		public:
 			CFile(const std::string& file);
 			CFile();
-			~CFile();
+			~CFile(); 
 
 			/*  Returns if there's more data to be read */
 			bool isEndOfFile();
@@ -80,13 +83,13 @@ namespace Pro{
 			/*  Reads a upto the deliminator
 			and returns between readPos and
 			the found deliminator */
-			std::string readToken(char delim);
+			string readToken(char delim);
 
 			/*  Read's upto the first New line */
-			std::string readLine();
+			string readLine();
 
 			/*	Read's upto the first Null Terminator */
-			std::string readString();
+			string readString();
 
 			/*	Closes the file and set's the flag to
 			FILE_CLOSED */
@@ -97,6 +100,7 @@ namespace Pro{
 
 			/*	Returns the flag */
 			EFile peekError();
+
 			/*	Returns the flag and resets to NO_ERROR */
 			EFile getError();
 		}; 

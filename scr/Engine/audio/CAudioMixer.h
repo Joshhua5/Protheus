@@ -24,12 +24,12 @@ namespace Pro{
 
 		class CAudioMixer
 		{
-			CAudioBuffer* output_stream; 
-			atomic<bool> stream_ready;
-			atomic<bool> stream_refill;
-			vector<CAudioSignal> signals; 
+			CAudioBuffer* m_output_stream; 
+			atomic<bool> m_stream_ready;
+			atomic<bool> m_stream_refill;
+			vector<CAudioSignal> m_signals; 
 			void process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready);
-			thread stream_processor;
+			thread m_stream_processor;
 		public:
 			CAudioMixer();
 			~CAudioMixer();

@@ -25,15 +25,15 @@ namespace Pro{
 		{
 		private:
 			// the ID of the animation 
-			uint32 activeAnimation;
+			game_id activeAnimation;
 			// current step of the animation
 			unsigned int currentStep;
 			// the count of steps in the animation
 			unsigned int maxStep;
 		public:
  
-			uint32 getAnimation();
-			void setAnimation(uint32 animationID, unsigned int Steps);
+			game_id getAnimation();
+			void setAnimation(game_id animationID, unsigned int Steps);
 
 			unsigned int getStep(); 
 			void step();
@@ -48,7 +48,7 @@ namespace Pro{
 				return "component_animated_metatable";
 			}
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "setAnimation", &T::lSetAnimation });
 				fields.push_back({ "getAnimation", &T::lGetAnimation });
 			}

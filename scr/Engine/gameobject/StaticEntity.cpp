@@ -6,8 +6,4 @@ using namespace GameObject;
 StaticEntity::StaticEntity()
 {
 }
-
-
-StaticEntity::~StaticEntity()
-{
-}
+ 

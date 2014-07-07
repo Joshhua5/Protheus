@@ -3,20 +3,19 @@
 
 using namespace Pro;
 using namespace GameObject;
+using namespace std;
+using namespace Math;
 
 Map::Map()
 {
 }
+ 
 
-
-Map::~Map()
-{
-}
-inline std::string getString(const std::string& line){
+inline string getString(const string& line){
 	return line.substr(line.find(':') + 1, line.find(';') - line.find(':') - 1);
 }
  
-TileType* Map::getTile(Math::Vector2& v){
+TileType* Map::getTile(Vector2& v){
 	short* ch = nullptr;
 	for each(const auto &section in mapSections)
 		if ((ch = section->contains(v)) != nullptr)
@@ -24,8 +23,8 @@ TileType* Map::getTile(Math::Vector2& v){
 	return nullptr;
 }
 
-std::vector<MapSection*> Map::getVisibleSections(Camera* cam){
-	std::vector<MapSection*> sections;
+vector<MapSection*> Map::getVisibleSections(DataEntity& cam){
+	vector<MapSection*> sections;
 	for each(const auto &sec in mapSections)
 		if (sec->visible(cam))
 			sections.push_back(sec);

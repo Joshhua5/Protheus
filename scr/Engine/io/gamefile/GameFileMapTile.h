@@ -22,7 +22,7 @@ namespace Pro{
 		class GameFileMapTile : 
 			public GameFileBase
 		{
-			vector<TileType> tiles; 
+			vector<TileType> m_tiles; 
 		public:
 			GameFileMapTile(GameFileChunk& buffer); 
 			GameFileMapTile(){}

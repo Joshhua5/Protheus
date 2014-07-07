@@ -15,7 +15,7 @@ History:
 #pragma once
 
 #include "lib\lua.hpp" 
-#include "..\gameobject\Avatar.h" 
+#include "..\GameObjects.h" 
 #include "..\util\LuaUtils.h" 
 #include "..\component\CScriptable.h" 
 #include "..\component\Name.h" 

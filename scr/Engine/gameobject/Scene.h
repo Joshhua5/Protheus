@@ -28,23 +28,26 @@ History:
 #include "Map.h" 
 namespace Pro{
 	namespace GameObject{
+
+		using namespace Math;
+		using namespace std;
+		using namespace Component;
+
 		class Scene :
 			public EntityContainer,
 			public CameraContainer,
-			public Component::CGUID
+			public CGUID
 		{
 			Map* tileData; 
 		public:
 			lua_State* lua_state;
 			Scene(lua_State* lua_state);
-			Scene(){};
-			~Scene();
 
 			bool addTileType(TileType);
 			void update();
 
 			// returns a list of entities found on a tile
-			std::vector<GameObject::Entity*> pollTile(Math::Vector2&); 
+			vector<Entity*> pollTile(Vector2&); 
 			 
 			// return the private storage of entities 
 			Map* getMap();

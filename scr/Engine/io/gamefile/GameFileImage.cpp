@@ -11,6 +11,6 @@ void GameFileImage::unpack(lua_State* L, GameFileChunk& _chunk){
 	sprite = manager->loadSprite(_chunk.chunkName, _chunk.chunkData); 
 }
 
-uint32 GameFileImage::getSpriteID(){
+game_id GameFileImage::getSpriteID(){
 	return sprite;
 }

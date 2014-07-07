@@ -13,15 +13,15 @@ GameFileRaw::GameFileRaw(GameFileChunk& chunk){
  
  
 void GameFileRaw::pack(const string& name, CBuffer* buffer){
-	chunk.chunkData = *buffer;
-	chunk.chunkName = name;
-	chunk.chunkType = EChunkType::RAW;
+	m_chunk.chunkData = *buffer;
+	m_chunk.chunkName = name;
+	m_chunk.chunkType = EChunkType::RAW;
 }
 
 void GameFileRaw::pack(string&& name, CBuffer* buffer){
-	chunk.chunkData = *buffer;
-	chunk.chunkName = move(name);
-	chunk.chunkType = EChunkType::RAW;
+	m_chunk.chunkData = *buffer;
+	m_chunk.chunkName = move(name);
+	m_chunk.chunkType = EChunkType::RAW;
 }
  
 void GameFileRaw::unpack(GameFileChunk& _chunk){

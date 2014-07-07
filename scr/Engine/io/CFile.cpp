@@ -8,20 +8,19 @@ using namespace std;
 
 CFile::CFile(const std::string& filePath)
 {
+	m_file_path = filePath;
 	file.open(filePath,
 		fstream::binary |
 		fstream::in |
 		fstream::out);
 }
-
-CFile::CFile()
-{
-}
-
+  
 
 CFile::~CFile()
 {
+	file.close();
 }
+ 
 
 bool CFile::isEndOfFile(){
 	return file.eof();

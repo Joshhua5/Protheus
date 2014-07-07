@@ -11,10 +11,8 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "GameFileBase.h"
-#include "..\..\gameobject\Avatar.h"
-#include "..\..\gameobject\Camera.h"
-#include "..\..\gameobject\SpriteEntity.h"
+#include "GameFileBase.h" 
+#include "..\..\GameObjects.h"
 
 namespace Pro{
 	namespace IO{

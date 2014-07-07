@@ -26,15 +26,14 @@ namespace Pro{
 			AnimatedSprite(const std::string& name);
 			AnimatedSprite();
 			~AnimatedSprite();
+			 
+			Sprite* getFrame(unsigned int) const;
+			unsigned int addFrame(Sprite*);
 
-			void nextFrame();
-			Sprite* getFrame();
-			Sprite* getFrame(int);
-			void addFrame(Sprite*);
-
+			unsigned int getStepCount() const;
 			// LUA Functions 
 
-			static int lNextFrame(lua_State*);
+			//static int lNextFrame(lua_State*);
 			static int lGetFrame(lua_State*);
 			static int lAddFrame(lua_State*);
 
@@ -45,8 +44,7 @@ namespace Pro{
 
 			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
-				CGUID::lGetFunctions<T>(fields);
-				fields.push_back({ "nextFrame", &T::lNextFrame });
+				CGUID::lGetFunctions<T>(fields); 
 				fields.push_back({ "getFrame", &T::lGetFrame });
 				fields.push_back({ "addFrame", &T::lAddFrame });
 			}

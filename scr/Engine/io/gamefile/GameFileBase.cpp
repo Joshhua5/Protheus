@@ -5,13 +5,13 @@ using namespace IO;
  
  
 GameFileChunk GameFileBase::getChunk(){
-	return chunk;
+	return m_chunk;
 }
 
 GameFileChunk GameFileBase::extractChunk(){
-	return move(chunk);
+	return move(m_chunk);
 }
 
 const string GameFileBase::getName(){
-	return chunk.chunkName;
+	return m_chunk.chunkName;
 }

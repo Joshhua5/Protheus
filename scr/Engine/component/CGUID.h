@@ -18,19 +18,18 @@ History:
 #include "..\GUIDLookup.h"
 
 namespace Pro{
-	namespace Component{
-		typedef unsigned int uint32;
+	namespace Component{ 
 		class CGUID
 		{
 		protected:
-			uint32 guid;
+			game_id guid;
 			virtual void polymorphic(){};
 		public:
 			CGUID(const std::string& name);
 			CGUID();
 			~CGUID();
 
-			uint32 getGUID();
+			game_id getGUID();
 
 			static int lGetGUID(lua_State*);
 

@@ -29,19 +29,19 @@ namespace Pro{
 			lua_State* lua_state;
 			SDL_Renderer* renderer = nullptr;
 			SDL_Texture* spriteSheet;
-			std::unordered_map<uint32, Asset::Sprite> sprites;
-			std::unordered_map<uint32, Asset::AnimatedSprite*> animations;
+			std::unordered_map<game_id, Asset::Sprite> sprites;
+			std::unordered_map<game_id, Asset::AnimatedSprite*> animations;
 
 			Asset::AnimatedSprite loadAnimation(const std::string& path);
 		public:
 			SpriteManager(lua_State* lua_state);
 			~SpriteManager();
 
-			Asset::Sprite* getSprite(uint32);
-			Asset::AnimatedSprite* getAnim(uint32);
+			Asset::Sprite* getSprite(game_id);
+			Asset::AnimatedSprite* getAnim(game_id);
 
-			uint32 loadSprite(const std::string& name,const CBuffer data);
-			void release(uint32); 
+			game_id loadSprite(const std::string& name,const CBuffer data);
+			void release(game_id); 
 
 			// LUA Functions
 			static int lGetSprite(lua_State*);

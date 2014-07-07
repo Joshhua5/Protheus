@@ -31,7 +31,7 @@ float inline getDropoff(Math::Vector2& pos){
 
 void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready){
 	while (true){
-		if (stream_refill.load()){
+		if (m_stream_refill.load()){
 			// populate stream with silence
 			switch (stream->channels){
 			case 1: // Mono
@@ -52,21 +52,21 @@ void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* sig
 				break;
 			}
 			 
-			stream_ready.store(true);
-			stream_refill.store(false);
+			m_stream_ready.store(true);
+			m_stream_refill.store(false);
 		}
 	}
 }
 
 CAudioBuffer* CAudioMixer::getStream(){
-	return output_stream;
+	return m_output_stream;
 }
 
 bool CAudioMixer::isStreamReady(){
-	return stream_ready.load();
+	return m_stream_ready.load();
 }
 void CAudioMixer::refillStream(){
-	stream_refill.store(true);
+	m_stream_refill.store(true);
 }
 
 void CAudioMixer::playTrack(CAudioSignal){}

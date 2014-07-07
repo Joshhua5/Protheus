@@ -21,7 +21,7 @@ namespace Pro{
 		class GameFileImage :
 			public GameFileBase
 		{
-			uint32 sprite;
+			game_id sprite;
 		public:
 			//GameFileImage(Sprite* sprite); 
 			GameFileImage(){}
@@ -33,7 +33,7 @@ namespace Pro{
 
 			// if the ID is 0 then there was an error in 
 			// loading the sprite
-			uint32 getSpriteID();
+			game_id getSpriteID();
 		};
 	}
 }

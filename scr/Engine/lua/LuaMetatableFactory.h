@@ -74,17 +74,11 @@ namespace Pro{
 				defineMetatable<Position>(L);
 
 				// Game Objects
-
-				defineMetatable<Avatar>(L);
-				defineMetatable<Camera>(L);
-				defineMetatable<Scene>(L);
-				defineMetatable<AnimatedEntity>(L); 
-				defineMetatable<Entity>(L);
-				defineMetatable<Inventory>(L);
-				defineMetatable<Item>(L);
+				 
+				defineMetatable<Scene>(L);  
+				defineMetatable<Entity>(L); 
 				defineMetatable<Map>(L);
-				defineMetatable<MapSection>(L);
-				defineMetatable<SpriteEntity>(L);
+				defineMetatable<MapSection>(L); 
 				defineMetatable<TileType>(L);
 
 				// GUI

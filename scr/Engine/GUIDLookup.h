@@ -17,17 +17,20 @@ History:
 #include <iostream>
 #include "lua\lib\lua.hpp"
 
+using namespace std;
+
 namespace Pro{  
-	typedef unsigned int uint32;
+	typedef unsigned long game_id;
+
 	class GUIDLookup{
 	private:
-		static std::unordered_map<std::string, uint32>* getNameMapping();
+		static unordered_map<string, game_id>* getNameMapping();
 	public:
-		static uint32  newGUID(const std::string& name);
-		static void releaseGUID(const std::string& name);
-		static void releaseGUID(uint32);
-		static uint32  getGUID(const std::string& name);
-		static std::string* getName(uint32 _id);
+		static game_id  newGUID(const string& name);
+		static void releaseGUID(const string& name);
+		static void releaseGUID(const game_id);
+		static game_id  getGUID(const string& name);
+		static string* getName(const game_id _id);
 		 
 		static int lGetGUID(lua_State*);
 		static int lGetName(lua_State*);

@@ -141,6 +141,7 @@
     <ClInclude Include="Engine\gameobject\DataEntity.h" />
     <ClInclude Include="Engine\component\Animated.h" />
     <ClInclude Include="Engine\gameobject\DynamicEntity.h" />
+    <ClInclude Include="Engine\gameobject\Entity.h" />
     <ClInclude Include="Engine\util\BufferIO.h" />
     <ClInclude Include="Engine\util\BufferReader.h" />
     <ClInclude Include="Engine\util\BufferWriter.h" />
@@ -278,7 +279,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">

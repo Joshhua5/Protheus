@@ -15,35 +15,39 @@ History:
 
 #include <vector> 
 #include "Tile.h"
-#include "..\component\Position.h" 
+#include "DataEntity.h"
 #include "..\Math.h"
-#include "..\component\Area.h"
+#include "..\Components.h"
 #include <SDL.h>
 
 namespace Pro{
 	namespace GameObject{
 
+		using namespace std;
+		using namespace Component;
+		using namespace Math;
+
 		class MapSection : 
-			public Component::Area,
-			public Component::Position
+			public Area,
+			public Position
 		{ 
-			std::vector<std::vector<short>> data;
+			vector<vector<short>> data;
 		public:
-			short tileAt(Math::Vector2&);
+			short tileAt(Vector2&);
 			// returns a pointer so we can return nullptr if
 			// a tile isn't found
-			short* contains(Math::Vector2&); 
-			void setData(std::vector<std::vector<short>>);
+			short* contains(Vector2&); 
+			void setData(vector<vector<short>>);
 			//void setData(short*); 
-			std::vector<std::vector<short>> getData();
-			bool visible(Camera* cam);
+			vector<vector<short>> getData();
+			bool visible(DataEntity& cam);
 
 			static string lGetMetatable(){
 				return "map_section_metatable";
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+			static inline void lGetFunctions(vector<luaL_Reg>& fields){
 				Area::lGetFunctions<T>(fields);
 				Position::lGetFunctions<T>(fields); 
 			}

@@ -12,25 +12,25 @@ History:
 #pragma once
 
 #include "..\Components.h"
+#include "Entity.h"
 
 namespace Pro{
 	namespace GameObject{
 		using namespace Component;
 		class DynamicEntity :
-			Position,
-			Area,
-			ActiveState,
-			CScriptable,
-			Textured,
-			Animated,
-			CGUID
+			public Position,
+			public Area,
+			public ActiveState,
+			public CScriptable,
+			public Textured,
+			public Animated,  
 
+			public Entity
 		{
 		public:
 			DynamicEntity(const string& name);
 			DynamicEntity(); 
-
-
+			 
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object

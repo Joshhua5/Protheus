@@ -13,9 +13,6 @@ History:
 #pragma once
 
 
-#include "gameobject\Avatar.h"
-#include "gameobject\AnimatedEntity.h" 
-#include "gameobject\Entity.h"
-#include "gameobject\Inventory.h"
-#include "gameobject\Item.h"
-#include "gameobject\SpriteEntity.h"
+#include "gameobject\StaticEntity.h"
+#include "gameobject\DynamicEntity.h"
+#include "gameobject\DataEntity.h"

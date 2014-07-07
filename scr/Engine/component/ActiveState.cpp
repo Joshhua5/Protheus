@@ -3,16 +3,7 @@
 
 using namespace Pro;
 using namespace Component;
-
-ActiveState::ActiveState()
-{
-}
-
-
-ActiveState::~ActiveState()
-{
-}
-
+ 
 void ActiveState::activate(){
 	active = true;
 }

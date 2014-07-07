@@ -817,5 +817,8 @@
     <ClInclude Include="Engine\gameobject\DataEntity.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\gameobject\Entity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

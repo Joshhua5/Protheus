@@ -17,7 +17,7 @@ SpriteManager::~SpriteManager()
 	// release all textures
 }
 
-uint32 SpriteManager::loadSprite(const string& name,const CBuffer data){ 
+game_id SpriteManager::loadSprite(const string& name,const CBuffer data){ 
 	// Load in texture
 	auto tex = IMG_LoadTexture(renderer, static_cast<const char*>(data.data)); 
 	if(tex == nullptr)
@@ -56,15 +56,15 @@ Asset::AnimatedSprite SpriteManager::loadAnimation(const std::string& path){
 	return anim;
 }
  
-Asset::Sprite* SpriteManager::getSprite(uint32 id){
+Asset::Sprite* SpriteManager::getSprite(game_id id){
 	return &sprites.at(id);
 }
 
-Asset::AnimatedSprite* SpriteManager::getAnim(uint32 id){
-	return &animations.at(id);
+Asset::AnimatedSprite* SpriteManager::getAnim(game_id id){
+	return animations.at(id);
 }
  
-void SpriteManager::release(uint32 textureID){
+void SpriteManager::release(game_id textureID){
 	// will call sprited destructor and 
 	// will delete the SDL_Texture
 	sprites.erase(textureID);
@@ -73,13 +73,13 @@ void SpriteManager::release(uint32 textureID){
 
 int SpriteManager::lGetSprite(lua_State* L){
 	const auto sm = Util::luaP_touserdata<SpriteManager>(L, 1);
-	const auto s = sm->getSprite(static_cast<uint32>(lua_tonumber(L, 2)));
+	const auto s = sm->getSprite(static_cast<game_id>(lua_tonumber(L, 2)));
 	Util::luaP_newobject<Sprite>(L, s);
 	return 1;
 }
 int SpriteManager::lGetAnimation(lua_State* L){ 
 	const auto sm = Util::luaP_touserdata<SpriteManager>(L, 1);
-	const auto as = sm->getAnim(static_cast<uint32>(lua_tonumber(L, 2)));
+	const auto as = sm->getAnim(static_cast<game_id>(lua_tonumber(L, 2)));
 	Util::luaP_newobject<AnimatedSprite>(L, as);
 	return 1;
 }

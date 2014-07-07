@@ -10,21 +10,33 @@ History:
 - 25:06:2014: Waring J.
 *************************************************************************/
 #pragma once
-
-#include "..\Components.h"
+ 
+#include "Entity.h"
 #include <unordered_map>
-
+  
 namespace Pro{
-	namespace GameObject{
-		using namespace Component;
-		class DataEntity 
-		{
-			unordered_map<string, void*> data;
-		public:
-			DataEntity();
+	namespace GameObject{ 
+		 
+		using namespace std;
 
-			void addData(pair<string, void*>& data);
-			void* getData(string);
+		class DataEntity : 
+			public Entity
+		{ 
+			unordered_map<string, void*> m_data;
+		public:
+			DataEntity(const string& name) : Entity(name){};
+			DataEntity() : Entity(){}
+
+			template<typename T> 
+			void addData(pair<string, T*>& pair){
+				m_data.insert(pair);
+			}
+			
+			// Returns the data stored after casting
+			template<typename T>
+			T* getData(const string& key){
+				return m_data.at(key);
+			}
 		};
 	}
 }
