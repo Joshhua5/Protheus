@@ -4,12 +4,17 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
+<<<<<<< HEAD
 	A entity which only contain data.
+=======
+	
+>>>>>>> master
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
 *************************************************************************/
 #pragma once
+<<<<<<< HEAD
  
 #include "Entity.h"
 #include <unordered_map>
@@ -39,6 +44,23 @@ namespace Pro{
 			T* getData(const string& key){
 				return static_cast<T*>(m_data.at(key));
 			}
+=======
+
+#include "..\Components.h"
+#include <unordered_map>
+
+namespace Pro{
+	namespace GameObject{
+		using namespace Component;
+		class DataEntity 
+		{
+			unordered_map<string, void*> data;
+		public:
+			DataEntity();
+
+			void addData(pair<string, void*>& data);
+			void* getData(string);
+>>>>>>> master
 		};
 	}
 }

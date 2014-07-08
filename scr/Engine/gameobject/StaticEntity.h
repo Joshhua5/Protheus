@@ -25,6 +25,7 @@ namespace Pro{
 			public Entity
 		{
 		public:
+<<<<<<< HEAD
 			StaticEntity(const string& name);
 			StaticEntity(); 
 			 
@@ -32,6 +33,16 @@ namespace Pro{
 
 			// returns the Metatable's name assosiated with this object
 			static inline const string lGetMetatable(){
+=======
+			StaticEntity();
+			~StaticEntity();
+
+
+			// LUA Functions
+
+			// returns the Metatable's name assosiated with this object
+			static inline string lGetMetatable(){
+>>>>>>> master
 				return "gameobject_static_metatable";
 			}
 

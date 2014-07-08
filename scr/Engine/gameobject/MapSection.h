@@ -15,7 +15,11 @@ History:
 
 #include <vector> 
 #include "Tile.h"
+<<<<<<< HEAD
 #include "DataEntity.h"
+=======
+#include "..\component\Position.h" 
+>>>>>>> master
 #include "..\Math.h"
 #include "..\Components.h"
 #include <SDL.h>
