@@ -30,12 +30,6 @@ namespace Pro{
 		public:
 			DynamicEntity(const string& name);
 			DynamicEntity(); 
-<<<<<<< HEAD
-			 
-=======
-
-
->>>>>>> master
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object
