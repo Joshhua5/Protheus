@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	
+	A entity which only contain data.
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
@@ -27,6 +27,8 @@ namespace Pro{
 			DataEntity(const string& name) : Entity(name){};
 			DataEntity() : Entity(){}
 
+			// Stores a pointer to the data with the string
+			// as a key
 			template<typename T> 
 			void addData(pair<string, T*>& pair){
 				m_data.insert(pair);
@@ -35,7 +37,7 @@ namespace Pro{
 			// Returns the data stored after casting
 			template<typename T>
 			T* getData(const string& key){
-				return m_data.at(key);
+				return static_cast<T*>(m_data.at(key));
 			}
 		};
 	}

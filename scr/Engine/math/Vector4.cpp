@@ -48,7 +48,7 @@ Vector4::Vector4(Vector4&& vec){
 	w = move(vec.w);
 }
 
-bool Vector4::contains(Math::Vector2& v){
+bool Vector4::contains(const Math::Vector2& v) const{
 	if (v.x > x &&
 		x + z > v.x &&
 		v.y > y &&
@@ -57,7 +57,7 @@ bool Vector4::contains(Math::Vector2& v){
 	return false;
 }
 
-bool Vector4::overlaps(Vector4& v){
+bool Vector4::overlaps(const Vector4& v) const{
 	if ((x >= v.x && x + w <= v.x + v.x) &
 		((y + w <= v.y && y >= v.y) |
 		(y + w > v.y && y + w < v.y + v.y)))

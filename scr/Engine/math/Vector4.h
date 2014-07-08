@@ -41,8 +41,8 @@ namespace Pro{
 			Vector4(int x, int y, int z, int w); 
 			
 			// z and w are width and height in that order.
-			bool contains(Vector2&);
-			bool overlaps(Vector4&);
+			bool contains(const Vector2&) const;
+			bool overlaps(const Vector4&) const;
 
 			Vector4 operator+(Vector4&);
 			Vector4 operator-(Vector4&);

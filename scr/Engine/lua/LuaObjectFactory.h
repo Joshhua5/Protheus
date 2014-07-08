@@ -34,8 +34,8 @@ namespace Pro{
 			LuaObjectFactory(lua_State** L){ 
 				*L = luaL_newstate();
 				const luaL_Reg globalFunctions [] = {
-						{ "avatar_create", &LuaObjectFactory::createAvatar },
-						{ "camera_create", &LuaObjectFactory::createCamera },
+						//{ "avatar_create", &LuaObjectFactory::createAvatar },
+						//{ "camera_create", &LuaObjectFactory::createCamera },
 						{ "scene_create", &LuaObjectFactory::createScene }
 				};
 
@@ -47,10 +47,10 @@ namespace Pro{
  
 			// Object Creation
 			static int createScene(lua_State* L);
-			static int createAvatar(lua_State*);
-			static int createCamera(lua_State*);
+			//static int createAvatar(lua_State*);
+			//static int createCamera(lua_State*);
 			static int createGUIButton(lua_State*);
-			static int createGUIContext(lua_State*);
+			//static int createGUIContext(lua_State*);
 		}; 
 	}
 }

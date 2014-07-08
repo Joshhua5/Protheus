@@ -21,7 +21,7 @@ namespace Pro{
 		class GameFileImage :
 			public GameFileBase
 		{
-			game_id sprite;
+			game_id m_sprite_id;
 		public:
 			//GameFileImage(Sprite* sprite); 
 			GameFileImage(){}

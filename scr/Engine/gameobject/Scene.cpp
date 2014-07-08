@@ -20,9 +20,14 @@ void Scene::update(){
 // returns a list of entities found on a tile
 vector<Entity*>  Scene::pollTile(Vector2& tile_position){
 	vector<Entity*> list;
-	for each(const auto obj in stored_entities)
-		if (obj.second-> == tile_position)
+	for each(const auto obj in m_dynamic_entities)
+		if (obj.second->getPosition() == tile_position)
 			list.push_back(obj.second);
+
+	for each(const auto obj in m_static_entities)
+		if (obj.second->getPosition() == tile_position)
+			list.push_back(obj.second);
+
 	return list;
 }
 
@@ -31,7 +36,7 @@ Map* Scene::getMap(){
 }
 
 int Scene::lUpdate(lua_State* L){
-	Scene* s = Util::luaP_touserdata<Scene>(L, 1);
+	const auto s = Util::luaP_touserdata<Scene>(L, 1);
 	s->update();
 	return 0;
 }

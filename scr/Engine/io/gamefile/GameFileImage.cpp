@@ -6,11 +6,10 @@ using namespace IO;
 using namespace Asset;
  
 void GameFileImage::unpack(lua_State* L, GameFileChunk& _chunk){
-	const auto manager = luaP_getSpriteManager(L);
-	const auto renderer = luaP_getRenderer(L)->getRenderer();
-	sprite = manager->loadSprite(_chunk.chunkName, _chunk.chunkData); 
+	const auto manager = luaP_getSpriteManager(L); 
+	m_sprite_id = manager->loadSprite(_chunk.chunkName, _chunk.chunkData);
 }
 
 game_id GameFileImage::getSpriteID(){
-	return sprite;
+	return m_sprite_id;
 }

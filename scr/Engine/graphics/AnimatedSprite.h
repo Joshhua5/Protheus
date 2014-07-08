@@ -25,10 +25,10 @@ namespace Pro{
 		public:
 			AnimatedSprite(const std::string& name);
 			AnimatedSprite();
-			~AnimatedSprite();
 			 
-			Sprite* getFrame(unsigned int) const;
-			unsigned int addFrame(Sprite*);
+			Sprite* getFrame(game_id id) const;
+
+			void addFrame(Sprite*);
 
 			unsigned int getStepCount() const;
 			// LUA Functions 

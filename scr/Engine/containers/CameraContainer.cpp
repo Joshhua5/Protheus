@@ -7,8 +7,8 @@ namespace Pro{
 	DataEntity* CameraContainer::getCamera(game_id i){
 		return stored_cameras.at(i);
 	}
-	DataEntity& CameraContainer::getActiveCamera(){
-		return *active_camera;
+	DataEntity* CameraContainer::getActiveCamera(){
+		return active_camera;
 	}
 	void CameraContainer::setActiveCamera(game_id i){
 		active_camera = getCamera(i);
