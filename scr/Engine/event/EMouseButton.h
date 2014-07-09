@@ -4,12 +4,12 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Stores which button was pressed in a Mouse event
+Stores which button was pressed in a Mouse event
 -------------------------------------------------------------------------
 History:
 - 10:06:2014: Waring J.
 *************************************************************************/
-#pragma once 
+#pragma once
 namespace Pro{
 	namespace Event{
 		enum struct EMouseButton{

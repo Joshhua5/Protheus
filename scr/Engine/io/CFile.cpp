@@ -1,5 +1,3 @@
-
-
 #include "CFile.h"
 
 using namespace Pro;
@@ -14,13 +12,11 @@ CFile::CFile(const std::string& filePath)
 		fstream::in |
 		fstream::out);
 }
-  
 
 CFile::~CFile()
 {
 	file.close();
 }
- 
 
 bool CFile::isEndOfFile(){
 	return file.eof();
@@ -125,7 +121,6 @@ EFile CFile::peekError(){
 	case ifstream::badbit:
 		flag = EFile::FILE_INVALID_OPERATION;
 		break;
-
 	}
 	return flag;
 }

@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <unordered_map>
-#include "..\graphics\Window.h" 
+#include "..\graphics\Window.h"
 #include "..\util\LuaUtils.h"
 namespace Pro{
 	class WindowContainer
@@ -28,9 +28,9 @@ namespace Pro{
 		void addWindow(Window*);
 		Window* getWindow(game_id);
 		void destoryWindow(game_id);
-		 
+
 		// LUA Functions
-		 
+
 		static int lGetWindow(lua_State*);
 		static int lAddWindow(lua_State*);
 		static int lDestroyWindow(lua_State*);

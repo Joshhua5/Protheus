@@ -19,7 +19,7 @@ History:
 
 namespace Pro{
 	class GraphicalUI
-	{ 
+	{
 		std::vector<GUI::GUIContext*> inactive_window_contexts;
 		std::vector<GUI::GUIContext*> window_contexts;
 	public:
@@ -33,7 +33,7 @@ namespace Pro{
 		void initEditor();
 		void enableEditor();
 		void disableEditor();
-		 
+
 		void setActive(const std::string& name);
 		void setInactive(const std::string& name);
 
@@ -41,5 +41,4 @@ namespace Pro{
 		GUI::GUIContext* getContext(game_id contextID);
 		void removeContext(game_id);
 	};
-
 }

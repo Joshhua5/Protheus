@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
- 
+
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
@@ -23,15 +23,15 @@ namespace Pro{
 		{
 			game_id m_sprite_id;
 		public:
-			//GameFileImage(Sprite* sprite); 
+			//GameFileImage(Sprite* sprite);
 			GameFileImage(){}
-			  
-			// unpacks a chunk and loads the sprite into the 
-			// sprite manager, the sprite's id can be 
+
+			// unpacks a chunk and loads the sprite into the
+			// sprite manager, the sprite's id can be
 			// returned with getSpriteID
 			void unpack(lua_State* L, GameFileChunk& chunk);
 
-			// if the ID is 0 then there was an error in 
+			// if the ID is 0 then there was an error in
 			// loading the sprite
 			game_id getSpriteID();
 		};

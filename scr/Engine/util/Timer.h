@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Counts the delta between ticks in nanaseconds and provides data 
-	abount the tick times
+Counts the delta between ticks in nanaseconds and provides data
+abount the tick times
 
 -------------------------------------------------------------------------
 History:
@@ -28,9 +28,9 @@ namespace Pro{
 			Timer();
 			~Timer();
 
-			double getTickDelta(); 
+			double getTickDelta();
 			double getTicksPerSec();
-			void tick(); 
+			void tick();
 		};
 	}
 }

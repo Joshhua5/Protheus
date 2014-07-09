@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	 
+
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
@@ -17,17 +17,17 @@ History:
 namespace Pro{
 	namespace GameObject{
 		using namespace Component;
-		class StaticEntity : 
+		class StaticEntity :
 			public Position,
 			public Area,
 			public Textured,
-			public Animated, 
+			public Animated,
 			public Entity
 		{
 		public:
 			StaticEntity(const string& name);
-			StaticEntity(); 
-			 
+			StaticEntity();
+
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object
@@ -36,14 +36,13 @@ namespace Pro{
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				Position::lGetFunctions<T>(fields);
 				Area::lGetFunctions<T>(fields);
 				Textured::lGetFunctions<T>(fields);
 				Animated::lGetFunctions<T>(fields);
 				CGUID::lGetFunctions<T>(fields);
 			}
-		}; 
+		};
 	}
 }
-

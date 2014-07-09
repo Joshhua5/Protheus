@@ -1,5 +1,3 @@
-
-
 #include "SpriteManager.h"
 
 using namespace Pro;
@@ -11,19 +9,18 @@ SpriteManager::SpriteManager(lua_State* _lua_state)
 	lua_state = _lua_state;
 }
 
-
 SpriteManager::~SpriteManager()
 {
 	// release all textures
 }
 
-game_id SpriteManager::loadSprite(const string& name,const CBuffer data){ 
+game_id SpriteManager::loadSprite(const string& name, const CBuffer data){
 	// Load in texture
-	auto tex = IMG_LoadTexture(renderer, static_cast<const char*>(data.data)); 
-	if(tex == nullptr)
+	auto tex = IMG_LoadTexture(renderer, static_cast<const char*>(data.data));
+	if (tex == nullptr)
 		return 0;
 	// Query texture dimensions
-	auto dim = Vector2(); 
+	auto dim = Vector2();
 	SDL_QueryTexture(tex, NULL, NULL, (int*)&dim.x, (int*)&dim.y);
 
 	// Store the texture as a sprite
@@ -55,7 +52,7 @@ Asset::AnimatedSprite SpriteManager::loadAnimation(const std::string& path){
 	}
 	return anim;
 }
- 
+
 Asset::Sprite* SpriteManager::getSprite(game_id id){
 	return &sprites.at(id);
 }
@@ -63,13 +60,12 @@ Asset::Sprite* SpriteManager::getSprite(game_id id){
 Asset::AnimatedSprite* SpriteManager::getAnim(game_id id){
 	return animations.at(id);
 }
- 
+
 void SpriteManager::release(game_id textureID){
-	// will call sprited destructor and 
+	// will call sprited destructor and
 	// will delete the SDL_Texture
 	sprites.erase(textureID);
 }
- 
 
 int SpriteManager::lGetSprite(lua_State* L){
 	const auto sm = Util::luaP_touserdata<SpriteManager>(L, 1);
@@ -77,7 +73,7 @@ int SpriteManager::lGetSprite(lua_State* L){
 	Util::luaP_newobject<Sprite>(L, s);
 	return 1;
 }
-int SpriteManager::lGetAnimation(lua_State* L){ 
+int SpriteManager::lGetAnimation(lua_State* L){
 	const auto sm = Util::luaP_touserdata<SpriteManager>(L, 1);
 	const auto as = sm->getAnim(static_cast<game_id>(lua_tonumber(L, 2)));
 	Util::luaP_newobject<AnimatedSprite>(L, as);

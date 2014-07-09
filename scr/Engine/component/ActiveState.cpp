@@ -1,9 +1,8 @@
-
 #include "ActiveState.h"
 
 using namespace Pro;
 using namespace Component;
- 
+
 void ActiveState::activate(){
 	active = true;
 }
@@ -15,7 +14,6 @@ bool ActiveState::isActive(){
 }
 
 // LUA Functions
-
 
 int ActiveState::lActivate(lua_State* L){
 	const auto a = Util::luaP_touserdata<ActiveState>(L, 1);

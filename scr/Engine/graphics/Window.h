@@ -10,20 +10,19 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once 
+#pragma once
 
 #include <SDL.h>
-#include <string> 
+#include <string>
 #include "..\component\CGUID.h"
 
 namespace Pro{
-
-	class Window :  
+	class Window :
 		public Component::CGUID
 	{
 		lua_State* lua_state;
 		SDL_Window* window;
-		std::string windowTitle; 
+		std::string windowTitle;
 		SDL_Rect dim;
 
 	public:
@@ -38,5 +37,4 @@ namespace Pro{
 		bool createWindow();
 		SDL_Window* getWindow();
 	};
-
 }

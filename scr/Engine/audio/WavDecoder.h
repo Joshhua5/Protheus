@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A Wavedecoder, which loads a WAVE file from a Buffer or CFile
-	and returns track.
+A Wavedecoder, which loads a WAVE file from a Buffer or CFile
+and returns track.
 -------------------------------------------------------------------------
 History:
 - 19:06:2014 Waring J.
@@ -26,8 +26,6 @@ namespace Pro{
 
 			CAudioTrack* load(Util::CFile& file);
 			CAudioTrack* load(CBuffer& buffer);
-
-		}; 
+		};
 	}
 }
-

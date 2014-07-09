@@ -4,28 +4,27 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	
+
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
 
-
-#include "GameFileChunk.h" 
-#include "..\..\component\CGUID.h"  
-#include "GameFileBase.h" 
+#include "GameFileChunk.h"
+#include "..\..\component\CGUID.h"
+#include "GameFileBase.h"
 
 namespace Pro{
 	namespace IO{
-		class GameFileScript :  
-			public Component::CGUID ,
+		class GameFileScript :
+			public Component::CGUID,
 			public GameFileBase
-		{ 
-			char* m_script; 
+		{
+			char* m_script;
 		public:
 			// Accepts a buffer pass to setScript
-			GameFileScript(GameFileChunk); 
+			GameFileScript(GameFileChunk);
 			GameFileScript(){}
 
 			// Returns a pointer to the script
@@ -43,7 +42,7 @@ namespace Pro{
 
 			// executes the loaded script, returns false if
 			// script returns an error or isn't a valid script
-			bool executeScript(lua_State* lua_state); 
+			bool executeScript(lua_State* lua_state);
 		};
 	}
 }

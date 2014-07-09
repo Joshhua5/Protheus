@@ -12,7 +12,7 @@ History:
 
 #pragma once
 
-#include "lib\lua.hpp" 
+#include "lib\lua.hpp"
 #include "..\GameObjects.h"
 #include "..\Math.h"
 #include "..\audio\CAudioDevice.h"
@@ -27,10 +27,9 @@ History:
 
 using namespace std;
 
-
 namespace Pro{
 	using namespace Component;
-	using namespace GameObject; 
+	using namespace GameObject;
 	using namespace Graphics;
 	using namespace GUI;
 	using namespace Math;
@@ -40,7 +39,7 @@ namespace Pro{
 	namespace Lua{
 		class LuaMetatableFactory{
 			typedef std::vector<luaL_Reg> Metatable;
-			   
+
 			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
 				luaL_newmetatable(L, &T::lGetMetatable()[0]);
 
@@ -53,7 +52,7 @@ namespace Pro{
 				lua_pushvalue(L, -2);
 				lua_settable(L, -3);
 			}
-			
+
 			template<typename T> inline void defineMetatable(lua_State* L){
 				Metatable fields;
 				T::lGetFunctions<T>(fields);
@@ -62,7 +61,6 @@ namespace Pro{
 
 		public:
 			LuaMetatableFactory(lua_State* L){
-
 				// Components
 
 				defineMetatable<ActiveState>(L);
@@ -74,11 +72,11 @@ namespace Pro{
 				defineMetatable<Position>(L);
 
 				// Game Objects
-				 
-				defineMetatable<Scene>(L);  
-				defineMetatable<Entity>(L); 
+
+				defineMetatable<Scene>(L);
+				defineMetatable<Entity>(L);
 				defineMetatable<Map>(L);
-				defineMetatable<MapSection>(L); 
+				defineMetatable<MapSection>(L);
 				defineMetatable<TileType>(L);
 
 				// GUI
@@ -92,7 +90,7 @@ namespace Pro{
 				defineMetatable<GUIMenuBar>(L);
 				defineMetatable<GUISlider>(L);
 				defineMetatable<GUIText>(L);
-				defineMetatable<GUIContext>(L); 
+				defineMetatable<GUIContext>(L);
 				defineMetatable<GUIWindow>(L);
 
 				// Audio
@@ -114,14 +112,14 @@ namespace Pro{
 
 				// Graphics
 
-				defineMetatable<Sprite>(L); 
+				defineMetatable<Sprite>(L);
 				defineMetatable<AnimatedSprite>(L);
 				defineMetatable<SpriteManager>(L);
 				defineMetatable<SpriteBatcher>(L);
 				defineMetatable<Renderer>(L);
 
 				// Containers
-				 
+
 				// Math
 
 				defineMetatable<Vector2>(L);
@@ -132,10 +130,9 @@ namespace Pro{
 
 				// Networking
 
-
-				//  
+				//
 			}
-			LuaMetatableFactory(); 
+			LuaMetatableFactory();
 		};
 	}
 }

@@ -12,21 +12,20 @@ History:
 
 #pragma once
 
-
 #include "..\util\CBuffer.h"
 #include "CServerTCPConnection.h"
 #include "CClientTCPConnection.h"
 #include "CTCPServer.h"
-#include <string>  
+#include <string>
 
 namespace Pro{
-	namespace Networking{ 
+	namespace Networking{
 		class Network
 		{
 		private:
 			std::mutex mutex;
-			std::vector<CConnection*> connections; 
-			  
+			std::vector<CConnection*> connections;
+
 			void connect();
 
 		public:
@@ -37,12 +36,12 @@ namespace Pro{
 			ServerTCPConnection* startServer();
 			ServerTCPConnection* startServer(int port);
 			ServerTCPConnection* startServer(const string* name, int port);
-			
+
 			ClientTCPConnection* connectToServer(const std::string &IP);
 			ClientTCPConnection* connectToServer(const std::string &IP, int port);
 			ClientTCPConnection* connectToServer(const std::string &IP, const string& name, int port);
-			 
+
 			void cleanup();
-		}; 
+		};
 	}
-} 
+}

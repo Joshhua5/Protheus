@@ -22,11 +22,11 @@ namespace Pro{
 	namespace Component{
 		class CScriptable{
 			string luaFunction = "";
-		public: 
+		public:
 
 			// Calls the assigned Lua Script
 			void update(lua_State* L);
-	
+
 			// Assigns a function's name to the object
 			void attachFunction(const string& function);
 
@@ -37,12 +37,11 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "component_scriptable_metatable";
 			}
-			template<typename T> 
+			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "update", (lua_CFunction)&T::lUpdate });
 				fields.push_back({ "attachFunction", (lua_CFunction)&T::lAttachFunction });
 			}
-		}; 
+		};
 	}
 }
- 

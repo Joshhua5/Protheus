@@ -1,4 +1,3 @@
-
 #include "BufferWriter.h"
 
 using namespace Pro;
@@ -6,7 +5,7 @@ using namespace Util;
 
 BufferWriter::BufferWriter(CBuffer* _buffer){
 	buffer = _buffer;
-} 
+}
 
 BufferWriter::~BufferWriter()
 {
@@ -19,6 +18,6 @@ void BufferWriter::write(void* value, unsigned int size){
 	if (getPosition() > buffer->size - size)
 		throw "BufferOverFlow";
 
-	memcpy(&static_cast<char*>(buffer->data)[head], value, size); 
+	memcpy(&static_cast<char*>(buffer->data)[head], value, size);
 	skip(size);
-} 
+}

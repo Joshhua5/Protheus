@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Used to provideo an object with volume
+Used to provideo an object with volume
 -------------------------------------------------------------------------
 History:
 - 17:05:2014 Waring J.
@@ -50,7 +50,7 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "component_area_metatable";
 			}
-			template<typename T> 
+			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getDimensions", (lua_CFunction)&T::lGetDimensions });
 				fields.push_back({ "setDimensions", (lua_CFunction)&T::lSetDimensions });

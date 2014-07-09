@@ -1,4 +1,3 @@
-
 #include "CAudioDevice.h"
 
 using namespace Pro;
@@ -26,10 +25,10 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 			memmove(_stream, stream->mono->data, length);
 			break;
 		case 2:
-			for (int x = 0; x < length / 2; x++){
+			for (int x = 0; x < length / 2; ++x){
 				SDL_AudioCVT convert;
-				convert.src_format = 
-				_stream[x * 2] = static_cast<Uint8*>(stream->left->data)[x];
+				convert.src_format =
+					_stream[x * 2] = static_cast<Uint8*>(stream->left->data)[x];
 				_stream[(x * 2) + 1] = static_cast<Uint8*>(stream->right->data)[x];
 			}
 			break;
@@ -38,7 +37,6 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 		case 6:
 			break;
 		}
-		
 	}
 }
 
@@ -46,7 +44,7 @@ CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
 	_spec.callback = audio_callback;
 	_spec.userdata = this;
 	if (SDL_OpenAudio(&_spec, &spec) < 0){
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError()); 
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
 	}
 }
 
@@ -63,9 +61,8 @@ CAudioDevice::CAudioDevice(){
 		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
 		CAudioDevice();
 	}
-
 }
-CAudioDevice::~CAudioDevice(){ 
+CAudioDevice::~CAudioDevice(){
 	SDL_CloseAudioDevice(deviceID);
 }
 
@@ -80,4 +77,3 @@ SDL_AudioStatus CAudioDevice::getDeviceState(){
 SDL_AudioSpec CAudioDevice::getSpec(){
 	return spec;
 }
-

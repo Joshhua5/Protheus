@@ -1,6 +1,4 @@
-
 #include "EventHandler.h"
-
 
 namespace Pro{
 	using namespace Event;
@@ -9,7 +7,6 @@ namespace Pro{
 	{
 		input = new Input();
 	}
-
 
 	EventHandler::~EventHandler()
 	{
@@ -22,7 +19,6 @@ namespace Pro{
 		IEvent* pro_event;
 		if (SDL_PollEvent(&sdl_event)){
 			switch (sdl_event.type){
-
 			case SDL_EventType::SDL_KEYDOWN:
 
 				_event.type = EEvent::KEYBOARD;
@@ -52,7 +48,7 @@ namespace Pro{
 				static_cast<MouseButton*>(pro_event)->button_down = !(static_cast<MouseButton*>(pro_event)->button_up = false);
 				_event.event = pro_event;
 				mouseEvents.push_back(_event);
-				break; 
+				break;
 
 			case SDL_EventType::SDL_MOUSEBUTTONUP:
 
@@ -64,21 +60,22 @@ namespace Pro{
 				_event.event = pro_event;
 				mouseEvents.push_back(_event);
 				break;
-				 
+
 			case SDL_EventType::SDL_MOUSEMOTION:
 
 				break;
 			case SDL_EventType::SDL_MOUSEWHEEL:
-				
+
 				_event.type = EEvent::MOUSE_WHEEL;
 				pro_event = new MouseWheel();
 				if (sdl_event.wheel.y > 0){
 					static_cast<MouseWheel*>(pro_event)->scroll_down = false;
 					static_cast<MouseWheel*>(pro_event)->scroll_up = true;
-				}else{
+				}
+				else{
 					static_cast<MouseWheel*>(pro_event)->scroll_down = true;
 					static_cast<MouseWheel*>(pro_event)->scroll_up = false;
-				} 
+				}
 				_event.event = pro_event;
 				mouseEvents.push_back(_event);
 				break;
@@ -104,7 +101,6 @@ namespace Pro{
 	std::vector<CEvent>* EventHandler::pollUserEvents(){
 		return &userEvents;
 	}
-
 
 	int EventHandler::lUpdate(lua_State* L){
 		EventHandler* e = Util::luaP_touserdata<EventHandler>(L, 1);

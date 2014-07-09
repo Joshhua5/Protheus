@@ -8,7 +8,7 @@ Stores and allocates GUID's to names provided.
 
 -------------------------------------------------------------------------
 History:
-- 17:05:2014 Waring J. 
+- 17:05:2014 Waring J.
 *************************************************************************/
 
 #pragma once
@@ -19,7 +19,7 @@ History:
 
 using namespace std;
 
-namespace Pro{  
+namespace Pro{
 	typedef unsigned long game_id;
 
 	class GUIDLookup{
@@ -30,8 +30,8 @@ namespace Pro{
 		static void releaseGUID(const string& name);
 		static void releaseGUID(const game_id);
 		static game_id  getGUID(const string& name);
-		static string* getName(const game_id _id);
-		 
+		static const std::string& getName(const game_id _id);
+
 		static int lGetGUID(lua_State*);
 		static int lGetName(lua_State*);
 	};

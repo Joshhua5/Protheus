@@ -3,7 +3,6 @@
 using namespace Pro;
 using namespace Component;
 
-
 game_id Animated::getAnimation(){
 	return activeAnimation;
 }
@@ -26,12 +25,12 @@ int Animated::lSetAnimation(lua_State* L){
 	const auto as = Util::luaP_touserdata<Animated>(L, 1);
 	const auto sm = luaP_getSpriteManager(L);
 	const auto anim_id = static_cast<game_id>(lua_tonumber(L, 2));
-	as->setAnimation(anim_id, sm->getAnim(anim_id)->getStepCount()); 
+	as->setAnimation(anim_id, sm->getAnim(anim_id)->getStepCount());
 	return 0;
 }
 
 int Animated::lGetAnimation(lua_State* L){
-	auto as = Util::luaP_touserdata<Animated>(L, 1); 
-	lua_pushnumber(L, as->getAnimation()); 
+	auto as = Util::luaP_touserdata<Animated>(L, 1);
+	lua_pushnumber(L, as->getAnimation());
 	return 1;
 }

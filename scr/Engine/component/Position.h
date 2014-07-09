@@ -34,7 +34,6 @@ using namespace Pro::Math;
 
 namespace Pro{
 	namespace Component{
-		
 		class Position
 		{
 		protected:
@@ -43,7 +42,7 @@ namespace Pro{
 			Position();
 			~Position();
 
-			Vector2 getPosition(); 
+			Vector2 getPosition();
 			void setPosition(Vector2&);
 
 			// LUA Functions
@@ -56,11 +55,11 @@ namespace Pro{
 				return "component_posititon_metatable";
 			}
 
-			template<typename T> 
+			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getPosition", &T::lGetPosition });
 				fields.push_back({ "setPosition", &T::lSetPosition });
-			} 
-		}; 
+			}
+		};
 	}
 }

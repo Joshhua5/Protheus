@@ -1,5 +1,3 @@
-
-
 #include "GUIDropDownMenu.h"
 
 using namespace Pro;
@@ -10,7 +8,6 @@ GUIDropDownMenu::GUIDropDownMenu(const std::string& name) : GUIContainer(name) {
 GUIDropDownMenu::GUIDropDownMenu()
 {
 }
-
 
 GUIDropDownMenu::~GUIDropDownMenu()
 {

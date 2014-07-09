@@ -20,12 +20,12 @@ History:
 namespace Pro{
 	namespace IO{
 		using namespace std;
-		class GameFileIndex : 
+		class GameFileIndex :
 			public GameFileBase
-		{ 
-			unordered_map<string, unsigned int> m_indexes; 
+		{
+			unordered_map<string, unsigned int> m_indexes;
 		public:
-			GameFileIndex(GameFileChunk& chunk); 
+			GameFileIndex(GameFileChunk& chunk);
 			GameFileIndex(){}
 
 			// packs a vector of names and offsets
@@ -38,7 +38,7 @@ namespace Pro{
 
 			// returns the offset of a chunk
 			// which has the name
-			unsigned int getOffset(const string& name); 
+			unsigned int getOffset(const string& name);
 		};
 	}
 }

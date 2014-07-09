@@ -8,15 +8,10 @@ GameFileAudio::GameFileAudio(GameFileChunk& _chunk){
 }
 
 void GameFileAudio::unpack(GameFileChunk& _chunk){
-	data = &_chunk.chunkData;  
+	data = &_chunk.chunkData;
 }
 
 CBuffer* GameFileAudio::getAudio()
 {
 	return getData();
 }
-
- 
-
-
- 

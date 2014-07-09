@@ -18,7 +18,6 @@ History:
 #include "..\util\LuaUtils.h"
 #include "Sprite.h"
 
-
 namespace Pro{
 	namespace Graphics {
 		using namespace std;
@@ -26,10 +25,10 @@ namespace Pro{
 		using namespace Math;
 
 		class SpriteBatcher
-		{ 
+		{
 			lua_State* lua_state;
 			SDL_Renderer* renderer;
-			stack<pair<Sprite*, Vector4>> render_stack; 
+			stack<pair<Sprite*, Vector4>> render_stack;
 		public:
 			SpriteBatcher(lua_State* lua_state);
 			SpriteBatcher();
@@ -42,7 +41,7 @@ namespace Pro{
 
 			static int lPush(lua_State*);
 			static int lFlush(lua_State*);
-			 
+
 			static inline string lGetMetatable(){
 				return "sprite_batcher_metatable";
 			}

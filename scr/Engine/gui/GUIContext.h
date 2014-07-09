@@ -11,44 +11,42 @@ History:
 *************************************************************************/
 
 #pragma once
- 
+
 #include <unordered_map>
-#include <vector> 
-#include "GUIWindow.h"  
+#include <vector>
+#include "GUIWindow.h"
 
 namespace Pro{
 	namespace GUI{
-		class GUIContext : 
+		class GUIContext :
 			public Component::CGUID
 		{
 		private:
-			std::unordered_map<game_id, GUIWindow> windows; 
+			std::unordered_map<game_id, GUIWindow> windows;
 
-			GUIEntity* focusedEntity; 
+			GUIEntity* focusedEntity;
 		public:
 			GUIContext(const std::string& name);
 			GUIContext();
-			~GUIContext();
 
 			void update(SDL_Event event);
 
 			void attachWindow(GUIWindow& window);
 			void detachWindow(game_id);
-			  
-			std::string* getContextName(); 
+
+			std::string getContextName();
 
 			// LUA Functions
 
 			static int lAttachWindow(lua_State*);
 			static int lDetachWindow(lua_State*);
-			static int lGetContextName(lua_State*); 
-
+			static int lGetContextName(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_context_metatable";
 			}
-			template<typename T> 
+			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "attachWindow", (lua_CFunction)&T::lAttachWindow });
 				fields.push_back({ "detachWindow", (lua_CFunction)&T::lDetachWindow });

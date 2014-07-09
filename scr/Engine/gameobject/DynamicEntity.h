@@ -23,13 +23,13 @@ namespace Pro{
 			public ActiveState,
 			public CScriptable,
 			public Textured,
-			public Animated,  
+			public Animated,
 
 			public Entity
 		{
 		public:
 			DynamicEntity(const string& name);
-			DynamicEntity(); 
+			DynamicEntity();
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object
@@ -38,7 +38,7 @@ namespace Pro{
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				Position::lGetFunctions<T>(fields);
 				Area::lGetFunctions<T>(fields);
 				ActiveState::lGetFunctions<T>(fields);
@@ -50,5 +50,3 @@ namespace Pro{
 		};
 	}
 }
-
-

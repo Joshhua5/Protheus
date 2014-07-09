@@ -1,4 +1,3 @@
-
 #include "Map.h"
 
 using namespace Pro;
@@ -9,12 +8,11 @@ using namespace Math;
 Map::Map()
 {
 }
- 
 
 inline string getString(const string& line){
 	return line.substr(line.find(':') + 1, line.find(';') - line.find(':') - 1);
 }
- 
+
 TileType* Map::getTile(Vector2& v){
 	short* ch = nullptr;
 	for each(const auto &section in mapSections)
@@ -30,11 +28,10 @@ vector<MapSection*> Map::getVisibleSections(DataEntity& cam){
 			sections.push_back(sec);
 	return sections;
 }
-   
+
 TileType* Map::getTileType(unsigned int ch){
 	return &tileData.at(ch);
 }
-
 
 void Map::addSection(MapSection* section){
 	mapSections.push_back(section);

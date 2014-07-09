@@ -4,14 +4,14 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A class with the functionality of compining multiple tracks and their
-	effects to produce the output stream for the audio device
+A class with the functionality of compining multiple tracks and their
+effects to produce the output stream for the audio device
 
 -------------------------------------------------------------------------
 History:
 - 09:06:2014 Waring J.
 *************************************************************************/
-#pragma once 
+#pragma once
 
 #include <atomic>
 #include <thread>
@@ -24,11 +24,11 @@ namespace Pro{
 
 		class CAudioMixer
 		{
-			CAudioBuffer* m_output_stream; 
+			CAudioBuffer* m_output_stream;
 			atomic<bool> m_stream_ready;
 			atomic<bool> m_stream_refill;
-			vector<CAudioSignal> m_signals; 
-			void process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready);
+			vector<CAudioSignal> m_signals;
+			void process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals);
 			thread m_stream_processor;
 		public:
 			CAudioMixer();
@@ -56,5 +56,3 @@ namespace Pro{
 		};
 	}
 }
-
-

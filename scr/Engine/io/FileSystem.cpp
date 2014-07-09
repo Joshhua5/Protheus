@@ -1,5 +1,3 @@
-
-
 #include "FileSystem.h"
 
 using namespace Pro;
@@ -10,14 +8,11 @@ FileSystem::FileSystem()
 	rootDir = "";
 }
 
-
 FileSystem::~FileSystem()
 {
 }
 
-
 CFile& FileSystem::openFile(const std::string& file){
-	
 	return *new CFile(rootDir + file);
 }
 void FileSystem::setRootDir(const std::string& dir){

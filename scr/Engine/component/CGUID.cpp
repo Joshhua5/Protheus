@@ -1,4 +1,3 @@
-
 #include "CGUID.h"
 
 using namespace Pro;

@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Enumeration of file return and state types
+Enumeration of file return and state types
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.

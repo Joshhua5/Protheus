@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Audio doesn't support packing, the unpacked data is unprocessed
-	and is required to be processed by a IBitstreamDecoder
+Audio doesn't support packing, the unpacked data is unprocessed
+and is required to be processed by a IBitstreamDecoder
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
@@ -16,7 +16,7 @@ History:
 
 namespace Pro{
 	namespace IO{
-		class GameFileAudio : 
+		class GameFileAudio :
 			protected GameFileRaw
 		{
 		public:
@@ -24,9 +24,8 @@ namespace Pro{
 			GameFileAudio(){}
 
 			void unpack(GameFileChunk& _chunk);
-			
+
 			CBuffer* getAudio();
-		}; 
+		};
 	}
 }
-

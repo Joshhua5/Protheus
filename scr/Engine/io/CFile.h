@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A class which provides a wrapper around fstream
+A class which provides a wrapper around fstream
 
 -------------------------------------------------------------------------
 History:
@@ -19,8 +19,7 @@ History:
 #include <string>
 
 namespace Pro{
-	namespace Util{ 
-
+	namespace Util{
 		using namespace std;
 		class CFile
 		{
@@ -31,7 +30,7 @@ namespace Pro{
 		public:
 			CFile(const std::string& file);
 			CFile();
-			~CFile(); 
+			~CFile();
 
 			/*  Returns if there's more data to be read */
 			bool isEndOfFile();
@@ -103,6 +102,6 @@ namespace Pro{
 
 			/*	Returns the flag and resets to NO_ERROR */
 			EFile getError();
-		}; 
+		};
 	}
 }

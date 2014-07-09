@@ -1,6 +1,5 @@
 #include "CScriptable.h"
 
-
 using namespace std;
 
 using namespace Pro;
@@ -12,7 +11,7 @@ void CScriptable::update(lua_State* L){
 }
 
 void CScriptable::attachFunction(const string& function){
-	luaFunction = function; 
+	luaFunction = function;
 }
 
 int CScriptable::lUpdate(lua_State* L){
@@ -24,5 +23,5 @@ int CScriptable::lUpdate(lua_State* L){
 int CScriptable::lAttachFunction(lua_State* L){
 	const auto scriptable = Util::luaP_touserdata<CScriptable>(L, 1);
 	scriptable->attachFunction(lua_tostring(L, 2));
-	return 0; 
+	return 0;
 }

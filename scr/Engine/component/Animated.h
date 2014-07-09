@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	The Animated componenet contains a id to the animatedSprite
-	and the current frame being drawn
+The Animated componenet contains a id to the animatedSprite
+and the current frame being drawn
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
@@ -21,23 +21,23 @@ namespace Pro{
 		using namespace std;
 		using namespace Asset;
 
-		class Animated 
+		class Animated
 		{
 		private:
-			// the ID of the animation 
+			// the ID of the animation
 			game_id activeAnimation;
 			// current step of the animation
 			unsigned int currentStep;
 			// the count of steps in the animation
 			unsigned int maxStep;
 		public:
- 
+
 			game_id getAnimation();
 			void setAnimation(game_id animationID, unsigned int Steps);
 
-			unsigned int getStep(); 
+			unsigned int getStep();
 			void step();
-			 
+
 			// LUA FUNCTIONS
 
 			static int lGetAnimation(lua_State*);
@@ -53,8 +53,5 @@ namespace Pro{
 				fields.push_back({ "getAnimation", &T::lGetAnimation });
 			}
 		};
-
 	}
-} 
-
-
+}

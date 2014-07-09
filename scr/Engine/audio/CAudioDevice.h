@@ -4,13 +4,13 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	The interface between the SDL Audio library and the produced audio buffers
+The interface between the SDL Audio library and the produced audio buffers
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
- 
+
 #include "CAudioMixer.h"
 #include "IBitstreamDecoder.h"
 #include <SDL.h>
@@ -18,7 +18,7 @@ History:
 namespace Pro{
 	namespace Audio{
 		class CAudioDevice
-		{ 
+		{
 			//void audio_callback(CAudioMixer*, Uint8* stream, int length);
 			unsigned int deviceID;
 			CAudioMixer mixer;
@@ -28,7 +28,7 @@ namespace Pro{
 			CAudioDevice();
 			~CAudioDevice();
 
-			SDL_AudioSpec getSpec(); 
+			SDL_AudioSpec getSpec();
 			CAudioMixer* getMixer();
 			SDL_AudioStatus getDeviceState();
 
@@ -42,7 +42,6 @@ namespace Pro{
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				//fields.push_back({ "update", &T::lUpdate });
 			}
-		}; 
+		};
 	}
 }
-

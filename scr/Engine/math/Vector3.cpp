@@ -1,4 +1,3 @@
-
 #include "Vector3.h"
 
 using namespace Pro;
@@ -6,9 +5,8 @@ using namespace Math;
 
 Vector3::Vector3()
 {
-	 
 }
- 
+
 int Vector3::lGetX(lua_State* L){
 	Vector3* v = Util::luaP_touserdata<Vector3>(L, 1);
 	lua_pushnumber(L, v->x);

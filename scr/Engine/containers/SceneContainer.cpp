@@ -1,4 +1,3 @@
-
 #include "SceneContainer.h"
 
 using namespace Pro;
@@ -32,9 +31,9 @@ int SceneContainer::lAddScene(lua_State* L){
 	return 0;
 }
 
-int SceneContainer::lGetActiveScene(lua_State* L){ 
+int SceneContainer::lGetActiveScene(lua_State* L){
 	SceneContainer* sc = Util::luaP_touserdata<SceneContainer>(L, -1);
-	Util::luaP_newuserdata<Scene>(L, sc->getActiveScene()); 
+	Util::luaP_newuserdata<Scene>(L, sc->getActiveScene());
 	return 1;
 }
 
@@ -50,7 +49,7 @@ int SceneContainer::lDestoryScene(lua_State* L){
 	return 0;
 }
 
-int SceneContainer::lSetActiveScene(lua_State* L){ 
+int SceneContainer::lSetActiveScene(lua_State* L){
 	SceneContainer* sc = Util::luaP_touserdata<SceneContainer>(L, -2);
 	sc->setActiveScene(static_cast<game_id>(lua_tonumber(L, -1)));
 	return 0;

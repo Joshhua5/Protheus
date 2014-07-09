@@ -11,21 +11,21 @@ History:
 *************************************************************************/
 
 #pragma once
- 
+
 #include <vector>
-#include "GUIEntity.h" 
+#include "GUIEntity.h"
 #include "GUIContainer.h"
 #include "..\GUIDLookup.h"
 
 namespace Pro{
 	namespace GUI{
-		class GUICollapsibleMenu : 
+		class GUICollapsibleMenu :
 			public GUIContainer
 		{
 		public:
 			GUICollapsibleMenu(const std::string& name);
 			GUICollapsibleMenu();
-			~GUICollapsibleMenu(); 
+			~GUICollapsibleMenu();
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){

@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Handles user input
+Handles user input
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -18,7 +18,6 @@ History:
 using namespace std;
 
 namespace Pro{
-
 	class Input
 	{
 		stack<SDL_Event> event_stack;
@@ -31,4 +30,4 @@ namespace Pro{
 		SDL_Event peekInputEvent();
 		bool hasEvent();
 	};
-} 
+}

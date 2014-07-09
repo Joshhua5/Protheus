@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <unordered_map>
-#include "..\gameobject\Scene.h" 
+#include "..\gameobject\Scene.h"
 #include "..\util\LuaUtils.h"
 
 namespace Pro{
@@ -27,17 +27,16 @@ namespace Pro{
 		SceneContainer(){}
 		~SceneContainer(){}
 
-		void addScene(Scene*); 
+		void addScene(Scene*);
 		Scene* getScene(game_id);
-		Scene* getActiveScene(); 
+		Scene* getActiveScene();
 		void setActiveScene(game_id);
-		void destoryScene(game_id); 
-		 
+		void destoryScene(game_id);
+
 		static int lAddScene(lua_State*);
 		static int lSetActiveScene(lua_State*);
 		static int lGetActiveScene(lua_State*);
 		static int lGetScene(lua_State*);
 		static int lDestoryScene(lua_State*);
-	}; 
+	};
 }
-

@@ -1,17 +1,13 @@
-
-#include "CNetwork.h" 
+#include "CNetwork.h"
 namespace Pro{
 	namespace Networking{
-
 		Network::Network()
-		{ 
+		{
 		}
-
 
 		Network::~Network()
-		{ 
+		{
 		}
-		  
 
 		bool Network::init(){
 			if (SDLNet_Init() < 0){
@@ -21,7 +17,7 @@ namespace Pro{
 			return true;
 		}
 
-		ServerTCPConnection* Network::startServer(){ 
+		ServerTCPConnection* Network::startServer(){
 			// Create Connection
 			ServerTCPConnection* _connection = new ServerTCPConnection;
 
@@ -51,16 +47,14 @@ namespace Pro{
 			return _connection;
 		}
 
-
-		void Network::closeAll(){ 
-		 
+		void Network::closeAll(){
 		}
 
-		void Network::cleanup(){ 
+		void Network::cleanup(){
 			// close all client connections
 			while (!connections.empty())
 				connections.erase(connections.begin());
 			SDLNet_Quit();
-		} 
+		}
 	}
 }

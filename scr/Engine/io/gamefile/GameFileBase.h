@@ -13,7 +13,7 @@ History:
 
 #include <vector>
 #include <string>
-#include "GameFileChunk.h"  
+#include "GameFileChunk.h"
 #include "..\..\util\BufferReader.h"
 #include "..\..\util\BufferWriter.h"
 #include "..\..\util\CBuffer.h"
@@ -38,4 +38,3 @@ namespace Pro{
 		};
 	}
 }
-

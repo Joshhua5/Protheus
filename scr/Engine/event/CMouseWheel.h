@@ -10,7 +10,7 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once   
+#pragma once
 
 #include "..\math\Vector2.h"
 #include "IEvent.h"
@@ -31,7 +31,7 @@ namespace Pro{
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			}
 		};
 	}

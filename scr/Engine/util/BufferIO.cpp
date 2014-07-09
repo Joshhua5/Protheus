@@ -1,9 +1,7 @@
-
 #include "BufferIO.h"
 
 using namespace Pro;
 using namespace Util;
-
 
 // sets the position of the writer
 void BufferIO::setPosition(unsigned int position){

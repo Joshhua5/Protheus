@@ -2,8 +2,7 @@
 
 using namespace Pro;
 using namespace IO;
- 
- 
+
 GameFileChunk GameFileBase::getChunk(){
 	return m_chunk;
 }

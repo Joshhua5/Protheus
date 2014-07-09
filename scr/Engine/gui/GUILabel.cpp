@@ -1,5 +1,3 @@
-
-
 #include "GUILabel.h"
 
 using namespace Pro;
@@ -10,7 +8,6 @@ GUILabel::GUILabel(const std::string& name) : GUIEntity(name){}
 GUILabel::GUILabel()
 {
 }
-
 
 GUILabel::~GUILabel()
 {

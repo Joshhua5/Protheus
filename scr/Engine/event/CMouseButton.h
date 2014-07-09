@@ -10,7 +10,7 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once   
+#pragma once
 
 #include "..\math\Vector2.h"
 #include "IEvent.h"

@@ -1,5 +1,3 @@
-
-
 #include "AnimatedSprite.h"
 
 using namespace Pro;
@@ -9,12 +7,12 @@ AnimatedSprite::AnimatedSprite(const std::string& name) : CGUID(name){}
 AnimatedSprite::AnimatedSprite() : CGUID() {}
 
 void AnimatedSprite::addFrame(Sprite* sprite){
-	frames.push_back(sprite); 
+	frames.push_back(sprite);
 }
 
 unsigned int AnimatedSprite::getStepCount() const{
 	return frames.size();
-} 
+}
 
 Sprite* AnimatedSprite::getFrame(game_id id) const{
 	return frames.at(id);

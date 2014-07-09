@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Enumeration of chunk types
+Enumeration of chunk types
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
@@ -30,6 +30,5 @@ namespace Pro{
 			MAP_DATA, //
 			RAW //
 		};
-
 	}
 }

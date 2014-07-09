@@ -13,22 +13,22 @@ History:
 #pragma once
 
 #include <vector>
- 
+
 #include "GUIEntity.h"
 
 namespace Pro{
 	namespace GUI{
-		class GUIContainer : 
+		class GUIContainer :
 			public GUIEntity
-		{ 
-			std::vector<GUIEntity*> window_entities; 
+		{
+			std::vector<GUIEntity*> window_entities;
 		public:
 			GUIContainer(const std::string& name);
 			GUIContainer();
 			~GUIContainer();
-			 
+
 			void update(SDL_Event);
-			void addComponent(GUIEntity*); 
+			void addComponent(GUIEntity*);
 
 			// LUA Functions
 
@@ -39,11 +39,10 @@ namespace Pro{
 				return "gui_container_metatable";
 			}
 
-			template<typename T> 
+			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "addComponent", (lua_CFunction)&T::lAddComponent });
 			}
-		}; 
+		};
 	}
 }
-

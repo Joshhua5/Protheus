@@ -17,21 +17,21 @@ History:
 
 namespace Pro{
 	namespace Asset{
-		class AnimatedSprite : 
+		class AnimatedSprite :
 			public Component::CGUID
 		{
 		private:
-			std::vector<Sprite*> frames; 
+			std::vector<Sprite*> frames;
 		public:
 			AnimatedSprite(const std::string& name);
 			AnimatedSprite();
-			 
+
 			Sprite* getFrame(game_id id) const;
 
 			void addFrame(Sprite*);
 
 			unsigned int getStepCount() const;
-			// LUA Functions 
+			// LUA Functions
 
 			//static int lNextFrame(lua_State*);
 			static int lGetFrame(lua_State*);
@@ -44,10 +44,10 @@ namespace Pro{
 
 			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
-				CGUID::lGetFunctions<T>(fields); 
+				CGUID::lGetFunctions<T>(fields);
 				fields.push_back({ "getFrame", &T::lGetFrame });
 				fields.push_back({ "addFrame", &T::lAddFrame });
 			}
-		}; 
+		};
 	}
 }

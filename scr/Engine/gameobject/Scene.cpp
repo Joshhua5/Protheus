@@ -1,10 +1,8 @@
-
-#include "Scene.h" 
+#include "Scene.h"
 using namespace Pro;
 using namespace GameObject;
 using namespace std;
 using namespace Math;
-
 
 Scene::Scene(lua_State* L) :
 EntityContainer(),
@@ -14,7 +12,6 @@ CameraContainer()
 }
 
 void Scene::update(){
-
 }
 
 // returns a list of entities found on a tile
@@ -40,4 +37,3 @@ int Scene::lUpdate(lua_State* L){
 	s->update();
 	return 0;
 }
-

@@ -11,13 +11,13 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "GameFileBase.h" 
+#include "GameFileBase.h"
 #include "..\..\GameObjects.h"
 
 namespace Pro{
 	namespace IO{
 		using namespace GameObject;
-		class GameFileObject : 
+		class GameFileObject :
 			public GameFileBase
 		{
 			Entity* object = nullptr;
@@ -25,11 +25,12 @@ namespace Pro{
 			GameFileObject();
 
 			template<typename T>
-			void pack(const string& name, T* obj){/* Template Specialization */ }
+			void pack(const string& name, T* obj){
+			}
 
 			void unpack(GameFileChunk& chunk);
 
 			Entity* getObject();
 		};
 	}
-} 
+}

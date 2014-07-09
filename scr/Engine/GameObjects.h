@@ -12,7 +12,6 @@ History:
 *************************************************************************/
 #pragma once
 
-
 #include "gameobject\StaticEntity.h"
 #include "gameobject\DynamicEntity.h"
 #include "gameobject\DataEntity.h"

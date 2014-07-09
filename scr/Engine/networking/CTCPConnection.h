@@ -12,8 +12,8 @@ History:
 
 #pragma once
 
-#include "CConnection.h" 
-#include <thread> 
+#include "CConnection.h"
+#include <thread>
 
 namespace Pro{
 	namespace Networking{
@@ -23,9 +23,9 @@ namespace Pro{
 		public:
 			TCPsocket serverSock;
 			TCPsocket clientSock;
-			
+
 			IPaddress* serverAddress;
-			IPaddress* clientAddress; 
+			IPaddress* clientAddress;
 
 			void handshake(TCPConnection* connection, thread** listener, thread** messenger);
 			void messenger(TCPConnection* connection);
@@ -34,7 +34,7 @@ namespace Pro{
 			thread _handshaker;
 			thread* _listener;
 			thread* _messenger;
-			 
+
 		public:
 			TCPConnection() : CConnection("TCPConnection"){
 				serverAddress = new IPaddress();
@@ -44,9 +44,8 @@ namespace Pro{
 			}
 
 			~TCPConnection(){};
-			 
-			void startHandshake();
 
+			void startHandshake();
 		};
 	}
 }

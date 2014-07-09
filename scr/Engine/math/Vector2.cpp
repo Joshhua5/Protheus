@@ -1,24 +1,22 @@
-
 #include "Vector2.h"
 
 using namespace Pro;
 using namespace Math;
 
-
-Vector2::Vector2(int x, int y) 
+Vector2::Vector2(int x, int y)
 	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
-Vector2::Vector2(unsigned int x, unsigned int y) 
+Vector2::Vector2(unsigned int x, unsigned int y)
 	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
-Vector2::Vector2(double x, double y) 
+Vector2::Vector2(double x, double y)
 	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
 Vector2::Vector2(float _x, float _y){
 	x = _x;
 	y = _y;
 }
- 
+
 Vector2::Vector2(const Vector2& vec){
 	x = vec.x;
 	y = vec.y;
@@ -64,16 +62,15 @@ float Vector2::hypotenuse(){
 	return sqrtf((x * x) + (y * y));
 }
 
- 
 int Vector2::lContains(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	lua_pushboolean(L, 
+	lua_pushboolean(L,
 		static_cast<bool>(v->contains(static_cast<float>(lua_tonumber(L, 2))))
 		);
 	return 1;
 }
 int Vector2::lHypotenuse(lua_State* L){
-	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1); 
+	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
 	lua_pushnumber(L, v->hypotenuse());
 	return 1;
 }
@@ -109,4 +106,3 @@ int Vector2::lSetXY(lua_State* L){
 	v->y = static_cast<float>(lua_tonumber(L, 3));
 	return 0;
 }
-

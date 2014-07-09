@@ -10,11 +10,11 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once 
+#pragma once
 
 #include "..\gameobject\Scene.h"
 #include <unordered_map>
-#include "SpriteManager.h" 
+#include "SpriteManager.h"
 #include "SpriteBatcher.h"
 namespace Pro{
 	namespace Graphics{
@@ -28,7 +28,7 @@ namespace Pro{
 			Renderer(lua_State* lua_state);
 			Renderer();
 			~Renderer();
-			 
+
 			SDL_Renderer* getRenderer();
 
 			void renderScene(Scene*, Graphics::SpriteManager*);

@@ -1,9 +1,8 @@
-
 #include "WindowContainer.h"
 
 using namespace Pro;
- 
-void WindowContainer::addWindow(Window* w ){
+
+void WindowContainer::addWindow(Window* w){
 	stored_windows.insert({ w->getGUID(), w });
 }
 Window* WindowContainer::getWindow(game_id _guid){
@@ -12,7 +11,6 @@ Window* WindowContainer::getWindow(game_id _guid){
 void WindowContainer::destoryWindow(game_id _guid){
 	stored_windows.erase(_guid);
 }
-
 
 int WindowContainer::lSetActiveWindow(lua_State* L){
 	Util::luaP_registerstore(L, "ACTIVE_WINDOW", Util::luaP_touserdata<Window>(L, 2));

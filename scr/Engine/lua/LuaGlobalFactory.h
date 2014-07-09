@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Creates all the global's which are accessible through Lua.
+Creates all the global's which are accessible through Lua.
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -30,7 +30,7 @@ namespace Pro{
 				for each(auto i in globalFunctions)
 					lua_register(L, i.name, i.func);
 
-				for (int x = 0; x < 10; x++)
+				for (int x = 0; x < 10; ++x)
 					lua_pushstring(L, "");
 
 				lua_setglobal(L, "script_engine_mode");
@@ -45,7 +45,7 @@ namespace Pro{
 				lua_setglobal(L, "fullscreen");
 			}
 			LuaGlobalFactory(){};
-			~LuaGlobalFactory(){}; 
+			~LuaGlobalFactory(){};
 		};
 	}
 }

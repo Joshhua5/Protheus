@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A global unique id procided to objects,
-	To look up a ID for the assosiated name, use the GUIDLookup
+A global unique id procided to objects,
+To look up a ID for the assosiated name, use the GUIDLookup
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -13,12 +13,12 @@ History:
 
 #pragma once
 
-#include "..\lua\lib\lua.hpp" 
+#include "..\lua\lib\lua.hpp"
 #include "..\util\LuaUtils.h"
 #include "..\GUIDLookup.h"
 
 namespace Pro{
-	namespace Component{ 
+	namespace Component{
 		class CGUID
 		{
 		protected:
@@ -37,7 +37,7 @@ namespace Pro{
 			static inline string lGetMetatable(){
 				return "component_guid_metatable";
 			}
-			template<typename T> 
+			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getGUID", &T::lGetGUID });
 			}

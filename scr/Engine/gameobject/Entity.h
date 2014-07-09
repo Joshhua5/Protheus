@@ -4,10 +4,9 @@
 
 namespace Pro{
 	namespace GameObject{
-
 		using namespace std;
 
-		class Entity : 
+		class Entity :
 			public Component::CGUID{
 		public:
 			Entity(const string& name) : CGUID(name){}

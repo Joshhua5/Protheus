@@ -16,30 +16,28 @@ History:
 #ifdef __SSE
 #include <xmmintrin.h>
 #endif
- 
+
 #include <SDL.h>
 #include "Vector2.h"
 namespace Pro{
 	namespace Math{
-
 #ifdef _MSC_VER
 		__declspec(align(16))
 #endif
 		struct Vector4{
-
 			float x, y, z, w;
-			
+
 			// Copy Constructor
 			Vector4(const Vector4&);
 			// Move Constructor
 			Vector4(Vector4&&);
-			
-			Vector4(SDL_Rect& xyzw); 
+
+			Vector4(SDL_Rect& xyzw);
 			Vector4(Vector2& xy, Vector2& zw);
 			Vector4(double x, double y, double z, double w);
-			Vector4(float x, float y, float z, float w); 
-			Vector4(int x, int y, int z, int w); 
-			
+			Vector4(float x, float y, float z, float w);
+			Vector4(int x, int y, int z, int w);
+
 			// z and w are width and height in that order.
 			bool contains(const Vector2&) const;
 			bool overlaps(const Vector4&) const;
@@ -70,25 +68,25 @@ namespace Pro{
 			static int lSetW(lua_State*);
 			static int lGetXYZW(lua_State*);
 			static int lSetXYZW(lua_State*);
-			  
+
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "vector4_metatable";
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getX", (lua_CFunction)&T::lGetX });
 				fields.push_back({ "getY", (lua_CFunction)&T::lGetY });
-				fields.push_back({ "getZ", (lua_CFunction)&T::lGetZ }); 
+				fields.push_back({ "getZ", (lua_CFunction)&T::lGetZ });
 				fields.push_back({ "getW", (lua_CFunction)&T::lGetW });
 				fields.push_back({ "setX", (lua_CFunction)&T::lSetX });
 				fields.push_back({ "setY", (lua_CFunction)&T::lSetY });
-				fields.push_back({ "setZ", (lua_CFunction)&T::lSetZ }); 
+				fields.push_back({ "setZ", (lua_CFunction)&T::lSetZ });
 				fields.push_back({ "setW", (lua_CFunction)&T::lSetW });
 				fields.push_back({ "getXYZW", (lua_CFunction)&T::lGetXYZW });
 				fields.push_back({ "setXYZW", (lua_CFunction)&T::lSetXYZW });
 			}
-		}; 
-	} 
+		};
+	}
 }

@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	The world map is broken down into sections
-	Each section is defined according to the datafile 
+The world map is broken down into sections
+Each section is defined according to the datafile
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
@@ -27,17 +27,17 @@ using namespace std;
 
 namespace Pro{
 	namespace GameObject{
-		class Map : 
+		class Map :
 			public Component::Area,
 			public Component::CGUID
 		{
-		private:  
+		private:
 			vector<MapSection*> mapSections;
 			vector<TileType> tileData;
 
 		public:
-			Map(); 
-			 
+			Map();
+
 			vector<MapSection*> getSections(){ return mapSections; }
 			unsigned int getSectionCount();
 			vector<MapSection*> getVisibleSections(DataEntity& cam);
@@ -46,7 +46,7 @@ namespace Pro{
 			void addSection(MapSection*);
 
 			// returns the tile which is at a position
-			TileType* getTile(Math::Vector2&); 
+			TileType* getTile(Math::Vector2&);
 			TileType* getTileType(unsigned int);
 			// returns the whole TileData vector
 			vector<TileType> getTileData();
@@ -63,5 +63,5 @@ namespace Pro{
 				Area::lGetFunctions<T>(fields);
 			}
 		};
-	} 
+	}
 }

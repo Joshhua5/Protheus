@@ -1,5 +1,3 @@
-
-
 #include "GUICollapsibleMenu.h"
 
 using namespace Pro;

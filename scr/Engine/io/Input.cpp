@@ -1,13 +1,9 @@
-
-
 #include "Input.h"
 
 namespace Pro{
-
 	Input::Input()
 	{
 	}
-
 
 	Input::~Input()
 	{

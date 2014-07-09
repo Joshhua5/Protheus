@@ -1,4 +1,3 @@
-
 #include "BufferReader.h"
 
 using namespace Pro;
@@ -6,7 +5,7 @@ using namespace Util;
 
 BufferReader::BufferReader(CBuffer* _buffer){
 	buffer = _buffer;
-} 
+}
 
 BufferReader::~BufferReader(){
 	buffer = nullptr;
@@ -22,4 +21,3 @@ char* BufferReader::read(int size){
 	skip(size);
 	return out;
 }
- 

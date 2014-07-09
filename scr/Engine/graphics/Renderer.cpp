@@ -1,18 +1,15 @@
-
-
 #include "Renderer.h"
 
 using namespace Pro;
 using namespace Graphics;
 
 Renderer::Renderer(){
-
 }
 
 Renderer::Renderer(lua_State* lua_state){
 	SDL_Window* w = Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW");
 	renderer = SDL_CreateRenderer(w, -1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); 
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == nullptr)
 		return;
 	Util::luaP_registerstore(lua_state, "SDL_RENDERER", renderer);
@@ -29,7 +26,7 @@ SDL_Renderer* Renderer::getRenderer(){
 }
 
 void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
-	// Get data 
+	// Get data
 	Map* map = scene->getMap();
 	//SDL_Point* cameraPos = scene->getActiveCamera()->getPosition();
 
@@ -56,24 +53,24 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 				if (static_cast<Asset::Sprite*>(tile->spriteCache) == nullptr)
 					tile->spriteCache = spriteMng->getSprite(GUIDLookup::getGUID(tile->spriteName));
 
-				auto spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getDimensions(); 
-				auto position = Vector2(spriteRect.x * x, spriteRect.y * y); 
+				auto spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getDimensions();
+				auto position = Vector2(spriteRect.x * x, spriteRect.y * y);
 				sprite_batcher->push(static_cast<Asset::Sprite*>(tile->spriteCache), Vector4(position, spriteRect));
 				y++;
 			}
-			x++;
+			++x;
 			y = 0;
 		}
 		x = 0;
 	}
 
-	// render entities 
+	// render entities
 	//GameObject::AnimatedEntity* aeCache;
 	//GameObject::SpriteEntity* seCache;
 	//for each(auto kv in *entities){
 	//	// check if animated
 	//	aeCache = dynamic_cast<GameObject::AnimatedEntity*>(kv.second);
-	//	if (aeCache != nullptr){ 
+	//	if (aeCache != nullptr){
 	//		sprite_batcher->push(aeCache->activeAnimation->getFrame(), aeCache->getPositionRect());
 	//		aeCache->activeAnimation->nextFrame();
 	//		continue;
@@ -93,7 +90,7 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 
 int Renderer::lGetBatcher(lua_State* L){
 	Renderer* r = Util::luaP_touserdata<Renderer>(L, 1);
-	Util::luaP_newobject<Renderer>(L, r); 
+	Util::luaP_newobject<Renderer>(L, r);
 	return 1;
 }
 

@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Handles all parts of the system, loads and executes a game file
+Handles all parts of the system, loads and executes a game file
 -------------------------------------------------------------------------
 History:
 - 20:06:2014 Waring J.
@@ -12,7 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 #include "IGame.h"
-#include "util\LuaUtils.h" 
+#include "util\LuaUtils.h"
 
 namespace Pro{
 	class DataGame :
@@ -32,4 +32,3 @@ namespace Pro{
 		int gameLoop();
 	};
 }
-

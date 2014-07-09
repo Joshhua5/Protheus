@@ -425,6 +425,9 @@
     <ClCompile Include="Engine\gameobject\DataEntity.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\util\ClassDefinition.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -818,6 +821,9 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\gameobject\Entity.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\ClassDefinition.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

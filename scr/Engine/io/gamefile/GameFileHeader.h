@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Data hiding of the game file header
+Data hiding of the game file header
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.
@@ -36,10 +36,9 @@ namespace Pro{
 			unsigned int objectIndexOffset;
 			// position to the index that stores all the maps
 			unsigned int mapIndexOffset;
-			// provides a index to raw data, which have no specified 
+			// provides a index to raw data, which have no specified
 			// type
-			unsigned int rawIndexOffset; 
+			unsigned int rawIndexOffset;
 		};
-
 	}
 }

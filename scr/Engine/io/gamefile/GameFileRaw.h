@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A raw chunk, has no understanding of the data it contains,
-	A buffer will be returned of the data contained inside the chunk
+A raw chunk, has no understanding of the data it contains,
+A buffer will be returned of the data contained inside the chunk
 -------------------------------------------------------------------------
 History:
 - 02:07:2014: Waring J.
@@ -24,7 +24,7 @@ namespace Pro{
 		protected:
 			CBuffer* data;
 		public:
-			GameFileRaw(const string& name, CBuffer* buffer); 
+			GameFileRaw(const string& name, CBuffer* buffer);
 			GameFileRaw(GameFileChunk& chunk);
 			GameFileRaw(){}
 
@@ -37,6 +37,6 @@ namespace Pro{
 
 			// returns the unpacked data
 			CBuffer* getData();
-		}; 
+		};
 	}
 }

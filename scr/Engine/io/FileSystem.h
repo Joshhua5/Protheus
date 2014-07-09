@@ -4,9 +4,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Handles all File Operations for platform independance,
-	All path's are relative to the set RootDir which is relative
-	to the executable unless defined as an absolute path.
+Handles all File Operations for platform independance,
+All path's are relative to the set RootDir which is relative
+to the executable unless defined as an absolute path.
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.
@@ -14,17 +14,16 @@ History:
 
 #pragma once
 
-#include "CFile.h" 
+#include "CFile.h"
 #include <string>
 
 namespace Pro{
 	namespace Util{
-
 		using namespace std;
-		
+
 		class FileSystem
 		{
-			string rootDir; 
+			string rootDir;
 		public:
 			FileSystem();
 			~FileSystem();

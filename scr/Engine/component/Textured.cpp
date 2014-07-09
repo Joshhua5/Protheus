@@ -11,7 +11,7 @@ void Textured::setSprite(game_id _guid){
 	sprite_guid = _guid;
 }
 
-int Textured::lSetSprite(lua_State* L){ 
+int Textured::lSetSprite(lua_State* L){
 	auto p = Util::luaP_touserdata<Textured>(L, 1);
 	p->setSprite(static_cast<game_id>(lua_tonumber(L, 2)));
 	return 0;

@@ -1,9 +1,8 @@
-
-
 #include "GUIContainer.h"
 
 using namespace Pro;
 using namespace GUI;
+using namespace Math;
 
 GUIContainer::GUIContainer(const std::string& name) : GUIEntity(name){}
 GUIContainer::GUIContainer(){}
@@ -18,7 +17,7 @@ void GUIContainer::update(SDL_Event mouse_event){
 		if (entities->isActive()){
 			switch (entities->type){
 			case GUI_ENTITY_TYPE::COLLAPSIBLE_MENU:
-				if (static_cast<GUIContainer*>(entities)->isClickWithin(Math::Vector2(mouse_event.button.x, mouse_event.button.y)))
+				if (static_cast<GUIContainer*>(entities)->isClickWithin(Vector2(mouse_event.button.x, mouse_event.button.y)))
 					static_cast<GUIContainer*>(entities)->update(mouse_event);
 				break;
 			default:
@@ -31,7 +30,6 @@ void GUIContainer::update(SDL_Event mouse_event){
 	// Call the containers callback
 	callback();
 }
-
 
 int GUIContainer::lAddComponent(lua_State* L){
 	GUIContainer* p = *static_cast<GUIContainer**>(lua_touserdata(L, 1));

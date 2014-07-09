@@ -9,9 +9,9 @@ Description:
 History:
 - 10:06:2014: Waring J.
 *************************************************************************/
-#pragma once 
+#pragma once
 
-#include "EEvent.h" 
+#include "EEvent.h"
 #include "IEvent.h"
 #include "CMouseButton.h"
 #include "CMouseMotion.h"
@@ -23,14 +23,14 @@ namespace Pro{
 		struct CEvent{
 			EEvent type;
 			// use the type to cast the event and retrieve it's data
-			IEvent* event; 
+			IEvent* event;
 
 			static inline string lGetMetatable(){
 				return "event_metatable";
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			}
 		};
 	}

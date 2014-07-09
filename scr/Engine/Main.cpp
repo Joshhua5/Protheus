@@ -1,16 +1,15 @@
-
-#include "Main.h" 
+#include "Main.h"
 
 using namespace Pro;
 using namespace Lua;
 
 int main(int argc, char* args[])
-{ 
+{
 	SDL_Init(SDL_INIT_EVERYTHING);
 	CLua* lua = new CLua();
 	IGame* game = nullptr;
 	game = lua->loadConfig("..\\GameDemo\\Config.lua");
-	
+
 	// check for the parent type of game
 	ScriptGame* sGame = dynamic_cast<ScriptGame*>(game);
 	DataGame* dGame = dynamic_cast<DataGame*>(game);
@@ -20,7 +19,7 @@ int main(int argc, char* args[])
 		lua->loadResources();
 		lua->loadMain();
 
-		sGame->initialize(); 
+		sGame->initialize();
 		sGame->gameLoop();
 		sGame->cleanup();
 		delete sGame;
@@ -29,11 +28,11 @@ int main(int argc, char* args[])
 	if (dGame != nullptr){
 		dGame->initialize();
 		dGame->gameLoop();
-		dGame->cleanup(); 
+		dGame->cleanup();
 		delete dGame;
 	}
-	 
+
 	delete lua;
-	 
+
 	return 0;
 }

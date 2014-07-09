@@ -4,10 +4,10 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Stores entities with reference from their GUID's
-	Stores the 3 types of entities in seperate containers
-	and one general container for unknown classes with the 
-	Entity base
+Stores entities with reference from their GUID's
+Stores the 3 types of entities in seperate containers
+and one general container for unknown classes with the
+Entity base
 
 -------------------------------------------------------------------------
 History:
@@ -16,11 +16,10 @@ History:
 
 #pragma once
 
-#include <unordered_map>   
+#include <unordered_map>
 #include "..\GameObjects.h"
 
-namespace Pro{   
-
+namespace Pro{
 	using namespace std;
 	using namespace GameObject;
 
@@ -32,7 +31,7 @@ namespace Pro{
 
 		unordered_map<game_id, Entity*> m_entities;
 
-	public: 
+	public:
 
 		template<typename T>
 		T* getEntity(game_id id){
@@ -48,6 +47,5 @@ namespace Pro{
 		void eraseEntity(game_id id){
 			m_entities.erase(id);
 		}
-
 	};
 }

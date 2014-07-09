@@ -22,14 +22,14 @@ namespace Pro{
 	namespace Math{
 		struct Vector3{
 			float x, y, z;
-			  
+
 			Vector3();
 
 			// LUA Functions
-			 
+
 			static int lGetX(lua_State*);
 			static int lGetY(lua_State*);
-			static int lGetZ(lua_State*); 
+			static int lGetZ(lua_State*);
 			static int lSetX(lua_State*);
 			static int lSetY(lua_State*);
 			static int lSetZ(lua_State*);
@@ -42,7 +42,7 @@ namespace Pro{
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getX", (lua_CFunction)&T::lGetX });
 				fields.push_back({ "getY", (lua_CFunction)&T::lGetY });
 				fields.push_back({ "getZ", (lua_CFunction)&T::lGetZ });
@@ -50,9 +50,8 @@ namespace Pro{
 				fields.push_back({ "setY", (lua_CFunction)&T::lSetY });
 				fields.push_back({ "setZ", (lua_CFunction)&T::lSetZ });
 				fields.push_back({ "getXYZ", (lua_CFunction)&T::lGetXYZ });
-				fields.push_back({ "setXYZ", (lua_CFunction)&T::lSetXYZ }); 
+				fields.push_back({ "setXYZ", (lua_CFunction)&T::lSetXYZ });
 			}
 		};
-	} 
+	}
 }
-

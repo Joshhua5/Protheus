@@ -1,4 +1,3 @@
-
 #include "CameraContainer.h"
 
 using namespace Pro::GameObject;

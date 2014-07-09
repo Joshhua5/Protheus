@@ -20,7 +20,6 @@ using namespace std;
 
 namespace Pro{
 	namespace Util{
-
 		inline void checkError(lua_State* L, int error){
 			if (error)
 				std::cout << "Lua Error: " << lua_tostring(L, -1) << std::endl;
@@ -36,28 +35,30 @@ namespace Pro{
 
 		// The first part of the pair will be used as the key and the second as the data
 		template<typename T>
-		inline void luaP_pushtoarray(lua_State* L, std::string table_name, char* key, T data){
-			lua_pushstring(L, &table_name[0]);
+		inline void luaP_pushtoarray(lua_State* L, string table_name, char* key, T data){
+			lua_pushstring(L, table_name.data());
 			lua_gettable(L, -1);
-			lua_pushstring(L, key); 
+			lua_pushstring(L, key);
 			lua_pushnumber(L, data);
 			lua_settable(L, -3);
 		}
 
+		// push an array of complex data types to lua
 		template<typename T>
-		inline void luaP_pusharray(lua_State* L, vector<std::pair<std::string, T>>& elements){
+		inline void luaP_pusharray(lua_State* L, vector<pair<string, T>>& elements){
 			lua_createtable(L, 0, 0);
-			for (int x = 0; x < elements.size(); x++){
-				lua_pushstring(L, elements.at(x)[0]);
-				lua_pushnumber(L, elements.at(x)[1]);
+			for (size_t x = 0; x < elements.size(); ++x){
+				lua_pushstring(L, elements.at(x).first.data());
+				luaP_newobject(L, elements.at(X).second);
 				lua_settable(L, -3);
 			}
-		} 
+		}
 
+		// Push an array of primative data types to lua
 		template<typename T>
-		inline void luaP_pusharray(lua_State* L, T* data, unsigned int size){  
+		inline void luaP_pusharray(lua_State* L, T* data, size_t size){
 			lua_createtable(L, 0, 0);
-			for (unsigned int x = 0; x < size; x++){
+			for (unsigned int x = 0; x < size; ++x){
 				lua_pushnumber(L, x);
 				lua_pushnumber(L, data[x]);
 				lua_settable(L, -3);
@@ -86,7 +87,14 @@ namespace Pro{
 		// Automaticallys binds the metatable
 		template<typename T> T** luaP_newobject(lua_State* L, T* data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			*o = data; 
+			*o = data;
+			luaP_setmetatable(L, T::lGetMetatable());
+			return o;
+		}
+
+		template<typename T> T** luaP_newobject(lua_State* L, T data) {
+			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
+			**o = data;
 			luaP_setmetatable(L, T::lGetMetatable());
 			return o;
 		}
@@ -109,7 +117,6 @@ namespace Pro{
 			auto pointer = static_cast<T*>(lua_touserdata(L, -1));
 			lua_pop(L, 1);
 			return pointer;
-
 		}
 
 		inline void luaP_dumpLuaStack(lua_State *L) {
@@ -118,7 +125,6 @@ namespace Pro{
 			for (i = 1; i <= top; i++) {  /* repeat for each level */
 				int t = lua_type(L, i);
 				switch (t) {
-
 				case LUA_TSTRING:  /* strings */
 					printf("`%s'", lua_tostring(L, i));
 					break;
@@ -139,8 +145,6 @@ namespace Pro{
 			}
 			printf("\n");  /* end the listing */
 		}
-
-
 
 #define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
 #define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
@@ -168,6 +172,5 @@ namespace Pro{
 
 #define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
 #define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
-
 	}
 }

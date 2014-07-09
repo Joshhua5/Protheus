@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	A playable and mutable copy of a audio track, effects can be applied
-	to the signal.
+A playable and mutable copy of a audio track, effects can be applied
+to the signal.
 
 -------------------------------------------------------------------------
 History:
@@ -13,8 +13,7 @@ History:
 *************************************************************************/
 #pragma once
 
-
-#include "IAudioEffect.h" 
+#include "IAudioEffect.h"
 #include <vector>
 #include "..\Math.h"
 
@@ -36,7 +35,7 @@ namespace Pro{
 			CAudioSignal();
 			~CAudioSignal();
 
-			void addEffect(IAudioEffect); 
+			void addEffect(IAudioEffect);
 
 			static inline string lGetMetatable(){
 				return "audio_signal_metatable";

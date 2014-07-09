@@ -10,7 +10,7 @@ History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
-#pragma once   
+#pragma once
 
 #include "..\math\Vector2.h"
 #include "IEvent.h"
@@ -19,7 +19,7 @@ History:
 namespace Pro{
 	namespace Event{
 		struct KeyboardEvent : IEvent{
-			// Key Pressed 
+			// Key Pressed
 			EKeyboardKey key;
 			// false if key is being released
 			bool key_down;
@@ -33,8 +33,8 @@ namespace Pro{
 			}
 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			}
 		};
-	} 
-} 
+	}
+}

@@ -1,10 +1,8 @@
-
-
 #include "Lua.h"
 
 namespace Pro{
 	namespace Lua{
-		CLua::CLua() : LuaObjectFactory(&lua_state) , LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){ 
+		CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){
 			// lua_state is created in object factory
 			// because it's constructer is the first called upon
 			luaL_openlibs(lua_state);
@@ -21,7 +19,7 @@ namespace Pro{
 		inline void CLua::checkError(bool error){
 			if (error)
 				std::cout << "Lua Error: " << lua_tostring(lua_state, -1) << std::endl;
-		} 
+		}
 
 		IGame* CLua::loadConfig(const std::string& _path){
 			// The config file must be next to the executable
@@ -38,20 +36,20 @@ namespace Pro{
 			// Set the root path in the File System
 			luaP_getFileSystem(lua_state)->setRootDir(lua_tostring(lua_state, -1));
 			// Grab the window title
-			lua_getglobal(lua_state, "window_title"); 
+			lua_getglobal(lua_state, "window_title");
 			// Create the window and set it in the registery
 			luaP_setWindow(lua_state, new Window(lua_tostring(lua_state, -1), lua_state));
 
 			// Create the renderer and set it in the registery
 			auto renderer = new Graphics::Renderer(lua_state);
-			luaP_setRenderer(lua_state, renderer); 
+			luaP_setRenderer(lua_state, renderer);
 			luaP_setSDLRenderer(lua_state, renderer->getRenderer());
 
 			lua_getglobal(lua_state, "script_engine_mode");
 			if (lua_toboolean(lua_state, -1))
 				return new ScriptGame(lua_state);
 			else
-				return new DataGame(lua_state); 
+				return new DataGame(lua_state);
 		}
 		void CLua::loadResources(){
 			// grab the path to the resource.lua
@@ -65,13 +63,13 @@ namespace Pro{
 		}
 		void CLua::loadMain(){
 			// grab the path to the main.lua
-			lua_getglobal(lua_state, "main_path"); 
+			lua_getglobal(lua_state, "main_path");
 			// append the path onto the root
 			std::string path =
 				luaP_getFileSystem(lua_state)->getRootDir() +
 				lua_tostring(lua_state, -1);
 			// execute file
-			checkError(luaL_dofile(lua_state, &path[0])); 
-		} 
+			checkError(luaL_dofile(lua_state, &path[0]));
+		}
 	}
 }

@@ -12,8 +12,7 @@ History:
 
 #pragma once
 
-
-#include <vector> 
+#include <vector>
 #include "Tile.h"
 #include "DataEntity.h"
 #include "..\Math.h"
@@ -22,23 +21,22 @@ History:
 
 namespace Pro{
 	namespace GameObject{
-
 		using namespace std;
 		using namespace Component;
 		using namespace Math;
 
-		class MapSection : 
+		class MapSection :
 			public Area,
 			public Position
-		{ 
+		{
 			vector<vector<short>> data;
 		public:
 			short tileAt(Vector2&);
 			// returns a pointer so we can return nullptr if
 			// a tile isn't found
-			short* contains(Vector2&); 
+			short* contains(Vector2&);
 			void setData(vector<vector<short>>);
-			//void setData(short*); 
+			//void setData(short*);
 			vector<vector<short>> getData();
 			bool visible(DataEntity& cam);
 
@@ -49,7 +47,7 @@ namespace Pro{
 			template<typename T>
 			static inline void lGetFunctions(vector<luaL_Reg>& fields){
 				Area::lGetFunctions<T>(fields);
-				Position::lGetFunctions<T>(fields); 
+				Position::lGetFunctions<T>(fields);
 			}
 		};
 	}

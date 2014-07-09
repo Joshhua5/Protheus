@@ -1,11 +1,7 @@
-
-#include "Matrix33.h" 
-
-
+#include "Matrix33.h"
 
 using namespace Pro;
 using namespace Math;
-
 
 Matrix33 Matrix33::operator/(Matrix33& m){
 	Matrix33 o = *this;
@@ -22,14 +18,13 @@ Matrix33 Matrix33::operator+(Matrix33& m){
 	o += m;
 	return o;
 }
-Matrix33 Matrix33::operator*(Matrix33& m){ 
+Matrix33 Matrix33::operator*(Matrix33& m){
 	Matrix33 o = *this;
 	o *= m;
 	return o;
 }
 
 bool Matrix33::operator==(Matrix33& m){
-
 #ifdef __SSE
 	// SSE Code
 
@@ -74,13 +69,27 @@ void Matrix33::operator=(Matrix33& m){
 #else
 	// Scalar code
 
-	for (char x = 0; x < 9; x++)
+	for (char x = 0; x < 9; ++x)
 		*_m[x] += *m._m[x];
 
 #endif
 }
 
-void Matrix33::operator/=(Matrix33& m){}
+void Matrix33::operator/=(Matrix33& m){
+#ifdef __SSE
+	// SSE Code
+	_mm_storeu_ps(_m[0], _mm_div_ps(_mm_loadu_ps(_m[0]), _mm_loadu_ps(m._m[0])));
+	_mm_storeu_ps(_m[3], _mm_div_ps(_mm_loadu_ps(_m[3]), _mm_loadu_ps(m._m[3])));
+	_mm_storeu_ps(_m[6], _mm_div_ps(_mm_loadu_ps(_m[6]), _mm_loadu_ps(m._m[6])));
+
+	return;
+#else
+	// Scalar code
+	for (char x = 0; x < 9; ++x)
+		*_m[x] /= *m._m[x];
+#endif
+}
+
 void Matrix33::operator-=(Matrix33& m){
 #ifdef __SSE
 	// SSE Code
@@ -91,7 +100,7 @@ void Matrix33::operator-=(Matrix33& m){
 	return;
 #else
 	// Scalar code
-	for (char x = 0; x < 9; x++)
+	for (char x = 0; x < 9; ++x)
 		*_m[x] += *m._m[x];
 #endif
 }
@@ -109,12 +118,11 @@ void Matrix33::operator+=(Matrix33& m){
 	return;
 #else
 	// Scalar code
-	for (char x = 0; x < 9; x++)
+	for (char x = 0; x < 9; ++x)
 		*_m[x] += *m._m[x];
 #endif
 }
 void Matrix33::operator*=(Matrix33& m){
-
 #ifdef __SSE
 	// SSE Code
 
@@ -123,23 +131,21 @@ void Matrix33::operator*=(Matrix33& m){
 		_mm_loadu_ps(&_m[0][1]),
 		_mm_loadu_ps(&_m[0][2]) };
 
-	// Flip Matrix m 
+	// Flip Matrix m
 
 	__m128 col[3];
 
-	for (char x = 0; x < 3; x++){
+	for (char x = 0; x < 3; ++x){
 		col[0].m128_f32[x] = _m[0][x];
 		col[1].m128_f32[x] = _m[1][x];
 		col[2].m128_f32[x] = _m[2][x];
 	}
-
 
 	for (char y = 0; y < 3; y++)
 		for (char x = 0; x < 3; y++){
 		__m128 ans = _mm_mul_ps(row[y], col[x]);
 		_m[x][y] = ans.m128_f32[0] + ans.m128_f32[1] + ans.m128_f32[2];
 		}
-
 
 	return;
 
@@ -163,7 +169,7 @@ void Matrix33::transpose(){
 	// SSE Code
 	__m128 col[3];
 
-	for (char x = 0; x < 3; x++){
+	for (char x = 0; x < 3; ++x){
 		col[0].m128_f32[x] = _m[0][x];
 		col[1].m128_f32[x] = _m[1][x];
 		col[2].m128_f32[x] = _m[2][x];
@@ -183,7 +189,7 @@ void Matrix33::transpose(){
 	// the flip has finished
 	Matrix33 o;
 	// Flip the matrix
-	for (char x = 0; x < 3; x++)
+	for (char x = 0; x < 3; ++x)
 		for (char y = 0; y < 3; y++)
 			o._m[x][y] = _m[y][x];
 

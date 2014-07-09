@@ -13,11 +13,11 @@ History:
 #pragma once
 
 #include <string>
-#include <vector> 
+#include <vector>
 #include "GUIButton.h"
-#include "GUISlider.h" 
+#include "GUISlider.h"
 #include "GUILabel.h"
-#include "GUIText.h"  
+#include "GUIText.h"
 #include "GUIContainer.h"
 #include "GUICollapsibleMenu.h"
 #include "GUIMenuBar.h"
@@ -26,10 +26,10 @@ using namespace std;
 
 namespace Pro{
 	namespace GUI{
-		class GUIWindow : 
+		class GUIWindow :
 			public GUIContainer
 		{
-		private: 
+		private:
 			// Titles bar for drop down menus
 			bool hasMenuBar;
 			GUIMenuBar* menu_bar;
@@ -38,9 +38,9 @@ namespace Pro{
 			GUIWindow(const std::string& name);
 			GUIWindow();
 			~GUIWindow();
-			 
+
 			void attachMenuBar(GUIMenuBar* component);
-			 
+
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_window_metatable";

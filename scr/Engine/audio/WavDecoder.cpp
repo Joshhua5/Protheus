@@ -50,7 +50,6 @@ CAudioTrack* decodeHeader(CBuffer& header){
 	int subChunksize2 =
 		*(int*)(charHeader + subChunkSize1 + 4);
 
-
 	CAudioTrack* out = new CAudioTrack;
 	out->channels = static_cast<char>(numChannels);
 	out->sample_rate = sampleRate;
@@ -67,10 +66,11 @@ CAudioTrack* decodeHeader(CBuffer& header){
 // as this is the format internally used
 CBuffer decodeData(CAudioTrack* headerData, CBuffer& data){
 	char* pointer = static_cast<char*>(data.data) + headerData->headerSize;
-	unsigned int sampleSize = (headerData->BitsPerSample / 8) * headerData->channels;
+	//unsigned int sampleSize = (headerData->BitsPerSample / 8) * headerData->channels;
 	unsigned int outSampleSize = headerData->channels * sizeof(float);
 	CBuffer out(headerData->sample_count * headerData->channels * sizeof(float));
-	for (unsigned sample = 0; sample < headerData->sample_count; sample++){
+
+	for (unsigned sample = 0; sample < headerData->sample_count; ++sample){
 		for (int channel = 0; channel < headerData->channels; channel++){
 			switch (headerData->BitsPerSample){
 			case 8:

@@ -4,8 +4,8 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Provdes an interface between the Lua API and Protheus,
-	also provides the API for Protheus for scripts for Protheus
+Provdes an interface between the Lua API and Protheus,
+also provides the API for Protheus for scripts for Protheus
 
 -------------------------------------------------------------------------
 History:
@@ -14,33 +14,31 @@ History:
 
 #pragma once
 
-
 #include <string>
 
 #include "..\Containers.h"
 
 #include "..\networking\CNetwork.h"
-#include "..\graphics\Renderer.h" 
+#include "..\graphics\Renderer.h"
 #include "..\util\Timer.h"
 #include "..\event\EventHandler.h"
 #include "..\io\FileSystem.h"
 #include "..\ScriptGame.h"
 #include "..\DataGame.h"
-#include "lib\lua.hpp"  
+#include "lib\lua.hpp"
 
 #include "LuaObjectFactory.h"
 #include "LuaMetatableFactory.h"
-#include "LuaGlobalFactory.h" 
- 
+#include "LuaGlobalFactory.h"
+
 namespace Pro{
 	namespace Lua{
-		static lua_State* lua_state;  
+		static lua_State* lua_state;
 		class CLua :
 			public LuaObjectFactory,
 			public LuaGlobalFactory,
 			public LuaMetatableFactory
-		{  
-			 
+		{
 			// No arguments
 			static int updateEngine(lua_State*);
 			static int renderEngine(lua_State*);
@@ -49,10 +47,10 @@ namespace Pro{
 			static int loadSpriteAnimations(lua_State* L);
 			static int loadScene(lua_State* L);
 			inline static void checkError(bool error);
-			 
+
 		public:
 			CLua();
-			~CLua(); 
+			~CLua();
 			// Returns the static lua state
 			lua_State* getLuaState();
 			// prints out all the contents inside of the lua stack
@@ -62,8 +60,7 @@ namespace Pro{
 			// loads the resource.lua relative to the FileSystem root
 			void loadResources();
 			// loads the main.lua relative to the FileSystem root
-			void loadMain();  
+			void loadMain();
 		};
 	}
 }
- 

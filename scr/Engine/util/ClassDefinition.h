@@ -7,34 +7,39 @@ Description:
 
 -------------------------------------------------------------------------
 History:
-- 20:05:2014: Waring J.
+- 09:07:2014 Waring J.
 *************************************************************************/
-
 #pragma once
 
 #include <string>
 #include <vector>
-#include "..\lua\lib\lua.hpp"
-
-using namespace std;
 
 namespace Pro{
-	namespace Component{
-		class Name
-		{
+	namespace Serializer{
+		using namespace std;
+
+		struct Member{
+			union{
+				// used in writing
+				unsigned offset;
+				// used in reading
+				void* data;
+			};
+			unsigned size;
 			string name;
+		};
+
+		class ClassDefinition
+		{
+			void* base_pointer;
+			vector<Member> members;
 		public:
-			void setName(const string& _name);
-			const string getName();
+			ClassDefinition(void* class_pointer);
+			~ClassDefinition();
 
-			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
-				return "component_name_metatable";
-			}
+			void addMember(const string& memberName, void* member_pointer, size_t member_size);
 
-			template<typename T>
-			inline static void lGetFunctions(vector<luaL_Reg>& fields){
-			}
+			vector<Member>& getMembers();
 		};
 	}
 }

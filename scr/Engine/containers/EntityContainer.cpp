@@ -3,20 +3,17 @@ Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
-Description: 
+Description:
 
 -------------------------------------------------------------------------
 History:
 - 17:05:2014 Waring J.
 *************************************************************************/
 
-
-
 #include "EntityContainer.h"
 
 using namespace Pro;
 
-  
 template<>
 void EntityContainer::eraseEntity<DataEntity>(game_id  i){
 	m_data_entities.erase(i);
@@ -32,9 +29,6 @@ void EntityContainer::eraseEntity<DynamicEntity>(game_id  i){
 	m_dynamic_entities.erase(i);
 }
 
-
- 
-
 template<>
 void EntityContainer::addEntity<DataEntity>(Entity* e){
 	m_data_entities.insert({ e->getGUID(), static_cast<DataEntity*>(e) });
@@ -49,9 +43,6 @@ template<>
 void EntityContainer::addEntity<DynamicEntity>(Entity* e){
 	m_dynamic_entities.insert({ e->getGUID(), static_cast<DynamicEntity*>(e) });
 }
-
-
-
 
 template<>
 DataEntity* EntityContainer::getEntity<DataEntity>(game_id id){

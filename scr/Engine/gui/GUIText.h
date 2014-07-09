@@ -12,7 +12,7 @@ History:
 
 #pragma once
 
-#include <string> 
+#include <string>
 #include "GUIEntity.h"
 
 namespace Pro{

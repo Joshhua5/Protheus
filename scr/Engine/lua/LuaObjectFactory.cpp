@@ -1,5 +1,3 @@
-
-
 #include "LuaObjectFactory.h"
 
 using namespace Pro;
@@ -12,9 +10,9 @@ int LuaObjectFactory::createScene(lua_State* L){
 	luaP_getScenes(L)->addScene(scene);
 	return 1;
 }
- 
+
 int LuaObjectFactory::createGUIButton(lua_State* L){
 	auto button = new GUI::GUIButton(lua_tostring(L, 1));
-	Util::luaP_newobject<GUI::GUIButton>(L, button); 
+	Util::luaP_newobject<GUI::GUIButton>(L, button);
 	return 1;
 }

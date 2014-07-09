@@ -1,10 +1,7 @@
-
-
 #include "Window.h"
 
 namespace Pro{
-
-	Window::Window(const std::string& name, lua_State* L) :  CGUID(name)
+	Window::Window(const std::string& name, lua_State* L) : CGUID(name)
 	{
 		lua_state = L;
 		windowTitle = name;
@@ -12,14 +9,12 @@ namespace Pro{
 		dim.h = 600;
 	}
 
-
 	Window::Window()
 	{
 		windowTitle = "Unnamed";
 		dim.w = 800;
 		dim.h = 600;
 	}
-
 
 	Window::~Window()
 	{

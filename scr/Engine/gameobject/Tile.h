@@ -4,24 +4,24 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Contains data about a specific tile, such as it's size, physical
-	properites and the sprite assigned to the tile.
+Contains data about a specific tile, such as it's size, physical
+properites and the sprite assigned to the tile.
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
 
 #pragma once
-  
+
 #include <SDL.h>
-#include <vector> 
+#include <vector>
 #include <string>
 #include "..\util\LuaUtils.h"
 
 namespace Pro{
 	namespace GameObject{
 		struct TileType
-		{ 
+		{
 			unsigned short tileID;
 			bool passable = true;
 
@@ -35,7 +35,6 @@ namespace Pro{
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				 
 			}
 		};
 	}

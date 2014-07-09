@@ -9,9 +9,6 @@ GameFileMapTile::GameFileMapTile(GameFileChunk& buffer)
 	unpack(buffer);
 }
 
- 
-
-
 // unpacks a chunk into tile data
 void GameFileMapTile::unpack(GameFileChunk& buffer){
 	unsigned int structSize = 0;
@@ -19,12 +16,12 @@ void GameFileMapTile::unpack(GameFileChunk& buffer){
 	structSize += sizeof(bool) * 2;
 	structSize += sizeof(char) * 32;
 
-	unsigned int tileCount = 
+	unsigned int tileCount =
 		buffer.chunkData.size / structSize;
 
-	BufferReader reader(&buffer.chunkData); 
+	BufferReader reader(&buffer.chunkData);
 
-	for (unsigned int x = 0; x < tileCount; x++){
+	for (unsigned int x = 0; x < tileCount; ++x){
 		TileType tile;
 		tile.tileID = reader.read<short>();
 		tile.passable = reader.read<bool>();
@@ -49,11 +46,10 @@ void GameFileMapTile::pack(vector<TileType>& _tiles){
 		writer.write<short>(tile.tileID);
 		writer.write<bool>(tile.passable);
 		writer.write<bool>(tile.isTextured);
-		writer.write_array<char>(&tile.spriteName[0], 32); 
+		writer.write_array<char>(&tile.spriteName[0], 32);
 	}
 }
 
 vector<TileType> GameFileMapTile::getTileData(){
 	return m_tiles;
 }
- 

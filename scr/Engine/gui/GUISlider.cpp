@@ -1,5 +1,3 @@
-
-
 #include "GUISlider.h"
 
 using namespace Pro;
@@ -10,7 +8,6 @@ GUISlider::GUISlider(const std::string& name) : GUIEntity(name){}
 GUISlider::GUISlider()
 {
 }
-
 
 GUISlider::~GUISlider()
 {

@@ -6,8 +6,7 @@ using namespace IO;
 GameFileIndex::GameFileIndex(GameFileChunk& chunk){
 	unpack(chunk);
 }
-  
-  
+
 void GameFileIndex::pack(vector<pair<string, unsigned int>> indexes, EChunkType type){
 	m_chunk.chunkName = "";
 	m_chunk.chunkType = type;
@@ -26,7 +25,6 @@ void GameFileIndex::pack(vector<pair<string, unsigned int>> indexes, EChunkType 
 }
 
 void GameFileIndex::unpack(GameFileChunk& _chunk){
-
 	auto structSize = 0;
 	structSize += sizeof(unsigned int);
 	structSize += sizeof(char) * 32;
@@ -36,7 +34,7 @@ void GameFileIndex::unpack(GameFileChunk& _chunk){
 
 	Util::BufferReader reader(&_chunk.chunkData);
 
-	for (size_t x = 0; x < indexCount; x++){
+	for (size_t x = 0; x < indexCount; ++x){
 		pair<string, unsigned int> index;
 		index.second = reader.read<unsigned int>();
 		index.first = reader.read_array<char>(32);

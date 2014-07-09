@@ -1,8 +1,6 @@
-
 #include "ScriptGame.h"
 
 using namespace Pro;
-
 
 ScriptGame::ScriptGame(lua_State* L){
 	lua_state = L;
@@ -12,17 +10,15 @@ ScriptGame::ScriptGame(){
 	lua_state = nullptr;
 }
 
-
 ScriptGame::~ScriptGame(){}
 
-
-int ScriptGame::update(){  
-	lua_getglobal(lua_state, "Update"); 
+int ScriptGame::update(){
+	lua_getglobal(lua_state, "Update");
 	return lua_pcall(lua_state, 0, 0, 0);
 }
 
-int ScriptGame::gameLoop(){ 
-	do{ 
+int ScriptGame::gameLoop(){
+	do{
 		Util::checkError(lua_state, update());
 		Util::checkError(lua_state, render());
 		lua_getglobal(lua_state, "isExitRequested");
@@ -35,7 +31,7 @@ int ScriptGame::render(){
 	return lua_pcall(lua_state, 0, 0, 0);
 }
 int ScriptGame::initialize(){
-	lua_getglobal(lua_state, "Initialize"); 
+	lua_getglobal(lua_state, "Initialize");
 	Util::checkError(lua_state, lua_pcall(lua_state, 0, 0, 0));
 	return 0;
 }

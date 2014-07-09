@@ -12,8 +12,8 @@ History:
 *************************************************************************/
 
 #pragma once
- 
-#include "CTCPConnection.h" 
+
+#include "CTCPConnection.h"
 
 using namespace std;
 
@@ -21,13 +21,11 @@ namespace Pro{
 	namespace Networking{
 		struct ClientTCPConnection :
 			public TCPConnection
-		{  
-
+		{
 		public:
 			ClientTCPConnection();
-			ClientTCPConnection(const string& name);  
+			ClientTCPConnection(const string& name);
 			~ClientTCPConnection(){};
-
 		};
 	}
 }

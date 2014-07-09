@@ -13,12 +13,12 @@ History:
 #pragma once
 
 #include <string>
-#include <vector> 
+#include <vector>
 #include <unordered_map>
 #include <thread>
-#include <fstream>  
+#include <fstream>
 #include <SDL_image.h>
-#include "..\graphics\AnimatedSprite.h"  
+#include "..\graphics\AnimatedSprite.h"
 #include "..\util\CBuffer.h"
 #include "..\util\LuaUtils.h"
 
@@ -40,8 +40,8 @@ namespace Pro{
 			Asset::Sprite* getSprite(game_id);
 			Asset::AnimatedSprite* getAnim(game_id);
 
-			game_id loadSprite(const std::string& name,const CBuffer data);
-			void release(game_id); 
+			game_id loadSprite(const std::string& name, const CBuffer data);
+			void release(game_id);
 
 			// LUA Functions
 			static int lGetSprite(lua_State*);

@@ -1,5 +1,3 @@
-
-
 #include "Vector4.h"
 
 using namespace Pro;
@@ -40,7 +38,7 @@ Vector4::Vector4(float _x, float _y, float _z, float _w){
 	z = _z;
 	w = _w;
 }
-  
+
 Vector4::Vector4(Vector4&& vec){
 	x = move(vec.x);
 	y = move(vec.y);
@@ -81,7 +79,7 @@ Vector4 Vector4::operator-(Vector4& v){
 }
 Vector4 Vector4::operator*(Vector4& v){
 	Vector4 o(v);
-	o *= *this; 
+	o *= *this;
 	return o;
 }
 Vector4 Vector4::operator/(Vector4& v){
@@ -108,7 +106,6 @@ void Vector4::operator+=(Vector4& v){
 	z += v.z;
 	w += v.w;
 #endif
-
 }
 void Vector4::operator-=(Vector4& v){
 #ifdef __SSE

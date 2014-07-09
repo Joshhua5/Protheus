@@ -1,4 +1,3 @@
-
 #include "CAudioMixer.h"
 
 using namespace Pro;
@@ -7,7 +6,6 @@ using namespace Audio;
 CAudioMixer::CAudioMixer()
 {
 }
-
 
 CAudioMixer::~CAudioMixer()
 {
@@ -24,12 +22,12 @@ CAudioMixer::~CAudioMixer()
 float inline getDropoff(Math::Vector2& pos){
 	// Inverse Square Law  = P / 4 * PI * R * R
 	// R : distance
-	// P : Power 
+	// P : Power
 	float distance = pos.hypotenuse();
 	return 1.0f / (4.0f * PI * (distance * distance));
 }
 
-void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals, atomic<bool>* ready){
+void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals){
 	while (true){
 		if (m_stream_refill.load()){
 			// populate stream with silence
@@ -37,9 +35,9 @@ void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* sig
 			case 1: // Mono
 				memset(stream->mono, 0, stream->mono->size);
 				for each(auto signal in *signals)
-					for (unsigned int x = 0; x < stream->mono->size; x++)
-						static_cast<float*>(stream->mono->data)[x] += 
-							static_cast<float*>(signal.stream.data)[x] * getDropoff(signal.position);
+					for (unsigned int x = 0; x < stream->mono->size; ++x)
+						static_cast<float*>(stream->mono->data)[x] +=
+						static_cast<float*>(signal.stream.data)[x] * getDropoff(signal.position);
 				break;
 			case 2: // Sterio
 				memset(stream->mono, 0, stream->mono->size);
@@ -51,7 +49,7 @@ void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* sig
 				memset(stream->mono, 0, stream->mono->size);
 				break;
 			}
-			 
+
 			m_stream_ready.store(true);
 			m_stream_refill.store(false);
 		}

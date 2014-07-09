@@ -14,7 +14,7 @@ History:
 
 #include <SDL.h>
 #include <string>
- 
+
 #include "..\Math.h"
 #include "..\component\CGUID.h"
 #include "..\component\Area.h"
@@ -25,21 +25,20 @@ namespace Pro{
 		using namespace std;
 		using namespace Math;
 
-		class Sprite : 
+		class Sprite :
 			public Component::CGUID,
 			public Component::Area
 		{
-		private: 
-			Vector2 rect; 
+		private:
+			Vector2 rect;
 			SDL_Texture* texture;
 		public:
 			Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex);
 			Sprite();
 			~Sprite();
-			  
+
 			SDL_Texture* getTexture();
-			
-			 
+
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "asset_sprite_metatable";

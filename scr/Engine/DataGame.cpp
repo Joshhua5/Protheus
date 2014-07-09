@@ -1,4 +1,3 @@
-
 #include "DataGame.h"
 
 using namespace Pro;
@@ -13,13 +12,11 @@ DataGame::DataGame()
 	lua_state = nullptr;
 }
 
-
 DataGame::~DataGame()
 {
 }
 
-
-int DataGame::update(){ 
+int DataGame::update(){
 	return 0;
 }
 

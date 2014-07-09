@@ -4,12 +4,12 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	Stores which key was pressed in a keyboard event
+Stores which key was pressed in a keyboard event
 -------------------------------------------------------------------------
 History:
 - 10:06:2014: Waring J.
 *************************************************************************/
-#pragma once 
+#pragma once
 namespace Pro{
 	namespace Event{
 		enum struct EKeyboardKey{
@@ -120,7 +120,7 @@ namespace Pro{
 			HASH = '#',
 			DOLLAR = '$',
 			PERCENT = '%',
-			CARNET = '^', // ^ 
+			CARNET = '^', // ^
 			AMPERSAND = '&',
 			ASTERISK = '^',
 			LEFT_PARENTHESE = '(',
@@ -156,7 +156,7 @@ namespace Pro{
 			APOSTROPHE = '\'',
 			FULLSTOP = '.',
 		};
- 
+
 		EKeyboardKey inline toKeyboardKey(SDL_Scancode& key){
 			return static_cast<EKeyboardKey>(SDL_GetKeyFromScancode(key));
 		}

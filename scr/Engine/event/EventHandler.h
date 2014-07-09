@@ -13,13 +13,11 @@ History:
 #pragma once
 
 #include <vector>
-#include "..\io\input.h" 
+#include "..\io\input.h"
 #include <SDL.h>
 #include "CEvent.h"
 #include "..\lua\lib\lua.hpp"
 #include "..\util\LuaUtils.h"
-
-
 
 namespace Pro{
 	using namespace Event;
@@ -48,8 +46,8 @@ namespace Pro{
 		}
 
 		template<typename T>
-		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){  
+		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			fields.push_back({ "update", &T::lUpdate });
 		}
-	}; 
+	};
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-#include <string>  
+#include <string>
 #include "..\Components.h"
 /*************************************************************************
 Protheus Source File.
@@ -18,9 +18,11 @@ History:
 #include "..\Components.h"
 #include "..\lua\lib\lua.hpp"
 
-namespace Pro{ 
-	namespace GUI{ 
-		 
+namespace Pro{
+	namespace GUI{
+		using namespace Math;
+		using namespace Component;
+
 		enum struct GUI_ENTITY_TYPE{
 			BUTTON,
 			LABEL,
@@ -30,16 +32,16 @@ namespace Pro{
 			COLLAPSIBLE_MENU
 		};
 
-		class GUIEntity : 
-			public Component::CGUID,
-			public Component::ActiveState,
-			public Component::Area,
-			public Component::Position,
-			public Component::LuaCallback
-		{ 
+		class GUIEntity :
+			public CGUID,
+			public ActiveState,
+			public Area,
+			public Position,
+			public LuaCallback
+		{
 			// pointer to the container of the GUI
-			GUIEntity* parent;  
-			 
+			GUIEntity* parent;
+
 		public:
 			// of type GUI_ENTITY_TYPE
 			GUI_ENTITY_TYPE type;
@@ -49,17 +51,17 @@ namespace Pro{
 			~GUIEntity();
 
 			// position includes the width and height
-			Math::Vector2 getPosition();
-			void setPosition(Math::Vector2);
+			Vector2 getPosition();
+			void setPosition(Vector2);
 
-			Math::Vector2 getDimensions();
-			void setDimensions(Math::Vector2);
+			Vector2 getDimensions();
+			void setDimensions(Vector2);
 
 			GUIEntity* getParent();
 			void setParent(GUIEntity*);
-			    
-			bool isClickWithin(Math::Vector2& v);
-			 
+
+			bool isClickWithin(const Vector2& v);
+
 			// Lua functions
 
 			static int lGetParent(lua_State*);
@@ -70,7 +72,7 @@ namespace Pro{
 				return "gui_entity_metatable";
 			}
 
-			template<typename T> 
+			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "getParent", (lua_CFunction)&T::lGetParent });
 				fields.push_back({ "setParent", (lua_CFunction)&T::lSetParent });
