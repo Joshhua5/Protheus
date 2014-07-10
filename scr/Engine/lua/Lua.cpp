@@ -1,75 +1,81 @@
 #include "Lua.h"
 
-namespace Pro{
-	namespace Lua{
-		CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){
-			// lua_state is created in object factory
-			// because it's constructer is the first called upon
-			luaL_openlibs(lua_state);
+using namespace Pro;
+using namespace Lua;
 
-			luaP_setScenes(lua_state, new SceneContainer());
-			luaP_setNetwork(lua_state, new Networking::Network());
-			luaP_setEventHandler(lua_state, new EventHandler());
-			luaP_setSpriteManager(lua_state, new Graphics::SpriteManager(lua_state));
-			luaP_setTimer(lua_state, new Util::Timer());
-			luaP_setFileSystem(lua_state, new Util::FileSystem());
-		}
-		CLua::~CLua() { lua_close(lua_state); }
+CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){
+	// lua_state is created in object factory
+	// because it's constructer is the first called upon
+	luaL_openlibs(lua_state);
 
-		inline void CLua::checkError(bool error){
-			if (error)
-				std::cout << "Lua Error: " << lua_tostring(lua_state, -1) << std::endl;
-		}
+	luaP_setScenes(lua_state, new SceneContainer());
+	luaP_setNetwork(lua_state, new Networking::Network());
+	luaP_setEventHandler(lua_state, new EventHandler());
+	luaP_setSpriteManager(lua_state, new Graphics::SpriteManager(lua_state));
+	luaP_setTimer(lua_state, new Util::Timer());
+	luaP_setFileSystem(lua_state, new Util::FileSystem());
+}
+CLua::~CLua() { lua_close(lua_state); }
 
-		IGame* CLua::loadConfig(const std::string& _path){
-			// The config file must be next to the executable
-			// to define the root file paths
+inline void CLua::checkError(bool error){
+	if (error)
+		std::cout << "Lua Error: " << lua_tostring(lua_state, -1) << std::endl;
+}
 
-			Util::checkError(lua_state, luaL_dofile(lua_state, &_path[0]));
+IGame* CLua::loadConfig(const std::string& _path){
+	// The config file must be next to the executable
+	// to define the root file paths
 
-			// Create and load Window here
-			// The window must be created first to register SDL_WINDOW
-			// which is requied by the renderer
+	Util::checkError(lua_state, luaL_dofile(lua_state, &_path[0]));
 
-			// Grab the root path
-			lua_getglobal(lua_state, "root_path");
-			// Set the root path in the File System
-			luaP_getFileSystem(lua_state)->setRootDir(lua_tostring(lua_state, -1));
-			// Grab the window title
-			lua_getglobal(lua_state, "window_title");
-			// Create the window and set it in the registery
-			luaP_setWindow(lua_state, new Window(lua_tostring(lua_state, -1), lua_state));
+	// Create and load Window here
+	// The window must be created first to register SDL_WINDOW
+	// which is requied by the renderer
 
-			// Create the renderer and set it in the registery
-			auto renderer = new Graphics::Renderer(lua_state);
-			luaP_setRenderer(lua_state, renderer);
-			luaP_setSDLRenderer(lua_state, renderer->getRenderer());
+	// Grab the root path
+	lua_getglobal(lua_state, "root_path");
+	// Set the root path in the File System
+	luaP_getFileSystem(lua_state)->setRootDir(lua_tostring(lua_state, -1));
+	// Grab the window title
+	lua_getglobal(lua_state, "window_title");
+	// Create the window and set it in the registery
+	luaP_setWindow(lua_state, new Window(lua_tostring(lua_state, -1), lua_state));
 
-			lua_getglobal(lua_state, "script_engine_mode");
-			if (lua_toboolean(lua_state, -1))
-				return new ScriptGame(lua_state);
-			else
-				return new DataGame(lua_state);
-		}
-		void CLua::loadResources(){
-			// grab the path to the resource.lua
-			lua_getglobal(lua_state, "resource_path");
-			// append the path onto the root
-			std::string path =
-				luaP_getFileSystem(lua_state)->getRootDir() +
-				lua_tostring(lua_state, -1);
-			// execute file
-			checkError(luaL_dofile(lua_state, &path[0]));
-		}
-		void CLua::loadMain(){
-			// grab the path to the main.lua
-			lua_getglobal(lua_state, "main_path");
-			// append the path onto the root
-			std::string path =
-				luaP_getFileSystem(lua_state)->getRootDir() +
-				lua_tostring(lua_state, -1);
-			// execute file
-			checkError(luaL_dofile(lua_state, &path[0]));
-		}
-	}
+	// Create the renderer and set it in the registery
+	auto renderer = new Graphics::Renderer(lua_state);
+	luaP_setRenderer(lua_state, renderer);
+	luaP_setSDLRenderer(lua_state, renderer->getRenderer());
+
+	lua_getglobal(lua_state, "script_engine_mode");
+	if (lua_toboolean(lua_state, -1))
+		return new ScriptGame(lua_state);
+	else
+		return new DataGame(lua_state);
+}
+
+int CLua::isGameScriptMode(){
+	lua_getglobal(lua_state, "script_engine_mode");
+	return lua_toboolean(lua_state, -1);
+}
+
+void CLua::loadResources(){
+	// grab the path to the resource.lua
+	lua_getglobal(lua_state, "resource_path");
+	// append the path onto the root
+	std::string path =
+		luaP_getFileSystem(lua_state)->getRootDir() +
+		lua_tostring(lua_state, -1);
+	// execute file
+	checkError(luaL_dofile(lua_state, &path[0]));
+}
+
+void CLua::loadMain(){
+	// grab the path to the main.lua
+	lua_getglobal(lua_state, "main_path");
+	// append the path onto the root
+	std::string path =
+		luaP_getFileSystem(lua_state)->getRootDir() +
+		lua_tostring(lua_state, -1);
+	// execute file
+	checkError(luaL_dofile(lua_state, &path[0]));
 }

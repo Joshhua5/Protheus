@@ -3,12 +3,21 @@
 using namespace Pro;
 using namespace Component;
 
-game_id Textured::getSprite(){
+game_id Textured::getSprite()const {
 	return sprite_guid;
 }
 
-void Textured::setSprite(game_id _guid){
+
+const char* Textured::getSpriteName() const{
+	return sprite_name;
+}
+
+void Textured::setSprite(const game_id _guid){
 	sprite_guid = _guid;
+	memcpy(
+		sprite_name,
+		GUIDLookup::getName(_guid).data(),
+		sizeof(char) * 32); 
 }
 
 int Textured::lSetSprite(lua_State* L){

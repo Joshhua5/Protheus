@@ -16,15 +16,21 @@ History:
 
 namespace Pro{
 	namespace Component{
+
+		using namespace std;
+
 		class Textured
 		{
 		protected:
 			game_id sprite_guid;
+			 
+			char sprite_name[32];
 		public:
 
-			game_id getSprite();
+			game_id getSprite() const;
+			const char* getSpriteName() const;
 
-			void setSprite(game_id guid);
+			void setSprite(const game_id guid);
 
 			// LUA Functions
 

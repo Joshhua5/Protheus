@@ -15,6 +15,7 @@ History:
 
 namespace Pro{
 	class IGame{
+	public:
 		// performs any specified updates
 		virtual int update() = 0;
 		// renders to the screen

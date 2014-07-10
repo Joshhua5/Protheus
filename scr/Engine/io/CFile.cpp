@@ -37,41 +37,17 @@ unsigned int CFile::getWritePosition(){
 
 void CFile::write(CBuffer& buf){
 	file.write(static_cast<const char*>(buf.data), buf.size);
-}
+} 
 
-void CFile::write(float f){
-	file.write((char*)&f, sizeof(float));
-}
 void CFile::write(const std::string& str){
-	file.write(&str[0], str.length());
-}
-void CFile::write(int f){
-	file.write((char*)&f, sizeof(int));
-}
+	file.write(str.data(), str.length());
+} 
 
 CBuffer CFile::read(unsigned int size){
 	CBuffer buf(size);
 	file.read((char*)buf.data, buf.size);
 	return buf;
-}
-
-char CFile::readByte(){
-	char c;
-	file.read(&c, 1);
-	return c;
-}
-
-float CFile::readFloat(){
-	float f;
-	file.read((char*)&f, sizeof(float));
-	return f;
-}
-
-int CFile::readInt(){
-	int f;
-	file.read((char*)&f, sizeof(float));
-	return f;
-}
+} 
 
 std::string CFile::readToken(char delim){
 	string s;

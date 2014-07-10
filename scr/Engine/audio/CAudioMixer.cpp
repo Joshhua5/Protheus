@@ -6,18 +6,7 @@ using namespace Audio;
 CAudioMixer::CAudioMixer()
 {
 }
-
-CAudioMixer::~CAudioMixer()
-{
-}
-
-/**
-*
-*
-*
-*
-*
-**/
+ 
 
 float inline getDropoff(Math::Vector2& pos){
 	// Inverse Square Law  = P / 4 * PI * R * R
@@ -28,7 +17,8 @@ float inline getDropoff(Math::Vector2& pos){
 }
 
 void CAudioMixer::process_stream(CAudioBuffer* stream, vector<CAudioSignal>* signals){
-	while (true){
+	m_stream_active.store(true);
+	while (m_stream_active.load()){
 		if (m_stream_refill.load()){
 			// populate stream with silence
 			switch (stream->channels){
@@ -75,4 +65,6 @@ void CAudioMixer::pause(){}
 
 void CAudioMixer::resume(){}
 
-void CAudioMixer::stop(){}
+void CAudioMixer::stop(){
+	m_stream_active.store(false);
+}

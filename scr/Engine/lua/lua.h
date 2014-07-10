@@ -38,7 +38,7 @@ namespace Pro{
 			public LuaObjectFactory,
 			public LuaGlobalFactory,
 			public LuaMetatableFactory
-		{
+		{  
 			// No arguments
 			static int updateEngine(lua_State*);
 			static int renderEngine(lua_State*);
@@ -60,7 +60,10 @@ namespace Pro{
 			// loads the resource.lua relative to the FileSystem root
 			void loadResources();
 			// loads the main.lua relative to the FileSystem root
-			void loadMain();
+			void loadMain(); 
+
+			// data game mode if false
+			int isGameScriptMode(); 
 		};
 	}
 }

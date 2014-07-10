@@ -12,11 +12,13 @@ History:
 #pragma once
 
 #include "..\Components.h"
+#include "..\util\ClassDefinition.h"
 #include "Entity.h"
 
 namespace Pro{
 	namespace GameObject{
 		using namespace Component;
+		using namespace Serializer;
 		class StaticEntity :
 			public Position,
 			public Area,
@@ -43,6 +45,8 @@ namespace Pro{
 				Animated::lGetFunctions<T>(fields);
 				CGUID::lGetFunctions<T>(fields);
 			}
+			
+			static const ClassDefinition getDefinition();
 		};
 	}
 }

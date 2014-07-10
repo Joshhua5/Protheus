@@ -25,17 +25,21 @@ namespace Pro{
 		{
 		private:
 			// the ID of the animation
-			game_id activeAnimation;
+			game_id animation_guid;
+
+			char animation_name[32];
 			// current step of the animation
-			unsigned int currentStep;
+			unsigned int current_step;
 			// the count of steps in the animation
-			unsigned int maxStep;
+			unsigned int max_step;
 		public:
 
-			game_id getAnimation();
-			void setAnimation(game_id animationID, unsigned int Steps);
+			game_id getAnimation() const;
+			const char* getAnimationName() const;
 
-			unsigned int getStep();
+			void setAnimation(const game_id animationID,const unsigned int Steps);
+
+			unsigned int getStep() const;
 			void step();
 
 			// LUA FUNCTIONS

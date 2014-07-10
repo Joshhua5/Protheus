@@ -190,6 +190,7 @@
     <ClInclude Include="Engine\graphics\Sprite.h" />
     <ClInclude Include="Engine\graphics\SpriteManager.h" />
     <ClInclude Include="Engine\gameobject\Tile.h" />
+    <ClInclude Include="Engine\util\Member.h" />
     <ClInclude Include="Engine\util\Timer.h" />
     <ClInclude Include="Engine\graphics\Window.h" />
     <ClInclude Include="Engine\gui\GUIButton.h" />
@@ -377,7 +378,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -385,10 +386,11 @@
       <EnablePREfast>false</EnablePREfast>
       <StructMemberAlignment>16Bytes</StructMemberAlignment>
       <CreateHotpatchableImage>true</CreateHotpatchableImage>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

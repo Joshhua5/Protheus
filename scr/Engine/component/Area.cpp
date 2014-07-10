@@ -6,27 +6,23 @@ using namespace Math;
 
 Area::Area(Vector2& dim){
 	dimensions = dim;
-}
+} 
 
-Area::Area()
-{
-}
-
-Area::~Area()
-{
-}
-
-Math::Vector2 Area::getDimensions(){
+Vector2 Area::getDimensions() const{
 	return dimensions;
 }
-Math::Vector2* Area::pGetDimensions(){
+Vector2* Area::pGetDimensions() {
 	return &dimensions;
 }
-void Area::setDimensions(Math::Vector2& v){
+void Area::setDimensions(const Vector2& v){
 	dimensions = v;
 }
 
-float Area::getVolume(){
+void Area::setDimensions(const Vector2&& v){
+	dimensions = v;
+}
+
+float Area::getVolume() const{
 	return dimensions.x * dimensions.y;
 }
 

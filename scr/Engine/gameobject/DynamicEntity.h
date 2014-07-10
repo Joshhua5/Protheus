@@ -12,6 +12,7 @@ History:
 #pragma once
 
 #include "..\Components.h"
+#include "..\util\ClassDefinition.h"
 #include "Entity.h"
 
 namespace Pro{
@@ -47,6 +48,8 @@ namespace Pro{
 				Animated::lGetFunctions<T>(fields);
 				CGUID::lGetFunctions<T>(fields);
 			}
+
+			static const ClassDefinition getDefinition();
 		};
 	}
 }

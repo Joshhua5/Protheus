@@ -21,7 +21,7 @@ using namespace std;
 namespace Pro{
 	namespace Component{
 		class CScriptable{
-			string luaFunction = "";
+			char luaFunction[32];
 		public:
 
 			// Calls the assigned Lua Script
@@ -29,6 +29,8 @@ namespace Pro{
 
 			// Assigns a function's name to the object
 			void attachFunction(const string& function);
+
+			const char* getFunction() const;
 
 			static int lUpdate(lua_State*);
 			static int lAttachFunction(lua_State*);

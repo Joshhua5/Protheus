@@ -4,7 +4,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	A chunk's name isn't to be written into the data
+	A chunk's name is to be stores inside the m_chunk.name
+	The size of the 
 -------------------------------------------------------------------------
 History:
 - 27:05:2014: Waring J.

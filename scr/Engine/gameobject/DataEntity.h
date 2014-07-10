@@ -43,6 +43,8 @@ namespace Pro{
 			T* getData(const string& key){
 				return static_cast<T*>(m_data.at(key));
 			}
+
+			static const ClassDefinition getDefinition();
 		};
 	}
 }

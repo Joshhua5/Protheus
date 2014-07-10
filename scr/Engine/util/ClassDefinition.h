@@ -12,34 +12,37 @@ History:
 #pragma once
 
 #include <string>
+#include "Member.h"
 #include <vector>
 
 namespace Pro{
 	namespace Serializer{
 		using namespace std;
-
-		struct Member{
-			union{
-				// used in writing
-				unsigned offset;
-				// used in reading
-				void* data;
-			};
-			unsigned size;
-			string name;
-		};
-
+		 
 		class ClassDefinition
 		{
 			void* base_pointer;
 			vector<Member> members;
 		public:
-			ClassDefinition(void* class_pointer);
-			~ClassDefinition();
+			ClassDefinition(void* class_pointer); 
 
-			void addMember(const string& memberName, void* member_pointer, size_t member_size);
+			// Adds a member to the definition
+			void addMember(const string& memberName,const void* member_pointer,const size_t member_size);
 
-			vector<Member>& getMembers();
+			// returns a vector of all members
+			const vector<Member>& getMembers() const;
+			
+			// returns the sizeof all members
+			const unsigned getSizeOf() const;
+
+			// returns the internal base pointer
+			// use for offsets
+			const void* getBase() const;
+
+			// deletes the unused data
+			// no new members can be added afterwards
+			// and the passed pointer is deleted
+			void finish();
 		};
 	}
 }

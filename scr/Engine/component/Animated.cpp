@@ -3,22 +3,27 @@
 using namespace Pro;
 using namespace Component;
 
-game_id Animated::getAnimation(){
-	return activeAnimation;
+game_id Animated::getAnimation() const{
+	return animation_guid;
 }
 
-void Animated::setAnimation(game_id animationID, unsigned int Steps){
-	activeAnimation = animationID;
-	maxStep = Steps;
-	currentStep = 0;
+
+const char* Animated::getAnimationName() const{
+	return animation_name;
 }
 
-unsigned int Animated::getStep(){
-	return currentStep;
+void Animated::setAnimation(const game_id animationID,const unsigned int Steps){
+	animation_guid = animationID;
+	max_step = Steps;
+	current_step = 0;
+}
+
+unsigned int Animated::getStep() const{
+	return current_step;
 }
 
 void Animated::step(){
-	currentStep != maxStep ? currentStep++ : currentStep = 0;
+	current_step != max_step ? current_step++ : current_step = 0;
 }
 
 int Animated::lSetAnimation(lua_State* L){
@@ -30,7 +35,7 @@ int Animated::lSetAnimation(lua_State* L){
 }
 
 int Animated::lGetAnimation(lua_State* L){
-	auto as = Util::luaP_touserdata<Animated>(L, 1);
+	const auto as = Util::luaP_touserdata<Animated>(L, 1);
 	lua_pushnumber(L, as->getAnimation());
 	return 1;
 }

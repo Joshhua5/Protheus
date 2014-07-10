@@ -26,6 +26,14 @@ namespace Pro{
 
 			template<typename T>
 			void pack(const string& name, T* obj){
+				auto def = T::getDefinition();
+
+				m_chunk.chunkData.init(def.getSizeOf());
+				m_chunk.chunkType = EChunkType::OBJECT;
+				m_chunk.chunkName = name;
+
+				BufferWriter writer(&m_chunk.chunkData);
+				writer.serialized_write<T>(def, obj);
 			}
 
 			void unpack(GameFileChunk& chunk);

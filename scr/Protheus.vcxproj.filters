@@ -826,5 +826,8 @@
     <ClInclude Include="Engine\util\ClassDefinition.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\util\Member.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,10 +26,10 @@ Vector2::Vector2(Vector2&& vec){
 	x = std::move(vec.x);
 	y = std::move(vec.y);
 }
-
+  
 Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
 
-SDL_Point Vector2::operator=(Vector2& p){
+SDL_Point Vector2::operator=(const Vector2& p){
 	SDL_Point o;
 	o.x = static_cast<int>(p.x);
 	o.y = static_cast<int>(p.y);

@@ -38,12 +38,13 @@ namespace Pro{
 		{
 		protected:
 			Vector2 position;
-		public:
-			Position();
-			~Position();
+		public: 
 
-			Vector2 getPosition();
-			void setPosition(Vector2&);
+			Vector2 getPosition() const;
+			Vector2* pGetPosition();
+
+			void setPosition(const Vector2&&);
+			void setPosition(const Vector2&);
 
 			// LUA Functions
 

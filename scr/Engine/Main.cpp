@@ -8,30 +8,25 @@ int main(int argc, char* args[])
 	SDL_Init(SDL_INIT_EVERYTHING);
 	CLua* lua = new CLua();
 	IGame* game = nullptr;
-	game = lua->loadConfig("..\\GameDemo\\Config.lua");
-
-	// check for the parent type of game
-	ScriptGame* sGame = dynamic_cast<ScriptGame*>(game);
-	DataGame* dGame = dynamic_cast<DataGame*>(game);
+	game = lua->loadConfig("..\\GameDemo\\Config.lua"); 
 
 	// execute if engine is ScriptDriven
-	if (sGame != nullptr){
+	if (lua->isGameScriptMode()){
 		lua->loadResources();
 		lua->loadMain();
 
-		sGame->initialize();
-		sGame->gameLoop();
-		sGame->cleanup();
-		delete sGame;
+		static_cast<ScriptGame*>(game)->initialize();
+		static_cast<ScriptGame*>(game)->gameLoop();
+		static_cast<ScriptGame*>(game)->cleanup();
 	}
-	// execute if engine is DataDriven
-	if (dGame != nullptr){
-		dGame->initialize();
-		dGame->gameLoop();
-		dGame->cleanup();
-		delete dGame;
+	else{
+		static_cast<DataGame*>(game)->initialize();
+		static_cast<DataGame*>(game)->gameLoop();
+		static_cast<DataGame*>(game)->cleanup();
 	}
 
+
+	delete game; 
 	delete lua;
 
 	return 0;

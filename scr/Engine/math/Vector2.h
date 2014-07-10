@@ -38,8 +38,8 @@ namespace Pro{
 			bool contains(float);
 			float hypotenuse();
 
-			Vector2 operator=(SDL_Point&);
-			SDL_Point operator=(Vector2&);
+			Vector2 operator=(SDL_Point&);  
+			SDL_Point operator=(const Vector2&);
 			bool operator==(Vector2&);
 			void operator+=(Vector2&);
 			Vector2 operator-(Vector2&);

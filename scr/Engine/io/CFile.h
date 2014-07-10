@@ -51,33 +51,29 @@ namespace Pro{
 			unsigned int getWritePosition();
 
 			/*	Writes the buffer to the file */
-			void write(CBuffer&);
-			/*  Writes the float to the file */
-			void write(float);
+			void write(CBuffer&); 
+
 			/*  Writes the string to the file */
 			void write(const std::string&);
-			/*  Writes the integer to the file */
-			void write(int);
+
+			/*  Writes a primative type to the file */
+			template<typename T>
+			T write(T data){ 
+				file.write((char*)&data, sizeof(T))
+			}
 
 			/*  Read's from the file and
 			copies everything between the position
 			and the size + position into the buffer */
 			CBuffer read(unsigned int size);
 
-			/*  Reads an Byte at the position
-			if no Byte is found then
-			FILE_INVALID_DATA is set */
-			char readByte();
-
-			/*  Reads an float at the position
-			if no float is found then
-			FILE_INVALID_DATA is set */
-			float readFloat();
-
-			/*  Reads an int at the position
-			if no int is found then
-			FILE_INVALID_DATA is set */
-			int readInt();
+			// Read a primative data type
+			template<typename T>
+			T read(){
+				T data;
+				file.read(&data, sizeof(T));
+				return data;
+			} 
 
 			/*  Reads a upto the deliminator
 			and returns between readPos and

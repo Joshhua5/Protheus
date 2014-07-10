@@ -4,7 +4,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-
+	A GameFile class which has the base of GameFileBase, all write to their
+	own buffers, once their buffer has been populated, the GameFileLoader
+	will act as an api to mask the packing and unpacking
 -------------------------------------------------------------------------
 History:
 - 25:06:2014: Waring J.

@@ -27,19 +27,20 @@ namespace Pro{
 		protected:
 			Vector2 dimensions;
 		public:
-			Area(Vector2& dimensions);
-			Area();
-			~Area();
+			Area(Vector2& dimensions); 
+			Area(){}
+			~Area(){}
 
-			Vector2 getDimensions();
+			Vector2 getDimensions() const;
 
 			// returns a pointer to the internal dimension
 			Vector2* pGetDimensions();
 
 			// the width and height multiplied together
-			float getVolume();
+			float getVolume() const;
 
-			void setDimensions(Vector2&);
+			void setDimensions(const Vector2&);
+			void setDimensions(const Vector2&&);
 
 			// LUA Functions
 
