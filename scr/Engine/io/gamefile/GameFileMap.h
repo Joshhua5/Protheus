@@ -28,7 +28,8 @@ namespace Pro{
 			// contains the information about the map
 			Map* m_map;
 		public:
-			GameFileMap(Map*);
+			GameFileMap(Map* map) { pack(map); }
+			GameFileMap(GameFileChunk& chunk){ unpack(chunk); }
 			GameFileMap(){}
 
 			// stores a map into a gamefile chunk

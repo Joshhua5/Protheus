@@ -23,7 +23,7 @@ namespace Pro{
 		{
 			game_id m_sprite_id;
 		public:
-			//GameFileImage(Sprite* sprite);
+			GameFileImage(lua_State* L, GameFileChunk& chunk) { unpack(L, chunk); }
 			GameFileImage(){}
 
 			// unpacks a chunk and loads the sprite into the

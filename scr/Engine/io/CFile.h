@@ -19,7 +19,7 @@ History:
 #include <string>
 
 namespace Pro{
-	namespace Util{
+	namespace IO{
 		using namespace std;
 		class CFile
 		{
@@ -74,6 +74,14 @@ namespace Pro{
 				file.read(&data, sizeof(T));
 				return data;
 			} 
+
+			template<typename T>
+			T* read(unsigned size){
+				T* data = new T[size];
+				file.read(&data, sizeof(T) * size);
+				return data;
+			}
+
 
 			/*  Reads a upto the deliminator
 			and returns between readPos and

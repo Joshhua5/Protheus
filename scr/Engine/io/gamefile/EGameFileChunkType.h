@@ -15,20 +15,20 @@ namespace Pro{
 	namespace IO{
 		enum struct EChunkType
 		{
-			IMAGE_INDEX, //
-			SCRIPT_INDEX, //
-			AUDIO_INDEX, //
-			MAP_TILE_INDEX, //
-			OBJECT_INDEX, //
-			MAP_INDEX, //
-			RAW_INDEX, //
-			IMAGE, //
-			SCRIPT, //
-			TILE, //
-			AUDIO, //
-			OBJECT,
-			MAP_DATA, //
-			RAW //
+			IMAGE_INDEX, 
+			SCRIPT_INDEX, 
+			AUDIO_INDEX, 
+			MAP_TILE_INDEX, 
+			OBJECT_INDEX, 
+			MAP_INDEX, 
+			RAW_INDEX, 
+			IMAGE, 
+			SCRIPT, 
+			TILE, 
+			AUDIO, 
+			OBJECT, 
+			MAP_DATA, 
+			RAW 
 		};
 	}
 }

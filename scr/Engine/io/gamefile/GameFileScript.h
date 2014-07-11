@@ -38,11 +38,7 @@ namespace Pro{
 			void unpack(GameFileChunk& script);
 
 			// Packs a script into a chunk
-			void pack(const string& script, const string& name);
-
-			// executes the loaded script, returns false if
-			// script returns an error or isn't a valid script
-			bool executeScript(lua_State* lua_state);
+			void pack(const string& script, const string& name); 
 		};
 	}
 }

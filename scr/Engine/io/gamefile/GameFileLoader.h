@@ -11,28 +11,62 @@ Description:
 History:
 - 25:06:2014: Waring J.
 *************************************************************************/
-
 #pragma once
+
+#include "..\CFile.h"
+#include <string>
+#include "GameFileChunk.h"
+#include "GameFileIndex.h"
+#include "GameFileImage.h"
+#include "GameFileMap.h"
+#include "GameFileScript.h"
+#include "GameFileRaw.h"
+#include "GameFileAudio.h"
+#include <unordered_map>
 
 namespace Pro{
 	namespace IO{
+
+		using namespace std;
+ 
+
 		class GameFileLoader
-		{
+		{   
+			unordered_map<string, unsigned int> image_index;
+			unordered_map<string, unsigned int> script_index;
+			unordered_map<string, unsigned int> audio_index;
+			unordered_map<string, unsigned int> object_index;
+			unordered_map<string, unsigned int> map_index;
+			unordered_map<string, unsigned int> raw_index; 
+
+			CFile* file;
 		public:
-			GameFileLoader(){}
+			GameFileLoader(const string& file_path){ load(file_path); } 
+			void load(const string& file_path);
+
+			const char* getScript(const string& name);
+			const char* getConfigScript();
+
+			game_id getImage(lua_State*, const string& name);
+			CBuffer getAudio(const string& name);  
+			Map* getMap(const string& name);
+			CBuffer getRaw(const string& name);
+			
+			template<typename T>
+			T* getObject(const string& name){
+
+			}
 		};
 	}
 }
 /*
-Header{
-Config Script ID
-Image Index Offset : 0 if non exist
-Script Index Offset : 0 if non exist
-Audio Index Offset : 0 if non exist
-Object Index Offset : 0 if non exist
-Map Index Offset : 0 if non exist
-Raw Index Offset : 0 if non exist
-Name Index Offset : contains a translation between an ID and name in the file
+Header{ 
+Image Index Offset
+Script Index Offset
+Audio Index Offset
+Object Index Offset
+Map Index
+Raw Index Offset
 }
 
 Data{

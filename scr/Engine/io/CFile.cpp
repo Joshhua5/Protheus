@@ -1,7 +1,7 @@
 #include "CFile.h"
 
 using namespace Pro;
-using namespace Util;
+using namespace IO;
 using namespace std;
 
 CFile::CFile(const std::string& filePath)

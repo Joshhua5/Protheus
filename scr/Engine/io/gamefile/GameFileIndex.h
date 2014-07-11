@@ -36,6 +36,10 @@ namespace Pro{
 			// the index
 			void unpack(GameFileChunk& chunk);
 
+			unordered_map<string, unsigned int> extractIndex(){
+				return std::move(m_indexes);
+			}
+
 			// returns the offset of a chunk
 			// which has the name
 			unsigned int getOffset(const string& name);

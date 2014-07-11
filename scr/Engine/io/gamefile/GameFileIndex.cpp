@@ -19,7 +19,8 @@ void GameFileIndex::pack(vector<pair<string, unsigned int>> indexes, EChunkType 
 	Util::BufferWriter writer(&m_chunk.chunkData);
 
 	for each(auto index in indexes){
-		writer.write<unsigned int>(index.second);
+		writer.write<unsigned int>(index.second); 
+		index.first.reserve(32);
 		writer.write_array<char>(&index.first[0], 32);
 	}
 }

@@ -34,7 +34,7 @@ namespace Pro{
 
 				BufferWriter writer(&m_chunk.chunkData);
 				writer.serialized_write<T>(def, obj);
-			}
+			} 
 
 			void unpack(GameFileChunk& chunk);
 

@@ -137,6 +137,7 @@
     <ClCompile Include="Engine\io\gamefile\GameFileObject.cpp" />
     <ClCompile Include="Engine\gameobject\StaticEntity.cpp" />
     <ClCompile Include="Engine\component\Textured.cpp" />
+    <ClCompile Include="Engine\io\gamefile\GameFileSaver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\util\ClassDefinition.h" />
@@ -272,6 +273,7 @@
     <ClInclude Include="Engine\io\gamefile\GameFileObject.h" />
     <ClInclude Include="Engine\gameobject\StaticEntity.h" />
     <ClInclude Include="Engine\component\Textured.h" />
+    <ClInclude Include="Engine\io\gamefile\GameFileSaver.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
