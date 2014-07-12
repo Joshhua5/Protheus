@@ -21,8 +21,9 @@ int ScriptGame::gameLoop(){
 	do{
 		Util::checkError(lua_state, update());
 		Util::checkError(lua_state, render());
-		lua_getglobal(lua_state, "isExitRequested");
+		lua_getglobal(lua_state, "isExitRequested"); 
 	} while (!lua_toboolean(lua_state, -1));
+	cout << lua_gettop(lua_state) << endl;
 	return 0;
 }
 
@@ -31,6 +32,11 @@ int ScriptGame::render(){
 	return lua_pcall(lua_state, 0, 0, 0);
 }
 int ScriptGame::initialize(){
+	// Add the ScriptGame instance to Lua 
+    Util::luaP_newobject<ScriptGame>(lua_state, this);
+	lua_setglobal(lua_state, "Game");
+
+	// Call initialize in the lua script
 	lua_getglobal(lua_state, "Initialize");
 	Util::checkError(lua_state, lua_pcall(lua_state, 0, 0, 0));
 	return 0;

@@ -25,8 +25,7 @@ namespace Pro{
 			SDL_Renderer* renderer;
 			SpriteBatcher* sprite_batcher;
 		public:
-			Renderer(lua_State* lua_state);
-			Renderer();
+			Renderer(lua_State* lua_state); 
 			~Renderer();
 
 			SDL_Renderer* getRenderer();

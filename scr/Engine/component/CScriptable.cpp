@@ -10,8 +10,12 @@ void CScriptable::update(lua_State* L){
 	lua_pcall(L, 1, 0, 0);
 }
 
-void CScriptable::attachFunction(const string& function){
-	luaFunction = function;
+void CScriptable::attachFunction(const string& function){ 
+	memcpy(luaFunction, function.data(), function.size()); 
+}
+
+const char* CScriptable::getFunction() const{
+	return luaFunction;
 }
 
 int CScriptable::lUpdate(lua_State* L){

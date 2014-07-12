@@ -19,6 +19,8 @@ History:
 #include <fstream>
 #include <SDL_image.h>
 #include "..\graphics\AnimatedSprite.h"
+#include "..\io\CFile.h"
+#include "..\io\FileSystem.h"
 #include "..\util\CBuffer.h"
 #include "..\util\LuaUtils.h"
 
@@ -44,6 +46,7 @@ namespace Pro{
 			void release(game_id);
 
 			// LUA Functions
+			static int lLoadSprite(lua_State*);
 			static int lGetSprite(lua_State*);
 			static int lGetAnimation(lua_State*);
 
@@ -53,6 +56,7 @@ namespace Pro{
 
 			template<typename T>
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "loadSprite", &T::lLoadSprite });
 				fields.push_back({ "getSprite", &T::lGetSprite });
 				fields.push_back({ "getAnimation", &T::lGetAnimation });
 			}

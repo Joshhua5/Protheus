@@ -112,9 +112,9 @@ namespace Pro{
 		}
 
 		template<typename T> T* luaP_registerget(lua_State* L, const std::string& key){
-			lua_pushstring(L, &key[0]);
+			lua_pushstring(L, key.data());
 			lua_gettable(L, LUA_REGISTRYINDEX);
-			auto pointer = static_cast<T*>(lua_touserdata(L, -1));
+			const auto pointer = static_cast<T*>(lua_touserdata(L, -1));
 			lua_pop(L, 1);
 			return pointer;
 		}

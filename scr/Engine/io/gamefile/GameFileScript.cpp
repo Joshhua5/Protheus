@@ -9,7 +9,7 @@ GameFileScript::GameFileScript(GameFileChunk)
 
 char* GameFileScript::getScript(){
 	return m_script;
-}=
+}
 
 void GameFileScript::unpack(GameFileChunk& _script){
 	m_script = static_cast<char*>(_script.chunkData.data);

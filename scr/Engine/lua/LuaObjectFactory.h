@@ -33,13 +33,11 @@ namespace Pro{
 		public:
 			LuaObjectFactory(lua_State** L){
 				*L = luaL_newstate();
-				const luaL_Reg globalFunctions[] = {
-					//{ "avatar_create", &LuaObjectFactory::createAvatar },
-					//{ "camera_create", &LuaObjectFactory::createCamera },
-						{ "scene_create", &LuaObjectFactory::createScene }
+				const luaL_Reg globalFunctions[] = { 
+					{ "scene_create", &LuaObjectFactory::createScene }
 				};
 
-				for each(auto i in globalFunctions)
+				for each(const auto i in globalFunctions)
 					lua_register(*L, i.name, i.func);
 			};
 			LuaObjectFactory(){}

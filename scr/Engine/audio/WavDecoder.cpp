@@ -101,7 +101,7 @@ CBuffer decodeData(CAudioTrack* headerData, CBuffer& data){
 	return out;
 }
 
-CAudioTrack* CWavDecoder::load(Util::CFile& file){
+CAudioTrack* CWavDecoder::load(IO::CFile& file){
 	return load(file.read(file.getSize()));
 }
 

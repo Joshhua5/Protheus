@@ -29,10 +29,9 @@ void SpriteBatcher::flush(){
 
 int SpriteBatcher::lPush(lua_State* L){
 	const auto sb = Util::luaP_touserdata<SpriteBatcher>(L, 1);
-	sb->push(
-		Util::luaP_touserdata<Asset::Sprite>(L, 2),
-		*Util::luaP_touserdata<Math::Vector4>(L, 3)
-		);
+	const auto spt = Util::luaP_touserdata<Asset::Sprite>(L, 2);
+	auto v = Math::Vector4(*Util::luaP_touserdata<Math::Vector2>(L, 3), spt->getDimensions());
+	sb->push(spt, v); 
 	return 0;
 }
 

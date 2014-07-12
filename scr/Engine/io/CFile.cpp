@@ -18,6 +18,14 @@ CFile::~CFile()
 	file.close();
 }
 
+void CFile::open(const std::string& filePath){
+	m_file_path = filePath;
+	file.open(filePath,
+		fstream::binary |
+		fstream::in |
+		fstream::out);
+}
+
 bool CFile::isEndOfFile(){
 	return file.eof();
 }
@@ -42,6 +50,12 @@ void CFile::write(CBuffer& buf){
 void CFile::write(const std::string& str){
 	file.write(str.data(), str.length());
 } 
+
+CBuffer CFile::read(){
+	CBuffer buf(this->getSize());
+	file.read((char*)buf.data, buf.size);
+	return buf;
+}
 
 CBuffer CFile::read(unsigned int size){
 	CBuffer buf(size);
@@ -76,7 +90,10 @@ bool CFile::isOpen(){
 }
 
 unsigned int CFile::getSize(){
-	auto current_position = getReadPosition();
+	if (!isOpen())
+		return 0;
+	
+	const auto current_position = getReadPosition();
 	file.seekg(0, std::ios::end);
 	auto ending_position = getReadPosition();
 	setReadPosition(current_position);

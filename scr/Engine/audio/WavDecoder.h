@@ -24,7 +24,7 @@ namespace Pro{
 			CWavDecoder();
 			~CWavDecoder();
 
-			CAudioTrack* load(Util::CFile& file);
+			CAudioTrack* load(IO::CFile& file);
 			CAudioTrack* load(CBuffer& buffer);
 		};
 	}

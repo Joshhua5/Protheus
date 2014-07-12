@@ -17,7 +17,8 @@ History:
 
 namespace Pro{
 	namespace GameObject{
-		using namespace Component;
+		using namespace Component; 
+		using namespace Serializer;
 		class DynamicEntity :
 			public Position,
 			public Area,

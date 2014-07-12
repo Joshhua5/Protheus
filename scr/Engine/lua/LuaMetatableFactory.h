@@ -43,14 +43,14 @@ namespace Pro{
 			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
 				luaL_newmetatable(L, &T::lGetMetatable()[0]);
 
-				for each(auto field in fields){
+				for each(const auto field in fields){
 					lua_pushcfunction(L, field.func);
-					lua_setfield(L, -2, field.name);
-				}
-
+					lua_setfield(L, -2, field.name); 
+				} 
 				lua_pushstring(L, "__index");
 				lua_pushvalue(L, -2);
-				lua_settable(L, -3);
+				lua_settable(L, -3); 
+				lua_pop(L, -1);
 			}
 
 			template<typename T> inline void defineMetatable(lua_State* L){
@@ -61,6 +61,9 @@ namespace Pro{
 
 		public:
 			LuaMetatableFactory(lua_State* L){
+
+				defineMetatable<ScriptGame>(L);
+
 				// Components
 
 				defineMetatable<ActiveState>(L);

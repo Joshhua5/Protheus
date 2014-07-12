@@ -5,8 +5,7 @@ using namespace IO;
 using namespace Math;
 using namespace GameObject;
 using namespace Util;
-
-GameFileMap::GameFileMap(Map* map){ pack(map); }
+ 
 
 // stores a map into a gamefile chunk
 void GameFileMap::pack(Map* map){

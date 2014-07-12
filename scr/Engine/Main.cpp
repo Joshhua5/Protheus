@@ -8,11 +8,10 @@ int main(int argc, char* args[])
 	SDL_Init(SDL_INIT_EVERYTHING);
 	CLua* lua = new CLua();
 	IGame* game = nullptr;
-	game = lua->loadConfig("..\\GameDemo\\Config.lua"); 
+	game = lua->loadConfig("config.lua"); 
 
 	// execute if engine is ScriptDriven
-	if (lua->isGameScriptMode()){
-		lua->loadResources();
+	if (lua->isGameScriptMode()){ 
 		lua->loadMain();
 
 		static_cast<ScriptGame*>(game)->initialize();

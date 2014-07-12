@@ -30,5 +30,25 @@ namespace Pro{
 		int initialize();
 		int cleanup();
 		int gameLoop();
+
+		static int lGetSpriteManager(lua_State* L){
+			Util::luaP_newobject<Graphics::SpriteManager>(L, luaP_getSpriteManager(L));
+			return 1;
+		}
+		static int lGetRenderer(lua_State* L){
+			Util::luaP_newobject<Graphics::Renderer>(L, luaP_getRenderer(L));
+			return 1;
+		}
+
+		// returns the Metatable's name assosiated with this object
+		static string lGetMetatable(){
+			return "script_game_metatable";
+		}
+
+		template<typename T>
+		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+			fields.push_back({ "getSpriteManager", &T::lGetSpriteManager });
+			 fields.push_back({ "getRenderer", &T::lGetRenderer });
+		}
 	};
 }

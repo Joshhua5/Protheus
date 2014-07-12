@@ -10,8 +10,7 @@ CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMet
 
 	luaP_setScenes(lua_state, new SceneContainer());
 	luaP_setNetwork(lua_state, new Networking::Network());
-	luaP_setEventHandler(lua_state, new EventHandler());
-	luaP_setSpriteManager(lua_state, new Graphics::SpriteManager(lua_state));
+	luaP_setEventHandler(lua_state, new EventHandler()); 
 	luaP_setTimer(lua_state, new Util::Timer());
 	luaP_setFileSystem(lua_state, new Util::FileSystem());
 }
@@ -41,10 +40,10 @@ IGame* CLua::loadConfig(const std::string& _path){
 	// Create the window and set it in the registery
 	luaP_setWindow(lua_state, new Window(lua_tostring(lua_state, -1), lua_state));
 
-	// Create the renderer and set it in the registery
-	auto renderer = new Graphics::Renderer(lua_state);
-	luaP_setRenderer(lua_state, renderer);
-	luaP_setSDLRenderer(lua_state, renderer->getRenderer());
+	// Create the renderer and set it in the registery 
+	luaP_setRenderer(lua_state, new Graphics::Renderer(lua_state)); 
+
+	luaP_setSpriteManager(lua_state, new Graphics::SpriteManager(lua_state));
 
 	lua_getglobal(lua_state, "script_engine_mode");
 	if (lua_toboolean(lua_state, -1))

@@ -7,11 +7,14 @@ using namespace Asset;
 SpriteManager::SpriteManager(lua_State* _lua_state)
 {
 	lua_state = _lua_state;
+	renderer = luaP_getSDLRenderer(_lua_state);
 }
 
 SpriteManager::~SpriteManager()
 {
 	// release all textures
+	for each(auto spt in sprites)
+		spt.second.~Sprite();  
 }
 
 game_id SpriteManager::loadSprite(const string& name, const CBuffer data){
@@ -65,6 +68,15 @@ void SpriteManager::release(game_id textureID){
 	// will call sprited destructor and
 	// will delete the SDL_Texture
 	sprites.erase(textureID);
+}
+
+int SpriteManager::lLoadSprite(lua_State* L){
+	const auto sm = Util::luaP_touserdata<SpriteManager>(L, 1);
+	const auto data = IO::CFile(lua_tostring(L, 3)).read(); 
+	const auto fs = luaP_getFileSystem(L);
+	const auto s = sm->loadSprite(fs->getRootDir() + lua_tostring(L, 2), data); 
+	lua_pushnumber(L, s); 
+	return 1;
 }
 
 int SpriteManager::lGetSprite(lua_State* L){

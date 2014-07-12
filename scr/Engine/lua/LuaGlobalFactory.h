@@ -14,6 +14,7 @@ History:
 
 #include "lib\lua.hpp"
 #include "..\event\EventHandler.h"
+#include "..\Math.h"
 #include "..\graphics\SpriteManager.h"
 #include "..\gameobject\Scene.h"
 
@@ -21,28 +22,39 @@ namespace Pro{
 	namespace Lua{
 		class LuaGlobalFactory
 		{
+			struct global{
+					char* defaultValue;
+					char* valueName; 
+				};
 		public:
 			LuaGlobalFactory(lua_State* L){
 				const luaL_Reg globalFunctions[] = {
-						{ "passBackToEngine", &EventHandler::lUpdate }
+						{ "passBackToEngine", &EventHandler::lUpdate },
+						{ "Vector2", &Vector2::lCreate}
 				};
 
 				for each(auto i in globalFunctions)
 					lua_register(L, i.name, i.func);
+				 
+				const global globals [] = {
+					// {Default Value, Variable Name}
+						{"", "script_engine_mode"},
+						{"", "root_path"},
+						{"", "resource_path"},
+						{"", "main_path"},
+						{"", "window_title"},
+						{"", "screen_width"},
+						{"", "screen_height"},
+						{"", "screen_position_x"},
+						{"", "screen_position_y"},
+						{"", "fullscreen"},
+						{"", "isExitRequested"}
+				};
 
-				for (int x = 0; x < 10; ++x)
-					lua_pushstring(L, "");
-
-				lua_setglobal(L, "script_engine_mode");
-				lua_setglobal(L, "root_path");
-				lua_setglobal(L, "resource_path");
-				lua_setglobal(L, "main_path");
-				lua_setglobal(L, "window_title");
-				lua_setglobal(L, "screen_width");
-				lua_setglobal(L, "screen_height");
-				lua_setglobal(L, "screen_position_x");
-				lua_setglobal(L, "screen_position_y");
-				lua_setglobal(L, "fullscreen");
+				for each(const auto i in globals){
+					lua_pushstring(L, i.defaultValue);
+					lua_setglobal(L, i.valueName);
+				}  
 			}
 			LuaGlobalFactory(){};
 			~LuaGlobalFactory(){};

@@ -32,6 +32,8 @@ namespace Pro{
 			CFile();
 			~CFile();
 
+			void CFile::open(const std::string& filePath);
+
 			/*  Returns if there's more data to be read */
 			bool isEndOfFile();
 
@@ -67,18 +69,21 @@ namespace Pro{
 			and the size + position into the buffer */
 			CBuffer read(unsigned int size);
 
+			// Reads the whole file
+			CBuffer CFile::read();
+
 			// Read a primative data type
 			template<typename T>
 			T read(){
 				T data;
-				file.read(&data, sizeof(T));
+				file.read((char*)(&data), sizeof(T));
 				return data;
 			} 
 
 			template<typename T>
 			T* read(unsigned size){
 				T* data = new T[size];
-				file.read(&data, sizeof(T) * size);
+				file.read(data, sizeof(T) * size);
 				return data;
 			}
 

@@ -46,6 +46,13 @@ namespace Pro{
 
 			// LUA Functions
 
+			static int lCreate(lua_State* L){ 
+				if(lua_isnumber(L, 1) && lua_isnumber(L, 2))
+					Util::luaP_newobject(L, new Vector2(lua_tonumber(L, 1), lua_tonumber(L, 2)));
+				else 
+					Util::luaP_newobject(L, new Vector2());
+				return 1;
+			}
 			static int lContains(lua_State*);
 			static int lHypotenuse(lua_State*);
 			static int lGetX(lua_State*);

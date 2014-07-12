@@ -2,17 +2,14 @@
 
 using namespace Pro;
 using namespace Graphics;
-
-Renderer::Renderer(){
-}
-
+  
 Renderer::Renderer(lua_State* lua_state){
 	SDL_Window* w = Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW");
 	renderer = SDL_CreateRenderer(w, -1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == nullptr)
 		return;
-	Util::luaP_registerstore(lua_state, "SDL_RENDERER", renderer);
+	luaP_setSDLRenderer(lua_state, renderer); 
 	sprite_batcher = new SpriteBatcher(lua_state);
 }
 
@@ -89,8 +86,8 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 }
 
 int Renderer::lGetBatcher(lua_State* L){
-	Renderer* r = Util::luaP_touserdata<Renderer>(L, 1);
-	Util::luaP_newobject<Renderer>(L, r);
+	const auto r = Util::luaP_touserdata<SpriteBatcher>(L, 1);
+	Util::luaP_newobject<SpriteBatcher>(L, r);
 	return 1;
 }
 

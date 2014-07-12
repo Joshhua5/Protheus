@@ -13,6 +13,8 @@ History:
 *************************************************************************/
 #pragma once
 
+#include "graphics\Renderer.h"
+
 namespace Pro{
 	class IGame{
 	public:
