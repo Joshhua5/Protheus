@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\util\CBuffer.cpp" />
     <ClCompile Include="Engine\util\ClassDefinition.cpp" />
     <ClCompile Include="Engine\gameobject\DataEntity.cpp" />
     <ClCompile Include="Engine\component\Animated.cpp" />
@@ -140,6 +141,8 @@
     <ClCompile Include="Engine\io\gamefile\GameFileSaver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\util\AlignedBuffer.h" />
+    <ClInclude Include="Engine\util\BufferBase.h" />
     <ClInclude Include="Engine\util\ClassDefinition.h" />
     <ClInclude Include="Engine\gameobject\DataEntity.h" />
     <ClInclude Include="Engine\component\Animated.h" />

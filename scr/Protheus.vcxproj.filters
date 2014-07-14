@@ -431,6 +431,9 @@
     <ClCompile Include="Engine\io\gamefile\GameFileSaver.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\util\CBuffer.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -833,6 +836,12 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\io\gamefile\GameFileSaver.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\AlignedBuffer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\BufferBase.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
