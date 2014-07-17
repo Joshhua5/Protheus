@@ -14,6 +14,7 @@ History:
 
 #pragma once
 #include "..\lua\lib\lua.hpp"
+#include "Error.h"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -45,11 +46,21 @@ namespace Pro{
 
 		// push an array of complex data types to lua
 		template<typename T>
-		inline void luaP_pusharray(lua_State* L, vector<pair<string, T>>& elements){
+		inline void luaP_pusharray(lua_State* L, vector<pair<const string, T>>& elements){
 			lua_createtable(L, 0, 0);
 			for (size_t x = 0; x < elements.size(); ++x){
 				lua_pushstring(L, elements.at(x).first.data());
 				luaP_newobject(L, elements.at(X).second);
+				lua_settable(L, -3);
+			}
+		}
+
+		template<>
+		inline void luaP_pusharray(lua_State* L, vector<pair<const string, double>>& elements){
+			lua_createtable(L, 0, 0);
+			for each(const auto element in elements){
+				lua_pushstring(L, element.first.data());
+				lua_pushnumber(L, element.second);
 				lua_settable(L, -3);
 			}
 		}
@@ -66,6 +77,13 @@ namespace Pro{
 		}
 
 		template<typename T> T* luaP_touserdata(lua_State* L, int idx){
+#ifdef DEBUG
+			if (lua_isuserdata(L, idx) == false){
+				error.reportError("Incorrect parameter");
+				luaP_dumpLuaStack(L);
+				return nullptr;
+			}
+#endif 
 			return *static_cast<T**>(lua_touserdata(L, idx));
 		}
 
@@ -85,7 +103,14 @@ namespace Pro{
 		}
 
 		// Automaticallys binds the metatable
-		template<typename T> T** luaP_newobject(lua_State* L, T* data) {
+		template<typename T> T** luaP_newobject(lua_State* L, T* data) { 
+#ifdef DEBUG 
+			if (data == nullptr){
+				error.reportError("Null data passed to new object");
+				luaP_dumpLuaStack(L);
+				return 0;
+			} 
+#endif 
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
 			*o = data;
 			luaP_setmetatable(L, T::lGetMetatable());
@@ -94,13 +119,13 @@ namespace Pro{
 
 		template<typename T> T** luaP_newobject(lua_State* L, T data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			**o = data;
+			*o = new T(data);
 			luaP_setmetatable(L, T::lGetMetatable());
 			return o;
 		}
 
 		inline void luaP_registerstore(lua_State* L, const std::string& key, void* data){
-			lua_pushstring(L, &key[0]);
+			lua_pushstring(L, key.data());
 			lua_pushlightuserdata(L, data);
 			lua_settable(L, LUA_REGISTRYINDEX);
 		}
@@ -146,6 +171,26 @@ namespace Pro{
 			printf("\n");  /* end the listing */
 		}
 
+		// Returns a string as a pair, the second value contains the length
+		inline pair<const char*, size_t> luaP_tostring(lua_State* L, int idx){
+			pair<const char*, size_t> out;
+			const_cast<const char*>(out.first) = lua_tolstring(L, idx, &out.second);
+			return out;
+		}
+
+		/* Useful macro's*/
+
+#define luaP_pushnumber(L, i) lua_pushnumber(L, static_cast<lua_Number>(i))
+
+#define luaP_toint(L, i)		static_cast<int>(lua_tonumber(L, i))
+#define luaP_touint(L, i)		static_cast<unsigned>(lua_tonumber(L, i))
+#define luaP_togameid(L, i)		static_cast<game_id>(lua_tonumber(L, i))
+#define luaP_toushort(L, i)		static_cast<unsigned short>(lua_tonumber(L, i))
+#define luaP_tofloat(L, i)		static_cast<float>(lua_tonumber(L, i))
+#define luaP_todouble(L, i)		static_cast<double>(lua_tonumber(L, i)) 
+
+#define	luaP_pushnumber(L, i)	lua_pushnumber(L, static_cast<lua_Number>(i))
+
 #define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
 #define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
 
@@ -157,6 +202,9 @@ namespace Pro{
 
 #define luaP_setSDLRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "SDL_RENDERER", data)
 #define	luaP_getSDLRenderer(lua_state) Util::luaP_registerget<SDL_Renderer>(lua_state, "SDL_RENDERER")
+
+#define luaP_setSDLWindow(lua_state, data) Util::luaP_registerstore(lua_state, "SDL_WINDOW", data)
+#define	luaP_getSDLWindow(lua_state) Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW")
 
 #define luaP_setScenes(lua_state, data) Util::luaP_registerstore(lua_state, "SCENES", data)
 #define luaP_getScenes(lua_state) Util::luaP_registerget<Pro::SceneContainer>(lua_state, "SCENES")
@@ -172,5 +220,7 @@ namespace Pro{
 
 #define luaP_setTimer(lua_state, data) Util::luaP_registerstore(lua_state, "TIMER", data)
 #define luaP_getTimer(lua_state) Util::luaP_registerget<Pro::Util::Timer>(lua_state, "TIMER")
+
+
 	}
 }

@@ -17,6 +17,12 @@ History:
 
 
 CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
+	if (_size == 0){
+		m_data = nullptr;
+		m_size = 0;
+		return;
+	}
+
 	if (copy){
 		m_data = new char[_size];
 		memcpy(m_data, _data, _size);
@@ -29,8 +35,11 @@ CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
 
 CBuffer::CBuffer(const unsigned _size)
 {
-	m_size = _size;
-	m_data = new char[_size];
+	if (_size == 0)
+		m_data = nullptr; 
+	else
+		m_data = new char[_size];
+	m_size = _size; 
 }
 
 CBuffer::CBuffer()
@@ -42,6 +51,7 @@ CBuffer::CBuffer()
 CBuffer::~CBuffer()
 {
 	delete [] m_data;
+	m_data = nullptr;
 }
 
 void CBuffer::init(void* _data,const unsigned _size,const bool copy){
@@ -80,6 +90,12 @@ void* CBuffer::at(const unsigned pos) const {
 		return reinterpret_cast<char*>(m_data) + pos;
 	return nullptr;
 }
-void* CBuffer::operator[](const unsigned pos) const{
-	return reinterpret_cast<char*>(m_data) + pos;
+void* CBuffer::operator[](const unsigned pos) const{ 
+	return reinterpret_cast<char*>(m_data)+pos;
+}
+ 
+int  CBuffer::lSize(lua_State* L){
+	const auto b = Pro::Util::luaP_touserdata<CBuffer>(L, 1);
+	lua_pushnumber(L, b->size());
+	return 1;
 }

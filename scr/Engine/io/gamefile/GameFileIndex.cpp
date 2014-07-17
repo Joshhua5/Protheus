@@ -31,7 +31,7 @@ void GameFileIndex::unpack(GameFileChunk& _chunk){
 	structSize += sizeof(char) * 32;
 
 	auto indexCount =
-		_chunk.chunkData.size / structSize;
+		_chunk.chunkData.size() / structSize;
 
 	Util::BufferReader reader(&_chunk.chunkData);
 

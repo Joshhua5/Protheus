@@ -29,16 +29,15 @@ namespace Pro{
 
 			// writes a value to the buffer at the writer,
 			// of the size specified
-			void write(void* value, unsigned int size);
-
+			void write(void* value, unsigned size);
+			  
 			template<typename T>
-			void inline write(T){
-				T data;
+			void inline write(T data){ 
 				write(&data, sizeof(T));
 			}
 
 			template<typename T>
-			void inline write_array(T* data, unsigned int size){
+			void inline write_array(T* data, unsigned size){
 				write((void*)data, size);
 			}
 
@@ -63,6 +62,27 @@ namespace Pro{
 					// Write the data of the member
 					write(member_pointer, member.size);
 				}
+			}
+
+			static int lWriteBuffer(lua_State*);
+			static int lWriteString(lua_State*);
+			static int lWriteUInt(lua_State*);
+			static int lWriteInt(lua_State*);
+			static int lWriteDouble(lua_State*);
+
+			static string lGetMetatable(){
+				return "buffer_writer_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				BufferIO::lGetFunctions<T>(fields);
+
+				fields.push_back({ "writeBuffer", &T::lSkip });
+				fields.push_back({ "writeString", &T::lSkip });
+				fields.push_back({ "writeUInt", &T::lGetPosition });
+				fields.push_back({ "writeInt", &T::lSetPosition });
+				fields.push_back({ "writeDouble", &T::lGetBufferSize });
 			}
 		};
 	}

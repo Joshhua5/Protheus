@@ -3,9 +3,10 @@
 using namespace Pro;
 using namespace Networking;
 
-unsigned int CConnection::recv(CBuffer& buffer){
-	buffer = inputStack.top();
-	return buffer.size;
+CBuffer CConnection::recv(){
+	const auto buffer = inputStack.top();
+	inputStack.pop();
+	return buffer;
 }
 
 void CConnection::send(CBuffer& _buffer){
@@ -16,6 +17,26 @@ void CConnection::send(CBuffer& _buffer){
 	mutex.unlock();
 }
 
-unsigned int CConnection::peek(){
-	return inputStack.top().size;
+unsigned CConnection::peek(){
+	if (inputStack.empty())
+		return 0;
+	return inputStack.top().size();
+}
+
+int CConnection::lSend(lua_State* L){
+	const auto c = Util::luaP_touserdata<CConnection>(L, 1); 
+	c->send(*Util::luaP_touserdata<CBuffer>(L, 2));
+	return 0;
+}
+
+int CConnection::lPeek(lua_State* L){
+	const auto c = Util::luaP_touserdata<CConnection>(L, 1);
+	lua_pushnumber(L, c->peek());
+	return 1;
+}
+
+int CConnection::lRecv(lua_State* L){
+	const auto c = Util::luaP_touserdata<CConnection>(L, 1); 
+	Util::luaP_newobject(L, c->recv());
+	return 1;
 }

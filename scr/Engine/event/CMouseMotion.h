@@ -12,23 +12,38 @@ History:
 
 #pragma once
 
-#include "..\math\Vector2.h"
-#include "IEvent.h"
+#include "..\math\Vector2.h" 
 
 namespace Pro{
 	namespace Event{
-		struct MouseMotion : IEvent{
+		using namespace Math;
+
+		struct MouseMotion{
 			// Position relative to the window
-			Math::Vector2 window_position;
+			Vector2 window_position;
 			// Position relative to the original position
-			Math::Vector2 relative_position;
+			Vector2 relative_position;
+
+			static int lGetPosition(lua_State* L){
+				const auto e = Util::luaP_touserdata<MouseMotion>(L, 1);
+				Util::luaP_newobject<Vector2>(L, e->window_position);
+				return 1;
+			}
+			static int lGetRelativePosition(lua_State* L){
+				const auto e = Util::luaP_touserdata<MouseMotion>(L, 1);
+				Util::luaP_newobject<Vector2>(L, e->relative_position);
+				return 1;
+			}
+
 
 			static inline string lGetMetatable(){
-				return "mouse_motion_event_metatable";
+				return "mouse_motion_metatable";
 			}
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "getPosition", &T::lGetPosition });
+				fields.push_back({ "getRelPosition", &T::lGetRelativePosition });
 			}
 		};
 	}

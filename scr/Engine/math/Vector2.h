@@ -36,25 +36,31 @@ namespace Pro{
 			Vector2(int, int);
 
 			bool contains(float);
+			void move(float x, float y);
 			float hypotenuse();
 
-			Vector2 operator=(SDL_Point&);  
-			SDL_Point operator=(const Vector2&);
+			//Vector2 operator=(Vector2&&);
+			//Vector2 operator=(const Vector2&);
+			//Vector2 operator=(Vector2);
+			Vector2 operator=(SDL_Point&);   
 			bool operator==(Vector2&);
 			void operator+=(Vector2&);
 			Vector2 operator-(Vector2&);
+
+			SDL_Point toSDL();
 
 			// LUA Functions
 
 			static int lCreate(lua_State* L){ 
 				if(lua_isnumber(L, 1) && lua_isnumber(L, 2))
-					Util::luaP_newobject(L, new Vector2(lua_tonumber(L, 1), lua_tonumber(L, 2)));
+					Util::luaP_newobject(L, new Vector2(luaP_tofloat(L, 1), luaP_tofloat(L, 2)));
 				else 
-					Util::luaP_newobject(L, new Vector2());
+					Util::luaP_newobject(L, new Vector2(0, 0));
 				return 1;
 			}
 			static int lContains(lua_State*);
 			static int lHypotenuse(lua_State*);
+			static int lMove(lua_State*);
 			static int lGetX(lua_State*);
 			static int lGetY(lua_State*);
 			static int lSetX(lua_State*);
@@ -69,14 +75,15 @@ namespace Pro{
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "contains", (lua_CFunction)&T::lContains });
-				fields.push_back({ "hypotenuse", (lua_CFunction)&T::lHypotenuse });
-				fields.push_back({ "getX", (lua_CFunction)&T::lGetX });
-				fields.push_back({ "getY", (lua_CFunction)&T::lGetY });
-				fields.push_back({ "setX", (lua_CFunction)&T::lSetX });
-				fields.push_back({ "setY", (lua_CFunction)&T::lSetY });
-				fields.push_back({ "getXY", (lua_CFunction)&T::lGetXY });
-				fields.push_back({ "setXY", (lua_CFunction)&T::lSetXY });
+				fields.push_back({ "contains", &T::lContains });
+				fields.push_back({ "hypotenuse", &T::lHypotenuse });
+				fields.push_back({ "move", &T::lMove });
+				fields.push_back({ "getX", &T::lGetX });
+				fields.push_back({ "getY", &T::lGetY });
+				fields.push_back({ "setX", &T::lSetX });
+				fields.push_back({ "setY", &T::lSetY });
+				fields.push_back({ "getXY", &T::lGetXY });
+				fields.push_back({ "setXY", &T::lSetXY });
 			}
 		};
 	}

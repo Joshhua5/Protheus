@@ -24,13 +24,13 @@ namespace Pro{
 	namespace Asset{
 		using namespace std;
 		using namespace Math;
+		using namespace Component;
 
 		class Sprite :
-			public Component::CGUID,
-			public Component::Area
+			public CGUID,
+			public Area
 		{
-		private:
-			Vector2 rect;
+		private: 
 			SDL_Texture* texture;
 		public:
 			Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex);
@@ -38,6 +38,7 @@ namespace Pro{
 			~Sprite();
 
 			SDL_Texture* getTexture();
+			void releaseTexture();
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){

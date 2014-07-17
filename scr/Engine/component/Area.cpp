@@ -4,7 +4,7 @@ using namespace Pro;
 using namespace Component;
 using namespace Math;
 
-Area::Area(Vector2& dim){
+Area::Area(const Vector2& dim){
 	dimensions = dim;
 } 
 

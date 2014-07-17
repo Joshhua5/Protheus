@@ -13,6 +13,8 @@ CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMet
 	luaP_setEventHandler(lua_state, new EventHandler()); 
 	luaP_setTimer(lua_state, new Util::Timer());
 	luaP_setFileSystem(lua_state, new Util::FileSystem());
+
+	defineKeyTable(lua_state);
 }
 CLua::~CLua() { lua_close(lua_state); }
 

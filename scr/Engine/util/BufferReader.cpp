@@ -4,20 +4,54 @@ using namespace Pro;
 using namespace Util;
 
 BufferReader::BufferReader(CBuffer* _buffer){
-	buffer = _buffer;
+	m_buffer = _buffer;
 }
 
 BufferReader::~BufferReader(){
-	buffer = nullptr;
+	m_buffer = nullptr;
 }
 
-inline char* BufferReader::read_raw(){
-	return &static_cast<char*>(buffer->data)[head];
+inline char* BufferReader::read_raw() const{
+	return m_buffer->data<char>() + m_head;
 }
 
-char* BufferReader::read(int size){
-	char* out = new char[size];
-	memcpy(out, read_raw(), size);
+CBuffer BufferReader::read(const int size){
+	CBuffer out(read_raw(), size, true); 
 	skip(size);
 	return out;
+}
+
+CBuffer BufferReader::read_delim(const char deliminator){   
+	const auto size = find(deliminator);
+	return move(read(size));
+}
+
+// reads until a null terminator is found '\0'
+CBuffer BufferReader::read_string(){
+	return move(read_delim('\0'));
+}
+
+int BufferReader::lReadString(lua_State* L){
+	const auto b = luaP_touserdata<BufferReader>(L, 1); 
+	lua_pushstring(L, b->read_string().data<char>());
+	return 1;
+}
+
+int BufferReader::lReadUInt(lua_State* L){
+	const auto b = luaP_touserdata<BufferReader>(L, 1);
+	lua_pushnumber(L, b->read<unsigned>());
+	return 1;
+}
+
+int BufferReader::lReadInt(lua_State* L){
+	const auto b = luaP_touserdata<BufferReader>(L, 1);
+	lua_pushnumber(L, b->read<int>());
+	return 1;
+}
+
+
+int BufferReader::lReadDouble(lua_State* L){
+	const auto b = luaP_touserdata<BufferReader>(L, 1);
+	lua_pushnumber(L, b->read<double>());
+	return 1;
 }

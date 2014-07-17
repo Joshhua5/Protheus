@@ -28,18 +28,24 @@ namespace Pro{
 
 			// returns a pointer to the internal buffer
 			// doesn't skip memory once read
-			char* read_raw();
+			char* read_raw() const;
 			// returns a char* to a copy of data
-			char* read(int size);
+			CBuffer read(int size);
+
+			// reads until the deliminator is found
+			CBuffer read_delim(const char deliminator);
+
+			// reads until a null terminator is found '\0'
+			CBuffer read_string();
 
 			template<typename T>
 			inline T read(){
-				return *(T*)read(sizeof(T));
+				return *(T*)(read(sizeof(T)).data());
 			}
 
 			template<typename T>
 			inline T* read_array(unsigned int size){
-				return (T*)read(sizeof(T) * size);
+				return (T*)(read(sizeof(T) * size).data());
 			}
 
 			template<typename T>
@@ -52,9 +58,13 @@ namespace Pro{
 
 				// Check if there's a missmatch of ClassDefinitons
 				if (member_count != def.getMembers().size()){
-					throw ""
+					string err = "";
+					for each(const auto members in def.getMembers())
+						err += members.name + "\n";
+					Error::reportError("Missmatch of class definition" + err);
+					return;
 				}
-				return;
+				
 
 				// Load the class from the buffer
 				for (auto x = member_count; x != 0; --x){
@@ -86,6 +96,25 @@ namespace Pro{
 						loaded_member.size);
 					}
 				return out;
+			}
+
+			static int lReadString(lua_State*);
+			static int lReadUInt(lua_State*);
+			static int lReadInt(lua_State*);
+			static int lReadDouble(lua_State*);
+
+			static string lGetMetatable(){
+				return "buffer_reader_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				BufferIO::lGetFunctions<T>(fields);
+
+				fields.push_back({ "readString", &T::lReadString });
+				fields.push_back({ "readUInt", &T::lReadUInt });
+				fields.push_back({ "readInt", &T::lReadInt });
+				fields.push_back({ "readDouble", &T::lReadDouble });
 			}
 		};
 	}

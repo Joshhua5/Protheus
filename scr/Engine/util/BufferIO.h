@@ -18,21 +18,41 @@ namespace Pro{
 		class BufferIO
 		{
 		protected:
-			unsigned int head;
-			CBuffer* buffer;
+			unsigned m_head;
+			CBuffer* m_buffer;
 		public:
 
 			// sets the position of the writer
 			void setPosition(unsigned int);
 
 			// returns the position of the writer
-			unsigned int getPosition();
+			unsigned getPosition() const;
 
 			// skips over the current writing position
-			void skip(int);
+			void skip(const int);
 
 			// get's the internal buffers size
-			unsigned int getBufferSize();
+			unsigned getBufferSize() const;
+
+			unsigned find(const char deliminator) const;
+
+			static int lSkip(lua_State*);
+			static int lGetPosition(lua_State*);
+			static int lSetPosition(lua_State*);
+			static int lGetBufferSize(lua_State*);
+
+			static string lGetMetatable(){
+				return "buffer_io_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				fields.push_back({ "skip", &T::lSkip });
+				fields.push_back({ "getPosition", &T::lGetPosition });
+				fields.push_back({ "setPosition", &T::lSetPosition });
+				fields.push_back({ "getBufferSize", &T::lGetBufferSize });
+			}
+
 		};
 	}
 }

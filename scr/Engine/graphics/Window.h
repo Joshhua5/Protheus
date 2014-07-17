@@ -34,7 +34,7 @@ namespace Pro{
 		void setWidth(unsigned int);
 		void setHeight(unsigned int);
 		void setRect(SDL_Rect _rect);
-		bool createWindow();
+		void createWindow();
 		SDL_Window* getWindow();
 	};
 }

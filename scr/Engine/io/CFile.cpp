@@ -11,6 +11,9 @@ CFile::CFile(const std::string& filePath)
 		fstream::binary |
 		fstream::in |
 		fstream::out);
+
+	if (file.is_open() == false)
+		error.reportError("Unable to open file: " + filePath);
 }
 
 CFile::~CFile()
@@ -24,6 +27,8 @@ void CFile::open(const std::string& filePath){
 		fstream::binary |
 		fstream::in |
 		fstream::out);
+	if (file.is_open() == false)
+		error.reportError("Unable to open file: " + filePath);
 }
 
 bool CFile::isEndOfFile(){
@@ -44,7 +49,7 @@ unsigned int CFile::getWritePosition(){
 }
 
 void CFile::write(CBuffer& buf){
-	file.write(static_cast<const char*>(buf.data), buf.size);
+	file.write(buf.data<const char>(), buf.size());
 } 
 
 void CFile::write(const std::string& str){
@@ -53,17 +58,17 @@ void CFile::write(const std::string& str){
 
 CBuffer CFile::read(){
 	CBuffer buf(this->getSize());
-	file.read((char*)buf.data, buf.size);
+	file.read(buf.data<char>(), buf.size());
 	return buf;
 }
 
 CBuffer CFile::read(unsigned int size){
 	CBuffer buf(size);
-	file.read((char*)buf.data, buf.size);
+	file.read(buf.data<char>(), buf.size());
 	return buf;
 } 
 
-std::string CFile::readToken(char delim){
+std::string CFile::readToken(const char delim){
 	string s;
 	getline(file, s, delim);
 	return s;

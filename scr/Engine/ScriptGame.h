@@ -12,14 +12,18 @@ History:
 *************************************************************************/
 #pragma once
 #include "IGame.h"
+#include "graphics\Renderer.h"
+#include "networking\CNetwork.h"
 #include "util\LuaUtils.h"
+#include "util\Timer.h"
+#include "event\EventHandler.h"
 
 namespace Pro{
 	class ScriptGame :
 		public IGame
 	{
 	private:
-		lua_State* lua_state;
+		lua_State* lua_state; 
 	public:
 		ScriptGame(lua_State* L);
 		ScriptGame();
@@ -30,15 +34,17 @@ namespace Pro{
 		int initialize();
 		int cleanup();
 		int gameLoop();
+		void exit();
 
 		static int lGetSpriteManager(lua_State* L){
 			Util::luaP_newobject<Graphics::SpriteManager>(L, luaP_getSpriteManager(L));
 			return 1;
 		}
 		static int lGetRenderer(lua_State* L){
-			Util::luaP_newobject<Graphics::Renderer>(L, luaP_getRenderer(L));
+			const auto r = luaP_getRenderer(L);
+			Util::luaP_newobject<Graphics::Renderer>(L, r);
 			return 1;
-		}
+		} 
 
 		// returns the Metatable's name assosiated with this object
 		static string lGetMetatable(){
@@ -48,7 +54,8 @@ namespace Pro{
 		template<typename T>
 		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			fields.push_back({ "getSpriteManager", &T::lGetSpriteManager });
-			 fields.push_back({ "getRenderer", &T::lGetRenderer });
+			fields.push_back({ "getRenderer", &T::lGetRenderer });
+			fields.push_back({ "exit", &T::lExit });
 		}
 	};
 }

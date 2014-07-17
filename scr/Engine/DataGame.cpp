@@ -25,6 +25,8 @@ int DataGame::render(){
 }
 
 int DataGame::initialize(){
+
+	SDL_ShowWindow(luaP_getSDLWindow(lua_state));
 	return 0;
 }
 

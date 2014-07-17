@@ -7,8 +7,8 @@ void convertStream(CBuffer* buffer, CAudioDevice* dev, int channels, unsigned in
 	SDL_AudioCVT cvt;
 	SDL_BuildAudioCVT(&cvt, AUDIO_F32, channels, inFreq, dev->getSpec().format, channels, dev->getSpec().freq);
 	SDL_assert(cvt.needed);
-	cvt.buf = static_cast<Uint8*>(buffer->data);
-	cvt.len = buffer->size;
+	cvt.buf = buffer->data<Uint8>();
+	cvt.len = buffer->size();
 	SDL_ConvertAudio(&cvt);
 }
 
@@ -22,14 +22,14 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 		switch (stream->channels){
 		case 1:
 			convertStream(stream->mono, device, 1, 48000);
-			memmove(_stream, stream->mono->data, length);
+			memmove(_stream, stream->mono->data(), length);
 			break;
 		case 2:
 			for (int x = 0; x < length / 2; ++x){
 				SDL_AudioCVT convert;
 				convert.src_format =
-					_stream[x * 2] = static_cast<Uint8*>(stream->left->data)[x];
-				_stream[(x * 2) + 1] = static_cast<Uint8*>(stream->right->data)[x];
+					_stream[x * 2] = stream->left->data<Uint8>()[x];
+				_stream[(x * 2) + 1] = stream->right->data<Uint8>()[x];
 			}
 			break;
 		case 4:

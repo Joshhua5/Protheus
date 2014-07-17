@@ -1,110 +1,202 @@
 #include "EventHandler.h"
 
-namespace Pro{
-	using namespace Event;
+using namespace Pro;
+using namespace Event;
+using namespace Util;
+using namespace Math;
+using namespace std;
 
-	EventHandler::EventHandler()
-	{
-		input = new Input();
-	}
+void EventHandler::update() {
+	SDL_Event sdl_event;
 
-	EventHandler::~EventHandler()
-	{
-		delete input;
-	}
+	MouseButton mbEvent;
+	MouseMotion mmEvent;
+	KeyboardEvent kEvent;
+	MouseWheel mwEvent;
 
-	void EventHandler::update() {
-		SDL_Event sdl_event;
-		CEvent _event;
-		IEvent* pro_event;
-		if (SDL_PollEvent(&sdl_event)){
-			switch (sdl_event.type){
-			case SDL_EventType::SDL_KEYDOWN:
+	while (SDL_PollEvent(&sdl_event)){
+		switch (sdl_event.type){
+		case SDL_EventType::SDL_KEYDOWN:
 
-				_event.type = EEvent::KEYBOARD;
-				pro_event = new KeyboardEvent();
-				static_cast<KeyboardEvent*>(pro_event)->key = toKeyboardKey(sdl_event.key.keysym.scancode);
-				static_cast<KeyboardEvent*>(pro_event)->key_down = !(static_cast<KeyboardEvent*>(pro_event)->key_up = false);
-				_event.event = pro_event;
-				keyboardEvents.push_back(_event);
-				break;
+			kEvent.key = 
+				toKeyboardKey(sdl_event.key.keysym.scancode);
+			kEvent.key_down = true;
+			kEvent.key_up = false;
+			keyEvent.push(kEvent);
 
-			case SDL_EventType::SDL_KEYUP:
+			break;
 
-				_event.type = EEvent::KEYBOARD;
-				pro_event = new KeyboardEvent();
-				static_cast<KeyboardEvent*>(pro_event)->key = toKeyboardKey(sdl_event.key.keysym.scancode);
-				static_cast<KeyboardEvent*>(pro_event)->key_down = !(static_cast<KeyboardEvent*>(pro_event)->key_up = true);
-				_event.event = pro_event;
-				keyboardEvents.push_back(_event);
-				break;
+		case SDL_EventType::SDL_KEYUP:
+			
+			kEvent.key = 
+				toKeyboardKey(sdl_event.key.keysym.scancode); 
+			kEvent.key_down = false;
+			kEvent.key_up = true;
+			keyEvent.push(kEvent);
 
-			case SDL_EventType::SDL_MOUSEBUTTONDOWN:
+			break;
 
-				_event.type = EEvent::MOUSE_BUTTON;
-				pro_event = new MouseButton();
-				static_cast<MouseButton*>(pro_event)->type = toMouseButton(sdl_event.button);
-				static_cast<MouseButton*>(pro_event)->window_position = Math::Vector2(sdl_event.button.x, sdl_event.button.y);
-				static_cast<MouseButton*>(pro_event)->button_down = !(static_cast<MouseButton*>(pro_event)->button_up = false);
-				_event.event = pro_event;
-				mouseEvents.push_back(_event);
-				break;
+		case SDL_EventType::SDL_MOUSEBUTTONDOWN:
 
-			case SDL_EventType::SDL_MOUSEBUTTONUP:
+			mbEvent.type = toMouseButton(sdl_event.button);
+			mbEvent.window_position = Vector2(sdl_event.button.x, sdl_event.button.y);
+			mbEvent.button_down = true;
+			mbEvent.button_up = false;
 
-				_event.type = EEvent::MOUSE_BUTTON;
-				pro_event = new Event::MouseButton();
-				static_cast<MouseButton*>(pro_event)->type = toMouseButton(sdl_event.button);
-				static_cast<MouseButton*>(pro_event)->window_position = Math::Vector2(sdl_event.button.x, sdl_event.button.y);
-				static_cast<MouseButton*>(pro_event)->button_down = !(static_cast<MouseButton*>(pro_event)->button_up = true);
-				_event.event = pro_event;
-				mouseEvents.push_back(_event);
-				break;
+			mouseButton.push(mbEvent);
+			break;
 
-			case SDL_EventType::SDL_MOUSEMOTION:
+		case SDL_EventType::SDL_MOUSEBUTTONUP:
 
-				break;
-			case SDL_EventType::SDL_MOUSEWHEEL:
+			mbEvent.type = toMouseButton(sdl_event.button);
+			mbEvent.window_position = Vector2(sdl_event.button.x, sdl_event.button.y);
+			mbEvent.button_down = false;
+			mbEvent.button_up = true;
 
-				_event.type = EEvent::MOUSE_WHEEL;
-				pro_event = new MouseWheel();
-				if (sdl_event.wheel.y > 0){
-					static_cast<MouseWheel*>(pro_event)->scroll_down = false;
-					static_cast<MouseWheel*>(pro_event)->scroll_up = true;
-				}
-				else{
-					static_cast<MouseWheel*>(pro_event)->scroll_down = true;
-					static_cast<MouseWheel*>(pro_event)->scroll_up = false;
-				}
-				_event.event = pro_event;
-				mouseEvents.push_back(_event);
-				break;
+			mouseButton.push(mbEvent);
+			break;
 
-			case SDL_EventType::SDL_USEREVENT:
-				//userEvents.push_back(_event);
-				break;
-			default:
-				//systemEvents.push_back(_event);
-				break;
+		case SDL_EventType::SDL_MOUSEMOTION:
+
+			mmEvent.window_position = Vector2(sdl_event.motion.x, sdl_event.motion.y);
+			mmEvent.relative_position = Vector2(sdl_event.motion.yrel, sdl_event.motion.yrel);
+			mouseMotion.push(mmEvent);
+
+			break;
+		case SDL_EventType::SDL_MOUSEWHEEL:
+
+			if (sdl_event.wheel.y > 0){
+				mwEvent.scroll_down = false;
+				mwEvent.scroll_up = true;
 			}
+			else{
+				mwEvent.scroll_down = true;
+				mwEvent.scroll_up = false;
+			}
+
+			mouseWheel.push(mwEvent);
+			break;
+
+		case SDL_EventType::SDL_USEREVENT:
+			//userEvents.push_back(_event);
+			break;
+		//default:
+			//systemEvents.push_back(_event);
+		//	break;
 		}
 	}
-	std::vector<CEvent>* EventHandler::pollKeyEvents(){
-		return &keyboardEvents;
-	}
-	std::vector<CEvent>* EventHandler::pollMouseEvents(){
-		return &mouseEvents;
-	}
-	std::vector<CEvent>* EventHandler::pollSystemEvents(){
-		return &systemEvents;
-	}
-	std::vector<CEvent>* EventHandler::pollUserEvents(){
-		return &userEvents;
-	}
+}
 
-	int EventHandler::lUpdate(lua_State* L){
-		EventHandler* e = Util::luaP_touserdata<EventHandler>(L, 1);
-		e->update();
+stack<KeyboardEvent>* EventHandler::pollKey(){
+	return &keyEvent;
+}
+stack<MouseButton>* EventHandler::pollMouseButton(){
+	return &mouseButton;
+}
+stack<MouseMotion>* EventHandler::pollMouseMotion(){
+	return &mouseMotion;
+} 
+
+stack<MouseWheel>* EventHandler::pollMouseWheel(){
+	return &mouseWheel;
+}
+
+int EventHandler::lKey(lua_State* L){ 
+	const auto e = lua_tostring(L, 1)[0];
+	lua_pushnumber(L, e);
+	return 1;
+}
+
+int EventHandler::lGetMouseMotion(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseMotion();
+	if (e->size() == 0)
 		return 0;
-	}
+	luaP_newobject<MouseMotion>(L, e->top());
+	e->pop();
+	return 1;
+}
+int EventHandler::lGetMouseMotionCount(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseMotion();
+	lua_pushnumber(L, e->size());
+	return 1;
+}
+
+int EventHandler::lGetMouseMotionHasNext(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseMotion();
+	lua_pushboolean(L, !(e->empty()));
+	return 1;
+}
+
+int EventHandler::lGetKey(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollKey();
+	if (e->size() == 0)
+		return 0;
+	luaP_newobject<KeyboardEvent>(L, e->top());
+	e->pop();
+	return 1;
+}
+
+int EventHandler::lGetKeyHasNext(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollKey();
+	lua_pushboolean(L, !(e->empty()));
+	return 1;
+}
+int EventHandler::lGetKeyCount(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollKey();
+	lua_pushnumber(L, e->size());
+	return 1;
+}
+
+int EventHandler::lGetMouseButton(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseButton();
+	if (e->size() == 0)
+		return 0;
+	luaP_newobject<MouseButton>(L, e->top());
+	e->pop();
+	return 1;
+}
+
+int EventHandler::lGetMouseButtonCount(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseButton();
+	lua_pushboolean(L, !(e->empty()));
+	return 1;
+}
+
+int EventHandler::lGetMouseButtonHasNext(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseButton();
+	lua_pushnumber(L, e->size());
+	return 1;
+}
+
+int EventHandler::lGetMouseWheel(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseWheel();
+	if (e->size() == 0)
+		return 0;
+	luaP_newobject<MouseWheel>(L, e->top());
+	e->pop();
+	return 1;
+}
+
+int EventHandler::lGetMouseWheelCount(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseWheel();
+	lua_pushboolean(L, !(e->empty()));
+	return 1;
+}
+
+int EventHandler::lGetMouseWheelHasNext(lua_State* L){
+	static const auto eh = luaP_touserdata<EventHandler>(L, 1);
+	static const auto e = eh->pollMouseWheel();
+	lua_pushnumber(L, e->size());
+	return 1;
 }

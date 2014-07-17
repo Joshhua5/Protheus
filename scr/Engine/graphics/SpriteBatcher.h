@@ -30,9 +30,7 @@ namespace Pro{
 			SDL_Renderer* renderer;
 			stack<pair<Sprite*, Vector4>> render_stack;
 		public:
-			SpriteBatcher(lua_State* lua_state);
-			SpriteBatcher();
-			~SpriteBatcher();
+			SpriteBatcher(lua_State* lua_state); 
 
 			void push(Asset::Sprite*, Math::Vector4&);
 			void flush();

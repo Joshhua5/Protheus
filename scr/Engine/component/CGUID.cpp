@@ -3,18 +3,20 @@
 using namespace Pro;
 using namespace Component;
 
-CGUID::CGUID(const std::string& name){
-	guid = GUIDLookup::newGUID(name);
+CGUID::CGUID(const std::string& _name){
+	guid = GUIDLookup::newGUID(_name);
+	name = _name;
 }
 
 CGUID::CGUID()
 {
 	guid = GUIDLookup::newGUID("");
+	name = string("");
 }
 
 CGUID::~CGUID()
 {
-	GUIDLookup::releaseGUID(guid);
+	GUIDLookup::releaseGUID(name);
 }
 
 int CGUID::lGetGUID(lua_State* L){
@@ -25,4 +27,8 @@ int CGUID::lGetGUID(lua_State* L){
 
 game_id CGUID::getGUID(){
 	return guid;
+}
+
+string CGUID::getName(){
+	return name;
 }

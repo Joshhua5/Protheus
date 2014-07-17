@@ -28,20 +28,21 @@ namespace Pro{
 				};
 		public:
 			LuaGlobalFactory(lua_State* L){
-				const luaL_Reg globalFunctions[] = {
-						{ "passBackToEngine", &EventHandler::lUpdate },
-						{ "Vector2", &Vector2::lCreate}
+				const luaL_Reg globalFunctions[] = { 
+						{ "Vector2", &Vector2::lCreate},
+						{ "getID", &GUIDLookup::lGetGUID },
+						{ "getName", &GUIDLookup::lGetName }
 				};
 
 				for each(auto i in globalFunctions)
 					lua_register(L, i.name, i.func);
 				 
 				const global globals [] = {
-					// {Default Value, Variable Name}
+					// {Default String Value, Variable Name}
 						{"", "script_engine_mode"},
 						{"", "root_path"},
-						{"", "resource_path"},
-						{"", "main_path"},
+						//{"", "resource_file"},
+						{"", "main_file"},
 						{"", "window_title"},
 						{"", "screen_width"},
 						{"", "screen_height"},

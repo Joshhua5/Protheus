@@ -12,13 +12,12 @@ History:
 
 #pragma once
 
-#include "..\math\Vector2.h"
-#include "IEvent.h"
+#include "..\math\Vector2.h" 
 #include "EMouseButton.h"
 
 namespace Pro{
 	namespace Event{
-		struct MouseButton : IEvent{
+		struct MouseButton{
 			// which button is being pressed
 			EMouseButton type;
 			// if the button is being pressed this is true
@@ -29,7 +28,7 @@ namespace Pro{
 			Math::Vector2 window_position;
 
 			static inline string lGetMetatable(){
-				return "mouse_button_event_metatable";
+				return "mouse_button_metatable";
 			}
 
 			template<typename T>

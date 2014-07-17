@@ -13,12 +13,11 @@ History:
 #pragma once
 
 #include "..\math\Vector2.h"
-#include "IEvent.h"
 #include "EMouseButton.h"
 
 namespace Pro{
 	namespace Event{
-		struct MouseWheel : IEvent{
+		struct MouseWheel{
 			// which button is being pressed
 			EMouseButton type;
 			// if the button is being pressed this is true
@@ -27,7 +26,7 @@ namespace Pro{
 			bool scroll_up;
 
 			static inline string lGetMetatable(){
-				return "mouse_wheel_event_metatable";
+				return "mouse_wheel_metatable";
 			}
 
 			template<typename T>

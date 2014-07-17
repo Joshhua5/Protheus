@@ -12,18 +12,12 @@ History:
 #pragma once
 
 #include <memory>
+#include "LuaUtils.h"
+#include "Error.h"
 
 class BufferBase
 {
 protected:
 	unsigned int m_size;
 	void* m_data;
-public: 
-
-	virtual void* data() = 0;
-	virtual void dereference() = 0;
-
-	virtual void* at(unsigned) = 0;
-	virtual void* operator[](unsigned) = 0; 
-	virtual unsigned size() = 0;
 };

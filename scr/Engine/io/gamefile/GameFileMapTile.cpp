@@ -17,7 +17,7 @@ void GameFileMapTile::unpack(GameFileChunk& buffer){
 	structSize += sizeof(char) * 32;
 
 	unsigned int tileCount =
-		buffer.chunkData.size / structSize;
+		buffer.chunkData.size() / structSize;
 
 	BufferReader reader(&buffer.chunkData);
 

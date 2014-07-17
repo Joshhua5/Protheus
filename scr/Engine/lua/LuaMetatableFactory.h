@@ -17,6 +17,7 @@ History:
 #include "..\Math.h"
 #include "..\audio\CAudioDevice.h"
 #include "..\graphics\Renderer.h"
+#include "..\util\BufferWriter.h"
 #include "..\graphics\Sprite.h"
 #include "..\event\EventHandler.h"
 #include "..\Components.h"
@@ -31,6 +32,7 @@ namespace Pro{
 	using namespace Component;
 	using namespace GameObject;
 	using namespace Graphics;
+	using namespace Networking;
 	using namespace GUI;
 	using namespace Math;
 	using namespace Audio;
@@ -41,7 +43,7 @@ namespace Pro{
 			typedef std::vector<luaL_Reg> Metatable;
 
 			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
-				luaL_newmetatable(L, &T::lGetMetatable()[0]);
+				luaL_newmetatable(L, T::lGetMetatable().data());
 
 				for each(const auto field in fields){
 					lua_pushcfunction(L, field.func);
@@ -55,7 +57,14 @@ namespace Pro{
 
 			template<typename T> inline void defineMetatable(lua_State* L){
 				Metatable fields;
-				T::lGetFunctions<T>(fields);
+				T::lGetFunctions<T>(fields); 
+#ifdef DEBUG
+				std::string functions = "";
+				functions += T::lGetMetatable() + "\n";
+				for each(const auto f in fields)
+					functions += "\t" + std::string(f.name) + "\n";
+				error.reportMessage(functions);
+#endif
 				saveMetatable<T>(L, fields);
 			}
 
@@ -108,8 +117,7 @@ namespace Pro{
 				defineMetatable<MouseWheel>(L);
 				defineMetatable<MouseMotion>(L);
 				defineMetatable<MouseButton>(L);
-				defineMetatable<KeyboardEvent>(L);
-				defineMetatable<CEvent>(L);
+				defineMetatable<KeyboardEvent>(L); 
 
 				// IO
 
@@ -133,7 +141,18 @@ namespace Pro{
 
 				// Networking
 
-				//
+				defineMetatable<Network>(L);
+				defineMetatable<TCPServer>(L);
+				defineMetatable<ClientTCPConnection>(L);
+				defineMetatable<ServerTCPConnection>(L); 
+
+				// Utils
+
+				defineMetatable<Timer>(L);
+				defineMetatable<CBuffer>(L);
+				defineMetatable<BufferReader>(L);
+				defineMetatable<BufferWriter>(L);
+
 			}
 			LuaMetatableFactory();
 		};

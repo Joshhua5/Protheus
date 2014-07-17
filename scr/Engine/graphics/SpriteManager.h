@@ -17,7 +17,7 @@ History:
 #include <unordered_map>
 #include <thread>
 #include <fstream>
-#include <SDL_image.h>
+#include <SDL_image.h> 
 #include "..\graphics\AnimatedSprite.h"
 #include "..\io\CFile.h"
 #include "..\io\FileSystem.h"
@@ -26,23 +26,25 @@ History:
 
 namespace Pro{
 	namespace Graphics{
+		using namespace Asset;
+
 		class SpriteManager
 		{
 			lua_State* lua_state;
 			SDL_Renderer* renderer = nullptr;
 			SDL_Texture* spriteSheet;
-			std::unordered_map<game_id, Asset::Sprite> sprites;
-			std::unordered_map<game_id, Asset::AnimatedSprite*> animations;
+			std::unordered_map<game_id, Sprite*> sprites;
+			std::unordered_map<game_id, AnimatedSprite*> animations;
 
-			Asset::AnimatedSprite loadAnimation(const std::string& path);
+			AnimatedSprite loadAnimation(const std::string& path);
 		public:
 			SpriteManager(lua_State* lua_state);
 			~SpriteManager();
 
-			Asset::Sprite* getSprite(game_id);
-			Asset::AnimatedSprite* getAnim(game_id);
+			Sprite* getSprite(game_id);
+			AnimatedSprite* getAnim(game_id);
 
-			game_id loadSprite(const std::string& name, const CBuffer data);
+			Sprite* loadSprite(const std::string& name, const string& imagePath);
 			void release(game_id);
 
 			// LUA Functions

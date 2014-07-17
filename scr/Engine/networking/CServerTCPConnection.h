@@ -21,10 +21,20 @@ namespace Pro{
 	namespace Networking{
 		struct ServerTCPConnection :
 			public TCPConnection
-		{
-		public:
-			ServerTCPConnection();
+		{  
+		public: 
 			ServerTCPConnection(const string& name);
+
+			void startCommunication();
+
+			static inline string lGetMetatable(){
+				return "c_tcp_connection_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				TCPConnection::lGetFunctions<T>(fields);
+			}
 		};
 	}
 }

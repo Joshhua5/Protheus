@@ -8,10 +8,14 @@ Sprite::Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex) : CGUI
 }
 
 Sprite::~Sprite()
-{
+{ 
 	SDL_DestroyTexture(texture);
 }
 
 SDL_Texture* Sprite::getTexture(){
 	return texture;
+}
+
+void Sprite::releaseTexture(){
+SDL_DestroyTexture(texture);
 }

@@ -30,7 +30,7 @@ namespace Pro{
 		static void releaseGUID(const string& name);
 		static void releaseGUID(const game_id);
 		static game_id  getGUID(const string& name);
-		static const std::string& getName(const game_id _id);
+		static const string getName(const game_id _id);
 
 		static int lGetGUID(lua_State*);
 		static int lGetName(lua_State*);

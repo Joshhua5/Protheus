@@ -16,6 +16,8 @@ History:
 #include <unordered_map>
 #include "SpriteManager.h"
 #include "SpriteBatcher.h"
+#include "Window.h"
+
 namespace Pro{
 	namespace Graphics{
 		class Renderer
@@ -29,8 +31,12 @@ namespace Pro{
 			~Renderer();
 
 			SDL_Renderer* getRenderer();
+			SpriteBatcher* getBatcher();
 
 			void renderScene(Scene*, Graphics::SpriteManager*);
+
+			void startFrame();
+			void endFrame();
 
 			// Lua Functions
 

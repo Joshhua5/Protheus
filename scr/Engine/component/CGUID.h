@@ -19,10 +19,13 @@ History:
 
 namespace Pro{
 	namespace Component{
+		using namespace std;
+
 		class CGUID
 		{
 		protected:
 			game_id guid;
+			string name;
 			virtual void polymorphic(){};
 		public:
 			CGUID(const std::string& name);
@@ -30,6 +33,7 @@ namespace Pro{
 			~CGUID();
 
 			game_id getGUID();
+			string getName();
 
 			static int lGetGUID(lua_State*);
 

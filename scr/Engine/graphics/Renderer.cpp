@@ -3,12 +3,18 @@
 using namespace Pro;
 using namespace Graphics;
   
-Renderer::Renderer(lua_State* lua_state){
-	SDL_Window* w = Util::luaP_registerget<SDL_Window>(lua_state, "SDL_WINDOW");
+Renderer::Renderer(lua_State* _lua_state){
+    lua_state = _lua_state;
+	SDL_Window* w = luaP_getSDLWindow(lua_state);
+	
 	renderer = SDL_CreateRenderer(w, -1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == nullptr)
+		SDL_RENDERER_ACCELERATED);// | SDL_RENDERER_PRESENTVSYNC);
+
+	if (renderer == nullptr){
+		error.reportFatal("Failure to create Renderer");
 		return;
+	} 
+
 	luaP_setSDLRenderer(lua_state, renderer); 
 	sprite_batcher = new SpriteBatcher(lua_state);
 }
@@ -85,9 +91,21 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 	sprite_batcher->flush();
 }
 
+void Renderer::startFrame(){
+	SDL_RenderClear(renderer);
+}
+
+void Renderer::endFrame(){ 
+	SDL_RenderPresent(renderer);
+}
+
+SpriteBatcher* Renderer::getBatcher(){
+	return sprite_batcher;
+}
+
 int Renderer::lGetBatcher(lua_State* L){
-	const auto r = Util::luaP_touserdata<SpriteBatcher>(L, 1);
-	Util::luaP_newobject<SpriteBatcher>(L, r);
+	const auto r = Util::luaP_touserdata<Renderer>(L, -1);
+	Util::luaP_newobject<SpriteBatcher>(L, r->getBatcher());
 	return 1;
 }
 

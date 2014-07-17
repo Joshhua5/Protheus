@@ -310,7 +310,7 @@ extern DECLSPEC SDLNet_SocketSet SDLCALL SDLNet_AllocSocketSet(int maxsockets);
 
 /* Add a socket to a set of sockets to be checked for available data */
 extern DECLSPEC int SDLCALL SDLNet_AddSocket(SDLNet_SocketSet set, SDLNet_GenericSocket sock);
-static __inline__ int SDLNet_TCP_AddSocket(SDLNet_SocketSet set, TCPsocket sock)
+static inline int SDLNet_TCP_AddSocket(SDLNet_SocketSet set, TCPsocket sock)
 {
     return SDLNet_AddSocket(set, (SDLNet_GenericSocket)sock);
 }

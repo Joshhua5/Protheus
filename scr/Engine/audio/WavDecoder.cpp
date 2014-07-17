@@ -29,7 +29,7 @@ CAudioTrack* decodeHeader(CBuffer& header){
 	Data
 	*/
 
-	char* charHeader = static_cast<char*>(header.data);
+	char* charHeader = reinterpret_cast<char*>(header.data());
 
 	// the size of the first subchunk, can change depending on what's stored
 	// in the header
@@ -65,33 +65,34 @@ CAudioTrack* decodeHeader(CBuffer& header){
 // this will convert the data to AUDIO_F32
 // as this is the format internally used
 CBuffer decodeData(CAudioTrack* headerData, CBuffer& data){
-	char* pointer = static_cast<char*>(data.data) + headerData->headerSize;
+	char* pointer = data.data<char>() + headerData->headerSize;
 	//unsigned int sampleSize = (headerData->BitsPerSample / 8) * headerData->channels;
 	unsigned int outSampleSize = headerData->channels * sizeof(float);
 	CBuffer out(headerData->sample_count * headerData->channels * sizeof(float));
 
 	for (unsigned sample = 0; sample < headerData->sample_count; ++sample){
-		for (int channel = 0; channel < headerData->channels; channel++){
+		for (int channel = 0; channel < headerData->channels; ++channel){
+			const unsigned index = (sample * outSampleSize) + channel;
 			switch (headerData->BitsPerSample){
 			case 8:
-				static_cast<float*>(out.data)[sample * outSampleSize + channel] =
+				out.data<float>()[index] =  
 					static_cast<char>(*pointer);
 				pointer += sizeof(char);
 				break;
-			case 16:
-				static_cast<float*>(out.data)[sample * outSampleSize + channel] =
+			case 16: 
+				out.data<float>()[index] =
 					static_cast<short>(*pointer);
 				pointer += sizeof(short);
 				break;
 			case 24:
 				int value;
 				memcpy(&value, pointer, 3);
-				static_cast<float*>(out.data)[sample * outSampleSize + channel] =
+				out.data<float>()[index] =
 					static_cast<float>(value);
-				pointer += (sizeof(char) * 3);
+				pointer += 3;
 				break;
 			case 32:
-				static_cast<float*>(out.data)[sample * outSampleSize + channel] =
+				out.data<float>()[index] =
 					static_cast<float>(*pointer);
 				pointer += sizeof(float);
 				break;
@@ -102,7 +103,7 @@ CBuffer decodeData(CAudioTrack* headerData, CBuffer& data){
 }
 
 CAudioTrack* CWavDecoder::load(IO::CFile& file){
-	return load(file.read(file.getSize()));
+	return load(file.read());
 }
 
 CAudioTrack* CWavDecoder::load(CBuffer& buffer){

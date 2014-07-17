@@ -7,6 +7,8 @@ namespace Pro{
 		windowTitle = name;
 		dim.w = 800;
 		dim.h = 600;
+
+		createWindow();
 	}
 
 	Window::Window()
@@ -14,19 +16,22 @@ namespace Pro{
 		windowTitle = "Unnamed";
 		dim.w = 800;
 		dim.h = 600;
+
+		createWindow();
 	}
 
 	Window::~Window()
 	{
 	}
 
-	bool Window::createWindow(){
+	void Window::createWindow(){
 		window = SDL_CreateWindow(&windowTitle[0], dim.x, dim.y, dim.w, dim.h,
 			SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
-		if (window == nullptr)
-			return false;
-		Util::luaP_registerstore(lua_state, "SDL_WINDOW", window);
-		return true;
+		if (window == nullptr){
+			error.reportFatal("Unable to create window");
+			return;
+		} 
+		luaP_setSDLWindow(lua_state, window); 
 	}
 
 	SDL_Window* Window::getWindow(){

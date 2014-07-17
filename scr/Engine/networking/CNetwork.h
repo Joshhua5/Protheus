@@ -31,17 +31,27 @@ namespace Pro{
 		public:
 			Network();
 			~Network();
-			bool init();
-			void closeAll();
-			ServerTCPConnection* startServer();
-			ServerTCPConnection* startServer(int port);
-			ServerTCPConnection* startServer(const string* name, int port);
+
+			TCPServer* startServer();
+			TCPServer* startServer(const unsigned short port);
+			TCPServer* startServer(const string& name, const unsigned short port, const unsigned maxConnections);
 
 			ClientTCPConnection* connectToServer(const std::string &IP);
-			ClientTCPConnection* connectToServer(const std::string &IP, int port);
-			ClientTCPConnection* connectToServer(const std::string &IP, const string& name, int port);
+			ClientTCPConnection* connectToServer(const std::string &IP, const unsigned short port);
+			ClientTCPConnection* connectToServer(const std::string &IP, const string& name, const unsigned short port);
+			  
+			static int lStartServer(lua_State*);
+			static int lConnectToServer(lua_State*);
 
-			void cleanup();
+			static inline string lGetMetatable(){
+				return "network_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+				fields.push_back({ "startServer", &T::lStartServer });
+				fields.push_back({ "connectToServer", &T::lConnectToServer });
+			}
 		};
 	}
 }

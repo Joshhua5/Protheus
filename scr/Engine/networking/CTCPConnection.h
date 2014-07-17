@@ -21,31 +21,28 @@ namespace Pro{
 			public CConnection
 		{
 		public:
-			TCPsocket serverSock;
-			TCPsocket clientSock;
+			TCPsocket socket; 
 
-			IPaddress* serverAddress;
-			IPaddress* clientAddress;
+			//void handshake();
+			void messenger();
+			void listener();
 
-			void handshake(TCPConnection* connection, thread** listener, thread** messenger);
-			void messenger(TCPConnection* connection);
-			void listener(TCPConnection* connection);
-
-			thread _handshaker;
 			thread* _listener;
-			thread* _messenger;
-
+			thread* _messenger; 
 		public:
-			TCPConnection() : CConnection("TCPConnection"){
-				serverAddress = new IPaddress();
-			}
-			TCPConnection(const string& name) : CConnection(name){
-				serverAddress = new IPaddress();
+			TCPConnection();
+			TCPConnection(const string& name);
+
+			//void startHandshake();
+
+			static inline string lGetMetatable(){
+				return "tcp_connection_metatable";
 			}
 
-			~TCPConnection(){};
-
-			void startHandshake();
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+				CConnection::lGetFunctions<T>(fields);
+			}
 		};
 	}
 }

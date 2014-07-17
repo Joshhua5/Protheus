@@ -625,16 +625,10 @@
     <ClInclude Include="Engine\event\CMouseMotion.h">
       <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\event\EEvent.h">
-      <Filter>Engine Header Files\Event</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\event\EKeyboardKey.h">
       <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\event\EMouseButton.h">
-      <Filter>Engine Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\event\IEvent.h">
       <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\event\EventHandler.h">
@@ -729,9 +723,6 @@
     </ClInclude>
     <ClInclude Include="Engine\lua\LuaObjectFactory.h">
       <Filter>Engine Header Files\Lua</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\event\CEvent.h">
-      <Filter>Engine Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\event\CMouseWheel.h">
       <Filter>Engine Header Files</Filter>
@@ -842,6 +833,9 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\util\BufferBase.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\Error.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

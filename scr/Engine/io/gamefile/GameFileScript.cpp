@@ -12,7 +12,7 @@ char* GameFileScript::getScript(){
 }
 
 void GameFileScript::unpack(GameFileChunk& _script){
-	m_script = static_cast<char*>(_script.chunkData.data);
+	m_script = _script.chunkData.data<char>();
 	// prevent out script from being deleted
 	_script.chunkData.dereference();
 }

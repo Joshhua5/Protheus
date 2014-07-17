@@ -17,6 +17,8 @@ History:
 
 namespace Pro{
 	class IGame{
+	protected:
+		bool exitRequested = false;
 	public:
 		// performs any specified updates
 		virtual int update() = 0;
@@ -28,5 +30,15 @@ namespace Pro{
 		virtual int cleanup() = 0;
 		// game loop
 		virtual int gameLoop() = 0;
+
+		void exit(){
+			exitRequested = true;
+		} 
+
+		static int lExit(lua_State* L){
+			const auto g = Util::luaP_touserdata<IGame>(L, 1);
+			g->exit();
+			return 0;
+		}
 	};
 }

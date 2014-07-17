@@ -27,9 +27,8 @@ namespace Pro{
 		protected:
 			Vector2 dimensions;
 		public:
-			Area(Vector2& dimensions); 
-			Area(){}
-			~Area(){}
+			Area(const Vector2& dimensions);  
+			Area() {}
 
 			Vector2 getDimensions() const;
 

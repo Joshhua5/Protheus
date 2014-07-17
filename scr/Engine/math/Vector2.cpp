@@ -26,13 +26,13 @@ Vector2::Vector2(Vector2&& vec){
 	x = std::move(vec.x);
 	y = std::move(vec.y);
 }
-  
+
 Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
 
-SDL_Point Vector2::operator=(const Vector2& p){
+SDL_Point Vector2::toSDL(){
 	SDL_Point o;
-	o.x = static_cast<int>(p.x);
-	o.y = static_cast<int>(p.y);
+	o.x = static_cast<int>(x);
+	o.y = static_cast<int>(y);
 	return o;
 }
 
@@ -50,6 +50,11 @@ void Vector2::operator+=(Vector2& p){
 Vector2 Pro::Math::Vector2::operator-(Vector2& other)
 {
 	return Vector2(x - other.x, y - other.y);
+}
+
+void Vector2::move(float _x, float _y){
+	x += _x;
+	y += _y;
 }
 
 bool Vector2::contains(float p){
@@ -74,6 +79,13 @@ int Vector2::lHypotenuse(lua_State* L){
 	lua_pushnumber(L, v->hypotenuse());
 	return 1;
 }
+
+int Vector2::lMove(lua_State* L){
+	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
+	v->move(static_cast<float>(lua_tonumber(L, 2)), static_cast<float>(lua_tonumber(L, 3)));
+	return 0;
+}
+
 int Vector2::lGetX(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
 	lua_pushnumber(L, v->x);
@@ -102,7 +114,7 @@ int Vector2::lGetXY(lua_State* L){
 }
 int Vector2::lSetXY(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
-	v->y = static_cast<float>(lua_tonumber(L, 3));
+	v->x = luaP_tofloat(L, 2);
+	v->y = luaP_tofloat(L, 3);
 	return 0;
 }
