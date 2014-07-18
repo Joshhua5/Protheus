@@ -13,7 +13,7 @@ function Initialize()
 	Position = Vector2(20, 20) 
 	Position2 = Vector2(20, 20)
 
-	Server = Network:startServer("connection", 9910)
+	--Server = Network:startServer("connection", 9910)
 end
 
 function Update()  

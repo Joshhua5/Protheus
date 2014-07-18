@@ -2,6 +2,7 @@
 
 using namespace Pro;
 using namespace Lua;
+using namespace Util;
 
 CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){
 	// lua_state is created in object factory
@@ -11,17 +12,12 @@ CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMet
 	luaP_setScenes(lua_state, new SceneContainer());
 	luaP_setNetwork(lua_state, new Networking::Network());
 	luaP_setEventHandler(lua_state, new EventHandler()); 
-	luaP_setTimer(lua_state, new Util::Timer());
-	luaP_setFileSystem(lua_state, new Util::FileSystem());
+	luaP_setTimer(lua_state, new Timer());
+	luaP_setFileSystem(lua_state, new FileSystem());
 
 	defineKeyTable(lua_state);
 }
 CLua::~CLua() { lua_close(lua_state); }
-
-inline void CLua::checkError(bool error){
-	if (error)
-		std::cout << "Lua Error: " << lua_tostring(lua_state, -1) << std::endl;
-}
 
 IGame* CLua::loadConfig(const std::string& _path){
 	// The config file must be next to the executable
@@ -67,7 +63,7 @@ void CLua::loadResources(){
 		luaP_getFileSystem(lua_state)->getRootDir() +
 		lua_tostring(lua_state, -1);
 	// execute file
-	checkError(luaL_dofile(lua_state, &path[0]));
+	checkError(lua_state, luaL_dofile(lua_state, &path[0]));
 }
 
 void CLua::loadMain(){
@@ -78,5 +74,5 @@ void CLua::loadMain(){
 		luaP_getFileSystem(lua_state)->getRootDir() +
 		lua_tostring(lua_state, -1);
 	// execute file
-	checkError(luaL_dofile(lua_state, &path[0]));
+	checkError(lua_state, luaL_dofile(lua_state, &path[0]));
 }

@@ -36,12 +36,11 @@ namespace Pro{
 			Vector2(int, int);
 
 			bool contains(float);
-			void move(float x, float y);
+			void move(float _x, float _y);
 			float hypotenuse();
 
-			//Vector2 operator=(Vector2&&);
-			//Vector2 operator=(const Vector2&);
-			//Vector2 operator=(Vector2);
+			Vector2 operator=(Vector2&&);
+			Vector2 operator=(const Vector2&);  
 			Vector2 operator=(SDL_Point&);   
 			bool operator==(Vector2&);
 			void operator+=(Vector2&);

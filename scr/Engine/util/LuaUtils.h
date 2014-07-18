@@ -21,9 +21,9 @@ using namespace std;
 
 namespace Pro{
 	namespace Util{
-		inline void checkError(lua_State* L, int error){
-			if (error)
-				std::cout << "Lua Error: " << lua_tostring(L, -1) << std::endl;
+		inline void checkError(lua_State* L,const int error_code){
+			if (error_code)
+				error.reportError("Lua Error:" + string(lua_tostring(L, -1))); 
 		}
 
 		template<typename T>
@@ -187,7 +187,7 @@ namespace Pro{
 #define luaP_togameid(L, i)		static_cast<game_id>(lua_tonumber(L, i))
 #define luaP_toushort(L, i)		static_cast<unsigned short>(lua_tonumber(L, i))
 #define luaP_tofloat(L, i)		static_cast<float>(lua_tonumber(L, i))
-#define luaP_todouble(L, i)		static_cast<double>(lua_tonumber(L, i)) 
+#define luaP_todouble(L, i)		static_cast<double>(lua_tonumber(L, i))  
 
 #define	luaP_pushnumber(L, i)	lua_pushnumber(L, static_cast<lua_Number>(i))
 

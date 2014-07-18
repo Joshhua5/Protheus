@@ -45,8 +45,7 @@ namespace Pro{
 			static int startEngine(lua_State*);
 			static int loadSpriteSheet(lua_State* L);
 			static int loadSpriteAnimations(lua_State* L);
-			static int loadScene(lua_State* L);
-			inline static void checkError(bool error);
+			static int loadScene(lua_State* L); 
 
 		public:
 			CLua();

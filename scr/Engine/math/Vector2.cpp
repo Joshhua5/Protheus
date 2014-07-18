@@ -28,6 +28,8 @@ Vector2::Vector2(Vector2&& vec){
 }
 
 Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
+Vector2 Vector2::operator=(const Vector2& p){ return Vector2(p.x, p.y); }
+Vector2 Vector2::operator=(Vector2&& p){ return std::move(p); } 
 
 SDL_Point Vector2::toSDL(){
 	SDL_Point o;
