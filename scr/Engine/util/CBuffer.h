@@ -53,6 +53,8 @@ public:
 	void dereference();
 	 
 	static int lSize(lua_State*);
+	static int lResize(lua_State*);
+	static int lCreate(lua_State*);
 
 	static inline string lGetMetatable(){
 		return "buffer_metatable";
@@ -61,6 +63,7 @@ public:
 	template<typename T>
 	static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
 		fields.push_back({ "size", &T::lSize });
+		fields.push_back({ "resize", &T::lResize }); 
 
 	}
 };

@@ -21,8 +21,10 @@ Sprite* SpriteManager::loadSprite(const string& name, const string& imagePath){
 	// Load in texture 
 	auto tex = IMG_LoadTexture(renderer, imagePath.data());
 	if (tex == nullptr){ 
-		error.reportError("Unable to load image: " + name);
-		error.reportError(IMG_GetError());
+		error.reportError(
+			"Unable to load image: " + name + "\n" +
+			"Image Path :" + imagePath + "\n" +
+			IMG_GetError()); 
 		return nullptr;
 	} 
 	// Query texture dimensions

@@ -39,9 +39,9 @@ namespace Pro{
 			void move(float _x, float _y);
 			float hypotenuse();
 
-			Vector2 operator=(Vector2&&);
-			Vector2 operator=(const Vector2&);  
-			Vector2 operator=(SDL_Point&);   
+			Vector2& operator=(Vector2&&);
+			Vector2& operator=(const Vector2&);  
+			Vector2& operator=(SDL_Point&);   
 			bool operator==(Vector2&);
 			void operator+=(Vector2&);
 			Vector2 operator-(Vector2&);

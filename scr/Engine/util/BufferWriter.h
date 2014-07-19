@@ -69,7 +69,7 @@ namespace Pro{
 			static int lWriteUInt(lua_State*);
 			static int lWriteInt(lua_State*);
 			static int lWriteDouble(lua_State*);
-
+			static int lCreate(lua_State*);
 			static string lGetMetatable(){
 				return "buffer_writer_metatable";
 			}

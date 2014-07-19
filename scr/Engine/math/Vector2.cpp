@@ -27,9 +27,21 @@ Vector2::Vector2(Vector2&& vec){
 	y = std::move(vec.y);
 }
 
-Vector2 Vector2::operator=(SDL_Point& p){ return Vector2(p.x, p.y); }
-Vector2 Vector2::operator=(const Vector2& p){ return Vector2(p.x, p.y); }
-Vector2 Vector2::operator=(Vector2&& p){ return std::move(p); } 
+Vector2& Vector2::operator=(SDL_Point& p){
+	this->x = p.x;
+	this->y = p.y;
+	return *this; 
+}
+Vector2& Vector2::operator=(const Vector2& p){
+	this->x = p.x;
+	this->y = p.y;
+	return *this;
+}
+Vector2& Vector2::operator=(Vector2&& p){
+	this->x = std::move(p.x);
+	this->y = std::move(p.y);
+	return *this;
+} 
 
 SDL_Point Vector2::toSDL(){
 	SDL_Point o;

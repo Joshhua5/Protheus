@@ -55,3 +55,8 @@ int BufferReader::lReadDouble(lua_State* L){
 	lua_pushnumber(L, b->read<double>());
 	return 1;
 }
+
+int BufferReader::lCreate(lua_State* L){
+	Util::luaP_newobject(L,
+		new BufferReader(luaP_touserdata<CBuffer>(L, 1)));
+}

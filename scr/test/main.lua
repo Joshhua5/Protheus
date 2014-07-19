@@ -10,10 +10,10 @@ function Initialize()
 	SpriteManager:loadSprite("sprite2", "image.png")
 	
 	-- Set it's position
-	Position = Vector2(20, 20) 
+	Position = Vector2(20, 20)
 	Position2 = Vector2(20, 20)
 
-	--Server = Network:startServer("connection", 9910)
+	Server = Network:startServer("connection", 9910)
 end
 
 function Update()  

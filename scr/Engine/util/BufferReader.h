@@ -102,6 +102,7 @@ namespace Pro{
 			static int lReadUInt(lua_State*);
 			static int lReadInt(lua_State*);
 			static int lReadDouble(lua_State*);
+			static int lCreate(lua_State*);
 
 			static string lGetMetatable(){
 				return "buffer_reader_metatable";

@@ -19,7 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-/* This is a PNG image file loading framework */
+/* This is a PNG image file loading framework */ 
 
 #include "SDL_image.h"
 
@@ -108,6 +108,8 @@ static struct {
 #ifdef LOAD_PNG_DYNAMIC
 int IMG_InitPNG()
 {
+	// EDITED
+	// consider including libpng statically to remove DLL
     if ( lib.loaded == 0 ) {
         lib.handle = SDL_LoadObject(LOAD_PNG_DYNAMIC);
         if ( lib.handle == NULL ) {
@@ -362,7 +364,10 @@ SDL_Surface *IMG_LoadPNG_RW(SDL_RWops *src)
     }
     start = SDL_RWtell(src);
 
-    if ( !IMG_Init(IMG_INIT_PNG) ) {
+    if ( !IMG_Init(IMG_INIT_PNG) ) 
+	{
+		// EDITED : place error in a more specific area
+		printf("pnglib.dll missing");
         return NULL;
     }
 

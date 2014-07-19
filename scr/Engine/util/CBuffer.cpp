@@ -96,6 +96,17 @@ void* CBuffer::operator[](const unsigned pos) const{
  
 int  CBuffer::lSize(lua_State* L){
 	const auto b = Pro::Util::luaP_touserdata<CBuffer>(L, 1);
-	lua_pushnumber(L, b->size());
+	luaP_pushnumber(L, b->size());
+	return 1;
+}
+
+int  CBuffer::lResize(lua_State* L){
+	const auto b = Pro::Util::luaP_touserdata<CBuffer>(L, 1);
+	b->resize(luaP_touint(L, 1)); 
+	return 0;
+}
+
+int CBuffer::lCreate(lua_State* L){
+	Pro::Util::luaP_newobject(L, new CBuffer(lua_tonumber(L, 1)));
 	return 1;
 }

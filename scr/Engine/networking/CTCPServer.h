@@ -57,7 +57,12 @@ namespace Pro{
 			ServerTCPConnection* newConnection();
 
 			// returns a reference to all the connections
-			vector<ServerTCPConnection>& getConnections();
+			vector<ServerTCPConnection*>& getConnections();
+
+			ServerTCPConnection* getConnection(const game_id);
+
+			// returns a connection which has recieved data
+			ServerTCPConnection* getPendingConnection();
 
 			// returns the amount of connections
 			// with data to be read
@@ -69,16 +74,21 @@ namespace Pro{
 			static int lResumeIncoming(lua_State*);
 			static int lGetConnectionCount(lua_State*);
 			static int lGetConnection(lua_State*);
-			static int lPeek(lua_State*); 
 			static int lRecv(lua_State*);
+			static int lPeek(lua_State*);
 
 			static inline string lGetMetatable(){
 				return "tcp_server_metatable";
 			}
 			 
 			template<typename T>
-			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				//TCPConnection::lGetFunctions<T>(fields);
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){ 
+				fields.push_back({ "pause", &T::lPauseIncoming });
+				fields.push_back({ "resume", &T::lResumeIncoming });
+				fields.push_back({ "getConnectionCount", &T::lGetConnectionCount });
+				fields.push_back({ "getConnection", &T::lGetConnection });
+				fields.push_back({ "recv", &T::lRecv });
+				fields.push_back({ "peek", &T::lPeek }); 
 			}
 		};
 	}

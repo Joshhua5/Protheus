@@ -17,8 +17,8 @@ void GameFileScript::unpack(GameFileChunk& _script){
 	_script.chunkData.dereference();
 }
 
-void GameFileScript::pack(const string& _script, const string& name){
-	m_chunk.chunkName = name;
+void GameFileScript::pack(const string& _script, const string& chunk_name){
+	m_chunk.chunkName = chunk_name;
 	m_chunk.chunkType = EChunkType::SCRIPT;
 	m_chunk.chunkData.init((void*)_script.data(), _script.length(), true);
 

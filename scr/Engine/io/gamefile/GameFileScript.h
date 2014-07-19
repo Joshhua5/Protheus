@@ -38,7 +38,7 @@ namespace Pro{
 			void unpack(GameFileChunk& script);
 
 			// Packs a script into a chunk
-			void pack(const string& script, const string& name); 
+			void pack(const string& script, const string& chunk_name); 
 		};
 	}
 }
