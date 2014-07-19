@@ -112,8 +112,12 @@ int TCPServer::lGetConnectionCount(lua_State* L){
 int TCPServer::lGetConnection(lua_State* L){
 	const auto server = Util::luaP_touserdata<TCPServer>(L, 1);
 	Util::luaP_newobject(L, server->getConnections().at(luaP_togameid(L, 2)));
+	return 1; 
+}
+int TCPServer::lGetNewConnection(lua_State* L){
+	const auto server = Util::luaP_touserdata<TCPServer>(L, 1);
+	Util::luaP_newobject(L, server->newConnection());
 	return 1;
-
 }
 int TCPServer::lPeek(lua_State* L){
 	const auto server = Util::luaP_touserdata<TCPServer>(L, 1);

@@ -74,6 +74,7 @@ namespace Pro{
 			static int lResumeIncoming(lua_State*);
 			static int lGetConnectionCount(lua_State*);
 			static int lGetConnection(lua_State*);
+			static int lGetNewConnection(lua_State*);
 			static int lRecv(lua_State*);
 			static int lPeek(lua_State*);
 
@@ -87,6 +88,7 @@ namespace Pro{
 				fields.push_back({ "resume", &T::lResumeIncoming });
 				fields.push_back({ "getConnectionCount", &T::lGetConnectionCount });
 				fields.push_back({ "getConnection", &T::lGetConnection });
+				fields.push_back({ "getNewConnection", &T::lGetNewConnection });
 				fields.push_back({ "recv", &T::lRecv });
 				fields.push_back({ "peek", &T::lPeek }); 
 			}

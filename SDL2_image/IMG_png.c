@@ -64,7 +64,8 @@
 
 #ifdef macintosh
 #define MACOS
-#endif
+#endif 
+
 #include <png.h>
 
 /* Check for the older version of libpng */
@@ -113,6 +114,8 @@ int IMG_InitPNG()
     if ( lib.loaded == 0 ) {
         lib.handle = SDL_LoadObject(LOAD_PNG_DYNAMIC);
         if ( lib.handle == NULL ) {
+			printf("Unable to load DLL:");
+			printf(LOAD_PNG_DYNAMIC);
             return -1;
         }
         lib.png_create_info_struct =
@@ -365,9 +368,7 @@ SDL_Surface *IMG_LoadPNG_RW(SDL_RWops *src)
     start = SDL_RWtell(src);
 
     if ( !IMG_Init(IMG_INIT_PNG) ) 
-	{
-		// EDITED : place error in a more specific area
-		printf("pnglib.dll missing");
+	{ 
         return NULL;
     }
 

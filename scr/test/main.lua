@@ -35,12 +35,27 @@ function Update()
 		end
 	end
 
+	-- Under Development
+	-- untested
+
 	if Server:peek() ~= 0 then
-		Buffer = Server:recv()
-		Buffer:size()
+		connection = Server:recv()
+		if connection:peek() ~= 0 then 
+			reader = BufferReader(buffer);
+			readString = reader:readString();
+		end
 	end
 
+	-- Prefered Syntax
 
+	--if Server:peek() ~= 0 then
+	--	connection = Server:recv()
+	--	if connection:peek() ~= 0 then
+	--		reader = connection:read()
+	--		readString = reader:readString();
+	--	end 
+	--end
+	 
 end 
 
 
@@ -48,7 +63,7 @@ function Render()
 	-- render the sprite to screen 
 	-- if we don't store the sprite we can use
 	Sprite2 = SpriteManager:getSprite(getID("sprite2"))
-	-- test timer 
+	-- test timer
 	
 	SpriteBatcher:push(Sprite2, Position2)
 	SpriteBatcher:push(Sprite, Position)

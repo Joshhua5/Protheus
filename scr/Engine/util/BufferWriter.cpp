@@ -58,4 +58,5 @@ int BufferWriter::lWriteDouble(lua_State* L){
 int BufferWriter::lCreate(lua_State* L){
 	Util::luaP_newobject(L,
 		new BufferWriter(luaP_touserdata<CBuffer>(L, 1)));
+	return 1;
 }

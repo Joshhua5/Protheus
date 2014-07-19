@@ -59,4 +59,5 @@ int BufferReader::lReadDouble(lua_State* L){
 int BufferReader::lCreate(lua_State* L){
 	Util::luaP_newobject(L,
 		new BufferReader(luaP_touserdata<CBuffer>(L, 1)));
+	return 1;
 }

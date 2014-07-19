@@ -85,6 +85,19 @@ unsigned CBuffer::size() const{
 	return m_size;
 }
 
+void CBuffer::resize(const unsigned size){
+	const auto old_data = m_data;
+	m_data = new char[size];
+	if (m_size > size)
+		// Reducing
+		memcpy(m_data, old_data, size);
+	else 
+		// Increasing
+		memcpy(m_data, old_data, m_size);
+	m_size = size;
+	delete [] m_data;
+}
+
 void* CBuffer::at(const unsigned pos) const {
 	if (pos < m_size)
 		return reinterpret_cast<char*>(m_data) + pos;
@@ -107,6 +120,6 @@ int  CBuffer::lResize(lua_State* L){
 }
 
 int CBuffer::lCreate(lua_State* L){
-	Pro::Util::luaP_newobject(L, new CBuffer(lua_tonumber(L, 1)));
+	Pro::Util::luaP_newobject(L, new CBuffer(luaP_touint(L, 1)));
 	return 1;
 }

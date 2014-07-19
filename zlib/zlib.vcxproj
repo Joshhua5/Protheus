@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{35A16724-7475-4FC0-856D-4776AD701AA8}</ProjectGuid>
-    <RootNamespace>SDL2_image</RootNamespace>
+    <ProjectGuid>{1328A6F4-EACB-4799-8F01-EAB08DD8B39B}</ProjectGuid>
+    <RootNamespace>zlib</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,8 +39,6 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)external\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)..\SDL2\include</IncludePath>
-    <LibraryPath>$(ProjectDir)external\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)lib</LibraryPath>
     <OutDir>$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -48,15 +46,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;LOAD_BMP_;LOAD_GIF_;LOAD_JPG_;LOAD_JPG_DYNAMIC_="libjpeg-9.dll";LOAD_LBM_;LOAD_PCX_;LOAD_PNG;LOAD_PNG_DYNAMIC="libpng16-16.dll";LOAD_PNM_;LOAD_TGA_;LOAD_TIF_;LOAD_TIF_DYNAMIC_="libtiff-5.dll";LOAD_WEBP_;LOAD_WEBP_DYNAMIC_E="libwebp-4.dll";LOAD_XPM;LOAD_XV;PNG_USE_DLL_E;ZLIB_DLL_E;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Lib>
-      <AdditionalDependencies>zlib.lib</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -73,25 +67,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IMG.c" />
-    <ClCompile Include="IMG_bmp.c" />
-    <ClCompile Include="IMG_gif.c" />
-    <ClCompile Include="IMG_jpg.c" />
-    <ClCompile Include="IMG_lbm.c" />
-    <ClCompile Include="IMG_pcx.c" />
-    <ClCompile Include="IMG_png.c" />
-    <ClCompile Include="IMG_pnm.c" />
-    <ClCompile Include="IMG_tga.c" />
-    <ClCompile Include="IMG_tif.c" />
-    <ClCompile Include="IMG_webp.c" />
-    <ClCompile Include="IMG_xcf.c" />
-    <ClCompile Include="IMG_xpm.c" />
-    <ClCompile Include="IMG_xv.c" />
-    <ClCompile Include="IMG_xxx.c" />
+    <ClCompile Include="adler32.c" />
+    <ClCompile Include="compress.c" />
+    <ClCompile Include="crc32.c" />
+    <ClCompile Include="deflate.c" />
+    <ClCompile Include="gzclose.c" />
+    <ClCompile Include="gzlib.c" />
+    <ClCompile Include="gzread.c" />
+    <ClCompile Include="gzwrite.c" />
+    <ClCompile Include="infback.c" />
+    <ClCompile Include="inffast.c" />
+    <ClCompile Include="inflate.c" />
+    <ClCompile Include="inftrees.c" />
+    <ClCompile Include="trees.c" />
+    <ClCompile Include="uncompr.c" />
+    <ClCompile Include="zutil.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="miniz.h" />
-    <ClInclude Include="SDL_image.h" />
+    <ClInclude Include="crc32.h" />
+    <ClInclude Include="deflate.h" />
+    <ClInclude Include="gzguts.h" />
+    <ClInclude Include="inffast.h" />
+    <ClInclude Include="inffixed.h" />
+    <ClInclude Include="inflate.h" />
+    <ClInclude Include="inftrees.h" />
+    <ClInclude Include="trees.h" />
+    <ClInclude Include="zconf.h" />
+    <ClInclude Include="zlib.h" />
+    <ClInclude Include="zutil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -407,12 +407,12 @@ typedef uLong FAR uLongf;
 #else
    typedef unsigned long z_crc_t;
 #endif
-   // EDITED
-#if 0    /* was set to #if 1 by ./configure */
+
+#ifdef HAVE_UNISTD_H    /* may be set to #if 1 by ./configure */
 #  define Z_HAVE_UNISTD_H
 #endif
 
-#if 0    /* was set to #if 1 by ./configure */
+#ifdef HAVE_STDARG_H    /* may be set to #if 1 by ./configure */
 #  define Z_HAVE_STDARG_H
 #endif
 
