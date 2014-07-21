@@ -102,7 +102,8 @@ namespace Pro{
 			return o;
 		}
 
-		// Automaticallys binds the metatable
+		// Automaticallys binds the metatable 
+
 		template<typename T> T** luaP_newobject(lua_State* L, T* data) { 
 #ifdef DEBUG 
 			if (data == nullptr){

@@ -34,7 +34,7 @@ namespace Pro{
 						{ "BufferWriter", &CBuffer::lCreate },
 						{ "BufferReader", &CBuffer::lCreate },
 						{ "getID", &GUIDLookup::lGetGUID },
-						{ "getName", &GUIDLookup::lGetName }
+						{ "getName", &GUIDLookup::lGetName }, 
 				};
 
 				for each(auto i in globalFunctions)
@@ -59,9 +59,8 @@ namespace Pro{
 					lua_pushstring(L, i.defaultValue);
 					lua_setglobal(L, i.valueName);
 				}  
-			}
-			LuaGlobalFactory(){};
-			~LuaGlobalFactory(){};
+			} 
+
 		};
 	}
 }

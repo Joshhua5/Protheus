@@ -66,6 +66,17 @@ typedef struct SDL_Rect
     int w, h;
 } SDL_Rect;
 
+// EDITED
+
+SDL_FORCE_INLINE SDL_Rect SDL_RectCreate(float x, float y, float z, float w){
+	SDL_Rect out;
+	out.x = (int)x;
+	out.y = (int)y;
+	out.w = (int)z;
+	out.h = (int)w;
+	return out;
+}
+
 /**
  *  \brief Returns true if the rectangle has no area.
  */

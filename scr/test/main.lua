@@ -2,7 +2,9 @@
 Sprite = 0
 Position = 0
 Position2 = 0
+isServer = true
 Server = 0
+Client = 0
 
 function Initialize()
 	-- Load in a sprite 
@@ -13,7 +15,11 @@ function Initialize()
 	Position = Vector2(20, 20)
 	Position2 = Vector2(20, 20)
 
-	Server = Network:startServer("connection", 9910)
+	if isServer then
+		Server = Network:startServer("connection", 9910)
+	else
+		Client = Network:connectToServer("localhost", "ClientConnection", 9910)
+	end
 end
 
 function Update()  
@@ -38,15 +44,40 @@ function Update()
 	-- Under Development
 	-- untested
 
-	if Server:peek() ~= 0 then
-		connection = Server:recv()
-		if connection:peek() ~= 0 then 
-			reader = BufferReader(buffer);
-			readString = reader:readString();
+	if isServer then
+		if Server:peek() then
+			connection = Server:recv()
+			if connection:peek() then
+				buffer = connection:recv()
+				reader = BufferReader(buffer)
+				readString = reader:readString()
+				print(readString) 
+			end
+		end 
+	else 
+		if Client:peek() then
+			-- :recv will return a buffer containing the 
+			-- information in a package
+			buffer = Client:recv()
+			-- Creates a reader for the buffer
+			reader = BufferReader(buffer)
+			readString = reader:readString()
+			print(readString) 
 		end
 	end
 
+	-- We want to send a message to the server once connected
+	 
+	if Client:isConnected() then
+		buffer = Buffer(32)
+		writer = BufferWriter(writer)
+		writer:writeString("Hello")
+		Client:send(buffer) 
+	end
+
 	-- Prefered Syntax
+
+	
 
 	--if Server:peek() ~= 0 then
 	--	connection = Server:recv()

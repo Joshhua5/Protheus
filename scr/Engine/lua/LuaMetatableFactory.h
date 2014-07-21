@@ -44,14 +44,19 @@ namespace Pro{
 
 			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
 				luaL_newmetatable(L, T::lGetMetatable().data());
-
-				for each(const auto field in fields){
+				lua_CFunction gc = nullptr;
+				for each(const auto field in fields){ 
 					lua_pushcfunction(L, field.func);
 					lua_setfield(L, -2, field.name); 
 				} 
 				lua_pushstring(L, "__index");
 				lua_pushvalue(L, -2);
-				lua_settable(L, -3); 
+				lua_settable(L, -3);
+				// Allocate a __gc if one is present 
+				lua_pushstring(L, "__gc");
+				lua_pushcfunction(L, &LuaMetatableFactory::lDelete<T>);
+				lua_settable(L, -3);
+				
 				lua_pop(L, -1);
 			}
 
@@ -69,6 +74,14 @@ namespace Pro{
 			}
 
 		public:
+			template<typename T>
+			static int lDelete(lua_State* L){ 
+				auto p = (T**)lua_touserdata(L, 1); 
+				delete *p;
+				*p = nullptr;
+				return 0;
+			}
+
 			LuaMetatableFactory(lua_State* L){
 
 				defineMetatable<ScriptGame>(L);

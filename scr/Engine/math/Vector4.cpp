@@ -17,14 +17,7 @@ Vector4::Vector4(double x, double y, double z, double w) : Vector4(
 	static_cast<float>(z),
 	static_cast<float>(w))
 {}
-
-Vector4::Vector4(SDL_Rect& p) : Vector4(
-	static_cast<float>(p.x),
-	static_cast<float>(p.y),
-	static_cast<float>(p.w),
-	static_cast<float>(p.h))
-{}
-
+ 
 Vector4::Vector4(int x, int y, int z, int w) : Vector4(
 	static_cast<float>(x),
 	static_cast<float>(y),
@@ -87,8 +80,7 @@ Vector4 Vector4::operator/(Vector4& v){
 	o /= v;
 	return o;
 }
-
-Vector4 Vector4::operator=(const SDL_Rect& p){ return Vector4(p.x, p.y, p.w, p.h); }
+ 
 Vector4 Vector4::operator=(Vector4& p){ return Vector4(p.x, p.y, p.z, p.w); }
 
 void Vector4::operator+=(Vector4& v){
@@ -155,16 +147,7 @@ void Vector4::operator/=(Vector4& v){
 	w /= v.w;
 #endif
 }
-
-SDL_Rect Vector4::toSDL(){
-	SDL_Rect o;
-	o.x = static_cast<int>(x);
-	o.y = static_cast<int>(y);
-	o.w = static_cast<int>(z);
-	o.h = static_cast<int>(w);
-	return o;
-}
-
+ 
 int Vector4::lGetX(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
 	lua_pushnumber(L, v->x);

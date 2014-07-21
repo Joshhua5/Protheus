@@ -27,8 +27,7 @@ namespace Pro{
 			Vector2(Vector2&&);
 
 			Vector2(){};
-
-			Vector2(SDL_Point);
+		
 			Vector2(double, double);
 			Vector2(unsigned long long, unsigned long long);
 			Vector2(unsigned int, unsigned int);
@@ -44,19 +43,11 @@ namespace Pro{
 			Vector2& operator=(SDL_Point&);   
 			bool operator==(Vector2&);
 			void operator+=(Vector2&);
-			Vector2 operator-(Vector2&);
-
-			SDL_Point toSDL();
+			Vector2 operator-(Vector2&); 
 
 			// LUA Functions
 
-			static int lCreate(lua_State* L){ 
-				if(lua_isnumber(L, 1) && lua_isnumber(L, 2))
-					Util::luaP_newobject(L, new Vector2(luaP_tofloat(L, 1), luaP_tofloat(L, 2)));
-				else 
-					Util::luaP_newobject(L, new Vector2(0, 0));
-				return 1;
-			}
+			static int lCreate(lua_State* L);
 			static int lContains(lua_State*);
 			static int lHypotenuse(lua_State*);
 			static int lMove(lua_State*);

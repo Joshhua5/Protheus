@@ -19,6 +19,9 @@ History:
 
 #include <SDL.h>
 #include "Vector2.h"
+
+#define SDL_RectCreate(v) SDL_RectCreate(v.x, v.y, v.z, v.w)
+
 namespace Pro{
 	namespace Math{
 #ifdef _MSC_VER
@@ -31,8 +34,7 @@ namespace Pro{
 			Vector4(const Vector4&);
 			// Move Constructor
 			Vector4(Vector4&&);
-
-			Vector4(SDL_Rect& xyzw);
+			 
 			Vector4(Vector2& xy, Vector2& zw);
 			Vector4(double x, double y, double z, double w);
 			Vector4(float x, float y, float z, float w);
@@ -53,8 +55,7 @@ namespace Pro{
 			void operator+=(Vector4&);
 			void operator-=(Vector4&);
 			void operator*=(Vector4&);
-			void operator/=(Vector4&);
-			SDL_Rect toSDL();
+			void operator/=(Vector4&); 
 
 			// Lua Functions
 

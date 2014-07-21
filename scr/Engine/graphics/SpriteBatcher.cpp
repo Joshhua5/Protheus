@@ -17,7 +17,7 @@ void SpriteBatcher::push(Sprite* _s, Vector4& _r){
 void SpriteBatcher::flush(){
 	for (auto x = render_stack.size(); x != 0; --x){
 		const auto pair = &render_stack.top();
-		const auto dstRect = pair->second.toSDL(); 
+		const auto dstRect = SDL_RectCreate(pair->second);
 
 #ifdef DEBUG
 		if (SDL_RenderCopy(renderer, pair->first->getTexture(), NULL, &dstRect) != 0){

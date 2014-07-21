@@ -26,12 +26,7 @@ Vector2::Vector2(Vector2&& vec){
 	x = std::move(vec.x);
 	y = std::move(vec.y);
 }
-
-Vector2& Vector2::operator=(SDL_Point& p){
-	this->x = p.x;
-	this->y = p.y;
-	return *this; 
-}
+ 
 Vector2& Vector2::operator=(const Vector2& p){
 	this->x = p.x;
 	this->y = p.y;
@@ -42,14 +37,7 @@ Vector2& Vector2::operator=(Vector2&& p){
 	this->y = std::move(p.y);
 	return *this;
 } 
-
-SDL_Point Vector2::toSDL(){
-	SDL_Point o;
-	o.x = static_cast<int>(x);
-	o.y = static_cast<int>(y);
-	return o;
-}
-
+ 
 bool Vector2::operator==(Vector2& p){
 	if (x == p.x && y == p.y)
 		return true;
@@ -91,6 +79,14 @@ int Vector2::lContains(lua_State* L){
 int Vector2::lHypotenuse(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
 	lua_pushnumber(L, v->hypotenuse());
+	return 1;
+}
+
+int Vector2::lCreate(lua_State* L){ 
+	if (lua_isnumber(L, 1) && lua_isnumber(L, 2))
+		Util::luaP_newobject(L, new Vector2(luaP_tofloat(L, 1), luaP_tofloat(L, 2)));
+	else 
+		Util::luaP_newobject(L, new Vector2(0, 0));
 	return 1;
 }
 
