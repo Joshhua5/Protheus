@@ -268,6 +268,10 @@ int SDLNet_TCP_Send(TCPsocket sock, const void *datap, int len)
 */
 int SDLNet_TCP_Recv(TCPsocket sock, void *data, int maxlen)
 {
+	// EDITED
+	if (sock == NULL)
+		return 0;
+
     int len;
 
     /* Server sockets are for accepting connections only */

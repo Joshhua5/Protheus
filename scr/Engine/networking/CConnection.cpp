@@ -4,7 +4,7 @@ using namespace Pro;
 using namespace Networking;
 
 CBuffer CConnection::recv(){
-	const auto buffer = inputStack.top();
+	const auto buffer = inputStack.top(); 
 	inputStack.pop();
 	return buffer;
 }
@@ -15,6 +15,10 @@ void CConnection::send(CBuffer& _buffer){
 	mutex.lock();
 	outputStack.push(buf);
 	mutex.unlock();
+}
+
+bool CConnection::isConnected(){
+	return connected.load() ? true : false;
 }
 
 unsigned CConnection::peek(){
@@ -38,5 +42,11 @@ int CConnection::lPeek(lua_State* L){
 int CConnection::lRecv(lua_State* L){
 	const auto c = Util::luaP_touserdata<CConnection>(L, 1); 
 	Util::luaP_newobject(L, c->recv());
+	return 1;
+}
+
+int CConnection::lIsConnected(lua_State* L){
+	const auto c = Util::luaP_touserdata<CConnection>(L, 1);
+	lua_pushboolean(L, c->isConnected());
 	return 1;
 }

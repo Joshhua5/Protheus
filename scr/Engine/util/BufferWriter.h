@@ -78,11 +78,11 @@ namespace Pro{
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				BufferIO::lGetFunctions<T>(fields);
 
-				fields.push_back({ "writeBuffer", &T::lSkip });
-				fields.push_back({ "writeString", &T::lSkip });
-				fields.push_back({ "writeUInt", &T::lGetPosition });
-				fields.push_back({ "writeInt", &T::lSetPosition });
-				fields.push_back({ "writeDouble", &T::lGetBufferSize });
+				fields.push_back({ "writeBuffer", &T::lWriteBuffer });
+				fields.push_back({ "writeString", &T::lWriteString });
+				fields.push_back({ "writeUInt", &T::lWriteUInt });
+				fields.push_back({ "writeInt", &T::lWriteInt });
+				fields.push_back({ "writeDouble", &T::lWriteDouble });
 			}
 		};
 	}

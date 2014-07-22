@@ -1,19 +1,45 @@
- 
-isServer = true
+
+Sprite = 0
+Position = 0
+Position2 = 0
+isServer = false
 Server = 0
 Client = 0
 
-function Initialize() 
-	if isServer then
-		Server = Network:startServer("connection", 9910, 32)
-	else
-		Client = Network:connectToServer("192.168.1.111", "ClientConnection", 9910)
-	end
+function Initialize()
+	-- Load in a sprite 
+	Sprite = SpriteManager:loadSprite("helloWorld", "hello.png")
+	SpriteManager:loadSprite("sprite2", "image.png")
+	
+	-- Set it's position
+	Position = Vector2(20, 20)
+	Position2 = Vector2(20, 20)
+
 
 end
 
 function Update()  
-	print("client 1")
+	if Position:getY() < 30 then  
+		Position:move(0, 1)
+	else
+		Position:setY(0)
+	end
+	
+	-- have Position2 equal the position of the mouse 
+	while EventHandler:mouseMotionHasNext() do
+		Position2 = EventHandler:mouseMotionNext():getPosition() 
+	end  
+
+	while EventHandler:keyHasNext() do
+		event = EventHandler:keyNext()
+		if event:isDown() and event:getKey() == key["w"] then  
+				Position:move(1, 0) 
+		end
+	end
+
+	-- Under Development
+	-- untested
+
 	if isServer then
 		if Server:peek() ~= 0 then
 			connection = Server:recv()
@@ -25,9 +51,7 @@ function Update()
 			end
 		end 
 	else 
-		print("client peek")
 		if Client:peek() ~= 0 then
-			print("client recv")
 			-- :recv will return a buffer containing the 
 			-- information in a package
 			buffer = Client:recv()
@@ -39,21 +63,18 @@ function Update()
 	end
 
 	-- We want to send a message to the server once connected
-	print("client isConnected")
+	 
 	if Client:isConnected() == true then
-		print("1")
 		buffer = Buffer(5)
-		print("2")
 		writer = BufferWriter(buffer)
-		print("3")
 		writer:writeString("Hello")
-		print("4") 
-		print("client send")
 		Client:send(buffer) 
 	end
 
 	-- Prefered Syntax
- 
+
+	
+
 	--if Server:peek() ~= 0 then
 	--	connection = Server:recv()
 	--	if connection:peek() ~= 0 then
@@ -65,6 +86,12 @@ function Update()
 end 
 
 
-function Render() 
-
+function Render()
+	-- render the sprite to screen 
+	-- if we don't store the sprite we can use
+	Sprite2 = SpriteManager:getSprite(getID("sprite2"))
+	-- test timer
+	
+	SpriteBatcher:push(Sprite2, Position2)
+	SpriteBatcher:push(Sprite, Position)
 end

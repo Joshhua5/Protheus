@@ -71,12 +71,8 @@ int SDLNet_AddSocket(SDLNet_SocketSet set, SDLNet_GenericSocket sock)
         if ( set->numsockets == set->maxsockets ) {
             SDLNet_SetError("socketset is full");
             return(-1);
-        }
-		// EDITED
-		// note: iterated after allocating 
-		// so that AddSocket is thread safe.
-        set->sockets[set->numsockets + 1] = (struct SDLNet_Socket *)sock;
-		++set->numsockets;
+        } 
+        set->sockets[set->numsockets++] = (struct SDLNet_Socket *)sock; 
     }
     return(set->numsockets);
 }

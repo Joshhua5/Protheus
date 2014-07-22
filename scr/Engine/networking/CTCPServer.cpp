@@ -16,17 +16,20 @@ TCPServer::~TCPServer()
 
 void TCPServer::listen(){
 	TCPsocket incoming = NULL;
-	while (listening.load()){
+	while (true){
+		if (listening.load() == false)
+			this_thread::sleep_for(chrono::milliseconds(50));
 		if ((incoming = SDLNet_TCP_Accept(serverSock)) == NULL)
 			this_thread::sleep_for(chrono::milliseconds(20));
+		else{ 
+			// Connection found 
+			auto con = new ServerTCPConnection("TCPConnection");
+			con->socket = incoming;
+			con->startCommunication();
 
-		// Connection found 
-		auto con = new ServerTCPConnection("TCPConnection");
-		con->socket = incoming;
-		con->startCommunication(); 
-
-		connections.push_back(con);
-		newConnections.push(con);
+			connections.push_back(con);
+			newConnections.push(con);
+		}
 	}
 }
 
@@ -39,6 +42,7 @@ void TCPServer::startListening(IPaddress serverAddress, const unsigned maxSocket
 		error.reportError("Unable to start server: \n" + string(SDLNet_GetError()));
 		return;
 	}
+	listening.store(true);
 	listener = thread(&TCPServer::listen, this);
 }
 
@@ -72,7 +76,7 @@ vector<ServerTCPConnection*>& TCPServer::getConnections(){
 ServerTCPConnection* TCPServer::getPendingConnection(){
 	for each(const auto con in connections)
 		if (con->peek() != 0)
-			return con; 
+			return con;
 	return nullptr;
 }
 
@@ -80,7 +84,7 @@ ServerTCPConnection* TCPServer::getConnection(const game_id id){
 	register unsigned count = 0;
 	for each(const auto con in connections)
 		if (con->getGUID() == id)
-			return con; 
+			return con;
 	return nullptr;
 }
 
@@ -112,7 +116,7 @@ int TCPServer::lGetConnectionCount(lua_State* L){
 int TCPServer::lGetConnection(lua_State* L){
 	const auto server = Util::luaP_touserdata<TCPServer>(L, 1);
 	Util::luaP_newobject(L, server->getConnections().at(luaP_togameid(L, 2)));
-	return 1; 
+	return 1;
 }
 int TCPServer::lGetNewConnection(lua_State* L){
 	const auto server = Util::luaP_touserdata<TCPServer>(L, 1);

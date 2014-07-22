@@ -28,7 +28,7 @@ namespace Pro{
 			void startCommunication();
 
 			static inline string lGetMetatable(){
-				return "c_tcp_connection_metatable";
+				return "s_tcp_connection_metatable";
 			}
 
 			template<typename T>

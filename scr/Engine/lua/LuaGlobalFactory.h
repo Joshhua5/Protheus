@@ -31,8 +31,8 @@ namespace Pro{
 				const luaL_Reg globalFunctions[] = { 
 						{ "Vector2", &Vector2::lCreate},
 						{ "Buffer", &CBuffer::lCreate },
-						{ "BufferWriter", &CBuffer::lCreate },
-						{ "BufferReader", &CBuffer::lCreate },
+						{ "BufferWriter", &BufferWriter::lCreate },
+						{ "BufferReader", &BufferReader::lCreate },
 						{ "getID", &GUIDLookup::lGetGUID },
 						{ "getName", &GUIDLookup::lGetName }, 
 				};

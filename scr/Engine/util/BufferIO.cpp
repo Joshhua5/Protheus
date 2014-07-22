@@ -20,12 +20,12 @@ unsigned BufferIO::getBufferSize() const{
 	return m_buffer->size();
 }
 unsigned BufferIO::find(const char deliminator) const{
-	register auto buf = (char*)m_buffer + m_head;
+	register auto buf = (char*)m_buffer->at(m_head);
 	while (*buf != deliminator)
 		++buf;
 	// include the deliminator
 	++buf;
-	return buf - ((char*)m_buffer + m_head);
+	return buf - (char*)m_buffer->at(m_head);
 }
 
 int BufferIO::lSkip(lua_State* L){

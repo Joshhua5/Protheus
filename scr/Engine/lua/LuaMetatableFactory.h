@@ -52,10 +52,10 @@ namespace Pro{
 				lua_pushstring(L, "__index");
 				lua_pushvalue(L, -2);
 				lua_settable(L, -3);
-				// Allocate a __gc if one is present 
-				lua_pushstring(L, "__gc");
-				lua_pushcfunction(L, &LuaMetatableFactory::lDelete<T>);
-				lua_settable(L, -3);
+				//// Allocate a __gc if one is present 
+				//lua_pushstring(L, "__gc");
+				//lua_pushcfunction(L, &LuaMetatableFactory::lDelete<T>);
+				//lua_settable(L, -3);
 				
 				lua_pop(L, -1);
 			}

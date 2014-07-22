@@ -15,20 +15,19 @@ inline char* BufferReader::read_raw() const{
 	return m_buffer->data<char>() + m_head;
 }
 
-CBuffer BufferReader::read(const int size){
-	CBuffer out(read_raw(), size, true); 
+CBuffer BufferReader::read(const int size){ 
+	CBuffer out(read_raw(), size, true);
 	skip(size);
-	return out;
+	return move(out);
 }
 
-CBuffer BufferReader::read_delim(const char deliminator){   
-	const auto size = find(deliminator);
-	return move(read(size));
+CBuffer BufferReader::read_delim(const char deliminator){
+	return read(find(deliminator));
 }
 
 // reads until a null terminator is found '\0'
 CBuffer BufferReader::read_string(){
-	return move(read_delim('\0'));
+	return read_delim('\0');
 }
 
 int BufferReader::lReadString(lua_State* L){

@@ -25,7 +25,7 @@ CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
 
 	if (copy){
 		m_data = new char[_size];
-		memcpy(m_data, _data, _size);
+		memcpy(m_data, _data, _size); 
 	}
 	else
 		m_data = _data;
@@ -46,6 +46,39 @@ CBuffer::CBuffer()
 {
 	m_size = 0;
 	m_data = nullptr;
+}
+
+CBuffer::CBuffer(CBuffer&& b) : CBuffer(){
+	m_data = b.data();
+	m_size = b.size();
+	b.dereference();
+}
+
+CBuffer& CBuffer::operator=(CBuffer&& b){
+#ifdef DEBUG
+	if (this == &b)
+		return *this; 
+#endif
+	
+	m_data = b.data();
+	m_size = b.size();
+	b.dereference();
+	return *this;
+}
+
+CBuffer::CBuffer(const CBuffer& b) : CBuffer(){
+	init(b.data<void>(), b.size(), true); 
+}
+
+CBuffer& CBuffer::operator=(const CBuffer& b){
+
+#ifdef DEBUG
+	if (this == &b)
+		return *this;
+#endif 
+
+	this->init(b.data<void>(), b.size(), true);
+	return *this;
 }
 
 CBuffer::~CBuffer()
@@ -95,7 +128,7 @@ void CBuffer::resize(const unsigned size){
 		// Increasing
 		memcpy(m_data, old_data, m_size);
 	m_size = size;
-	delete [] m_data;
+	delete [] old_data;
 }
 
 void* CBuffer::at(const unsigned pos) const {

@@ -16,8 +16,12 @@ BufferWriter::~BufferWriter()
 void BufferWriter::write(void* value, unsigned size){
 	if (m_buffer == nullptr)
 		return; 
-
-	memcpy(m_buffer->at(size) , value, size);
+#ifdef DEBUG
+	if (m_head + size > m_buffer->size())
+		// Resizes the buffer to with 64 bytes overhead
+		m_buffer->resize(m_head + size + 64);
+#endif
+	memcpy(m_buffer->at(m_head) , value, size);
 	skip(size);
 }
 
@@ -33,6 +37,7 @@ int BufferWriter::lWriteString(lua_State* L){
 	const auto b = luaP_touserdata<BufferWriter>(L, 1);
 	const auto str = luaP_tostring(L, 2);
 	b->write((void*)str.first, str.second); 
+	b->write('\0');
 	return 0;
 }
 

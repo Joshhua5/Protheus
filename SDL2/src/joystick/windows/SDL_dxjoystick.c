@@ -538,8 +538,9 @@ SDL_JoystickThread(void *_data)
 
         if ( s_bXInputEnabled && XINPUTGETCAPABILITIES ) {
             /* scan for any change in XInput devices */
-            Uint8 userId;
-            for (userId = 0; userId < SDL_XINPUT_MAX_DEVICES; userId++) {
+			// EDITED
+            Uint8 userId = 0;
+			for (; userId < SDL_XINPUT_MAX_DEVICES; userId++) {
                 XINPUT_CAPABILITIES capabilities;
                 const DWORD result = XINPUTGETCAPABILITIES( userId, XINPUT_FLAG_GAMEPAD, &capabilities );
                 const SDL_bool available = (result == ERROR_SUCCESS);
