@@ -31,13 +31,16 @@ namespace Pro{
 			public Area
 		{
 		private: 
-			SDL_Texture* texture;
+			SDL_Texture* texture; 
+			SDL_Point center;
+
 		public:
 			Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex);
 			Sprite();
 			~Sprite();
 
 			SDL_Texture* getTexture();
+			SDL_Point* getCenter();
 			void releaseTexture();
 
 			// returns the Metatable's name assosiated with this object

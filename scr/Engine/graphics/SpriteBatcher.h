@@ -26,13 +26,22 @@ namespace Pro{
 
 		class SpriteBatcher
 		{
+			struct Details{
+				float scale;
+				float rotation;
+				Sprite* sprite;
+				Vector4 position;
+			};
+
 			lua_State* lua_state;
 			SDL_Renderer* renderer;
-			stack<pair<Sprite*, Vector4>> render_stack;
+			stack<Details> render_stack; 
 		public:
 			SpriteBatcher(lua_State* lua_state); 
 
-			void push(Asset::Sprite*, Math::Vector4&);
+			void push(Sprite*, Vector4&);
+			void push(Sprite*, Vector4&, float scale);
+			void push(Sprite*, Vector4&, float scale, float rotate);
 			void flush();
 
 			// Lua Functions
