@@ -29,6 +29,15 @@
 #include "SDL_pixels_c.h"
 #include "SDL_RLEaccel_c.h"
 
+// EDITED
+SDL_Color SDLP_ColorCreate(Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+	SDL_Color out;
+	out.r = r;
+	out.b = b;
+	out.g = g;
+	out.a = a;
+	return out;
+}
 
 /* Lookup tables to expand partial bytes to the full 0..255 range */
 

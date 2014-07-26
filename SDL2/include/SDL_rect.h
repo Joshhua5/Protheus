@@ -68,7 +68,7 @@ typedef struct SDL_Rect
 
 // EDITED
 
-SDL_FORCE_INLINE SDL_Rect SDL_RectCreate(float x, float y, float z, float w){
+SDL_FORCE_INLINE SDL_Rect SDLP_RectCreate(float x, float y, float z, float w){
 	SDL_Rect out;
 	out.x = (int)x;
 	out.y = (int)y;

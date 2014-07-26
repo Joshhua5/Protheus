@@ -260,6 +260,8 @@ typedef struct SDL_Color
 } SDL_Color;
 #define SDL_Colour SDL_Color
 
+
+
 typedef struct SDL_Palette
 {
     int ncolors;
@@ -298,6 +300,9 @@ typedef struct SDL_PixelFormat
  * \brief Get the human readable name of a pixel format
  */
 extern DECLSPEC const char* SDLCALL SDL_GetPixelFormatName(Uint32 format);
+
+
+extern DECLSPEC SDL_Color SDLP_ColorCreate(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
 /**
  *  \brief Convert one of the enumerated pixel formats to a bpp and RGBA masks.
