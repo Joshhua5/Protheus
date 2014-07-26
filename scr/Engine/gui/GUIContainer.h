@@ -24,8 +24,7 @@ namespace Pro{
 			std::vector<GUIEntity*> window_entities;
 		public:
 			GUIContainer(const std::string& name);
-			GUIContainer();
-			~GUIContainer();
+			GUIContainer(); 
 
 			void update(SDL_Event);
 			void addComponent(GUIEntity*);
@@ -41,6 +40,7 @@ namespace Pro{
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIEntity::lGetFunctions<T>(fields);
 				fields.push_back({ "addComponent", (lua_CFunction)&T::lAddComponent });
 			}
 		};

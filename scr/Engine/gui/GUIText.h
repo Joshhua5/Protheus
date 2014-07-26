@@ -25,13 +25,18 @@ namespace Pro{
 			std::string content;
 		public:
 			GUIText(const std::string& name);
-			GUIText();
-			~GUIText();
+			GUIText(); 
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_text_metatable";
 			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIEntity::lGetFunctions<T>(fields);
+			}
+
 		};
 	}
 }

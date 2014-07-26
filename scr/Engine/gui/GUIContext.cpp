@@ -3,6 +3,7 @@
 using namespace Pro;
 using namespace GUI;
 using namespace Math;
+using namespace Util;
 using namespace std;
 
 GUIContext::GUIContext(const std::string& name) : CGUID(name)
@@ -33,20 +34,20 @@ string GUIContext::getContextName(){
 }
 
 int GUIContext::lAttachWindow(lua_State* L){
-	const auto p = Util::luaP_touserdata<GUIContext>(L, 1);
-	const auto w = Util::luaP_touserdata<GUIWindow>(L, 1);
+	const auto p = luaP_touserdata<GUIContext>(L, 1);
+	const auto w = luaP_touserdata<GUIWindow>(L, 1);
 	p->attachWindow(*w);
 	return 0;
 }
 
 int GUIContext::lDetachWindow(lua_State* L){
-	const auto p = Util::luaP_touserdata<GUIContext>(L, 1);
+	const auto p = luaP_touserdata<GUIContext>(L, 1);
 	p->detachWindow(static_cast<game_id>(lua_tonumber(L, 2)));
 	return 0;
 }
 
 int GUIContext::lGetContextName(lua_State* L){
-	const auto p = Util::luaP_touserdata<GUIContext>(L, 1);
+	const auto p = luaP_touserdata<GUIContext>(L, 1);
 	lua_pushstring(L, p->getContextName().data());
 	return 1;
 }

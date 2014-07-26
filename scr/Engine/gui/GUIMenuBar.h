@@ -22,8 +22,7 @@ namespace Pro{
 			std::vector<GUIDropDownMenu> elements;
 		public:
 			GUIMenuBar(const std::string& name);
-			GUIMenuBar();
-			~GUIMenuBar();
+			GUIMenuBar(); 
 
 			void attachMenu(GUIDropDownMenu* component);
 			void update(std::vector<SDL_Event> events);
@@ -31,6 +30,11 @@ namespace Pro{
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_menubar_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIEntity::lGetFunctions<T>(fields);
 			}
 		};
 	}

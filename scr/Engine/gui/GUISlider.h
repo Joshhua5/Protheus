@@ -27,12 +27,17 @@ namespace Pro{
 			double value;
 		public:
 			GUISlider(const std::string& name);
-			GUISlider();
-			~GUISlider();
+			GUISlider(); 
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_slider_metatable";
+			}
+
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIEntity::lGetFunctions<T>(fields);
 			}
 		};
 	}

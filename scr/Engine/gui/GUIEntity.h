@@ -47,25 +47,18 @@ namespace Pro{
 			GUI_ENTITY_TYPE type;
 
 			GUIEntity(const std::string& name);
-			GUIEntity();
-			~GUIEntity();
+			GUIEntity(); 
 
-			// position includes the width and height
-			Vector2 getPosition();
-			void setPosition(Vector2);
-
-			Vector2 getDimensions();
-			void setDimensions(Vector2);
-
-			GUIEntity* getParent();
+			GUIEntity* getParent() const;
 			void setParent(GUIEntity*);
 
-			bool isClickWithin(const Vector2& v);
+			bool isClickWithin(const Vector2& v) const;
 
 			// Lua functions
 
 			static int lGetParent(lua_State*);
 			static int lSetParent(lua_State*);
+			static int lIsClickWithin(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
@@ -74,8 +67,14 @@ namespace Pro{
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
-				fields.push_back({ "getParent", (lua_CFunction)&T::lGetParent });
-				fields.push_back({ "setParent", (lua_CFunction)&T::lSetParent });
+				CGUID::lGetFunctions<T>(fields);
+				Area::lGetFunctions<T>(fields);
+				Position::lGetFunctions<T>(fields);
+				LuaCallback::lGetFunctions<T>(fields);
+				ActiveState::lGetFunctions<T>(fields);
+				fields.push_back({ "isClickWithin", &T::lIsClickWithin });
+				fields.push_back({ "getParent", &T::lGetParent });
+				fields.push_back({ "setParent", &T::lSetParent });
 			}
 		};
 	}

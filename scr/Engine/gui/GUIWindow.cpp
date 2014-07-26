@@ -5,10 +5,4 @@ using namespace GUI;
 
 GUIWindow::GUIWindow(const std::string& name) : GUIContainer(name){}
 
-GUIWindow::GUIWindow()
-{
-}
-
-GUIWindow::~GUIWindow()
-{
-}
+GUIWindow::GUIWindow() : GUIContainer(){} 

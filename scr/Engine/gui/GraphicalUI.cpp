@@ -5,11 +5,7 @@ using namespace Pro;
 GraphicalUI::GraphicalUI()
 {
 }
-
-GraphicalUI::~GraphicalUI()
-{
-}
-
+ 
 void GraphicalUI::update(std::vector<SDL_Event*> events){
 	for each(auto event in events)
 		for each(auto windows in window_contexts)

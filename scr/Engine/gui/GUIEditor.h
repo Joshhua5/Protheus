@@ -16,8 +16,7 @@ namespace Pro{
 		class GUIEditor
 		{
 		public:
-			GUIEditor();
-			~GUIEditor();
+			GUIEditor(); 
 		};
 	}
 }

@@ -22,12 +22,16 @@ namespace Pro{
 		{
 		public:
 			GUIDropDownMenu(const std::string& name);
-			GUIDropDownMenu();
-			~GUIDropDownMenu();
+			GUIDropDownMenu(); 
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_dropdown_menu_metatable";
+			}
+			 
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIContainer::lGetFunctions<T>(fields);
 			}
 		};
 	}

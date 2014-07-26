@@ -5,10 +5,5 @@ using namespace GUI;
 
 GUIDropDownMenu::GUIDropDownMenu(const std::string& name) : GUIContainer(name) {}
 
-GUIDropDownMenu::GUIDropDownMenu()
-{
-}
-
-GUIDropDownMenu::~GUIDropDownMenu()
-{
-}
+GUIDropDownMenu::GUIDropDownMenu() : GUIContainer() {}
+ 

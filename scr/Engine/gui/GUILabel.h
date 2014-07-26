@@ -20,12 +20,16 @@ namespace Pro{
 		{
 		public:
 			GUILabel(const std::string& name);
-			GUILabel();
-			~GUILabel();
+			GUILabel(); 
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_label_metatable";
+			}
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIEntity::lGetFunctions<T>(fields);
 			}
 		};
 	}

@@ -24,12 +24,17 @@ namespace Pro{
 		{
 		public:
 			GUICollapsibleMenu(const std::string& name);
-			GUICollapsibleMenu();
-			~GUICollapsibleMenu();
+			GUICollapsibleMenu(); 
 
 			// returns the Metatable's name assosiated with this object
 			static string lGetMetatable(){
 				return "gui_collapsible_menu_metatable";
+			}
+
+
+			template<typename T>
+			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+				GUIContainer::lGetFunctions<T>(fields);
 			}
 		};
 	}

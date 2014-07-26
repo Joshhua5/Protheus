@@ -9,7 +9,4 @@ GUIButton::GUIButton(const std::string& name) : GUIEntity(name){
 GUIButton::GUIButton() : GUIEntity()
 {
 }
-
-GUIButton::~GUIButton()
-{
-}
+ 

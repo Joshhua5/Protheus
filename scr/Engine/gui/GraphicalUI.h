@@ -23,8 +23,7 @@ namespace Pro{
 		std::vector<GUI::GUIContext*> inactive_window_contexts;
 		std::vector<GUI::GUIContext*> window_contexts;
 	public:
-		GraphicalUI();
-		~GraphicalUI();
+		GraphicalUI(); 
 
 		// Passing events causes the GUI to update
 		void update(std::vector<SDL_Event*> events);
@@ -40,5 +39,13 @@ namespace Pro{
 		void addContext(GUI::GUIContext* context);
 		GUI::GUIContext* getContext(game_id contextID);
 		void removeContext(game_id);
+
+		static string lGetMetatable(){
+			return "gui_metatable";
+		}
+
+		template<typename T>
+		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){  
+		}
 	};
 }
