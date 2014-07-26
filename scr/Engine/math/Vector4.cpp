@@ -7,7 +7,7 @@ Vector4::Vector4(const Vector4& v) : Vector4(
 	v.x, v.y,
 	v.z, v.w){}
 
-Vector4::Vector4(Vector2& pos, Vector2& dim) : Vector4(
+Vector4::Vector4(const Vector2& pos,const Vector2& dim) : Vector4(
 	pos.x, pos.y,
 	dim.x, dim.y){}
 

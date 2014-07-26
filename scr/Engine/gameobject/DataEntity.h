@@ -21,9 +21,9 @@ History:
 namespace Pro{
 	namespace GameObject{
 		using namespace Util;
-		using namespace std;
-
+		using namespace std; 
 		using namespace Serializer;
+
 		class DataEntity :
 			public Entity
 		{

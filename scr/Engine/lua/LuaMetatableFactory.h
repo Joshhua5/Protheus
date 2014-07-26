@@ -57,7 +57,7 @@ namespace Pro{
 				//lua_pushcfunction(L, &LuaMetatableFactory::lDelete<T>);
 				//lua_settable(L, -3);
 				
-				lua_pop(L, -1);
+				lua_pop(L, 1);
 			}
 
 			template<typename T> inline void defineMetatable(lua_State* L){
@@ -152,6 +152,10 @@ namespace Pro{
 
 				// Scene
 
+				// Font
+
+				defineMetatable<TextRenderer>(L);
+
 				// Networking
 
 				defineMetatable<Network>(L);
@@ -166,8 +170,7 @@ namespace Pro{
 				defineMetatable<BufferReader>(L);
 				defineMetatable<BufferWriter>(L);
 
-			}
-			LuaMetatableFactory();
+			} 
 		};
 	}
 }

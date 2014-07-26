@@ -3,18 +3,19 @@
 using namespace Pro;
 using namespace Lua;
 using namespace Util;
+using namespace Networking;
 
 CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMetatableFactory(lua_state){
 	// lua_state is created in object factory
-	// because it's constructer is the first called upon
+	// because it's constructer is the first called
 	luaL_openlibs(lua_state);
 
 	luaP_setScenes(lua_state, new SceneContainer());
-	luaP_setNetwork(lua_state, new Networking::Network());
+	luaP_setNetwork(lua_state, new Network());
 	luaP_setEventHandler(lua_state, new EventHandler()); 
 	luaP_setTimer(lua_state, new Timer());
 	luaP_setFileSystem(lua_state, new FileSystem());
-
+	luaP_setTextRenderer(lua_state, new TextRenderer(lua_state));
 	defineKeyTable(lua_state);
 }
 CLua::~CLua() { lua_close(lua_state); }
@@ -23,7 +24,7 @@ IGame* CLua::loadConfig(const std::string& _path){
 	// The config file must be next to the executable
 	// to define the root file paths
 
-	Util::checkError(lua_state, luaL_dofile(lua_state, &_path[0]));
+	checkError(lua_state, luaL_dofile(lua_state, &_path[0]));
 
 	// Create and load Window here
 	// The window must be created first to register SDL_WINDOW

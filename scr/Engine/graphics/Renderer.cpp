@@ -2,6 +2,7 @@
 
 using namespace Pro;
 using namespace Graphics;
+using namespace Asset;
   
 Renderer::Renderer(lua_State* _lua_state){
     lua_state = _lua_state;
@@ -53,12 +54,12 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 				if (!tile->isTextured)
 					continue;
 				// populate the sprite pointer
-				if (static_cast<Asset::Sprite*>(tile->spriteCache) == nullptr)
+				if (static_cast<Sprite*>(tile->spriteCache) == nullptr)
 					tile->spriteCache = spriteMng->getSprite(GUIDLookup::getGUID(tile->spriteName));
 
 				auto spriteRect = static_cast<Asset::Sprite*>(tile->spriteCache)->getDimensions();
 				auto position = Vector2(spriteRect.x * x, spriteRect.y * y);
-				sprite_batcher->push(static_cast<Asset::Sprite*>(tile->spriteCache), Vector4(position, spriteRect));
+				sprite_batcher->push(static_cast<Sprite*>(tile->spriteCache), Vector4(position, spriteRect));
 				y++;
 			}
 			++x;

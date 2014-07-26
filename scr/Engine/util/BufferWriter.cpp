@@ -36,7 +36,7 @@ int BufferWriter::lWriteBuffer(lua_State* L){
 int BufferWriter::lWriteString(lua_State* L){
 	const auto b = luaP_touserdata<BufferWriter>(L, 1);
 	const auto str = luaP_tostring(L, 2);
-	b->write((void*)str.first, str.second); 
+	b->write((void*)str.data(), str.length()); 
 	b->write('\0');
 	return 0;
 }

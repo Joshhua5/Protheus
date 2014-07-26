@@ -173,10 +173,8 @@ namespace Pro{
 		}
 
 		// Returns a string as a pair, the second value contains the length
-		inline pair<const char*, size_t> luaP_tostring(lua_State* L, int idx){
-			pair<const char*, size_t> out;
-			const_cast<const char*>(out.first) = lua_tolstring(L, idx, &out.second);
-			return out;
+		inline string luaP_tostring(lua_State* L, int idx){ 
+			return string(lua_tostring(L, idx));
 		}
 
 		/* Useful macro's*/
@@ -194,6 +192,9 @@ namespace Pro{
 
 #define luaP_getFileSystem(lua_state) Pro::Util::luaP_registerget<Pro::Util::FileSystem>(lua_state, "FILESYSTEM")
 #define luaP_setFileSystem(lua_state, data) Pro::Util::luaP_registerstore(lua_state, "FILESYSTEM", data)
+
+#define luaP_setTextRenderer(lua_state, data) Util::luaP_registerstore(lua_state, "TEXTRENDERER", data)
+#define luaP_getTextRenderer(lua_state) Util::luaP_registerget<Pro::Graphics::TextRenderer>(lua_state, "TEXTRENDERER")
 
 #define luaP_setWindow(lua_state, data) Util::luaP_registerstore(lua_state, "WINDOW", data)
 #define luaP_getWindow(lua_state) Util::luaP_registerget<Pro::Window>(lua_state, "WINDOW")

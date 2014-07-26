@@ -15,6 +15,7 @@ History:
 #include "..\gameobject\Scene.h"
 #include <unordered_map>
 #include "SpriteManager.h"
+#include "TextRenderer.h"
 #include "SpriteBatcher.h"
 #include "Window.h"
 
