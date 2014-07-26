@@ -434,6 +434,9 @@
     <ClCompile Include="Engine\util\CBuffer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\graphics\TextRenderer.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -581,9 +584,6 @@
       <Filter>Engine Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Containers.h">
-      <Filter>Engine Header Files\Group Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObjects.h">
       <Filter>Engine Header Files\Group Headers</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Components.h">
@@ -836,6 +836,12 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\util\Error.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjects.h">
+      <Filter>Engine Header Files\Group Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphics\TextRenderer.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>
