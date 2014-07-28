@@ -43,7 +43,7 @@ namespace Pro{
 			static int lGetContextName(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "gui_context_metatable";
 			}
 

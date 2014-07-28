@@ -25,7 +25,7 @@ namespace Pro{
 			GUIDropDownMenu(); 
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "gui_dropdown_menu_metatable";
 			}
 			 

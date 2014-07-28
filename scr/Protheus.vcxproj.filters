@@ -437,6 +437,9 @@
     <ClCompile Include="Engine\graphics\TextRenderer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\util\Pipeline.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -842,6 +845,9 @@
       <Filter>Engine Header Files\Group Headers</Filter>
     </ClInclude>
     <ClInclude Include="Engine\graphics\TextRenderer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\util\Pipeline.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

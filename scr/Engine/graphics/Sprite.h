@@ -44,7 +44,7 @@ namespace Pro{
 			void releaseTexture();
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "asset_sprite_metatable";
 			}
 

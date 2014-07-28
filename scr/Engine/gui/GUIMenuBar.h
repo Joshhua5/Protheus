@@ -28,7 +28,7 @@ namespace Pro{
 			void update(std::vector<SDL_Event> events);
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "gui_menubar_metatable";
 			}
 

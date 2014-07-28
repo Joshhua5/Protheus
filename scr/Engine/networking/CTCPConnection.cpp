@@ -23,7 +23,7 @@ void TCPConnection::messenger(){
 		if (!outputStack.empty()){
 			mutex.lock();
 			// Grab the message
-			CBuffer buffOut = outputStack.top();
+			CBuffer buffOut = outputStack.front();
 			outputStack.pop();
 			mutex.unlock();
 

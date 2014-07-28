@@ -41,7 +41,7 @@ namespace Pro{
 			static int lSetPosition(lua_State*);
 			static int lGetBufferSize(lua_State*);
 
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "buffer_io_metatable";
 			}
 

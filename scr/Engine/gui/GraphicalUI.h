@@ -40,7 +40,7 @@ namespace Pro{
 		GUI::GUIContext* getContext(game_id contextID);
 		void removeContext(game_id);
 
-		static string lGetMetatable(){
+		constexpr static const char* lGetMetatable(){
 			return "gui_metatable";
 		}
 

@@ -41,7 +41,7 @@ namespace Pro{
 			void attachMenuBar(GUIMenuBar* component);
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "gui_window_metatable";
 			}
 

@@ -14,6 +14,7 @@ History:
 #pragma once
 
 #include <stack>
+#include <queue>
 #include "..\io\input.h"
 #include <SDL.h>
 #include "CMouseMotion.h"
@@ -28,18 +29,18 @@ namespace Pro{
 	using namespace std;
 
 	class EventHandler
-	{   
-		stack<MouseButton> mouseButton;
-		stack<MouseWheel> mouseWheel;
-		stack<KeyboardEvent> keyEvent;
-		stack<MouseMotion> mouseMotion;
+	{    
+		queue<MouseButton> mouseButton;
+		queue<MouseWheel> mouseWheel;
+		queue<KeyboardEvent> keyEvent;
+		queue<MouseMotion> mouseMotion;
 	public: 
 
 		void update();
-		stack<KeyboardEvent>* pollKey();
-		stack<MouseButton>* pollMouseButton();
-		stack<MouseMotion>* pollMouseMotion(); 
-		stack<MouseWheel>* pollMouseWheel();
+		queue<KeyboardEvent>* pollKey();
+		queue<MouseButton>* pollMouseButton();
+		queue<MouseMotion>* pollMouseMotion();
+		queue<MouseWheel>* pollMouseWheel();
 
 		static int lGetKey(lua_State*);
 		static int lGetKeyHasNext(lua_State*);

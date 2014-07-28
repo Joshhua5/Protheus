@@ -87,17 +87,17 @@ void EventHandler::update() {
 	}
 }
 
-stack<KeyboardEvent>* EventHandler::pollKey(){
+queue<KeyboardEvent>* EventHandler::pollKey(){
 	return &keyEvent;
 }
-stack<MouseButton>* EventHandler::pollMouseButton(){
+queue<MouseButton>* EventHandler::pollMouseButton(){
 	return &mouseButton;
 }
-stack<MouseMotion>* EventHandler::pollMouseMotion(){
+queue<MouseMotion>* EventHandler::pollMouseMotion(){
 	return &mouseMotion;
 } 
 
-stack<MouseWheel>* EventHandler::pollMouseWheel(){
+queue<MouseWheel>* EventHandler::pollMouseWheel(){
 	return &mouseWheel;
 }
 
@@ -112,7 +112,7 @@ int EventHandler::lGetMouseMotion(lua_State* L){
 	static const auto e = eh->pollMouseMotion();
 	if (e->size() == 0)
 		return 0;
-	luaP_newobject<MouseMotion>(L, e->top());
+	luaP_newobject<MouseMotion>(L, e->front());
 	e->pop();
 	return 1;
 }
@@ -135,7 +135,7 @@ int EventHandler::lGetKey(lua_State* L){
 	static const auto e = eh->pollKey();
 	if (e->size() == 0)
 		return 0;
-	luaP_newobject<KeyboardEvent>(L, e->top());
+	luaP_newobject<KeyboardEvent>(L, e->front());
 	e->pop();
 	return 1;
 }
@@ -158,7 +158,7 @@ int EventHandler::lGetMouseButton(lua_State* L){
 	static const auto e = eh->pollMouseButton();
 	if (e->size() == 0)
 		return 0;
-	luaP_newobject<MouseButton>(L, e->top());
+	luaP_newobject<MouseButton>(L, e->front());
 	e->pop();
 	return 1;
 }
@@ -182,7 +182,7 @@ int EventHandler::lGetMouseWheel(lua_State* L){
 	static const auto e = eh->pollMouseWheel();
 	if (e->size() == 0)
 		return 0;
-	luaP_newobject<MouseWheel>(L, e->top());
+	luaP_newobject<MouseWheel>(L, e->front());
 	e->pop();
 	return 1;
 }

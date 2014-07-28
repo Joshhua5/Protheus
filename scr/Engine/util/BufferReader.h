@@ -39,64 +39,13 @@ namespace Pro{
 			CBuffer read_string();
 
 			template<typename T>
-			inline T read(){
-				return *(T*)(read(sizeof(T)).data());
-			}
+			inline T read();
 
 			template<typename T>
-			inline T* read_array(unsigned int size){
-				return (T*)(read(sizeof(T) * size).data());
-			}
+			inline T* read_array(unsigned int size);
 
 			template<typename T>
-			T serialized_read(Serializer::ClassDefinition def) {
-				T out;
-
-				vector<Member> loaded_members;
-
-				const auto member_count = read<unsigned short>();
-
-				// Check if there's a missmatch of ClassDefinitons
-				if (member_count != def.getMembers().size()){
-					string err = "";
-					for each(const auto members in def.getMembers())
-						err += members.name + "\n";
-					Error::reportError("Missmatch of class definition" + err);
-					return;
-				}
-				
-
-				// Load the class from the buffer
-				for (auto x = member_count; x != 0; --x){
-					Serializer::Member m;
-
-					m.name = string(read_array<char>(32));
-					m.size = read<unsigned>();
-					m.data = read(m.size);
-
-					loaded_members.push_back(m);
-				}
-
-				// check for a match between the definition
-				// and what's been loaded
-				// upon a match, load the data into the object
-				for each(const auto member in def.getMembers())
-					for each(const auto loaded_member in loaded_members){
-					if (member.name != loaded_member.name)
-						continue;
-
-					// Get the pointer to the member
-					const auto member_pointer =
-						static_cast<char*>(&out) +
-						member.offset;
-
-					// copy the data into the object
-					memcpy(member_pointer,
-						loaded_member.data,
-						loaded_member.size);
-					}
-				return out;
-			}
+			T serialized_read(Serializer::ClassDefinition def);
 
 			static int lReadString(lua_State*);
 			static int lReadUInt(lua_State*);
@@ -104,7 +53,7 @@ namespace Pro{
 			static int lReadDouble(lua_State*);
 			static int lCreate(lua_State*);
 
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "buffer_reader_metatable";
 			}
 
@@ -118,5 +67,67 @@ namespace Pro{
 				fields.push_back({ "readDouble", &T::lReadDouble });
 			}
 		};
+
+
+
+		template<typename T>
+		inline T BufferReader::read(){
+			return *(T*) (read(sizeof(T)).data());
+		}
+
+		template<typename T>
+		inline T* BufferReader::read_array(unsigned int size){
+			return (T*) (read(sizeof(T) * size).data());
+		}
+
+		template<typename T>
+		T BufferReader::serialized_read(Serializer::ClassDefinition def) {
+			T out;
+
+			vector<Member> loaded_members;
+
+			const auto member_count = read<unsigned short>();
+
+			// Check if there's a missmatch of ClassDefinitons
+			if (member_count != def.getMembers().size()){
+				string err = "";
+				for each(const auto members in def.getMembers())
+					err += members.name + "\n";
+				Error::reportError("Missmatch of class definition" + err);
+				return;
+			}
+
+
+			// Load the class from the buffer
+			for (auto x = member_count; x != 0; --x){
+				Serializer::Member m;
+
+				m.name = string(read_array<char>(32));
+				m.size = read<unsigned>();
+				m.data = read(m.size);
+
+				loaded_members.push_back(m);
+			}
+
+			// check for a match between the definition
+			// and what's been loaded
+			// upon a match, load the data into the object
+			for each(const auto member in def.getMembers())
+				for each(const auto loaded_member in loaded_members){
+					if (member.name != loaded_member.name)
+						continue;
+
+					// Get the pointer to the member
+					const auto member_pointer =
+						static_cast<char*>(&out) +
+						member.offset;
+
+					// copy the data into the object
+					memcpy(member_pointer,
+						loaded_member.data,
+						loaded_member.size);
+				}
+			return out;
+		} 
 	}
 }

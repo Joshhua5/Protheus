@@ -4,9 +4,9 @@ using namespace Pro;
 using namespace Networking;
 
 CBuffer CConnection::recv(){
-	const auto buffer = inputStack.top(); 
+	const auto buffer = inputStack.front();
 	inputStack.pop();
-	return buffer;
+	return move(buffer);
 }
 
 void CConnection::send(CBuffer& _buffer){
@@ -24,7 +24,7 @@ bool CConnection::isConnected(){
 unsigned CConnection::peek(){
 	if (inputStack.empty())
 		return 0;
-	return inputStack.top().size();
+	return inputStack.front().size();
 }
 
 int CConnection::lSend(lua_State* L){

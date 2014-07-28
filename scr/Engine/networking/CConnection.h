@@ -12,7 +12,7 @@ History:
 #pragma once
 
 #include <SDL_net.h>
-#include <stack>
+#include <queue>
 #include <mutex>
 #include <atomic>
 #include "..\util\BufferReader.h"
@@ -21,13 +21,14 @@ History:
 
 namespace Pro{
 	namespace Networking{
+		using namespace std;
 		struct CConnection :
 			public Component::CGUID
 		{
-			std::mutex mutex;
-			std::stack<CBuffer> inputStack;
-			std::stack<CBuffer> outputStack;
-			std::atomic<bool> connected;
+			mutex mutex;
+			queue<CBuffer> inputStack;
+			queue<CBuffer> outputStack;
+			atomic<bool> connected;
 		public:
 			CConnection(const string& name) : CGUID(name){};
 			CConnection() : CGUID("Connection"){}; 

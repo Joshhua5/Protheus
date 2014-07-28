@@ -26,47 +26,131 @@ Vector2::Vector2(Vector2&& vec){
 	x = std::move(vec.x);
 	y = std::move(vec.y);
 }
- 
-Vector2& Vector2::operator=(const Vector2& p){
+
+inline Vector2& Vector2::operator=(const Vector2& p){
 	this->x = p.x;
 	this->y = p.y;
 	return *this;
 }
-Vector2& Vector2::operator=(Vector2&& p){
+inline Vector2& Vector2::operator=(Vector2&& p){
 	this->x = std::move(p.x);
 	this->y = std::move(p.y);
 	return *this;
-} 
- 
-bool Vector2::operator==(Vector2& p){
+}
+
+inline bool Vector2::operator==(Vector2& p){
 	if (x == p.x && y == p.y)
 		return true;
 	return false;
 }
 
-void Vector2::operator+=(Vector2& p){
+inline void Vector2::operator+=(Vector2& p){
 	x += p.x;
 	y += p.y;
 }
 
-Vector2 Pro::Math::Vector2::operator-(Vector2& other)
-{
-	return Vector2(x - other.x, y - other.y);
+inline void Vector2::operator+=(float val){
+	x += val;
+	y += val;
 }
 
-void Vector2::move(float _x, float _y){
+inline Vector2 Vector2::operator+(Vector2& val){
+	Vector2 out(*this);
+	out += val;
+	return out;
+}
+
+inline Vector2 Vector2::operator+(float val){
+	Vector2 out(*this);
+	out += val;
+	return out;
+}
+
+inline void Vector2::operator-=(Vector2& p){
+	x -= p.x;
+	y -= p.y;
+}
+
+inline void Vector2::operator-=(register float val){
+	x -= val;
+	y -= val;
+}
+
+inline Vector2 Vector2::operator-(Vector2& val){
+	Vector2 out(*this);
+	out -= val;
+	return out;
+}
+
+inline Vector2 Vector2::operator-(float val){
+	Vector2 out(*this);
+	out -= val;
+	return out;
+}
+
+inline void Vector2::operator/=(Vector2& p){
+	x /= p.x;
+	y /= p.y;
+}
+
+inline void Vector2::operator/=(float val){
+	x /= val;
+	y /= val;
+}
+
+inline Vector2 Vector2::operator/(Vector2& val){
+	Vector2 out(*this);
+	out /= val;
+	return out;
+}
+
+inline Vector2 Vector2::operator/(float val){
+	Vector2 out(*this);
+	out /= val;
+	return out;
+}
+
+inline void Vector2::operator*=(Vector2& p){
+	x *= p.x;
+	y *= p.y;
+}
+
+inline void Vector2::operator*=(float val){
+	x *= val;
+	y *= val;
+}
+
+inline Vector2 Vector2::operator*(Vector2& val){
+	Vector2 out(*this);
+	out *= val;
+	return out;
+}
+
+inline Vector2 Vector2::operator*(float val){
+	Vector2 out(*this);
+	out *= val;
+	return out;
+}
+
+inline void Vector2::move(float _x, float _y){
 	x += _x;
 	y += _y;
 }
 
-bool Vector2::contains(float p){
+inline bool Vector2::contains(float p){
 	if ((x > p && y < p) || (x < p && y > p))
 		return true;
 	return false;
 }
 
-float Vector2::hypotenuse(){
+inline float Vector2::length(){
 	return sqrtf((x * x) + (y * y));
+}
+
+inline Vector2 Vector2::normalize(){
+	Vector2 out(*this);
+	out /= out.length();
+	return out;
 }
 
 int Vector2::lContains(lua_State* L){
@@ -76,17 +160,24 @@ int Vector2::lContains(lua_State* L){
 		);
 	return 1;
 }
-int Vector2::lHypotenuse(lua_State* L){
+int Vector2::lLength(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	lua_pushnumber(L, v->hypotenuse());
+	lua_pushnumber(L, v->length());
 	return 1;
 }
 
-int Vector2::lCreate(lua_State* L){ 
+
+int Vector2::lNormalize(lua_State* L){
+	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
+	luaP_pushuserdata(L, v->normalize());
+	return 1;
+}
+
+int Vector2::lCreate(lua_State* L){
 	if (lua_isnumber(L, 1) && lua_isnumber(L, 2))
-		Util::luaP_newobject(L, new Vector2(luaP_tofloat(L, 1), luaP_tofloat(L, 2)));
-	else 
-		Util::luaP_newobject(L, new Vector2(0, 0));
+		luaP_pushuserdata(L, new Vector2(luaP_tofloat(L, 1), luaP_tofloat(L, 2)));
+	else
+		luaP_pushuserdata(L, new Vector2(0, 0));
 	return 1;
 }
 
@@ -118,7 +209,7 @@ int Vector2::lSetY(lua_State* L){
 }
 int Vector2::lGetXY(lua_State* L){
 	Vector2* v = Util::luaP_touserdata<Vector2>(L, 1);
-	float packed_data[] = { v->x, v->y };
+	float packed_data [] = { v->x, v->y };
 	Util::luaP_pusharray<float>(L, packed_data, 2);
 	return 1;
 }

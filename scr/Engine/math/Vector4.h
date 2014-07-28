@@ -75,7 +75,7 @@ namespace Pro{
 			static int lSetXYZW(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "vector4_metatable";
 			}
 

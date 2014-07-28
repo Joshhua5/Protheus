@@ -118,6 +118,8 @@ namespace Pro{
 			return o;
 		}
 
+#define luaP_pushuserdata(L, data) Util::luaP_newobject(L, data)
+
 		template<typename T> T** luaP_newobject(lua_State* L, T data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
 			*o = new T(data);

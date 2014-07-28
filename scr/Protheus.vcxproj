@@ -61,6 +61,7 @@
     <ClCompile Include="Engine\graphics\Sprite.cpp" />
     <ClCompile Include="Engine\graphics\SpriteManager.cpp" />
     <ClCompile Include="Engine\gameobject\Tile.cpp" />
+    <ClCompile Include="Engine\util\Pipeline.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
     <ClCompile Include="Engine\graphics\Window.cpp" />
     <ClCompile Include="Engine\gui\GUIButton.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Engine\gameobject\Tile.h" />
     <ClInclude Include="Engine\util\Error.h" />
     <ClInclude Include="Engine\util\Member.h" />
+    <ClInclude Include="Engine\util\Pipeline.h" />
     <ClInclude Include="Engine\util\Timer.h" />
     <ClInclude Include="Engine\graphics\Window.h" />
     <ClInclude Include="Engine\gui\GUIButton.h" />

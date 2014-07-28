@@ -27,7 +27,7 @@ namespace Pro{
 			GUICollapsibleMenu(); 
 
 			// returns the Metatable's name assosiated with this object
-			static string lGetMetatable(){
+			constexpr static const char* lGetMetatable(){
 				return "gui_collapsible_menu_metatable";
 			}
 
