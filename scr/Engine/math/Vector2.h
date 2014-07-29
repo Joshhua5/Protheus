@@ -11,22 +11,30 @@ History:
 
 *************************************************************************/
 #pragma once
- 
+
 #include <cmath>
 #include "..\util\LuaUtils.h"
 
 namespace Pro{
 	namespace Math{
 
-		struct alignas(16) Vector2{ 
+		struct alignas(16) Vector2{
 			float x, y;
 
 			// Copy constructor
 			Vector2(const Vector2&);
-			Vector2& operator=(const Vector2&); 
+			Vector2& operator=(const Vector2& vec){
+				x = vec.x;
+				y = vec.y;
+				return *this;
+			}
 			// Move Constructor
 			Vector2(Vector2&&);
-			Vector2& operator=(Vector2&&);
+			Vector2& operator=(Vector2&& vec){
+				x = std::move(vec.x);
+				y = std::move(vec.y);
+				return *this;
+			}
 
 			Vector2(){};
 
@@ -42,7 +50,11 @@ namespace Pro{
 			Vector2 normalize();
 
 			Vector2& operator=(float);
-			bool operator==(const Vector2&); 
+
+			bool operator==(const Vector2& p){
+				return (x == p.x && y == p.y) ? true : false;
+			}
+
 
 			void operator+=(float);
 			void operator+=(Vector2&);

@@ -1,5 +1,5 @@
 script_engine_mode = true;
-root_path = "test/";
+root_path = "main/";
 main_path = "main.lua";
 window_title = "test";
 screen_width = 800;

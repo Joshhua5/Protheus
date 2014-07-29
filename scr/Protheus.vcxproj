@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\math\Vector2.cpp" />
     <ClCompile Include="Engine\util\CBuffer.cpp" />
     <ClCompile Include="Engine\util\ClassDefinition.cpp" />
     <ClCompile Include="Engine\gameobject\DataEntity.cpp" />
@@ -112,7 +113,6 @@
     <ClCompile Include="Engine\containers\EntityContainer.cpp" />
     <ClCompile Include="Engine\component\Position.cpp" />
     <ClCompile Include="Engine\component\Area.cpp" />
-    <ClCompile Include="Engine\math\Vector2.cpp" />
     <ClCompile Include="Engine\math\Vector3.cpp" />
     <ClCompile Include="Engine\math\Vector4.cpp" />
     <ClCompile Include="Engine\component\CGUID.cpp" />

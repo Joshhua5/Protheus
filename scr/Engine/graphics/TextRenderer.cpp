@@ -63,9 +63,7 @@ void TextRenderer::flush(){
 		SDL_FreeSurface(surface);
 		SDL_Point dim;
 		SDL_QueryTexture(texture, NULL, NULL, &dim.x, &dim.y);
-		dim.x = (int) ((float) dim.x / text.size);
-		dim.y = (int) ((float) dim.y / text.size);
-		auto rect = SDLP_RectCreate(text.position.x, text.position.y, dim.x, dim.y); 
+		auto rect = SDLP_RectCreate(text.position.x, text.position.y, dim.x / text.size, dim.y / text.size);
 		SDL_RenderCopyEx(renderer, texture, NULL, &rect, text.rotation, NULL, SDL_FLIP_NONE);
 		SDL_DestroyTexture(texture);
 	}
@@ -77,16 +75,16 @@ int TextRenderer::lPushText(lua_State* L){
 	const auto pos = *luaP_touserdata<Vector2>(L, 3);
 
 	// remove one because the TextRenderer is passed by default
-	const auto argument_count = lua_gettop(L) - 1;
+	const auto argument_count = lua_gettop(L);
 
 	switch (argument_count){
-	case 2:
+	case 3:
 		tr->pushText(str, pos);
 		break;
-	case 3:
+	case 4:
 		tr->pushText(str, pos, luaP_toint(L, 4));
 		break;
-	case 4:
+	case 5:
 		tr->pushText(str, pos, luaP_toint(L, 4), luaP_tofloat(L, 5));
 		break; 
 	default:

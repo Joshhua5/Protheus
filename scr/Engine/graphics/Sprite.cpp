@@ -5,12 +5,12 @@ using namespace Asset;
 
 Sprite::Sprite(const string& name, Vector2& dimensions, SDL_Texture* tex) : CGUID(name), Area(dimensions){
 	texture = tex;
-	center.x = dimensions.x / 2;
-	center.y = dimensions.y / 2;
+	center.x = (int) (dimensions.x / 2);
+	center.y = (int) (dimensions.y / 2);
 }
 
 Sprite::~Sprite()
-{ 
+{
 	SDL_DestroyTexture(texture);
 }
 
@@ -23,5 +23,5 @@ SDL_Point* Sprite::getCenter(){
 }
 
 void Sprite::releaseTexture(){
-SDL_DestroyTexture(texture);
+	SDL_DestroyTexture(texture);
 }

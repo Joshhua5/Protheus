@@ -76,7 +76,6 @@ SDL_FORCE_INLINE SDL_Rect SDLP_RectCreate(float x, float y, float z, float w){
 	out.h = (int)w;
 	return out;
 }
-
 /**
  *  \brief Returns true if the rectangle has no area.
  */

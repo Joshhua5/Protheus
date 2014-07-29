@@ -81,7 +81,13 @@ Vector4 Vector4::operator/(Vector4& v){
 	return o;
 }
  
-Vector4 Vector4::operator=(Vector4& p){ return Vector4(p.x, p.y, p.z, p.w); }
+Vector4 Vector4::operator=(Vector4& p){ 
+	x = p.x;
+	y = p.y;
+	z = p.z;
+	w = p.w;
+	return *this;
+}
 
 void Vector4::operator+=(Vector4& v){
 #ifdef __SSE
@@ -170,22 +176,22 @@ int Vector4::lGetW(lua_State* L){
 }
 int Vector4::lSetX(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->x = luaP_tofloat(L, 2);
 	return 0;
 }
 int Vector4::lSetY(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->x = luaP_tofloat(L, 2);
 	return 0;
 }
 int Vector4::lSetZ(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->x = luaP_tofloat(L, 2);
 	return 0;
 }
 int Vector4::lSetW(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->x = luaP_tofloat(L, 2);
 	return 0;
 }
 int Vector4::lGetXYZW(lua_State* L){
@@ -195,6 +201,6 @@ int Vector4::lGetXYZW(lua_State* L){
 }
 int Vector4::lSetXYZW(lua_State* L){
 	Vector4* v = Util::luaP_touserdata<Vector4>(L, 1);
-	v->x = static_cast<float>(lua_tonumber(L, 2));
+	v->x = luaP_tofloat(L, 2);
 	return 0;
 }

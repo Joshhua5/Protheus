@@ -35,7 +35,7 @@ void SpriteBatcher::flush(){
 		auto center = *details.sprite->getCenter();
 
 		// Scale
-		dstRect.w = (int)((float)dstRect.w *details.scale);
+		dstRect.w = (int)((float)dstRect.w * details.scale);
 		dstRect.h = (int)((float)dstRect.h * details.scale); 
 		// Scale the center as well
 		center.x = (int) ((float) center.x * details.scale);
