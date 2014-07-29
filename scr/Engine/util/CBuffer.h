@@ -64,7 +64,7 @@ public:
 	static int lResize(lua_State*);
 	static int lCreate(lua_State*); 
 
-	static inline string lGetMetatable(){
+	/*constexpr*/ static const char* lGetMetatable(){
 		return "buffer_metatable";
 	}
 

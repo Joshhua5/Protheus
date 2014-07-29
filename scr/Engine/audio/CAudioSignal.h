@@ -31,13 +31,13 @@ namespace Pro{
 			Math::Vector2 position;
 			std::vector<IAudioEffect> effects;
 		public:
-			CAudioSignal(Math::Vector2, CAudioTrack);
+			CAudioSignal(const Math::Vector2&,const CAudioTrack&);
 			CAudioSignal();
 			~CAudioSignal();
 
 			void addEffect(IAudioEffect);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "audio_signal_metatable";
 			}
 

@@ -34,7 +34,7 @@ namespace Pro{
 
 			// Lua Functions
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "audio_device_metatable";
 			}
 

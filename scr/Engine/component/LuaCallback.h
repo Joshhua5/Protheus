@@ -35,7 +35,7 @@ namespace Pro{
 			static int lBindCallback(lua_State*);
 
 			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_lua_callback_metatable";
 			}
 			template<typename T>

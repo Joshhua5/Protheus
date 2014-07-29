@@ -52,7 +52,7 @@ namespace Pro{
 			static int lSetPosition(lua_State* L);
 
 			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_posititon_metatable";
 			}
 

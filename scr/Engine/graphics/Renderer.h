@@ -44,7 +44,7 @@ namespace Pro{
 			static int lGetBatcher(lua_State*);
 			static int lRenderScene(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "renderer_metatable";
 			}
 

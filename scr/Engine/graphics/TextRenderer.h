@@ -53,7 +53,7 @@ namespace Pro{
 			static int lPushText(lua_State*);
 			static int lFlush(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "text_renderer_metatable";
 			}
 

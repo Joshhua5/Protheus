@@ -61,7 +61,6 @@
     <ClCompile Include="Engine\graphics\Sprite.cpp" />
     <ClCompile Include="Engine\graphics\SpriteManager.cpp" />
     <ClCompile Include="Engine\gameobject\Tile.cpp" />
-    <ClCompile Include="Engine\util\Pipeline.cpp" />
     <ClCompile Include="Engine\util\Timer.cpp" />
     <ClCompile Include="Engine\graphics\Window.cpp" />
     <ClCompile Include="Engine\gui\GUIButton.cpp" />

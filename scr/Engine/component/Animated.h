@@ -48,7 +48,7 @@ namespace Pro{
 			static int lSetAnimation(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_animated_metatable";
 			}
 			template<typename T>

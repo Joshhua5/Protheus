@@ -52,7 +52,7 @@ namespace Pro{
 			static int lGetSprite(lua_State*);
 			static int lGetAnimation(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "sprite_manager_metatable";
 			}
 

@@ -36,7 +36,7 @@ namespace Pro{
 			}
 
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "mouse_motion_metatable";
 			}
 

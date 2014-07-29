@@ -47,7 +47,7 @@ namespace Pro{
 		} 
 
 		// returns the Metatable's name assosiated with this object
-		constexpr static const char* lGetMetatable(){
+		/*constexpr*/ static const char* lGetMetatable(){
 			return "script_game_metatable";
 		}
 

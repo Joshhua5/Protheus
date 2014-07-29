@@ -54,7 +54,7 @@ namespace Pro{
 			// and moves it into the Map
 			void setTileData(vector<TileType>& data);
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "scene_map_metatable";
 			}
 

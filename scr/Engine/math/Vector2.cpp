@@ -28,17 +28,24 @@ Vector2::Vector2(Vector2&& vec){
 }
 
 inline Vector2& Vector2::operator=(const Vector2& p){
-	this->x = p.x;
-	this->y = p.y;
-	return *this;
-}
-inline Vector2& Vector2::operator=(Vector2&& p){
-	this->x = std::move(p.x);
-	this->y = std::move(p.y);
+	x = p.x;
+	y = p.y;
 	return *this;
 }
 
-inline bool Vector2::operator==(Vector2& p){
+inline Vector2& Vector2::operator=(Vector2&& p){
+	x = std::move(p.x);
+	y = std::move(p.y);
+	return *this;
+}
+
+inline Vector2& Vector2::operator=(float p){
+	x = p;
+	y = p;
+	return *this;
+}
+
+inline bool Vector2::operator==(const Vector2& p){
 	if (x == p.x && y == p.y)
 		return true;
 	return false;
@@ -219,3 +226,4 @@ int Vector2::lSetXY(lua_State* L){
 	v->y = luaP_tofloat(L, 3);
 	return 0;
 }
+ 

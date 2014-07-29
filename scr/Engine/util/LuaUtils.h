@@ -88,7 +88,12 @@ namespace Pro{
 		}
 
 		inline void luaP_setmetatable(lua_State* L, const string& metatable){
-			luaL_getmetatable(L, &metatable[0]);
+			luaL_getmetatable(L, metatable.data());
+			lua_setmetatable(L, -2);
+		}
+
+		inline void luaP_setmetatable(lua_State* L, const char* metatable){
+			luaL_getmetatable(L, metatable);
 			lua_setmetatable(L, -2);
 		}
 
@@ -120,7 +125,7 @@ namespace Pro{
 
 #define luaP_pushuserdata(L, data) Util::luaP_newobject(L, data)
 
-		template<typename T> T** luaP_newobject(lua_State* L, T data) {
+		template<typename T> T** luaP_newobject(lua_State* L, T& data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
 			*o = new T(data);
 			luaP_setmetatable(L, T::lGetMetatable());

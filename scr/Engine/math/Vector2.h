@@ -11,25 +11,22 @@ History:
 
 *************************************************************************/
 #pragma once
-
-#include <SDL.h>
+ 
 #include <cmath>
 #include "..\util\LuaUtils.h"
-
-#ifdef _MSC_VER
-#define ALIGN __declspec(align(16))
-#endif
 
 namespace Pro{
 	namespace Math{
 
-		ALIGN struct Vector2{ 
-			float x, y, pad1, pad2;
+		struct alignas(16) Vector2{ 
+			float x, y;
 
 			// Copy constructor
 			Vector2(const Vector2&);
+			Vector2& operator=(const Vector2&); 
 			// Move Constructor
 			Vector2(Vector2&&);
+			Vector2& operator=(Vector2&&);
 
 			Vector2(){};
 
@@ -44,11 +41,8 @@ namespace Pro{
 			float length();
 			Vector2 normalize();
 
-			Vector2& operator=(Vector2&&);
-			Vector2& operator=(const Vector2&);
-			Vector2& operator=(SDL_Point&);
 			Vector2& operator=(float);
-			bool operator==(Vector2&);
+			bool operator==(const Vector2&); 
 
 			void operator+=(float);
 			void operator+=(Vector2&);
@@ -86,14 +80,14 @@ namespace Pro{
 			static int lSetXY(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "vector2_metatable";
 			}
 
 			template<typename T>
 			static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "contains", &T::lContains });
-				fields.push_back({ "length", &T::lHypotenuse });
+				fields.push_back({ "length", &T::lLength });
 				fields.push_back({ "normalize", &T::lNormalize });
 				fields.push_back({ "move", &T::lMove });
 				fields.push_back({ "getX", &T::lGetX });

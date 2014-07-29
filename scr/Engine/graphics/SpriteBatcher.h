@@ -49,7 +49,7 @@ namespace Pro{
 			static int lPush(lua_State*);
 			static int lFlush(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "sprite_batcher_metatable";
 			}
 

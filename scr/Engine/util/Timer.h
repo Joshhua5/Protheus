@@ -39,7 +39,7 @@ namespace Pro{
 			static int lGetTickDelta(lua_State*);
 			static int lGetTicksPerSec(lua_State*);
 
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "timer_metatable";
 			}
 

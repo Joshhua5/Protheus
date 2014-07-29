@@ -35,7 +35,7 @@ namespace Pro{
 			  
 			void startHandshake(IPaddress );
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "c_tcp_connection_metatable";
 			}
 

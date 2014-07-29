@@ -43,7 +43,7 @@ namespace Pro{
 			typedef std::vector<luaL_Reg> Metatable;
 
 			template<typename T> inline void saveMetatable(lua_State* L, Metatable& fields){
-				luaL_newmetatable(L, T::lGetMetatable().data());
+				luaL_newmetatable(L, T::lGetMetatable());
 				lua_CFunction gc = nullptr;
 				for each(const auto field in fields){ 
 					lua_pushcfunction(L, field.func);
@@ -65,7 +65,7 @@ namespace Pro{
 				T::lGetFunctions<T>(fields); 
 #ifdef DEBUG
 				std::string functions = "";
-				functions += T::lGetMetatable() + "\n";
+				functions += string(T::lGetMetatable()) + "\n";
 				for each(const auto f in fields)
 					functions += "\t" + std::string(f.name) + "\n";
 				error.reportMessage(functions);

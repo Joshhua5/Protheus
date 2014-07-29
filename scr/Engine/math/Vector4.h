@@ -17,18 +17,15 @@ History:
 #include <xmmintrin.h>
 #endif
 
-#include <SDL.h>
+#include <SDL.h> 
 #include "Vector2.h"
 
 #define SDL_RectCreate(v) SDLP_RectCreate(v.x, v.y, v.z, v.w)
 #define SDL_ColorCreate(v)  SDLP_ColorCreate((Uint8) v.x, (Uint8) v.y, (Uint8) v.z, (Uint8) v.w)
 
 namespace Pro{
-	namespace Math{
-#ifdef _MSC_VER
-		__declspec(align(16))
-#endif
-		struct Vector4{
+	namespace Math{  
+		struct alignas(16) Vector4{
 			float x, y, z, w;
 
 			// Copy Constructor
@@ -75,7 +72,7 @@ namespace Pro{
 			static int lSetXYZW(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "vector4_metatable";
 			}
 

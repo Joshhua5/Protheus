@@ -78,7 +78,7 @@ namespace Pro{
 			static int lRecv(lua_State*);
 			static int lPeek(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "tcp_server_metatable";
 			}
 			 

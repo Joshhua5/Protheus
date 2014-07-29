@@ -47,7 +47,7 @@ namespace Pro{
 			static int lSetDimensions(lua_State*);
 
 			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_area_metatable";
 			}
 			template<typename T>

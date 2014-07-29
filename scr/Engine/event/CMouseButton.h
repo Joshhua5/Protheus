@@ -27,7 +27,7 @@ namespace Pro{
 			// Position of the mouse relative to the window
 			Math::Vector2 window_position;
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "mouse_button_metatable";
 			}
 

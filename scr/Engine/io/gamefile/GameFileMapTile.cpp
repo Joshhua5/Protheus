@@ -43,7 +43,7 @@ void GameFileMapTile::pack(vector<TileType>& _tiles){
 	BufferWriter writer(&m_chunk.chunkData);
 
 	for each(auto tile in _tiles){
-		writer.write<short>(tile.tileID);
+		writer.write<unsigned short>(tile.tileID);
 		writer.write<bool>(tile.passable);
 		writer.write<bool>(tile.isTextured);
 		writer.write_array<char>(&tile.spriteName[0], 32);

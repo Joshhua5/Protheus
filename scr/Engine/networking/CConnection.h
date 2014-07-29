@@ -50,7 +50,7 @@ namespace Pro{
 			static int lRecv(lua_State*);
 			static int lIsConnected(lua_State*);
 			 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "connection_metatable";
 			}
 

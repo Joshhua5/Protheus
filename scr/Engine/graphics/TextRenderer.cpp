@@ -42,7 +42,7 @@ void TextRenderer::pushText(const string& text, const Vector2& position, int fon
 
 void TextRenderer::pushText(const string& text, const Vector2& position, int fontSize, float rotation){ 
 	Details details;
-	details.size = fontSize;
+	details.size = (float)fontSize;
 	details.position = position;
 	details.color = Vector4(255, 255, 255, 0);
 	details.text = text;

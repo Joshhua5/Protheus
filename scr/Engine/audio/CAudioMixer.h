@@ -36,16 +36,16 @@ namespace Pro{
 			CAudioBuffer* getStream();
 			bool isStreamReady();
 			void refillStream();
-			void playTrack(CAudioSignal);
+			void playTrack(const CAudioSignal&);
 			// Will create a signal from the track
-			void playTrack(CAudioTrack);
+			void playTrack(const CAudioTrack&);
 			void pause();
 			void resume();
 			void stop();
 
 			// LUA Functions
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "audio_mixer_metatable";
 			}
 

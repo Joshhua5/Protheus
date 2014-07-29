@@ -28,7 +28,7 @@ namespace Pro{
 			GUIText(); 
 
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "gui_text_metatable";
 			}
 

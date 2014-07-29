@@ -60,7 +60,7 @@ namespace Pro{
 
 		static int lKey(lua_State*); 
 
-		static inline string lGetMetatable(){
+		/*constexpr*/ static const char* lGetMetatable(){
 			return "event_handler_metatable";
 		}
 

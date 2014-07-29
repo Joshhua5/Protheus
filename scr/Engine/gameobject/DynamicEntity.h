@@ -35,7 +35,7 @@ namespace Pro{
 			// LUA Functions
 
 			// returns the Metatable's name assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "gameobject_dynamic_metatable";
 			}
 

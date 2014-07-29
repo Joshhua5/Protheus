@@ -43,7 +43,7 @@ namespace Pro{
 			static int lStartServer(lua_State*);
 			static int lConnectToServer(lua_State*);
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "network_metatable";
 			}
 

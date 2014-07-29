@@ -38,7 +38,7 @@ namespace Pro{
 			static int lAddFrame(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "gameobject_animated_sprite_metatable";
 			}
 

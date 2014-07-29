@@ -27,7 +27,7 @@ namespace Pro{
 
 			void startCommunication();
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "s_tcp_connection_metatable";
 			}
 

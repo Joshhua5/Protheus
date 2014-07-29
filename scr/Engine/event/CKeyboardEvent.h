@@ -49,7 +49,7 @@ namespace Pro{
 				return 1;
 			}
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "event_key_metatable";
 			}
 

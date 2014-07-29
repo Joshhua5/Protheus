@@ -38,8 +38,8 @@ void SpriteBatcher::flush(){
 		dstRect.w = (int)((float)dstRect.w *details.scale);
 		dstRect.h = (int)((float)dstRect.h * details.scale); 
 		// Scale the center as well
-		center.x *= details.scale;
-		center.y *= details.scale;
+		center.x = (int) ((float) center.x * details.scale);
+		center.y = (int) ((float) center.y * details.scale);
 
 #ifdef DEBUG  
 		if (SDL_RenderCopyEx(
@@ -91,10 +91,10 @@ int SpriteBatcher::lPush(lua_State* L){
 		sb->push(spt, v);
 		break;
 	case 3:
-		sb->push(spt, v, lua_tonumber(L, 4));
+		sb->push(spt, v, luaP_tofloat(L, 4));
 		break;
 	case 4: 
-		sb->push(spt, v, lua_tonumber(L, 4), lua_tonumber(L, 5));
+		sb->push(spt, v, luaP_tofloat(L, 4), luaP_tofloat(L, 5));
 		break;
 	default:
 		error.reportError("Sprite Batcher called with a invalid number of arguments");

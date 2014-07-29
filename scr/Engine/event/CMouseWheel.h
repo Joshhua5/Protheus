@@ -25,7 +25,7 @@ namespace Pro{
 			// if the button is being released this is true
 			bool scroll_up;
 
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "mouse_wheel_metatable";
 			}
 

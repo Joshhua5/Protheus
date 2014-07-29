@@ -40,7 +40,7 @@ namespace Pro{
 			vector<vector<short>> getData();
 			bool visible(DataEntity& cam);
 
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "map_section_metatable";
 			}
 

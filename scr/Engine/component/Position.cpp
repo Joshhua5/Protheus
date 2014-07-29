@@ -30,7 +30,6 @@ int Position::lGetPosition(lua_State* L){
 
 int Position::lSetPosition(lua_State* L){
 	const auto p = Util::luaP_touserdata<Position>(L, 1);
-	p->setPosition(Vector2(lua_tonumber(L, 2), lua_tonumber(L, 3))
-		);
+	p->setPosition(Vector2(lua_tonumber(L, 2), lua_tonumber(L, 3)));
 	return 0;
 }

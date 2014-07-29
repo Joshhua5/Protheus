@@ -53,7 +53,7 @@ namespace Pro{
 			static int lReadDouble(lua_State*);
 			static int lCreate(lua_State*);
 
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "buffer_reader_metatable";
 			}
 

@@ -34,7 +34,7 @@ namespace Pro{
 			static int lAddComponent(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "gui_container_metatable";
 			}
 

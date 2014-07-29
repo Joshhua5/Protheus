@@ -38,7 +38,7 @@ namespace Pro{
 			static int lGetGUID(lua_State*);
 
 			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_guid_metatable";
 			}
 			template<typename T>

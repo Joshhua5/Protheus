@@ -12,7 +12,7 @@ float inline getDropoff(Math::Vector2& pos){
 	// Inverse Square Law  = P / 4 * PI * R * R
 	// R : distance
 	// P : Power
-	float distance = pos.hypotenuse();
+	float distance = pos.length();
 	return 1.0f / (4.0f * PI * (distance * distance));
 }
 
@@ -57,9 +57,9 @@ void CAudioMixer::refillStream(){
 	m_stream_refill.store(true);
 }
 
-void CAudioMixer::playTrack(CAudioSignal){}
+void CAudioMixer::playTrack(const CAudioSignal&){}
 
-void CAudioMixer::playTrack(CAudioTrack){}
+void CAudioMixer::playTrack(const CAudioTrack&){}
 
 void CAudioMixer::pause(){}
 

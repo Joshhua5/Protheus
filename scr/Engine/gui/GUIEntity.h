@@ -61,7 +61,7 @@ namespace Pro{
 			static int lIsClickWithin(lua_State*);
 
 			// returns the Metatable's name assosiated with this object
-			constexpr static const char* lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "gui_entity_metatable";
 			}
 

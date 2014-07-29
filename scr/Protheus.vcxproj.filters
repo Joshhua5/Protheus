@@ -437,9 +437,6 @@
     <ClCompile Include="Engine\graphics\TextRenderer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\util\Pipeline.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">

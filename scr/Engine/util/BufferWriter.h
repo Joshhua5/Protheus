@@ -32,7 +32,14 @@ namespace Pro{
 			void write(void* value, unsigned size);
 			  
 			template<typename T>
-			void inline write(T data){ 
+			void inline write(T& data){ 
+				write(&data, sizeof(T));
+			}
+
+			template<typename T>
+			void inline write(T&& data){
+				// Not sure about the behavior for r values
+				// because this is a Universal Reference.
 				write(&data, sizeof(T));
 			}
 
@@ -70,7 +77,8 @@ namespace Pro{
 			static int lWriteInt(lua_State*);
 			static int lWriteDouble(lua_State*);
 			static int lCreate(lua_State*);
-			constexpr static const char* lGetMetatable(){
+
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "buffer_writer_metatable";
 			}
 

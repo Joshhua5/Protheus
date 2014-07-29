@@ -29,7 +29,7 @@ namespace Pro{
 			std::string spriteName;
 			void* spriteCache = nullptr;
 
-			static std::string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "tile_type_metatable";
 			}
 

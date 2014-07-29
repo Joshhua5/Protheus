@@ -36,7 +36,7 @@ namespace Pro{
 			static int lAttachFunction(lua_State*);
 
 			// returns the Metatable assosiated with this object
-			static inline string lGetMetatable(){
+			/*constexpr*/ static const char* lGetMetatable(){
 				return "component_scriptable_metatable";
 			}
 			template<typename T>
