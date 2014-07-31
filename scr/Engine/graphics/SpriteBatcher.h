@@ -31,8 +31,7 @@ namespace Pro{
 				float rotation;
 				Sprite* sprite;
 				Vector4 position;
-			};
-
+			}; 
 			lua_State* lua_state;
 			SDL_Renderer* renderer;
 			stack<Details> render_stack; 

@@ -142,6 +142,8 @@
     <ClCompile Include="Engine\graphics\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Gamestate.h" />
+    <ClInclude Include="Engine\StateStack.h" />
     <ClInclude Include="Engine\util\AlignedBuffer.h" />
     <ClInclude Include="Engine\util\BufferBase.h" />
     <ClInclude Include="Engine\util\ClassDefinition.h" />

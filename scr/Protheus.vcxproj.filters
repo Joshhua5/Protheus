@@ -847,5 +847,11 @@
     <ClInclude Include="Engine\util\Pipeline.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Gamestate.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\StateStack.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
