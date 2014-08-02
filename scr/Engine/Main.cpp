@@ -16,12 +16,12 @@ int main(int argc, char* args[])
 
 		static_cast<ScriptGame*>(game)->initialize();
 		static_cast<ScriptGame*>(game)->gameLoop();
-		static_cast<ScriptGame*>(game)->cleanup();
+		//static_cast<ScriptGame*>(game)->cleanup();
 	}
 	else{
 		static_cast<DataGame*>(game)->initialize();
 		static_cast<DataGame*>(game)->gameLoop();
-		static_cast<DataGame*>(game)->cleanup();
+		//static_cast<DataGame*>(game)->cleanup();
 	}
 
 

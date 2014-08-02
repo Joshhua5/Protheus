@@ -10,6 +10,8 @@
 *.pdb
 *.lastbuildstate
 *.tlog
+*.a
+*.o
 *.v12.suo
 *.v11.suo
 *.suo

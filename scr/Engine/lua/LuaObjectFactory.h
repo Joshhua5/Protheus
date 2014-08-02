@@ -33,6 +33,8 @@ namespace Pro{
 		public:
 			LuaObjectFactory(lua_State** L){
 				*L = luaL_newstate();
+				// define luaP_state for global access
+				Util::luaP_state(*L);
 				const luaL_Reg globalFunctions[] = { 
 					{ "scene_create", &LuaObjectFactory::createScene }
 				};
