@@ -39,15 +39,15 @@ typedef struct SDLNet_version {
 
 #else /* WITHOUT_SDL */
 
-#include "..\SDL2\include\SDL.h"
-#include "..\SDL2\include\SDL_endian.h"
-#include "..\SDL2\include\SDL_version.h"
+#include "SDL.h"
+#include "SDL_endian.h"
+#include "SDL_version.h"
 
 typedef SDL_version SDLNet_version;
 
 #endif /* WITHOUT_SDL */
 
-#include "..\SDL2\include\begin_code.h"
+#include "begin_code.h"
 
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
@@ -438,6 +438,6 @@ static __inline__ Uint32 _SDLNet_Read32(const void *areap)
 #ifdef __cplusplus
 }
 #endif
-#include "..\SDL2\include\close_code.h"
+#include "close_code.h"
 
 #endif /* _SDL_NET_H */
