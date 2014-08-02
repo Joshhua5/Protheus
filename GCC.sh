@@ -23,7 +23,7 @@ ar rcs $lib/libSDL2$bit.a $lib/SDL2$bit.o
 # SDL net lib
 
 gcc -c $SDLN/SDLnet.c -o $lib/SDL2_net$bit.o -I $SDL2/include -std=$cstd -m$bit
-ar rcs $lib/libSDL2_net$bit.a $lib/SDL2_net$bit.a
+ar rcs $lib/libSDL2_net$bit.a $lib/SDL2_net$bit.o
 
 # SDL image lib
 
@@ -31,4 +31,4 @@ gcc -c $SDLI/SDL_image.h -I $SDLI/external/include -I $SDL2/include -o $lib/SDL2
 ar rcs $lib/libSDL2_image$bit.a $lib/SDL2_image$bit.o
 
 # Protheus
-g++ $path/src/Engine/Main.h -std=$cppstd -L$lib -lSDL2_image$bit -lSDL2$bit -lSDL2_net$bit -o $path/Protheus -m$bit
+g++ $path/scr/Engine/Main.cpp -std=$cppstd -L$lib -lSDL2_image$bit -lSDL2$bit -lSDL2_net$bit -o $path/Protheus -m$bit
