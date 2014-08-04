@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SDL" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../lib/SDL" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SDL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../src/SDL.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/SDL_assert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/SDL_assert_c.h" />
+		<Unit filename="../src/SDL_error.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/SDL_error_c.h" />
+		<Unit filename="../src/SDL_hints.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/SDL_internal.h" />
+		<Unit filename="../src/SDL_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/atomic/SDL_atomic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/atomic/SDL_spinlock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_audio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_audio_c.h" />
+		<Unit filename="../src/audio/SDL_audiocvt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_audiodev.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_audiodev_c.h" />
+		<Unit filename="../src/audio/SDL_audiomem.h" />
+		<Unit filename="../src/audio/SDL_audiotypecvt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_mixer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_sysaudio.h" />
+		<Unit filename="../src/audio/SDL_wave.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/SDL_wave.h" />
+		<Unit filename="../src/audio/alsa/SDL_alsa_audio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/alsa/SDL_alsa_audio.h" />
+		<Unit filename="../src/audio/android/SDL_androidaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/android/SDL_androidaudio.h" />
+		<Unit filename="../src/audio/arts/SDL_artsaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/arts/SDL_artsaudio.h" />
+		<Unit filename="../src/audio/bsd/SDL_bsdaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/bsd/SDL_bsdaudio.h" />
+		<Unit filename="../src/audio/coreaudio/SDL_coreaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/coreaudio/SDL_coreaudio.h" />
+		<Unit filename="../src/audio/directsound/SDL_directsound.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/directsound/SDL_directsound.h" />
+		<Unit filename="../src/audio/directsound/directx.h" />
+		<Unit filename="../src/audio/disk/SDL_diskaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/disk/SDL_diskaudio.h" />
+		<Unit filename="../src/audio/dsp/SDL_dspaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/dsp/SDL_dspaudio.h" />
+		<Unit filename="../src/audio/dummy/SDL_dummyaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/dummy/SDL_dummyaudio.h" />
+		<Unit filename="../src/audio/esd/SDL_esdaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/esd/SDL_esdaudio.h" />
+		<Unit filename="../src/audio/fusionsound/SDL_fsaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/fusionsound/SDL_fsaudio.h" />
+		<Unit filename="../src/audio/haiku/SDL_haikuaudio.cc" />
+		<Unit filename="../src/audio/haiku/SDL_haikuaudio.h" />
+		<Unit filename="../src/audio/nas/SDL_nasaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/nas/SDL_nasaudio.h" />
+		<Unit filename="../src/audio/paudio/SDL_paudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/paudio/SDL_paudio.h" />
+		<Unit filename="../src/audio/psp/SDL_pspaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/psp/SDL_pspaudio.h" />
+		<Unit filename="../src/audio/pulseaudio/SDL_pulseaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/pulseaudio/SDL_pulseaudio.h" />
+		<Unit filename="../src/audio/qsa/SDL_qsa_audio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/qsa/SDL_qsa_audio.h" />
+		<Unit filename="../src/audio/sndio/SDL_sndioaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/sndio/SDL_sndioaudio.h" />
+		<Unit filename="../src/audio/sun/SDL_sunaudio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/sun/SDL_sunaudio.h" />
+		<Unit filename="../src/audio/winmm/SDL_winmm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/winmm/SDL_winmm.h" />
+		<Unit filename="../src/audio/xaudio2/SDL_xaudio2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/audio/xaudio2/SDL_xaudio2_winrthelpers.cpp" />
+		<Unit filename="../src/audio/xaudio2/SDL_xaudio2_winrthelpers.h" />
+		<Unit filename="../src/core/android/SDL_android.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/core/android/SDL_android.h" />
+		<Unit filename="../src/core/linux/SDL_evdev.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/core/linux/SDL_evdev.h" />
+		<Unit filename="../src/core/linux/SDL_udev.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/core/linux/SDL_udev.h" />
+		<Unit filename="../src/core/windows/SDL_windows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/core/windows/SDL_windows.h" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_common.cpp" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_common.h" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_direct3d.cpp" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_direct3d.h" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_xaml.cpp" />
+		<Unit filename="../src/core/winrt/SDL_winrtapp_xaml.h" />
+		<Unit filename="../src/cpuinfo/SDL_cpuinfo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/dynapi/SDL_dynapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/dynapi/SDL_dynapi.h" />
+		<Unit filename="../src/dynapi/SDL_dynapi_overrides.h" />
+		<Unit filename="../src/dynapi/SDL_dynapi_procs.h" />
+		<Unit filename="../src/events/SDL_clipboardevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_clipboardevents_c.h" />
+		<Unit filename="../src/events/SDL_dropevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_dropevents_c.h" />
+		<Unit filename="../src/events/SDL_events.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_events_c.h" />
+		<Unit filename="../src/events/SDL_gesture.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_gesture_c.h" />
+		<Unit filename="../src/events/SDL_keyboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_keyboard_c.h" />
+		<Unit filename="../src/events/SDL_mouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_mouse_c.h" />
+		<Unit filename="../src/events/SDL_quit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_sysevents.h" />
+		<Unit filename="../src/events/SDL_touch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_touch_c.h" />
+		<Unit filename="../src/events/SDL_windowevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/events/SDL_windowevents_c.h" />
+		<Unit filename="../src/events/blank_cursor.h" />
+		<Unit filename="../src/events/default_cursor.h" />
+		<Unit filename="../src/events/scancodes_darwin.h" />
+		<Unit filename="../src/events/scancodes_linux.h" />
+		<Unit filename="../src/events/scancodes_windows.h" />
+		<Unit filename="../src/events/scancodes_xfree86.h" />
+		<Unit filename="../src/file/SDL_rwops.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/file/cocoa/SDL_rwopsbundlesupport.h" />
+		<Unit filename="../src/filesystem/dummy/SDL_sysfilesystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/filesystem/haiku/SDL_sysfilesystem.cc" />
+		<Unit filename="../src/filesystem/unix/SDL_sysfilesystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/filesystem/windows/SDL_sysfilesystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/filesystem/winrt/SDL_sysfilesystem.cpp" />
+		<Unit filename="../src/haptic/SDL_haptic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/haptic/SDL_haptic_c.h" />
+		<Unit filename="../src/haptic/SDL_syshaptic.h" />
+		<Unit filename="../src/haptic/darwin/SDL_syshaptic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/haptic/darwin/SDL_syshaptic_c.h" />
+		<Unit filename="../src/haptic/dummy/SDL_syshaptic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/haptic/linux/SDL_syshaptic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/haptic/windows/SDL_syshaptic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/haptic/windows/SDL_syshaptic_c.h" />
+		<Unit filename="../src/joystick/SDL_gamecontroller.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/SDL_gamecontrollerdb.h" />
+		<Unit filename="../src/joystick/SDL_joystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/SDL_joystick_c.h" />
+		<Unit filename="../src/joystick/SDL_sysjoystick.h" />
+		<Unit filename="../src/joystick/android/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/android/SDL_sysjoystick_c.h" />
+		<Unit filename="../src/joystick/bsd/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/darwin/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/darwin/SDL_sysjoystick_c.h" />
+		<Unit filename="../src/joystick/dummy/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/haiku/SDL_haikujoystick.cc" />
+		<Unit filename="../src/joystick/iphoneos/SDLUIAccelerationDelegate.h" />
+		<Unit filename="../src/joystick/linux/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/linux/SDL_sysjoystick_c.h" />
+		<Unit filename="../src/joystick/psp/SDL_sysjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/windows/SDL_dxjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/windows/SDL_dxjoystick_c.h" />
+		<Unit filename="../src/joystick/windows/SDL_mmjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/joystick/winrt/SDL_xinputjoystick.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/e_atan2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/e_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/e_pow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/e_rem_pio2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/e_sqrt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/k_cos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/k_rem_pio2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/k_sin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/math_libm.h" />
+		<Unit filename="../src/libm/math_private.h" />
+		<Unit filename="../src/libm/s_atan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_copysign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_cos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_fabs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_floor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_scalbn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/libm/s_sin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/loadso/dlopen/SDL_sysloadso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/loadso/dummy/SDL_sysloadso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/loadso/haiku/SDL_sysloadso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/loadso/windows/SDL_sysloadso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/main/android/SDL_android_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/main/dummy/SDL_dummy_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/main/haiku/SDL_BApp.h" />
+		<Unit filename="../src/main/haiku/SDL_BeApp.cc" />
+		<Unit filename="../src/main/haiku/SDL_BeApp.h" />
+		<Unit filename="../src/main/psp/SDL_psp_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/main/windows/SDL_windows_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/main/winrt/SDL_winrt_main_NonXAML.cpp" />
+		<Unit filename="../src/power/SDL_power.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/android/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/haiku/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/linux/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/macosx/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/psp/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/uikit/SDL_syspower.h" />
+		<Unit filename="../src/power/windows/SDL_syspower.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/power/winrt/SDL_syspower.cpp" />
+		<Unit filename="../src/render/SDL_d3dmath.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/SDL_d3dmath.h" />
+		<Unit filename="../src/render/SDL_render.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/SDL_sysrender.h" />
+		<Unit filename="../src/render/SDL_yuv_mmx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/SDL_yuv_sw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/SDL_yuv_sw_c.h" />
+		<Unit filename="../src/render/direct3d/SDL_render_d3d.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/direct3d11/SDL_render_d3d11.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/direct3d11/SDL_render_winrt.cpp" />
+		<Unit filename="../src/render/direct3d11/SDL_render_winrt.h" />
+		<Unit filename="../src/render/mmx.h" />
+		<Unit filename="../src/render/opengl/SDL_glfuncs.h" />
+		<Unit filename="../src/render/opengl/SDL_render_gl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/opengl/SDL_shaders_gl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/opengl/SDL_shaders_gl.h" />
+		<Unit filename="../src/render/opengles/SDL_glesfuncs.h" />
+		<Unit filename="../src/render/opengles/SDL_render_gles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/opengles2/SDL_gles2funcs.h" />
+		<Unit filename="../src/render/opengles2/SDL_render_gles2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/opengles2/SDL_shaders_gles2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/opengles2/SDL_shaders_gles2.h" />
+		<Unit filename="../src/render/psp/SDL_render_psp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_blendfillrect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_blendfillrect.h" />
+		<Unit filename="../src/render/software/SDL_blendline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_blendline.h" />
+		<Unit filename="../src/render/software/SDL_blendpoint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_blendpoint.h" />
+		<Unit filename="../src/render/software/SDL_draw.h" />
+		<Unit filename="../src/render/software/SDL_drawline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_drawline.h" />
+		<Unit filename="../src/render/software/SDL_drawpoint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_drawpoint.h" />
+		<Unit filename="../src/render/software/SDL_render_sw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_render_sw_c.h" />
+		<Unit filename="../src/render/software/SDL_rotate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/render/software/SDL_rotate.h" />
+		<Unit filename="../src/stdlib/SDL_getenv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdlib/SDL_iconv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdlib/SDL_malloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdlib/SDL_qsort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdlib/SDL_stdlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/stdlib/SDL_string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_assert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_common.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_compare.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_font.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_fuzzer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_harness.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_imageBlit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_imageBlitBlend.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_imageFace.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_imagePrimitives.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_imagePrimitivesBlend.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_md5.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/test/SDL_test_random.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/SDL_systhread.h" />
+		<Unit filename="../src/thread/SDL_thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/SDL_thread_c.h" />
+		<Unit filename="../src/thread/generic/SDL_syscond.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/generic/SDL_sysmutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/generic/SDL_sysmutex_c.h" />
+		<Unit filename="../src/thread/generic/SDL_syssem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/generic/SDL_systhread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/generic/SDL_systhread_c.h" />
+		<Unit filename="../src/thread/generic/SDL_systls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/psp/SDL_syscond.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/psp/SDL_sysmutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/psp/SDL_sysmutex_c.h" />
+		<Unit filename="../src/thread/psp/SDL_syssem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/psp/SDL_systhread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/psp/SDL_systhread_c.h" />
+		<Unit filename="../src/thread/pthread/SDL_syscond.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/pthread/SDL_sysmutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/pthread/SDL_sysmutex_c.h" />
+		<Unit filename="../src/thread/pthread/SDL_syssem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/pthread/SDL_systhread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/pthread/SDL_systhread_c.h" />
+		<Unit filename="../src/thread/pthread/SDL_systls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/stdcpp/SDL_syscond.cpp" />
+		<Unit filename="../src/thread/stdcpp/SDL_sysmutex.cpp" />
+		<Unit filename="../src/thread/stdcpp/SDL_sysmutex_c.h" />
+		<Unit filename="../src/thread/stdcpp/SDL_systhread.cpp" />
+		<Unit filename="../src/thread/stdcpp/SDL_systhread_c.h" />
+		<Unit filename="../src/thread/windows/SDL_sysmutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/windows/SDL_syssem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/windows/SDL_systhread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread/windows/SDL_systhread_c.h" />
+		<Unit filename="../src/thread/windows/SDL_systls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/SDL_timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/SDL_timer_c.h" />
+		<Unit filename="../src/timer/dummy/SDL_systimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/haiku/SDL_systimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/psp/SDL_systimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/unix/SDL_systimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/timer/windows/SDL_systimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_RLEaccel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_RLEaccel_c.h" />
+		<Unit filename="../src/video/SDL_blit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit.h" />
+		<Unit filename="../src/video/SDL_blit_0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_A.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_N.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_auto.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_auto.h" />
+		<Unit filename="../src/video/SDL_blit_copy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_copy.h" />
+		<Unit filename="../src/video/SDL_blit_slow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_blit_slow.h" />
+		<Unit filename="../src/video/SDL_bmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_clipboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_egl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_egl_c.h" />
+		<Unit filename="../src/video/SDL_fillrect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_pixels.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_pixels_c.h" />
+		<Unit filename="../src/video/SDL_rect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_rect_c.h" />
+		<Unit filename="../src/video/SDL_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_shape_internals.h" />
+		<Unit filename="../src/video/SDL_stretch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_surface.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/SDL_sysvideo.h" />
+		<Unit filename="../src/video/SDL_video.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidclipboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidclipboard.h" />
+		<Unit filename="../src/video/android/SDL_androidevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidevents.h" />
+		<Unit filename="../src/video/android/SDL_androidgl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidkeyboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidkeyboard.h" />
+		<Unit filename="../src/video/android/SDL_androidtouch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidtouch.h" />
+		<Unit filename="../src/video/android/SDL_androidvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidvideo.h" />
+		<Unit filename="../src/video/android/SDL_androidwindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/android/SDL_androidwindow.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoaclipboard.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoaevents.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoakeyboard.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoamessagebox.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoamodes.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoamouse.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoamousetap.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoaopengl.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoashape.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoavideo.h" />
+		<Unit filename="../src/video/cocoa/SDL_cocoawindow.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_WM.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_WM.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_dyn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_dyn.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_events.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_events.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_modes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_modes.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_mouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_mouse.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_opengl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_opengl.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_render.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_render.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_shape.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_video.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_video.h" />
+		<Unit filename="../src/video/directfb/SDL_DirectFB_window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/directfb/SDL_DirectFB_window.h" />
+		<Unit filename="../src/video/dummy/SDL_nullevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/dummy/SDL_nullevents_c.h" />
+		<Unit filename="../src/video/dummy/SDL_nullframebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/dummy/SDL_nullframebuffer_c.h" />
+		<Unit filename="../src/video/dummy/SDL_nullvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/dummy/SDL_nullvideo.h" />
+		<Unit filename="../src/video/haiku/SDL_BWin.h" />
+		<Unit filename="../src/video/haiku/SDL_bclipboard.cc" />
+		<Unit filename="../src/video/haiku/SDL_bclipboard.h" />
+		<Unit filename="../src/video/haiku/SDL_bevents.cc" />
+		<Unit filename="../src/video/haiku/SDL_bevents.h" />
+		<Unit filename="../src/video/haiku/SDL_bframebuffer.cc" />
+		<Unit filename="../src/video/haiku/SDL_bframebuffer.h" />
+		<Unit filename="../src/video/haiku/SDL_bkeyboard.cc" />
+		<Unit filename="../src/video/haiku/SDL_bkeyboard.h" />
+		<Unit filename="../src/video/haiku/SDL_bmodes.cc" />
+		<Unit filename="../src/video/haiku/SDL_bmodes.h" />
+		<Unit filename="../src/video/haiku/SDL_bopengl.cc" />
+		<Unit filename="../src/video/haiku/SDL_bopengl.h" />
+		<Unit filename="../src/video/haiku/SDL_bvideo.cc" />
+		<Unit filename="../src/video/haiku/SDL_bvideo.h" />
+		<Unit filename="../src/video/haiku/SDL_bwindow.cc" />
+		<Unit filename="../src/video/haiku/SDL_bwindow.h" />
+		<Unit filename="../src/video/mir/SDL_mirdyn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirdyn.h" />
+		<Unit filename="../src/video/mir/SDL_mirevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirevents.h" />
+		<Unit filename="../src/video/mir/SDL_mirframebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirframebuffer.h" />
+		<Unit filename="../src/video/mir/SDL_mirmouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirmouse.h" />
+		<Unit filename="../src/video/mir/SDL_miropengl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_miropengl.h" />
+		<Unit filename="../src/video/mir/SDL_mirsym.h" />
+		<Unit filename="../src/video/mir/SDL_mirvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirvideo.h" />
+		<Unit filename="../src/video/mir/SDL_mirwindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/mir/SDL_mirwindow.h" />
+		<Unit filename="../src/video/pandora/SDL_pandora.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/pandora/SDL_pandora.h" />
+		<Unit filename="../src/video/pandora/SDL_pandora_events.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/pandora/SDL_pandora_events.h" />
+		<Unit filename="../src/video/psp/SDL_pspevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/psp/SDL_pspevents_c.h" />
+		<Unit filename="../src/video/psp/SDL_pspgl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/psp/SDL_pspgl_c.h" />
+		<Unit filename="../src/video/psp/SDL_pspmouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/psp/SDL_pspmouse_c.h" />
+		<Unit filename="../src/video/psp/SDL_pspvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/psp/SDL_pspvideo.h" />
+		<Unit filename="../src/video/raspberry/SDL_rpievents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/raspberry/SDL_rpievents_c.h" />
+		<Unit filename="../src/video/raspberry/SDL_rpimouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/raspberry/SDL_rpimouse.h" />
+		<Unit filename="../src/video/raspberry/SDL_rpiopengles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/raspberry/SDL_rpiopengles.h" />
+		<Unit filename="../src/video/raspberry/SDL_rpivideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/raspberry/SDL_rpivideo.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitappdelegate.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitevents.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitmessagebox.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitmodes.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitopengles.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitopenglview.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitvideo.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitview.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitviewcontroller.h" />
+		<Unit filename="../src/video/uikit/SDL_uikitwindow.h" />
+		<Unit filename="../src/video/uikit/keyinfotable.h" />
+		<Unit filename="../src/video/wayland/SDL_waylanddyn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylanddyn.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandevents_c.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandmouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandmouse.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandopengles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandopengles.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandsym.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandtouch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandtouch.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandvideo.h" />
+		<Unit filename="../src/video/wayland/SDL_waylandwindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/wayland/SDL_waylandwindow.h" />
+		<Unit filename="../src/video/windows/SDL_msctf.h" />
+		<Unit filename="../src/video/windows/SDL_vkeys.h" />
+		<Unit filename="../src/video/windows/SDL_windowsclipboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsclipboard.h" />
+		<Unit filename="../src/video/windows/SDL_windowsevents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsevents.h" />
+		<Unit filename="../src/video/windows/SDL_windowsframebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsframebuffer.h" />
+		<Unit filename="../src/video/windows/SDL_windowskeyboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowskeyboard.h" />
+		<Unit filename="../src/video/windows/SDL_windowsmessagebox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsmessagebox.h" />
+		<Unit filename="../src/video/windows/SDL_windowsmodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsmodes.h" />
+		<Unit filename="../src/video/windows/SDL_windowsmouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsmouse.h" />
+		<Unit filename="../src/video/windows/SDL_windowsopengl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsopengl.h" />
+		<Unit filename="../src/video/windows/SDL_windowsopengles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsopengles.h" />
+		<Unit filename="../src/video/windows/SDL_windowsshape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsshape.h" />
+		<Unit filename="../src/video/windows/SDL_windowsvideo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowsvideo.h" />
+		<Unit filename="../src/video/windows/SDL_windowswindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/windows/SDL_windowswindow.h" />
+		<Unit filename="../src/video/windows/wmmsg.h" />
+		<Unit filename="../src/video/winrt/SDL_winrtevents.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtevents_c.h" />
+		<Unit filename="../src/video/winrt/SDL_winrtkeyboard.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtmouse.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtmouse_c.h" />
+		<Unit filename="../src/video/winrt/SDL_winrtopengles.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtopengles.h" />
+		<Unit filename="../src/video/winrt/SDL_winrtpointerinput.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtvideo.cpp" />
+		<Unit filename="../src/video/winrt/SDL_winrtvideo_cpp.h" />
+		<Unit filename="../src/video/x11/SDL_x11clipboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11clipboard.h" />
+		<Unit filename="../src/video/x11/SDL_x11dyn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11dyn.h" />
+		<Unit filename="../src/video/x11/SDL_x11events.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11events.h" />
+		<Unit filename="../src/video/x11/SDL_x11framebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11framebuffer.h" />
+		<Unit filename="../src/video/x11/SDL_x11keyboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11keyboard.h" />
+		<Unit filename="../src/video/x11/SDL_x11messagebox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11messagebox.h" />
+		<Unit filename="../src/video/x11/SDL_x11modes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11modes.h" />
+		<Unit filename="../src/video/x11/SDL_x11mouse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11mouse.h" />
+		<Unit filename="../src/video/x11/SDL_x11opengl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11opengl.h" />
+		<Unit filename="../src/video/x11/SDL_x11opengles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11opengles.h" />
+		<Unit filename="../src/video/x11/SDL_x11shape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11shape.h" />
+		<Unit filename="../src/video/x11/SDL_x11sym.h" />
+		<Unit filename="../src/video/x11/SDL_x11touch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11touch.h" />
+		<Unit filename="../src/video/x11/SDL_x11video.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11video.h" />
+		<Unit filename="../src/video/x11/SDL_x11window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11window.h" />
+		<Unit filename="../src/video/x11/SDL_x11xinput2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/SDL_x11xinput2.h" />
+		<Unit filename="../src/video/x11/edid-parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/edid.h" />
+		<Unit filename="../src/video/x11/imKStoUCS.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/video/x11/imKStoUCS.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

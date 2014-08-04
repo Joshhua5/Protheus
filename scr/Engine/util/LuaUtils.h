@@ -34,6 +34,11 @@ namespace Pro{
 			}
 		};
 
+		inline lua_State* luaP_state(lua_State* L){
+			static lua_State* state = L;
+			return state;
+		}
+
 		// The first part of the pair will be used as the key and the second as the data
 		template<typename T>
 		inline void luaP_pushtoarray(lua_State* L, string table_name, char* key, T data){

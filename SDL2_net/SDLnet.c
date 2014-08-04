@@ -149,7 +149,9 @@ int SDLNet_ResolveHost(IPaddress *address, const char *host, Uint16 port)
 
             hp = gethostbyname(host);
             if ( hp ) {
-                memcpy(&address->host,hp->h_addr,hp->h_length);
+// Edited to fix backwards compatability issue
+// because hp->h_addr is depreciated
+                memcpy(&address->host,hp->h_addr_list[0],hp->h_length);
             } else {
                 retval = -1;
             }

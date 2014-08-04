@@ -28,11 +28,8 @@ namespace Pro{
 		ScriptGame(lua_State* L);
 		ScriptGame();
 		~ScriptGame();
-
-		int update();
-		int render();
-		int initialize();
-		int cleanup();
+		 
+		int initialize(); 
 		int gameLoop();
 		void exit();
 

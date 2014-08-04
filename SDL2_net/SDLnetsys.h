@@ -45,6 +45,8 @@ typedef int socklen_t;
 #endif /* W64 */
 #include <iphlpapi.h>
 #else /* UNIX */
+#define __USE_BSD
+#define __USE_MISC // required for structs to be included
 #include <sys/types.h>
 #ifdef __FreeBSD__
 #include <sys/socket.h>

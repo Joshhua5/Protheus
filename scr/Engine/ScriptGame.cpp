@@ -15,23 +15,20 @@ ScriptGame::ScriptGame(){
 
 ScriptGame::~ScriptGame(){}
 
-int ScriptGame::update(){
-	lua_getglobal(lua_state, "Update");
-	return lua_pcall(lua_state, 0, 0, 0);
-}
-
-int ScriptGame::gameLoop(){ 
+int ScriptGame::gameLoop(){
+	const auto text = luaP_getTextRenderer(lua_state);
 	const auto renderer = luaP_getRenderer(lua_state);
 	const auto spriteBatcher = renderer->getBatcher();
 	const auto eventHandler = luaP_getEventHandler(lua_state);
 	const auto timer = luaP_getTimer(lua_state);
-	const auto text = luaP_getTextRenderer(lua_state);
-	do{ 
+	do{
+		// Update engine
 		timer->tick();
 		eventHandler->update();
 		renderer->startFrame();
-		Util::checkError(lua_state, update());
-		Util::checkError(lua_state, render());
+		// Update Stack
+		stack.execute();
+		// Render
 		spriteBatcher->flush();
 		text->flush();
 		renderer->endFrame();
@@ -39,13 +36,9 @@ int ScriptGame::gameLoop(){
 	return 0;
 }
 
-int ScriptGame::render(){
-	lua_getglobal(lua_state, "Render");
-	return lua_pcall(lua_state, 0, 0, 0); 
-}
 int ScriptGame::initialize(){
 	// Add the ScriptGame instance to Lua 
-    luaP_newobject<ScriptGame>(lua_state, this);
+	luaP_newobject<ScriptGame>(lua_state, this);
 	lua_setglobal(lua_state, "Game");
 
 	luaP_newobject<SpriteBatcher>(lua_state, luaP_getRenderer(lua_state)->getBatcher());
@@ -53,7 +46,7 @@ int ScriptGame::initialize(){
 
 	luaP_newobject<Renderer>(lua_state, luaP_getRenderer(lua_state));
 	lua_setglobal(lua_state, "Renderer");
-	 
+
 	luaP_newobject<SpriteManager>(lua_state, luaP_getSpriteManager(lua_state));
 	lua_setglobal(lua_state, "SpriteManager");
 
@@ -68,14 +61,19 @@ int ScriptGame::initialize(){
 
 	luaP_newobject<TextRenderer>(lua_state, luaP_getTextRenderer(lua_state));
 	lua_setglobal(lua_state, "Text");
-	
-	// Call initialize in the lua script
-	lua_getglobal(lua_state, "Initialize");
-	checkError(lua_state, lua_pcall(lua_state, 0, 0, 0));
+
+
+	// Place the base state on the stack
+
+	GameState base_state;
+	base_state.setInitialize("Initialize");
+	base_state.setUpdate("Update");
+	base_state.setRender("Render");
+	base_state.setCleanup("Cleanup");
+	base_state.setReturn("Return");
+	stack.push(base_state, false);
+
 	SDL_ShowWindow(luaP_getSDLWindow(lua_state));
 	return 0;
-}
-int ScriptGame::cleanup(){
-	// Engine managed cleanup
-	return 0;
-}
+
+} 

@@ -16,7 +16,7 @@ void LuaCallback::callback(){
 	if (lua_state == nullptr)
 		return;
 	lua_getglobal(lua_state, &lua_callback[0]);
-	lua_call(lua_state, 0, 0);
+	lua_pcall(lua_state, 0, 0, 0);
 	return;
 }
 

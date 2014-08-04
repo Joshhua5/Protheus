@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\GameState.cpp" />
     <ClCompile Include="Engine\math\Vector2.cpp" />
     <ClCompile Include="Engine\util\CBuffer.cpp" />
     <ClCompile Include="Engine\util\ClassDefinition.cpp" />
