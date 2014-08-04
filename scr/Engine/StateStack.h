@@ -50,5 +50,28 @@ namespace Pro{
 			}
 			m_stack[0].render(lua_state);
 		}
+
+		static int lPop(lua_State* L){
+			const auto stack = Util::luaP_touserdata<StateStack>(L, 1);
+			stack->pop();
+			return 0;
+		}
+
+		static int lPush(lua_State* L){ 
+			const auto stack = Util::luaP_touserdata<StateStack>(L, 1);
+			stack->push(*Util::luaP_touserdata<GameState>(L, 2), lua_toboolean(L, 3));
+			return 0;
+		}
+
+		// returns the Metatable's name assosiated with this object
+		/*constexpr*/ static const char* lGetMetatable(){
+			return "script_game_metatable";
+		}
+
+		template<typename T>
+		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
+			fields.push_back({ "push", &T::lPush });
+			fields.push_back({ "pop", &T::lPop }); 
+		}
 	};
 }

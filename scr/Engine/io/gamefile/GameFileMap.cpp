@@ -37,9 +37,9 @@ void GameFileMap::pack(Map* map){
 		dataWriter.write<Vector2>(section->getPosition());
 		dataWriter.write<Vector2>(section->getDimensions());
 
-		for each(auto col in section->getData())
+		for each(auto& col in section->getData())
 			for each(auto row in col)
-				dataWriter.write(row);
+				dataWriter.write<short>(row);
 	}
 }
 

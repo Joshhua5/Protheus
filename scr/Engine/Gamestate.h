@@ -68,11 +68,12 @@ namespace Pro{
 		void setCleanup(const string& lua_function);
 		void cleanup(lua_State*);
 
-		static int setCleanup(lua_State*);
-		static int setRender(lua_State*);
-		static int setInitialize(lua_State*);
-		static int setUpdate(lua_State*);
-		static int setReturn(lua_State*);
+		static int lSetCleanup(lua_State*);
+		static int lSetRender(lua_State*);
+		static int lSetInitialize(lua_State*);
+		static int lSetUpdate(lua_State*);
+		static int lSetReturn(lua_State*);
+		static int lCreate(lua_State*);
 
 		// returns the Metatable's name assosiated with this object
 		/*constexpr*/ static const char* lGetMetatable(){
@@ -81,7 +82,11 @@ namespace Pro{
 
 		template<typename T>
 		static void lGetFunctions(std::vector<luaL_Reg>& fields){
-			//fields.push_back({ "push", &T::lPush });
+			fields.push_back({ "setCleanup", &T::lSetCleanup });
+			fields.push_back({ "setRender", &T::lSetRender });
+			fields.push_back({ "setInitialize", &T::lSetInitialize });
+			fields.push_back({ "setUpdate", &T::lSetUpdate });
+			fields.push_back({ "setReturn", &T::lSetReturn });
 		}
 	};
 }

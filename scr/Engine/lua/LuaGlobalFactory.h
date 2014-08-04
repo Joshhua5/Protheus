@@ -33,6 +33,7 @@ namespace Pro{
 						{ "Buffer", &CBuffer::lCreate },
 						{ "BufferWriter", &BufferWriter::lCreate },
 						{ "BufferReader", &BufferReader::lCreate },
+						{ "GameState", &GameState::lCreate },
 						{ "getID", &GUIDLookup::lGetGUID },
 						{ "getName", &GUIDLookup::lGetName }, 
 				};

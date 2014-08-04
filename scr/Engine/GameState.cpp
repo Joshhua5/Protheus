@@ -65,28 +65,33 @@ void GameState::cleanup(lua_State* L){
 	m_cleanup.execute(L);
 }
 
-int GameState::setCleanup(lua_State* L){
+int GameState::lSetCleanup(lua_State* L){
 	const auto state = Util::luaP_touserdata<GameState>(L, 1);
 	state->setCleanup(lua_tostring(L, 2));
 	return 0;
 }
-int GameState::setRender(lua_State* L){
+int GameState::lSetRender(lua_State* L){
 	const auto state = Util::luaP_touserdata<GameState>(L, 1);
 	state->setRender(lua_tostring(L, 2));
 	return 0;
 }
-int GameState::setInitialize(lua_State* L){
+int GameState::lSetInitialize(lua_State* L){
 	const auto state = Util::luaP_touserdata<GameState>(L, 1);
 	state->setInitialize(lua_tostring(L, 2));
 	return 0;
 }
-int GameState::setUpdate(lua_State* L){
+int GameState::lSetUpdate(lua_State* L){
 	const auto state = Util::luaP_touserdata<GameState>(L, 1);
 	state->setUpdate(lua_tostring(L, 2));
 	return 0;
 }
-int GameState::setReturn(lua_State* L){
+int GameState::lSetReturn(lua_State* L){
 	const auto state = Util::luaP_touserdata<GameState>(L, 1);
 	state->setReturn(lua_tostring(L, 2));
 	return 0;
+}
+
+int GameState::lCreate(lua_State* L){ 
+	Util::luaP_newobject(L, new GameState()); 
+	return 1;
 }
