@@ -406,6 +406,23 @@ vector4_metatable
 END MESSAGE
 
 START MESSAGE 40
+script_game_metatable
+	push
+	pop
+
+END MESSAGE
+
+START MESSAGE 41
+gamestate_metatable
+	setCleanup
+	setRender
+	setInitialize
+	setUpdate
+	setReturn
+
+END MESSAGE
+
+START MESSAGE 42
 text_renderer_metatable
 	loadFont
 	flush
@@ -413,14 +430,14 @@ text_renderer_metatable
 
 END MESSAGE
 
-START MESSAGE 41
+START MESSAGE 43
 network_metatable
 	startServer
 	connectToServer
 
 END MESSAGE
 
-START MESSAGE 42
+START MESSAGE 44
 tcp_server_metatable
 	pause
 	resume
@@ -432,7 +449,7 @@ tcp_server_metatable
 
 END MESSAGE
 
-START MESSAGE 43
+START MESSAGE 45
 c_tcp_connection_metatable
 	send
 	peek
@@ -441,7 +458,7 @@ c_tcp_connection_metatable
 
 END MESSAGE
 
-START MESSAGE 44
+START MESSAGE 46
 s_tcp_connection_metatable
 	send
 	peek
@@ -450,21 +467,21 @@ s_tcp_connection_metatable
 
 END MESSAGE
 
-START MESSAGE 45
+START MESSAGE 47
 timer_metatable
 	ElapsedTime
 	TicksPerSecond
 
 END MESSAGE
 
-START MESSAGE 46
+START MESSAGE 48
 buffer_metatable
 	size
 	resize
 
 END MESSAGE
 
-START MESSAGE 47
+START MESSAGE 49
 buffer_reader_metatable
 	skip
 	getPosition
@@ -477,7 +494,7 @@ buffer_reader_metatable
 
 END MESSAGE
 
-START MESSAGE 48
+START MESSAGE 50
 buffer_writer_metatable
 	skip
 	getPosition

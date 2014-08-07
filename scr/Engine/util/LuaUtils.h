@@ -199,6 +199,7 @@ namespace Pro{
 #define luaP_toushort(L, i)		static_cast<unsigned short>(lua_tonumber(L, i))
 #define luaP_tofloat(L, i)		static_cast<float>(lua_tonumber(L, i))
 #define luaP_todouble(L, i)		static_cast<double>(lua_tonumber(L, i))  
+#define luaP_toboolean(L, i)	static_cast<bool>(lua_toboolean(L, i))
 
 #define	luaP_pushnumber(L, i)	lua_pushnumber(L, static_cast<lua_Number>(i))
 

@@ -41,7 +41,7 @@ int ScriptGame::initialize(){
 	luaP_newobject<ScriptGame>(lua_state, this);
 	lua_setglobal(lua_state, "Game");
 
-	luaP_newobject<StateStack>(lua_state, stack);
+	luaP_newobject<StateStack>(lua_state, &stack);
 	lua_setglobal(lua_state, "Stack");
 
 	luaP_newobject<SpriteBatcher>(lua_state, luaP_getRenderer(lua_state)->getBatcher());
@@ -76,7 +76,7 @@ int ScriptGame::initialize(){
 	base_state.setReturn("Return");
 	stack.push(base_state, false);
 
+
 	SDL_ShowWindow(luaP_getSDLWindow(lua_state));
 	return 0;
-
 } 

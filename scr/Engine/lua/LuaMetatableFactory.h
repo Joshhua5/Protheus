@@ -152,6 +152,9 @@ namespace Pro{
 
 				// Scene
 
+				defineMetatable<StateStack>(L);
+				defineMetatable<GameState>(L);
+
 				// Font
 
 				defineMetatable<TextRenderer>(L);

@@ -9,7 +9,7 @@ namespace Pro{
 		std::vector<GameState> m_stack;
 		lua_State* lua_state;
 	public:
-		StateStack(){ lua_state = Util::luaP_state(nullptr); } 
+		StateStack(){ lua_state = Util::luaP_state(nullptr); }
 		~StateStack(){ }
 		// The bool if true will stop the state below (originally on top) it in the stack from updating
 		// if false then it will also recieve updates.
@@ -17,10 +17,10 @@ namespace Pro{
 		// but all us to push ontop of that game state a GUI without stopping the game state.
 		void push(GameState& state, bool deactivateTop){
 			if (deactivateTop)
-				m_stack.back().deactivate();
+				m_stack.back().deactivate(); 
 			state.activate();
-			state.initialize(lua_state);
 			m_stack.push_back(state);
+			state.initialize(lua_state);
 		}
 
 		// The stack that is poped will have it's cleanup function called
@@ -57,9 +57,16 @@ namespace Pro{
 			return 0;
 		}
 
-		static int lPush(lua_State* L){ 
+		static int lPush(lua_State* L){
 			const auto stack = Util::luaP_touserdata<StateStack>(L, 1);
-			stack->push(*Util::luaP_touserdata<GameState>(L, 2), lua_toboolean(L, 3));
+			switch (lua_gettop(L)){
+			case 2:
+				stack->push(*Util::luaP_touserdata<GameState>(L, 2), false);
+				break;
+			case 3:
+				stack->push(*Util::luaP_touserdata<GameState>(L, 2), luaP_toboolean(L, 3));
+				break;
+			}
 			return 0;
 		}
 
@@ -71,7 +78,7 @@ namespace Pro{
 		template<typename T>
 		static inline void lGetFunctions(std::vector<luaL_Reg>& fields){
 			fields.push_back({ "push", &T::lPush });
-			fields.push_back({ "pop", &T::lPop }); 
+			fields.push_back({ "pop", &T::lPop });
 		}
 	};
 }

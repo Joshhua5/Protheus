@@ -242,6 +242,7 @@ namespace Pro{
 			values.push_back({ "PAGE_UP",	(double)EKeyboardKey::PAGE_UP });
 			values.push_back({ "DELETE",	(double)EKeyboardKey::DELETE });
 			values.push_back({ "SPACE",		(double)EKeyboardKey::SPACE }); 
+			values.push_back({ "TAB",		(double) EKeyboardKey::TAB });
 
 			values.push_back({ "1", (double)EKeyboardKey::_1 });
 			values.push_back({ "2", (double)EKeyboardKey::_2 });
