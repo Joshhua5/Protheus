@@ -17,6 +17,7 @@ History:
 #include "..\Math.h"
 #include "..\graphics\SpriteManager.h"
 #include "..\gameobject\Scene.h"
+#include "..\ScriptGame.h"
 
 namespace Pro{
 	namespace Lua{
@@ -62,6 +63,37 @@ namespace Pro{
 				}  
 			} 
 
+
+			void setGlobals(ScriptGame& game, lua_State* lua_state){
+				// Pass pointers do we don't copy the class, otherwise they're copied
+				// and lua will contain reference to a different instance than Protheus.
+				luaP_newobject<ScriptGame>(lua_state, &game); 
+				lua_setglobal(lua_state, "Game");
+
+				luaP_newobject<StateStack>(lua_state, &game.stack);
+				lua_setglobal(lua_state, "Stack");
+
+				luaP_newobject<SpriteBatcher>(lua_state, luaP_getRenderer(lua_state)->getBatcher());
+				lua_setglobal(lua_state, "SpriteBatcher");
+
+				luaP_newobject<Renderer>(lua_state, luaP_getRenderer(lua_state));
+				lua_setglobal(lua_state, "Renderer");
+
+				luaP_newobject<SpriteManager>(lua_state, luaP_getSpriteManager(lua_state));
+				lua_setglobal(lua_state, "SpriteManager");
+
+				luaP_newobject<EventHandler>(lua_state, luaP_getEventHandler(lua_state));
+				lua_setglobal(lua_state, "EventHandler");
+
+				luaP_newobject<Timer>(lua_state, luaP_getTimer(lua_state));
+				lua_setglobal(lua_state, "Timer");
+
+				luaP_newobject<Network>(lua_state, luaP_getNetwork(lua_state));
+				lua_setglobal(lua_state, "Network");
+
+				luaP_newobject<TextRenderer>(lua_state, luaP_getTextRenderer(lua_state));
+				lua_setglobal(lua_state, "Text"); 
+			}
 		};
 	}
 }

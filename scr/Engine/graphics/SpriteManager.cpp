@@ -13,8 +13,8 @@ SpriteManager::SpriteManager(lua_State* _lua_state)
 SpriteManager::~SpriteManager()
 {
 	// release all textures
-	for each(auto spt in sprites)
-		spt.second->~Sprite();
+	for each(auto& spt in sprites)
+		delete spt.second;
 }
 
 Sprite* SpriteManager::loadSprite(const string& name, const string& imagePath){

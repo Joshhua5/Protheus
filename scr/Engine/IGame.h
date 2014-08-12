@@ -20,8 +20,8 @@ namespace Pro{
 	class IGame{
 	protected:
 		bool exitRequested = false;
-		StateStack stack;
 	public:   
+		StateStack stack;
 		void exit(){
 			exitRequested = true;
 		} 

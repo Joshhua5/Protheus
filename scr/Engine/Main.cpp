@@ -13,6 +13,7 @@ int main(int argc, char* args[])
 	// execute if engine is ScriptDriven
 	if (lua->isGameScriptMode()){ 
 		lua->loadMain();
+		lua->setGlobals(*static_cast<ScriptGame*>(game), lua->getLuaState());
 
 		static_cast<ScriptGame*>(game)->initialize();
 		static_cast<ScriptGame*>(game)->gameLoop();

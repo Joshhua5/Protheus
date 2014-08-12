@@ -7,9 +7,11 @@ using namespace std;
 namespace Pro{
 	class GameState_Function{
 	public:
-		char isLua;
-		// returns void and has no arguments 
+		// if no function has been set, then isLua will equal 2
+		char isLua; 
+		// fucntion pointer that returns void and has no arguments 
 		void(*function_pointer)(); 
+		// name of the lua function to be called.
 		string lua_function;
 
 		GameState_Function(){
@@ -20,6 +22,7 @@ namespace Pro{
 			switch (isLua){
 			case 1: // true
 				lua_getglobal(L, lua_function.data());
+				// No returns and no arguments.
 				lua_pcall(L, 0, 0, 0); break;
 			case 0: // false
 				// Cast to a function pointer
@@ -27,6 +30,11 @@ namespace Pro{
 			}
 		}
 	};
+
+	// Each state can accept two versions of a functions to call
+	// but only one can be used at any one time.
+	// The first type is a lua function with no arguments and no returns
+	// The second type is a C++ function pointer with no arguments and a void return
 
 	class GameState : public Component::ActiveState{
 		GameState_Function m_update;
@@ -38,32 +46,38 @@ namespace Pro{
 		GameState(){}
 		~GameState(){}
 
-		// A function called 
-		// when the stack is being updated
+		// The update function is called when the stack
+		// is being executed, refer to Gamestate.h for
+		// the order in which the stack is executed.
 		void setUpdate(void(*cpp_function)());
 		void setUpdate(const string& lua_function);
 		void update(lua_State*);
 
-		// A function called when
-		// when the stack is being rendered
+		// The render function is called when the stack
+		// is being executed, refer to GameState.h for 
+		// the order in which the stack is executed.
 		void setRender(void(*cpp_function)());
 		void setRender(const string& lua_function);
 		void render(lua_State*);
 
-		// A function called when
-		// the state is first created
+		// This function is called when the state is
+		// first stored on the stack, it should be used
+		// for initialization of the state.
 		void setInitialize(void(*cpp_function)());
 		void setInitialize(const string& lua_function);
 		void initialize(lua_State*);
 
-		// A Function called when 
-		// set to the top of the stack
+		// The return function is called when
+		// the top of the stack is set to this state
+		// to inform the state that this is happened
+		// Protheus will call it's return function.
 		void setReturn(void(*cpp_function)());
 		void setReturn(const string& lua_function);
 		void returned(lua_State*);
-
-		// A function called 
-		// when removed from the stack
+		 
+		// The clean up functions is called when the 
+		// state is being removed from the stack, never
+		// to be returned to again.
 		void setCleanup(void(*cpp_function)());
 		void setCleanup(const string& lua_function);
 		void cleanup(lua_State*);

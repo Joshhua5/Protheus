@@ -16,11 +16,12 @@ ScriptGame::ScriptGame(){
 ScriptGame::~ScriptGame(){}
 
 int ScriptGame::gameLoop(){
-	const auto text = luaP_getTextRenderer(lua_state);
-	const auto renderer = luaP_getRenderer(lua_state);
-	const auto spriteBatcher = renderer->getBatcher();
-	const auto eventHandler = luaP_getEventHandler(lua_state);
-	const auto timer = luaP_getTimer(lua_state);
+	// Static because they only have one instance.
+	static const auto text = luaP_getTextRenderer(lua_state);
+	static const auto renderer = luaP_getRenderer(lua_state);
+	static const auto spriteBatcher = renderer->getBatcher();
+	static const auto eventHandler = luaP_getEventHandler(lua_state);
+	static const auto timer = luaP_getTimer(lua_state);
 	do{
 		// Update engine
 		timer->tick();
@@ -37,36 +38,8 @@ int ScriptGame::gameLoop(){
 }
 
 int ScriptGame::initialize(){
-	// Add the ScriptGame instance to Lua 
-	luaP_newobject<ScriptGame>(lua_state, this);
-	lua_setglobal(lua_state, "Game");
-
-	luaP_newobject<StateStack>(lua_state, &stack);
-	lua_setglobal(lua_state, "Stack");
-
-	luaP_newobject<SpriteBatcher>(lua_state, luaP_getRenderer(lua_state)->getBatcher());
-	lua_setglobal(lua_state, "SpriteBatcher");
-
-	luaP_newobject<Renderer>(lua_state, luaP_getRenderer(lua_state));
-	lua_setglobal(lua_state, "Renderer");
-
-	luaP_newobject<SpriteManager>(lua_state, luaP_getSpriteManager(lua_state));
-	lua_setglobal(lua_state, "SpriteManager");
-
-	luaP_newobject<EventHandler>(lua_state, luaP_getEventHandler(lua_state));
-	lua_setglobal(lua_state, "EventHandler");
-
-	luaP_newobject<Timer>(lua_state, luaP_getTimer(lua_state));
-	lua_setglobal(lua_state, "Timer");
-
-	luaP_newobject<Network>(lua_state, luaP_getNetwork(lua_state));
-	lua_setglobal(lua_state, "Network");
-
-	luaP_newobject<TextRenderer>(lua_state, luaP_getTextRenderer(lua_state));
-	lua_setglobal(lua_state, "Text");
-
-
-	// Place the base state on the stack
+	// Initialize the base state for Protheus
+	// running in script mode.
 
 	GameState base_state;
 	base_state.setInitialize("Initialize");
@@ -74,8 +47,8 @@ int ScriptGame::initialize(){
 	base_state.setRender("Render");
 	base_state.setCleanup("Cleanup");
 	base_state.setReturn("Return");
-	stack.push(base_state, false);
-
+	// 
+	stack.pushBase(std::move(base_state));
 
 	SDL_ShowWindow(luaP_getSDLWindow(lua_state));
 	return 0;

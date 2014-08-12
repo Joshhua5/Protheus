@@ -440,6 +440,12 @@
     <ClCompile Include="Engine\GameState.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\networking\Encryption.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\StateStack.cpp">
+      <Filter>Engine Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Main.h">
@@ -854,6 +860,9 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\StateStack.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\networking\Encryption.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

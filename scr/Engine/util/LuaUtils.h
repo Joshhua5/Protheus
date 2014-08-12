@@ -132,10 +132,11 @@ namespace Pro{
 
 		template<typename T> T** luaP_newobject(lua_State* L, T& data) {
 			T** o = static_cast<T**>(lua_newuserdata(L, sizeof(T*)));
-			*o = new T(data);
+			*o = new T(data); // copy constructor
 			luaP_setmetatable(L, T::lGetMetatable());
 			return o;
 		}
+
 
 		inline void luaP_registerstore(lua_State* L, const std::string& key, void* data){
 			lua_pushstring(L, key.data());
@@ -199,7 +200,7 @@ namespace Pro{
 #define luaP_toushort(L, i)		static_cast<unsigned short>(lua_tonumber(L, i))
 #define luaP_tofloat(L, i)		static_cast<float>(lua_tonumber(L, i))
 #define luaP_todouble(L, i)		static_cast<double>(lua_tonumber(L, i))  
-#define luaP_toboolean(L, i)	static_cast<bool>(lua_toboolean(L, i))
+#define luaP_toboolean(L, i)	lua_toboolean(L, i) ? true : false
 
 #define	luaP_pushnumber(L, i)	lua_pushnumber(L, static_cast<lua_Number>(i))
 

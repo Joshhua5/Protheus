@@ -27,8 +27,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\networking\Encryption.cpp" />
     <ClCompile Include="Engine\GameState.cpp" />
     <ClCompile Include="Engine\math\Vector2.cpp" />
+    <ClCompile Include="Engine\StateStack.cpp" />
     <ClCompile Include="Engine\util\CBuffer.cpp" />
     <ClCompile Include="Engine\util\ClassDefinition.cpp" />
     <ClCompile Include="Engine\gameobject\DataEntity.cpp" />
@@ -143,6 +145,7 @@
     <ClCompile Include="Engine\graphics\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\networking\Encryption.h" />
     <ClInclude Include="Engine\Gamestate.h" />
     <ClInclude Include="Engine\StateStack.h" />
     <ClInclude Include="Engine\util\AlignedBuffer.h" />

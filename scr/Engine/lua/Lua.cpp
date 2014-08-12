@@ -77,3 +77,7 @@ void CLua::loadMain(){
 	// execute file
 	checkError(lua_state, luaL_dofile(lua_state, &path[0]));
 }
+
+lua_State* CLua::getLuaState(){
+	return lua_state;
+}
