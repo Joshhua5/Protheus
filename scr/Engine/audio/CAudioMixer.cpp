@@ -61,10 +61,16 @@ void CAudioMixer::playTrack(const CAudioSignal&){}
 
 void CAudioMixer::playTrack(const CAudioTrack&){}
 
-void CAudioMixer::pause(){}
+void CAudioMixer::pause(){
+	m_stream_active.store(false);
+}
 
-void CAudioMixer::resume(){}
+void CAudioMixer::resume(){
+	m_stream_active.store(true);
+}
 
 void CAudioMixer::stop(){
+	// Remove all signals from processing
+	m_signals.erase(m_signals.begin(), m_signals.end());
 	m_stream_active.store(false);
 }

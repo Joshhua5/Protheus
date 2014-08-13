@@ -7,6 +7,7 @@ void convertStream(CBuffer* buffer, CAudioDevice* dev, int channels, unsigned in
 	SDL_AudioCVT cvt;
 	SDL_BuildAudioCVT(&cvt, AUDIO_F32, channels, inFreq, dev->getSpec().format, channels, dev->getSpec().freq);
 	SDL_assert(cvt.needed);
+
 	cvt.buf = buffer->data<Uint8>();
 	cvt.len = buffer->size();
 	SDL_ConvertAudio(&cvt);
@@ -17,20 +18,22 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 	auto mixer = device->getMixer();
 	auto stream = mixer->getStream();
 
-	if (mixer->isStreamReady()){
-		// Mix the channels together
+	// Populate the audio stream if the mixer has processed
+	// enough data
+	if (mixer->isStreamReady()){ 
 		switch (stream->channels){
 		case 1:
+			// convert the stream into the devices format.
+			// Consider having the stream pre converted in the mixer
 			convertStream(stream->mono, device, 1, 48000);
+			// Move the stream into the device
 			memmove(_stream, stream->mono->data(), length);
 			break;
 		case 2:
-			for (int x = 0; x < length / 2; ++x){
-				SDL_AudioCVT convert;
-				convert.src_format =
-					_stream[x * 2] = stream->left->data<Uint8>()[x];
+			/*for (int x = 0; x < length / 2; ++x){
+				_stream[x * 2] = stream->left->data<Uint8>()[x];
 				_stream[(x * 2) + 1] = stream->right->data<Uint8>()[x];
-			}
+			}*/
 			break;
 		case 4:
 			break;
@@ -42,6 +45,7 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 
 CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
 	_spec.callback = audio_callback;
+	// Allow the callback to access this CAudioDevice instance.
 	_spec.userdata = this;
 	if (SDL_OpenAudio(&_spec, &spec) < 0){
 		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
@@ -49,6 +53,9 @@ CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
 }
 
 CAudioDevice::CAudioDevice(){
+	// Create a request of the settings of the device,
+	// What we request may not be approved in which case
+	// we create the device with what was approved.
 	SDL_AudioSpec _spec;
 	_spec.channels = 2;
 	_spec.format = AUDIO_S16;

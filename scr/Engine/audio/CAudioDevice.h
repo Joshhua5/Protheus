@@ -28,8 +28,12 @@ namespace Pro{
 			CAudioDevice();
 			~CAudioDevice();
 
+			// Returns the details of the Audio Device which 
 			SDL_AudioSpec getSpec();
+			// Returns the mixer instance responsible for
+			// processing of Audio to be played
 			CAudioMixer* getMixer();
+			// Returns the device state (Playing, Paused, Stopped)
 			SDL_AudioStatus getDeviceState();
 
 			// Lua Functions

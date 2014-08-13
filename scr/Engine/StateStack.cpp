@@ -21,6 +21,7 @@ void StateStack::push(GameState& state, bool deactivateTop){
 }
 
 void StateStack::pushBase(const GameState& state){
+	// Move the base state, as we don't need a copy
 	base_state = std::move(state);
 	base_state.initialize(lua_state);
 }
@@ -45,10 +46,11 @@ void StateStack::pop(){
  
 void StateStack::execute(){
 	// execute everything in the order the were placed
-	// apart from the base stack, which the render function
-	// is the last thing called of the frame
+	// apart from the base stack, which has it's update function called first
+	// and render function called last.
 	base_state.update(lua_state);
 	for each(auto state in m_stack)
+		// Ignore a state that isn't active
 		if (state.isActive()){
 			state.update(lua_state);
 			state.render(lua_state);
