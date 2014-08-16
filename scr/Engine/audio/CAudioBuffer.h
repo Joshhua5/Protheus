@@ -24,18 +24,55 @@ namespace Pro{
 		{
 			char channels;
 			union{
-				CBuffer* mono;
+				CBuffer* mono = nullptr;
 				CBuffer* left;
 				CBuffer* front_left;
 			};
 			union{
-				CBuffer* right;
+				CBuffer* right = nullptr;
 				CBuffer* front_right;
 			};
-			CBuffer* back_left;
-			CBuffer* back_right;
-			CBuffer* center;
-			CBuffer* low_freq;
+			CBuffer* back_left = nullptr;
+			CBuffer* back_right = nullptr;
+			CBuffer* center = nullptr;
+			CBuffer* low_freq = nullptr;
+
+			// Initializer of a CAudioBuffer 
+			CAudioBuffer(char channels, unsigned short buffer_size){
+				this->channels = channels;
+				switch (channels){
+				case 1:
+					mono = new CBuffer(buffer_size); 
+					return;
+				case 2:
+					left = new CBuffer(buffer_size);
+					right = new CBuffer(buffer_size);
+					return;
+				case 4:
+					front_left = new CBuffer(buffer_size);
+					front_right = new CBuffer(buffer_size);
+					back_left = new CBuffer(buffer_size);
+					back_right = new CBuffer(buffer_size);
+					return;
+				case 6:
+					front_left = new CBuffer(buffer_size);
+					front_right = new CBuffer(buffer_size);
+					center = new CBuffer(buffer_size);
+					back_left = new CBuffer(buffer_size);
+					back_right = new CBuffer(buffer_size);
+					low_freq = new CBuffer(buffer_size);
+					return;
+				}
+			}
+
+			~CAudioBuffer(){
+				delete mono;
+				delete right;
+				delete back_left;
+				delete back_right;
+				delete center;
+				delete low_freq;
+			}
 		};
 	}
 }

@@ -21,10 +21,12 @@ namespace Pro{
 		{
 			//void audio_callback(CAudioMixer*, Uint8* stream, int length);
 			unsigned int deviceID;
-			CAudioMixer mixer;
+			CAudioMixer* mixer;
 			SDL_AudioSpec spec;
 		public:
 			CAudioDevice(SDL_AudioSpec);
+			CAudioDevice(const CAudioDevice& copy) = delete;
+			CAudioDevice(CAudioDevice&& move);
 			CAudioDevice();
 			~CAudioDevice();
 
