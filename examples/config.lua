@@ -1,5 +1,5 @@
 script_engine_mode = true;
-root_path = "main/";
+root_path = "gamemaker/";
 main_path = "main.lua";
 window_title = "test";
 screen_width = 800;
