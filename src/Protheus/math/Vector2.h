@@ -44,10 +44,10 @@ namespace Pro{
 			Vector2(float, float);
 			Vector2(int, int);
 
-			bool contains(float);
+			bool contains(float) const;
 			void move(float _x, float _y);
-			float length();
-			Vector2 normalize();
+			float length() const;
+			Vector2 normalize() const;
 
 			Vector2& operator=(float);
 

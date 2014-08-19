@@ -3,52 +3,7 @@
 using namespace Pro;
 using namespace Audio;
 
-CAudioDevice::CAudioDevice(){
-	// Create a request of the settings of the device,
-	// What we request may not be approved in which case
-	// we create the device with what was approved.
-	SDL_AudioSpec _spec;
-	_spec.channels = 2;
-	_spec.format = AUDIO_S16;
-	_spec.freq = 44100;
-	_spec.samples = 1024;
-	_spec.callback = audio_callback;
-	_spec.userdata = this;
-
-	if (SDL_OpenAudio(&_spec, &spec) < 0){
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-		CAudioDevice();
-	}
-	// Create mixer
-	mixer = new CAudioMixer(spec.channels, 2048);
-}
-
-
-CAudioDevice::CAudioDevice(CAudioDevice&& move){
-	spec = std::move(move.spec);
-	mixer = move.mixer;
-	move.mixer = nullptr;
-	deviceID = move.deviceID;
-	move.deviceID = NULL;
-}
-
-CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
-	_spec.callback = audio_callback;
-	// Allow the callback to access this CAudioDevice instance.
-	_spec.userdata = this;
-	if (SDL_OpenAudio(&_spec, &spec) < 0){
-		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-	}
-	// Create mixer
-	mixer = new CAudioMixer(spec.channels, 2048);
-}
-
-CAudioDevice::~CAudioDevice(){
-	SDL_CloseAudioDevice(deviceID);
-	delete mixer;
-}
-
-void convertStream(CBuffer* buffer, CAudioDevice* dev, int channels, unsigned int inFreq){
+void inline convertStream(CBuffer* buffer, CAudioDevice* dev, int channels, unsigned int inFreq){
 	SDL_AudioCVT cvt;
 	SDL_BuildAudioCVT(&cvt, AUDIO_F32, channels, inFreq, dev->getSpec().format, channels, dev->getSpec().freq);
 	SDL_assert(cvt.needed);
@@ -94,6 +49,51 @@ void audio_callback(void* dev, Uint8* _stream, int length){
 	}
 }
 
+CAudioDevice::CAudioDevice(){
+	// Create a request of the settings of the device,
+	// What we request may not be approved in which case
+	// we create the device with what was approved.
+	SDL_AudioSpec _spec;
+	_spec.channels = 2;
+	_spec.format = AUDIO_S16;
+	_spec.freq = 44100;
+	_spec.samples = 1024;
+	_spec.callback = audio_callback;
+	_spec.userdata = this;
+
+	if (SDL_OpenAudio(&_spec, &spec) < 0){
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+		CAudioDevice();
+	}
+	// Create mixer
+	mixer = new CAudioMixer(spec.channels, 2048);
+}
+
+
+CAudioDevice::CAudioDevice(CAudioDevice&& move){
+	spec = std::move(move.spec);
+	mixer = move.mixer;
+	move.mixer = nullptr;
+	deviceID = move.deviceID;
+	move.deviceID = NULL;
+}
+
+CAudioDevice::CAudioDevice(SDL_AudioSpec _spec){
+	_spec.callback = audio_callback;
+	// Allow the callback to access this CAudioDevice instance.
+	_spec.userdata = this;
+	if (SDL_OpenAudio(&_spec, &spec) < 0){
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+	}
+	// Create mixer
+	mixer = new CAudioMixer(spec.channels, 2048);
+}
+
+CAudioDevice::~CAudioDevice(){
+	SDL_CloseAudioDevice(deviceID);
+	delete mixer;
+}
+ 
 CAudioMixer* CAudioDevice::getMixer(){
 	return mixer;
 }

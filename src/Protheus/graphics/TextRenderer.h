@@ -40,7 +40,7 @@ namespace Pro{
 			TTF_Font* active_font; 
 			unordered_map<string, TTF_Font*> loaded_fonts;
 		public: 
-			TextRenderer(lua_State* lua_state);
+			TextRenderer(lua_State* lua_state, SDL_Renderer* renderer);
 			~TextRenderer();
 			
 			void loadFont(const string& name, const string& path);

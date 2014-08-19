@@ -15,7 +15,6 @@ CLua::CLua() : LuaObjectFactory(&lua_state), LuaGlobalFactory(lua_state), LuaMet
 	luaP_setEventHandler(lua_state, new EventHandler()); 
 	luaP_setTimer(lua_state, new Timer());
 	luaP_setFileSystem(lua_state, new FileSystem());
-	luaP_setTextRenderer(lua_state, new TextRenderer(lua_state));
 	defineKeyTable(lua_state);
 }
 CLua::~CLua() { lua_close(lua_state); }
@@ -44,6 +43,8 @@ IGame* CLua::loadConfig(const std::string& _path){
 
 	luaP_setSpriteManager(lua_state, new Graphics::SpriteManager(lua_state));
 
+	luaP_setTextRenderer(lua_state, new TextRenderer(lua_state, luaP_getSDLRenderer(lua_state)));
+
 	lua_getglobal(lua_state, "script_engine_mode");
 	if (lua_toboolean(lua_state, -1))
 		return new ScriptGame(lua_state);
@@ -71,9 +72,14 @@ void CLua::loadMain(){
 	// grab the path to the main.lua
 	lua_getglobal(lua_state, "main_path");
 	// append the path onto the root
+	std::string main_path = lua_tostring(lua_state, -1);
+
+	if (main_path == "")
+		error.reportFatal("No main path defined");
+
 	std::string path =
 		luaP_getFileSystem(lua_state)->getRootDir() +
-		lua_tostring(lua_state, -1);
+		main_path;
 	// execute file
 	checkError(lua_state, luaL_dofile(lua_state, &path[0]));
 }

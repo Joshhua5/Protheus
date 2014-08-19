@@ -1,0 +1,514 @@
+START MESSAGE 0
+script_game_metatable
+	getSpriteManager
+	getRenderer
+	exit
+
+END MESSAGE
+
+START MESSAGE 1
+component_active_state_metatable
+	activate
+	deactivate
+	isActive
+
+END MESSAGE
+
+START MESSAGE 2
+component_area_metatable
+	getDimensions
+	setDimensions
+
+END MESSAGE
+
+START MESSAGE 3
+component_guid_metatable
+	getGUID
+
+END MESSAGE
+
+START MESSAGE 4
+component_scriptable_metatable
+	update
+	attachFunction
+
+END MESSAGE
+
+START MESSAGE 5
+component_lua_callback_metatable
+	bindCallback
+
+END MESSAGE
+
+START MESSAGE 6
+component_name_metatable
+
+END MESSAGE
+
+START MESSAGE 7
+component_posititon_metatable
+	getPosition
+	setPosition
+
+END MESSAGE
+
+START MESSAGE 8
+scene_metatable
+	getGUID
+	update
+
+END MESSAGE
+
+START MESSAGE 9
+component_guid_metatable
+	getGUID
+
+END MESSAGE
+
+START MESSAGE 10
+scene_map_metatable
+	getDimensions
+	setDimensions
+
+END MESSAGE
+
+START MESSAGE 11
+map_section_metatable
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+
+END MESSAGE
+
+START MESSAGE 12
+tile_type_metatable
+
+END MESSAGE
+
+START MESSAGE 13
+gui_button_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 14
+gui_collapsible_menu_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+	addComponent
+
+END MESSAGE
+
+START MESSAGE 15
+gui_container_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+	addComponent
+
+END MESSAGE
+
+START MESSAGE 16
+gui_dropdown_menu_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+	addComponent
+
+END MESSAGE
+
+START MESSAGE 17
+gui_entity_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 18
+gui_label_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 19
+gui_menubar_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 20
+gui_slider_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 21
+gui_text_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+
+END MESSAGE
+
+START MESSAGE 22
+gui_context_metatable
+	getGUID
+	attachWindow
+	detachWindow
+	getContextName
+
+END MESSAGE
+
+START MESSAGE 23
+gui_window_metatable
+	getGUID
+	getDimensions
+	setDimensions
+	getPosition
+	setPosition
+	bindCallback
+	activate
+	deactivate
+	isActive
+	isClickWithin
+	getParent
+	setParent
+	addComponent
+
+END MESSAGE
+
+START MESSAGE 24
+audio_device_metatable
+
+END MESSAGE
+
+START MESSAGE 25
+audio_mixer_metatable
+
+END MESSAGE
+
+START MESSAGE 26
+audio_signal_metatable
+
+END MESSAGE
+
+START MESSAGE 27
+event_handler_metatable
+	keyNext
+	keyHasNext
+	keyCount
+	mouseButtonNext
+	mouseButtonHasNext
+	mouseButtonCount
+	mouseMotionNext
+	mouseMotionHasNext
+	mouseMotionCount
+	mouseWheelNext
+	mouseWheelHasNext
+	mouseWheelCount
+
+END MESSAGE
+
+START MESSAGE 28
+mouse_wheel_metatable
+
+END MESSAGE
+
+START MESSAGE 29
+mouse_motion_metatable
+	getPosition
+	getRelPosition
+
+END MESSAGE
+
+START MESSAGE 30
+mouse_button_metatable
+
+END MESSAGE
+
+START MESSAGE 31
+event_key_metatable
+	isDown
+	isUp
+	getKey
+	repeated
+
+END MESSAGE
+
+START MESSAGE 32
+asset_sprite_metatable
+
+END MESSAGE
+
+START MESSAGE 33
+gameobject_animated_sprite_metatable
+	getGUID
+	getFrame
+	addFrame
+
+END MESSAGE
+
+START MESSAGE 34
+sprite_manager_metatable
+	loadSprite
+	getSprite
+	getAnimation
+
+END MESSAGE
+
+START MESSAGE 35
+sprite_batcher_metatable
+	push
+	flush
+
+END MESSAGE
+
+START MESSAGE 36
+renderer_metatable
+	getBatcher
+	renderScene
+
+END MESSAGE
+
+START MESSAGE 37
+vector2_metatable
+	contains
+	length
+	normalize
+	move
+	getX
+	getY
+	setX
+	setY
+	getXY
+	setXY
+
+END MESSAGE
+
+START MESSAGE 38
+vector3_metatable
+	getX
+	getY
+	getZ
+	setX
+	setY
+	setZ
+	getXYZ
+	setXYZ
+
+END MESSAGE
+
+START MESSAGE 39
+vector4_metatable
+	getX
+	getY
+	getZ
+	getW
+	setX
+	setY
+	setZ
+	setW
+	getXYZW
+	setXYZW
+
+END MESSAGE
+
+START MESSAGE 40
+script_game_metatable
+	push
+	pop
+
+END MESSAGE
+
+START MESSAGE 41
+gamestate_metatable
+	setCleanup
+	setRender
+	setInitialize
+	setUpdate
+	setReturn
+
+END MESSAGE
+
+START MESSAGE 42
+text_renderer_metatable
+	loadFont
+	flush
+	drawText
+
+END MESSAGE
+
+START MESSAGE 43
+network_metatable
+	startServer
+	connectToServer
+
+END MESSAGE
+
+START MESSAGE 44
+tcp_server_metatable
+	pause
+	resume
+	getConnectionCount
+	getConnection
+	getNewConnection
+	recv
+	peek
+
+END MESSAGE
+
+START MESSAGE 45
+c_tcp_connection_metatable
+	send
+	peek
+	recv
+	isConnected
+
+END MESSAGE
+
+START MESSAGE 46
+s_tcp_connection_metatable
+	send
+	peek
+	recv
+	isConnected
+
+END MESSAGE
+
+START MESSAGE 47
+timer_metatable
+	ElapsedTime
+	TicksPerSecond
+
+END MESSAGE
+
+START MESSAGE 48
+buffer_metatable
+	size
+	resize
+
+END MESSAGE
+
+START MESSAGE 49
+buffer_reader_metatable
+	skip
+	getPosition
+	setPosition
+	getBufferSize
+	readString
+	readUInt
+	readInt
+	readDouble
+
+END MESSAGE
+
+START MESSAGE 50
+buffer_writer_metatable
+	skip
+	getPosition
+	setPosition
+	getBufferSize
+	writeBuffer
+	writeString
+	writeUInt
+	writeInt
+	writeDouble
+
+END MESSAGE
+
+START ERROR 0
+Lua Error:cannot open text/main.lua: No such file or directory
+END ERROR
+

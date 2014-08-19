@@ -11,6 +11,8 @@
 *.lastbuildstate
 *.tlog
 *.a
+*.manifest
+*.res
 *.o
 *.v12.suo
 *.v11.suo
@@ -20,6 +22,8 @@
 /x64
 /arm
 /Debug
-/scr/Debug
-/scr/Protheus.tlog
-/Protheus Engine.sdf
+src/Protheus/log.txt
+/vs2014/lib
+/vs2014/Debug
+src/Protheus/Debug
+Protheus Engine.sdf

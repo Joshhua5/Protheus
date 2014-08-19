@@ -10,7 +10,7 @@ CAudioMixer::CAudioMixer(char channels, unsigned short buffer_size){
 	m_stream_active.store(false);
 	m_stream_ready.store(false);
 	m_stream_refill.store(false);
-	m_stream_processor = thread(&process_stream, this);
+	m_stream_processor = thread(&CAudioMixer::process_stream, this);
 } 
 
 CAudioMixer::~CAudioMixer(){
@@ -23,7 +23,7 @@ CAudioMixer::~CAudioMixer(){
 }
 
 
-float inline getDropoff(Math::Vector2& pos){
+float inline getDropoff(const Math::Vector2& pos){
 	// Inverse Square Law  = P / 4 * PI * R * R
 	// R : distance
 	// P : Power

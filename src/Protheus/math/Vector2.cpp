@@ -135,17 +135,17 @@ inline void Vector2::move(float _x, float _y){
 	y += _y;
 }
 
-inline bool Vector2::contains(float p){
+inline bool Vector2::contains(float p) const{
 	if ((x > p && y < p) || (x < p && y > p))
 		return true;
 	return false;
 }
 
-inline float Vector2::length(){
+inline float Vector2::length() const{
 	return sqrtf((x * x) + (y * y));
 }
 
-inline Vector2 Vector2::normalize(){
+inline Vector2 Vector2::normalize() const{
 	Vector2 out(*this);
 	out /= out.length();
 	return out;

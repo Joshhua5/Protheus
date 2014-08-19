@@ -33,6 +33,9 @@ int ScriptGame::gameLoop(){
 		spriteBatcher->flush();
 		text->flush();
 		renderer->endFrame();
+#if DEBUG
+		cout << "Lua Top:" << lua_gettop(lua_state) << "\n";
+#endif
 	} while (!exitRequested);
 	return 0;
 }

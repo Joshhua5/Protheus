@@ -5,12 +5,13 @@ using namespace Graphics;
 using namespace Math;
 using namespace Util;
 
-TextRenderer::TextRenderer(lua_State* lua_state)
+TextRenderer::TextRenderer(lua_State* lua_state, SDL_Renderer* sdl_renderer)
 {
 	this->lua_state = lua_state;
 	if (TTF_WasInit())
 		TTF_Init();  
 
+	renderer = sdl_renderer;
 	active_font = nullptr;
 }
 

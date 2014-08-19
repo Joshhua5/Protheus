@@ -63,7 +63,6 @@ namespace Pro{
 				}  
 			} 
 
-
 			void setGlobals(ScriptGame& game, lua_State* lua_state){
 				// Pass pointers do we don't copy the class, otherwise they're copied
 				// and lua will contain reference to a different instance than Protheus.

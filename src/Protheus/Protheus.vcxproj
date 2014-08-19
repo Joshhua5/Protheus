@@ -353,10 +353,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)SDL2_image;$(SolutionDir)SDL2\include;$(SolutionDir)SDL2_net;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\SDL2_image;$(ProjectDir)..\SDL2\include;$(ProjectDir)..\SDL2_net;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <IncludePath>$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
