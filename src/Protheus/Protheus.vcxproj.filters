@@ -15,12 +15,6 @@
     <Filter Include="Engine Source Files\GUI">
       <UniqueIdentifier>{ee0f07f3-778e-4945-8846-9ac0762656d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Source">
-      <UniqueIdentifier>{9ec49b7a-a1b1-4ec0-986f-7e97baada3af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Header">
-      <UniqueIdentifier>{bce6dfe0-b403-4452-b48e-d12af7250eaf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine Source Files\Containers">
       <UniqueIdentifier>{3b499125-257b-4621-9ea4-432ea7ea20f7}</UniqueIdentifier>
     </Filter>

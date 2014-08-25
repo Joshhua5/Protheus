@@ -14,7 +14,7 @@ History:
 
 #include <stack> 
 #include <SDL_ttf.h>
-
+#include "..\io\FileSystem.h"
 #include "..\math\Vector4.h"
 #include "..\util\LuaUtils.h"
 #include "Sprite.h"
@@ -45,13 +45,14 @@ namespace Pro{
 			
 			void loadFont(const string& name, const string& path);
 			void pushText(const string& text, const Vector2& position);
-			void pushText(const string& text, const Vector2& position, int fontSize);
-			void pushText(const string& text, const Vector2& position, int fontSize, float rotation);
+			void pushText(const string& text, const Vector2& position, float fontSize);
+			void pushText(const string& text, const Vector2& position, float fontSize, float rotation);
 			void flush();
 			 
 			static int lLoadFont(lua_State*);
 			static int lPushText(lua_State*);
 			static int lFlush(lua_State*);
+			static int lSetActive(lua_State*);
 
 			/*constexpr*/ static const char* lGetMetatable(){
 				return "text_renderer_metatable";
@@ -61,7 +62,8 @@ namespace Pro{
 			static void lGetFunctions(std::vector<luaL_Reg>& fields){
 				fields.push_back({ "loadFont", &T::lLoadFont });
 				fields.push_back({ "flush", &T::lFlush });
-				fields.push_back({ "drawText", &T::lPushText });
+				fields.push_back({ "pushText", &T::lPushText });
+				fields.push_back({ "setActive", &T::lSetActive });
 			}
 		};
 	}

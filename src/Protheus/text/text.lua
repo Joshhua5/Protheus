@@ -7,20 +7,22 @@ function Initialize()
 	-- loads the font
 	Text:loadFont("special", "PWCurvesAndDots.ttf")
 	
-end
-
-function Update()   
+		-- push text to be rendererd
 
 end
 
-
-function Render() 
+function Update()   	 
 	-- push text to be rendererd
 	Text:pushText("Hello", Vector2(30, 30))
 	-- set the font that's rendering the text
 	Text:setActive("special")
 	-- the scale is multiplied by 72 which is the default font size.
-	Text:pushText("Special", Vector2(50, 50), 0.5)
+	Text:pushText("Special", Vector2(200, 200), 0.5)
 	-- set font back to original
 	Text:setActive("default")
+end
+
+
+function Render() 
+
 end

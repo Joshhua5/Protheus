@@ -75,4 +75,5 @@ int StateStack::lPush(lua_State* L){
 		stack->push(*Util::luaP_touserdata<GameState>(L, 2), luaP_toboolean(L, 3));
 		return 0;
 	} 
+	return 0;
 }
