@@ -6,19 +6,17 @@ using namespace Math;
 using namespace Util;
 using namespace std;
 
-GUIContext::GUIContext(const std::string& name) : CGUID(name)
-{
-}
+GUIContext::GUIContext(const std::string& name) : CGUID(name){}
 
-GUIContext::GUIContext() : CGUID()
-{
-}
+GUIContext::GUIContext() : CGUID(){}
 
 void GUIContext::update(SDL_Event event){
-	for each(auto window in windows)
-		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-			if (window.second.isClickWithin(Vector2(event.button.x, event.button.y)))
-				window.second.update(event);
+	// Don't update if context isn't active
+	if (isActive()) 
+		for each(auto window in windows)
+			if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
+				if (window.second.isClickWithin(Vector2(event.button.x, event.button.y)))
+					window.second.update(event);
 }
 
 void GUIContext::attachWindow(GUIWindow& window){
@@ -27,6 +25,11 @@ void GUIContext::attachWindow(GUIWindow& window){
 }
 void GUIContext::detachWindow(game_id i){
 	windows.erase(i);
+}
+
+unordered_map<game_id, GUIWindow>& GUIContext::getWindows()
+{
+	return windows;
 }
 
 string GUIContext::getContextName(){

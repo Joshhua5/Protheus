@@ -27,25 +27,26 @@ History:
 namespace Pro{
 	namespace Graphics{
 		using namespace Asset;
+		using namespace std;
 
 		class SpriteManager
 		{
 			lua_State* lua_state;
 			SDL_Renderer* renderer = nullptr;
 			SDL_Texture* spriteSheet;
-			std::unordered_map<game_id, Sprite*> sprites;
-			std::unordered_map<game_id, AnimatedSprite*> animations;
+			unordered_map<game_id, Sprite*> sprites;
+			unordered_map<game_id, AnimatedSprite*> animations;
 
-			AnimatedSprite loadAnimation(const std::string& path);
+			AnimatedSprite loadAnimation(const string& path);
 		public:
 			SpriteManager(lua_State* lua_state);
 			~SpriteManager();
 
-			Sprite* getSprite(game_id);
-			AnimatedSprite* getAnim(game_id);
+			Sprite* getSprite(const game_id);
+			AnimatedSprite* getAnim(const game_id);
 
-			Sprite* loadSprite(const std::string& name, const string& imagePath);
-			void release(game_id);
+			Sprite* loadSprite(const string& name, const string& imagePath);
+			void release(const game_id);
 
 			// LUA Functions
 			static int lLoadSprite(lua_State*);

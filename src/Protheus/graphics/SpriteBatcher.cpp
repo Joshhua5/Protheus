@@ -10,14 +10,8 @@ SpriteBatcher::SpriteBatcher(lua_State* L){
 	renderer = luaP_getSDLRenderer(L);
 	lua_state = L;
 }
-
-void SpriteBatcher::push(Sprite* _s, Vector4& _r){
-	push(_s, _r, 1.0f, 0.0f); 
-}
-void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale){
-	push(_s, _r, scale, 0.0f);
-}
-void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale, float rotation){ 
+ 
+void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale = 1, float rotation = 0){ 
 	Details details;
 	details.position = _r;
 	details.scale = scale;

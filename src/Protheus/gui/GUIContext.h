@@ -18,11 +18,13 @@ History:
 
 namespace Pro{
 	namespace GUI{
+		using namespace std;
 		class GUIContext :
-			public Component::CGUID
+			public Component::CGUID,
+			public Component::ActiveState
 		{
 		private:
-			std::unordered_map<game_id, GUIWindow> windows;
+			unordered_map<game_id, GUIWindow> windows;
 
 			GUIEntity* focusedEntity;
 		public:
@@ -34,7 +36,9 @@ namespace Pro{
 			void attachWindow(GUIWindow& window);
 			void detachWindow(game_id);
 
-			std::string getContextName();
+			unordered_map<game_id, GUIWindow>& getWindows();
+
+			string getContextName();
 
 			// LUA Functions
 

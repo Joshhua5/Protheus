@@ -36,9 +36,9 @@ namespace Pro{
 
 		public:
 			GUIWindow(const std::string& name);
-			GUIWindow(); 
+			GUIWindow();
 
-			void attachMenuBar(GUIMenuBar* component);
+			void attachMenuBar(GUIMenuBar* component); 
 
 			// returns the Metatable's name assosiated with this object
 			/*constexpr*/ static const char* lGetMetatable(){

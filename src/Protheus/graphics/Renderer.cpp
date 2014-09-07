@@ -92,6 +92,20 @@ void Renderer::renderScene(Scene* scene, SpriteManager* spriteMng){
 	sprite_batcher->flush();
 }
 
+void Renderer::renderGUI(GUI::GUIContext& context)
+{
+	if (!context.isActive())
+		return error.reportErrorNR("Trying to render a inactive GUIContext: " + context.getContextName());
+	
+	for each(const auto& window in context.getWindows()){
+		// Render Window 
+		const auto& pos = window.second.getPosition();
+		
+		// Render Componenets 
+	}
+		 
+}
+
 void Renderer::startFrame(){
 	SDL_RenderClear(renderer);
 }

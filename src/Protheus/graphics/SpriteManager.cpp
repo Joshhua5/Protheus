@@ -66,15 +66,15 @@ AnimatedSprite SpriteManager::loadAnimation(const std::string& path){
 	return anim;
 }
 
-Asset::Sprite* SpriteManager::getSprite(game_id id){
+Asset::Sprite* SpriteManager::getSprite(const game_id id){
 	return sprites.at(id);
 }
 
-Asset::AnimatedSprite* SpriteManager::getAnim(game_id id){
+Asset::AnimatedSprite* SpriteManager::getAnim(const game_id id){
 	return animations.at(id);
 }
 
-void SpriteManager::release(game_id textureID){ 
+void SpriteManager::release(const game_id textureID){
 	sprites.at(textureID)->releaseTexture();
 	sprites.erase(textureID);
 }

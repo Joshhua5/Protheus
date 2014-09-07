@@ -43,9 +43,7 @@ namespace Pro{
 			TextRenderer(lua_State* lua_state, SDL_Renderer* renderer);
 			~TextRenderer();
 			
-			void loadFont(const string& name, const string& path);
-			void pushText(const string& text, const Vector2& position);
-			void pushText(const string& text, const Vector2& position, int fontSize);
+			void loadFont(const string& name, const string& path); 
 			void pushText(const string& text, const Vector2& position, int fontSize, float rotation);
 			void flush();
 			 

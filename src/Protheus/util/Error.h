@@ -6,7 +6,7 @@ using namespace std;
 namespace Pro{
 
 	static class Error{
-		std::fstream log; 
+		fstream log; 
 	public:
 		Error(){ log.open("log.txt", std::ios::out | std::ios::binary | std::ios::trunc); }
 		~Error(){ log.close(); }
@@ -52,6 +52,49 @@ namespace Pro{
 			++msgNum;
 			return msgNum;
 		} 
+	
+		// NR stands for No Return 
+		void reportFatalNR(const string& msg) {
+			static unsigned long errNum = 0;
+			if (log.is_open() == false)
+				return;
+			log << "START FATAL ";
+			log << errNum;
+			log << "\n";
+			log.write(msg.data(), msg.size());
+			log << "\nEND FATAL\n\n";
+			log.flush();
+			++errNum; 
+		}
+
+		// NR stands for No Return
+		void reportErrorNR(const string& msg){
+			static unsigned long errNum = 0;
+			if (log.is_open() == false)
+				return;
+			log << "START ERROR ";
+			log << errNum;
+			log << "\n";
+			log.write(msg.data(), msg.size());
+			log << "\nEND ERROR\n\n";
+			++errNum;
+			log.flush(); 
+		}
+
+		// NR stands for No Return
+		void reportMessageNR(const string& msg){
+			static unsigned long msgNum = 0;
+			if (log.is_open() == false)
+				return;
+			log << "START MESSAGE ";
+			log << msgNum;
+			log << "\n";
+			log.write(msg.data(), msg.size());
+			log << "\nEND MESSAGE\n\n";
+			log.flush();
+			++msgNum; 
+		}
+
 	} error; 
 }
 

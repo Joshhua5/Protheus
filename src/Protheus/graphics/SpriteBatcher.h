@@ -37,9 +37,7 @@ namespace Pro{
 			stack<Details> render_stack; 
 		public:
 			SpriteBatcher(lua_State* lua_state); 
-
-			void push(Sprite*, Vector4&);
-			void push(Sprite*, Vector4&, float scale);
+			 
 			void push(Sprite*, Vector4&, float scale, float rotate);
 			void flush();
 

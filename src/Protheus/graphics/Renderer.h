@@ -15,6 +15,7 @@ History:
 #include "..\gameobject\Scene.h"
 #include <unordered_map>
 #include "SpriteManager.h"
+#include "..\gui\GUIContext.h"
 #include "TextRenderer.h"
 #include "SpriteBatcher.h"
 #include "Window.h"
@@ -34,7 +35,8 @@ namespace Pro{
 			SDL_Renderer* getRenderer();
 			SpriteBatcher* getBatcher();
 
-			void renderScene(Scene*, Graphics::SpriteManager*);
+			void renderScene(Scene*, SpriteManager*);
+			void renderGUI(GUI::GUIContext&);
 
 			void startFrame();
 			void endFrame();

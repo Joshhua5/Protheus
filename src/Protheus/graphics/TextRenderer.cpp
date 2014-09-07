@@ -32,16 +32,9 @@ void TextRenderer::loadFont(const string& name, const string& path){
 
 	loaded_fonts.insert({ name, font }); 
 }
- 
-void TextRenderer::pushText(const string& text, const Vector2& position){
-	pushText(text, position, 10, 0);
-}
+  
 
-void TextRenderer::pushText(const string& text, const Vector2& position, int fontSize){
-	pushText(text, position, fontSize, 0);
-}
-
-void TextRenderer::pushText(const string& text, const Vector2& position, int fontSize, float rotation){ 
+void TextRenderer::pushText(const string& text, const Vector2& position, int fontSize = 10, float rotation = 0){ 
 	Details details;
 	details.size = (float)fontSize;
 	details.position = position;
