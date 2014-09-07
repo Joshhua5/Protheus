@@ -22,7 +22,9 @@ int ScriptGame::gameLoop(){
 	static const auto spriteBatcher = renderer->getBatcher();
 	static const auto eventHandler = luaP_getEventHandler(lua_state);
 	static const auto timer = luaP_getTimer(lua_state);
-	do{
+	do{ 
+		// remember the original stack size
+		const auto original_top = lua_gettop(lua_state);
 		// Update engine
 		timer->tick();
 		eventHandler->update();
@@ -33,9 +35,10 @@ int ScriptGame::gameLoop(){
 		spriteBatcher->flush();
 		text->flush();
 		renderer->endFrame();
-#if DEBUG
-		cout << "Lua Top:" << lua_gettop(lua_state) << "\n";
-#endif
+
+		// pop values from the stack if they're left over from the frame
+		if (original_top != lua_gettop(lua_state))
+			lua_pop(lua_state, lua_gettop(lua_state) - original_top);
 	} while (!exitRequested);
 	return 0;
 }

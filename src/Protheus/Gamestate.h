@@ -24,6 +24,7 @@ namespace Pro{
 				lua_getglobal(L, lua_function.data());
 				// No returns and no arguments.
 				lua_pcall(L, 0, 0, 0); break;
+				lua_pop(L, -1);
 			case 0: // false
 				// Cast to a function pointer
 				function_pointer(); break;
