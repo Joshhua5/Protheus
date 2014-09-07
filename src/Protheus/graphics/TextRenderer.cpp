@@ -8,8 +8,7 @@ using namespace Util;
 TextRenderer::TextRenderer(lua_State* lua_state, SDL_Renderer* sdl_renderer)
 {
 	this->lua_state = lua_state;
-	if (TTF_WasInit())
-		TTF_Init();  
+	TTF_Init();  
 
 	renderer = sdl_renderer;
 	active_font = nullptr;
@@ -20,7 +19,7 @@ TextRenderer::~TextRenderer(){
 }
 
 void TextRenderer::loadFont(const string& name, const string& path){
-	auto font = TTF_OpenFont(path.data(), 72);
+	auto font = TTF_OpenFont((luaP_getFileSystem(lua_state)->getRootDir() + path).data(), 72);
 	// check for error
 	if (font == nullptr){
 		error.reportError("Unable to load font: \n" + path + "\n" + TTF_GetError());
@@ -32,9 +31,9 @@ void TextRenderer::loadFont(const string& name, const string& path){
 
 	loaded_fonts.insert({ name, font }); 
 }
-  
 
 void TextRenderer::pushText(const string& text, const Vector2& position, int fontSize = 10, float rotation = 0){ 
+
 	Details details;
 	details.size = (float)fontSize;
 	details.position = position;
@@ -45,8 +44,10 @@ void TextRenderer::pushText(const string& text, const Vector2& position, int fon
 }
 
 void TextRenderer::flush(){
-	if (active_font == nullptr) 
-		return; 
+	if (active_font == nullptr){
+		error.reportMessage("No font has been loaded");
+		return;
+	}
 	while (!text_stack.empty()){
 		// Horribly inefficient, add method for reusing a texture,
 		// instead of destroying and creating a texture every frame.
@@ -57,9 +58,10 @@ void TextRenderer::flush(){
 		SDL_FreeSurface(surface);
 		SDL_Point dim;
 		SDL_QueryTexture(texture, NULL, NULL, &dim.x, &dim.y);
-		auto rect = SDLP_RectCreate(text.position.x, text.position.y, dim.x / text.size, dim.y / text.size);
+		auto rect = SDLP_RectCreate(text.position.x, text.position.y, dim.x * text.size, dim.y * text.size);
 		SDL_RenderCopyEx(renderer, texture, NULL, &rect, text.rotation, NULL, SDL_FLIP_NONE);
 		SDL_DestroyTexture(texture);
+		text_stack.pop();
 	}
 }
 
@@ -71,15 +73,17 @@ int TextRenderer::lPushText(lua_State* L){
 	// remove one because the TextRenderer is passed by default
 	const auto argument_count = lua_gettop(L);
 
+	// The first argument is the TextRenderer
+	// so we look for 3 is there was 2 arguments passed
 	switch (argument_count){
 	case 3:
 		tr->pushText(str, pos);
 		break;
 	case 4:
-		tr->pushText(str, pos, luaP_toint(L, 4));
+		tr->pushText(str, pos, luaP_tofloat(L, 4));
 		break;
 	case 5:
-		tr->pushText(str, pos, luaP_toint(L, 4), luaP_tofloat(L, 5));
+		tr->pushText(str, pos, luaP_tofloat(L, 4), luaP_tofloat(L, 5));
 		break; 
 	default:
 		error.reportMessage("Invalid number of arguments passed to pushText");
@@ -90,6 +94,12 @@ int TextRenderer::lPushText(lua_State* L){
 int TextRenderer::lFlush(lua_State* L){
 	static const auto tr = luaP_touserdata<TextRenderer>(L, 1);
 	tr->flush();
+	return 0;
+}
+
+int TextRenderer::lSetActive(lua_State* L){
+	static const auto tr = luaP_touserdata<TextRenderer>(L, 1);
+	tr->active_font = tr->loaded_fonts.at(lua_tostring(L, 2));
 	return 0;
 }
 
