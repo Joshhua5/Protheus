@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.21901.1
+VisualStudioVersion = 14.0.22129.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protheus", "..\src\Protheus\Protheus.vcxproj", "{F9AC6516-613E-424E-BE31-5526A44185FF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,6 +30,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "..\src\zlib\zlib.vcxproj", "{1328A6F4-EACB-4799-8F01-EAB08DD8B39B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL2main", "..\src\SDL2\SDLmain_VS2013.vcxproj", "{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataStructures", "..\src\DataStructures\DataStructures.vcxproj", "{B822C1BA-5047-430A-A47D-CA52829CB401}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +168,22 @@ Global
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release|x64.Build.0 = Release|x64
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release|x86.ActiveCfg = Release|Win32
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}.Release|x86.Build.0 = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|ARM.ActiveCfg = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|Win32.Build.0 = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|x64.ActiveCfg = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|x86.ActiveCfg = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Debug|x86.Build.0 = Debug|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|ARM.ActiveCfg = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|Win32.ActiveCfg = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|Win32.Build.0 = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|x64.ActiveCfg = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|x86.ActiveCfg = Release|Win32
+		{B822C1BA-5047-430A-A47D-CA52829CB401}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
