@@ -11,7 +11,7 @@ SpriteBatcher::SpriteBatcher(lua_State* L){
 	lua_state = L;
 }
  
-void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale = 1, float rotation = 0){ 
+void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale, float rotation){ 
 	Details details;
 	details.position = _r;
 	details.scale = scale;

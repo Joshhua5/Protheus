@@ -24,7 +24,7 @@ void Position::setPosition(const Vector2&& p){
 
 int Position::lGetPosition(lua_State* L){
 	const auto p = Util::luaP_touserdata<Position>(L, 1);
-	Util::luaP_newobject<Vector2>(L, p->getPosition());
+	//Util::luaP_newobject<Vector2>(L, p->getPosition());
 	return 1;
 }
 

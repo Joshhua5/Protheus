@@ -14,7 +14,7 @@ History:
 
 #include <unordered_map>
 #include "..\graphics\Window.h"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 namespace Pro{
 	class WindowContainer
 	{

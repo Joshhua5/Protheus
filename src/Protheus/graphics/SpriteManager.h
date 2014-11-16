@@ -21,8 +21,8 @@ History:
 #include "..\graphics\AnimatedSprite.h"
 #include "..\io\CFile.h"
 #include "..\io\FileSystem.h"
-#include "..\util\CBuffer.h"
-#include "..\util\LuaUtils.h"
+#include <CBuffer.h>
+#include "..\lua\LuaUtils.h"
 
 namespace Pro{
 	namespace Graphics{

@@ -27,7 +27,7 @@ History:
 #include <string>
 #include <vector>
 #include "..\Math.h"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 
 using namespace std;
 using namespace Pro::Math;

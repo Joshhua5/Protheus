@@ -15,8 +15,8 @@ History:
 #include <stack> 
 #include <SDL_ttf.h>
 #include "..\io\FileSystem.h"
-#include "..\math\Vector4.h"
-#include "..\util\LuaUtils.h"
+#include <Vector4.h>
+#include "..\lua\LuaUtils.h"
 #include "Sprite.h"
 
 namespace Pro{

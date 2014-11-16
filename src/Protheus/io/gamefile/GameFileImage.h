@@ -12,7 +12,7 @@ History:
 #pragma once
 
 #include "GameFileBase.h"
-#include "..\..\util\LuaUtils.h"
+#include "..\..\lua\LuaUtils.h"
 #include "..\..\graphics\Renderer.h"
 
 namespace Pro{

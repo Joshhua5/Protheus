@@ -14,10 +14,10 @@ History:
 
 #include "lib\lua.hpp"
 #include "..\GameObjects.h"
-#include "..\Math.h"
-#include "..\audio\CAudioDevice.h"
+#include "..\Math.h" 
 #include "..\graphics\Renderer.h"
-#include "..\util\BufferWriter.h"
+#include <BufferWriter.h> 
+#include "..\ScriptGame.h" 
 #include "..\graphics\Sprite.h"
 #include "..\event\EventHandler.h"
 #include "..\Components.h"
@@ -31,11 +31,9 @@ using namespace std;
 namespace Pro{
 	using namespace Component;
 	using namespace GameObject;
-	using namespace Graphics;
-	using namespace Networking;
+	using namespace Graphics; 
 	using namespace GUI;
-	using namespace Math;
-	using namespace Audio;
+	using namespace Math; 
 	using namespace Asset;
 
 	namespace Lua{
@@ -117,14 +115,7 @@ namespace Pro{
 				defineMetatable<GUIText>(L);
 				defineMetatable<GUIContext>(L);
 				defineMetatable<GUIWindow>(L);
-
-				// Audio
-
-				defineMetatable<CAudioDevice>(L);
-				defineMetatable<CAudioMixer>(L);
-				defineMetatable<CAudioSignal>(L);
-
-				// Event
+				 
 
 				defineMetatable<EventHandler>(L);
 				defineMetatable<MouseWheel>(L);
@@ -143,13 +134,7 @@ namespace Pro{
 				defineMetatable<Renderer>(L);
 
 				// Containers
-
-				// Math
-
-				defineMetatable<Vector2>(L);
-				defineMetatable<Vector3>(L);
-				defineMetatable<Vector4>(L);
-
+				 
 				// Scene
 
 				defineMetatable<StateStack>(L);
@@ -158,21 +143,7 @@ namespace Pro{
 				// Font
 
 				defineMetatable<TextRenderer>(L);
-
-				// Networking
-
-				defineMetatable<Network>(L);
-				defineMetatable<TCPServer>(L);
-				defineMetatable<ClientTCPConnection>(L);
-				defineMetatable<ServerTCPConnection>(L); 
-
-				// Utils
-
-				defineMetatable<Timer>(L);
-				defineMetatable<CBuffer>(L);
-				defineMetatable<BufferReader>(L);
-				defineMetatable<BufferWriter>(L);
-
+				   
 			} 
 		};
 	}

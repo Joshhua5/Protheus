@@ -16,7 +16,7 @@ History:
 
 #include "lib\lua.hpp"
 #include "..\GameObjects.h"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 #include "..\component\CScriptable.h"
 #include "..\component\Name.h"
 #include "..\containers\SceneContainer.h"

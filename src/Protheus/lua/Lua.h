@@ -20,7 +20,7 @@ History:
 
 #include "..\networking\CNetwork.h"
 #include "..\graphics\Renderer.h"
-#include "..\util\Timer.h"
+#include <Timer.h>
 #include "..\event\EventHandler.h"
 #include "..\io\FileSystem.h"
 #include "..\ScriptGame.h"

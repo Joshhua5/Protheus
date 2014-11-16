@@ -18,7 +18,7 @@ History:
 #include <fstream>
 #include <vector>
 
-#include "..\util\StringConverter.h"
+#include <StringConverter.h>
 #include "MapSection.h"
 #include "DataEntity.h"
 #include "..\component\CGUID.h"

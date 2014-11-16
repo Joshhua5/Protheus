@@ -14,7 +14,7 @@ History:
 
 #include <unordered_map>
 #include "..\gameobject\Scene.h"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 
 namespace Pro{
 	using namespace GameObject;

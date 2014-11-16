@@ -14,8 +14,8 @@ History:
 
 #include <stack>
 
-#include "..\math\Vector4.h"
-#include "..\util\LuaUtils.h"
+#include <Vector4.h>
+#include "..\lua\LuaUtils.h"
 #include "Sprite.h"
 
 namespace Pro{
@@ -38,7 +38,7 @@ namespace Pro{
 		public:
 			SpriteBatcher(lua_State* lua_state); 
 			 
-			void push(Sprite*, Vector4&, float scale, float rotate);
+			void push(Sprite*, Vector4&, float scale = 1, float rotate = 0);
 			void flush();
 
 			// Lua Functions

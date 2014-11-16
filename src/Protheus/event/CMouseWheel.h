@@ -12,7 +12,7 @@ History:
 
 #pragma once
 
-#include "..\math\Vector2.h"
+#include <Vector2.h>
 #include "EMouseButton.h"
 
 namespace Pro{

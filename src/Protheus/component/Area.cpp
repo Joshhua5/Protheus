@@ -28,7 +28,7 @@ float Area::getVolume() const{
 
 int Area::lGetDimensions(lua_State* L){
 	const auto p = Util::luaP_touserdata<Area>(L, 1);
-	Util::luaP_newobject<Vector2>(L, p->pGetDimensions());
+	//Util::luaP_newobject<Vector2>(L, p->pGetDimensions());
 	return 1;
 }
 int Area::lSetDimensions(lua_State* L){

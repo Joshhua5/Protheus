@@ -19,7 +19,7 @@ History:
 #include "..\containers\EntityContainer.h"
 #include "..\containers\CameraContainer.h"
 #include "..\component\CGUID.h"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 #include "..\Math.h"
 
 #include "Tile.h"

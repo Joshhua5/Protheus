@@ -11,9 +11,9 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "..\..\util\CBuffer.h"
-#include "..\..\util\BufferReader.h"
-#include "..\..\util\BufferWriter.h"
+#include <CBuffer.h>
+#include <BufferReader.h>
+#include <BufferWriter.h>
 #include "EGameFileChunkType.h"
 #include <string>
 

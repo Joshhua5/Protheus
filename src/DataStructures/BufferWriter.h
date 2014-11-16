@@ -43,9 +43,16 @@ namespace Pro{
 				write(&data, sizeof(T));
 			}
 
+			// Writes the array into the buffer, size in bytes
 			template<typename T>
 			void inline write_array(T* data, unsigned size){
 				write((void*)data, size);
+			}
+
+			// writes the amount of elements in an array
+			template<typename T>
+			void inline write_elements(T* data, unsigned elements){
+				write((void*) data, elements * sizeof(T));
 			}
 
 			template<typename T>

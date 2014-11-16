@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debugging|ARM">
+      <Configuration>Debugging</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debugging|Win32">
+      <Configuration>Debugging</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debugging|x64">
+      <Configuration>Debugging</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
@@ -29,25 +41,12 @@
   <ItemGroup>
     <ClCompile Include="networking\Encryption.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="StateStack.cpp" />
-    <ClCompile Include="util\CBuffer.cpp" />
-    <ClCompile Include="util\ClassDefinition.cpp" />
     <ClCompile Include="gameobject\DataEntity.cpp" />
     <ClCompile Include="component\Animated.cpp" />
     <ClCompile Include="gameobject\DynamicEntity.cpp" />
-    <ClCompile Include="util\BufferIO.cpp" />
-    <ClCompile Include="util\BufferReader.cpp" />
-    <ClCompile Include="util\BufferWriter.cpp" />
     <ClCompile Include="DataGame.cpp" />
-    <ClCompile Include="audio\CAudioDevice.cpp" />
-    <ClCompile Include="audio\CAudioMixer.cpp" />
-    <ClCompile Include="audio\CAudioSignal.cpp" />
     <ClCompile Include="component\CScriptable.cpp" />
-    <ClCompile Include="networking\CClientTCPConnection.cpp" />
-    <ClCompile Include="networking\CConnection.cpp" />
-    <ClCompile Include="networking\CServerTCPConnection.cpp" />
-    <ClCompile Include="networking\CTCPConnection.cpp" />
     <ClCompile Include="component\ActiveState.cpp" />
     <ClCompile Include="containers\CameraContainer.cpp" />
     <ClCompile Include="graphics\AnimatedSprite.cpp" />
@@ -59,13 +58,11 @@
     <ClCompile Include="io\Input.cpp" />
     <ClCompile Include="gameobject\Map.cpp" />
     <ClCompile Include="component\Name.cpp" />
-    <ClCompile Include="networking\CNetwork.cpp" />
     <ClCompile Include="graphics\Renderer.cpp" />
     <ClCompile Include="gameobject\Scene.cpp" />
     <ClCompile Include="graphics\Sprite.cpp" />
     <ClCompile Include="graphics\SpriteManager.cpp" />
     <ClCompile Include="gameobject\Tile.cpp" />
-    <ClCompile Include="util\Timer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
     <ClCompile Include="gui\GUIButton.cpp" />
     <ClCompile Include="gui\GUICollapsibleMenu.cpp" />
@@ -116,18 +113,13 @@
     <ClCompile Include="containers\EntityContainer.cpp" />
     <ClCompile Include="component\Position.cpp" />
     <ClCompile Include="component\Area.cpp" />
-    <ClCompile Include="math\Vector3.cpp" />
-    <ClCompile Include="math\Vector4.cpp" />
     <ClCompile Include="component\CGUID.cpp" />
     <ClCompile Include="component\LuaCallback.cpp" />
-    <ClCompile Include="math\Matrix33.cpp" />
     <ClCompile Include="containers\SceneContainer.cpp" />
     <ClCompile Include="containers\WindowContainer.cpp" />
     <ClCompile Include="lua\LuaObjectFactory.cpp" />
     <ClCompile Include="io\CFile.cpp" />
     <ClCompile Include="io\FileSystem.cpp" />
-    <ClCompile Include="networking\CTCPServer.cpp" />
-    <ClCompile Include="audio\WavDecoder.cpp" />
     <ClCompile Include="ScriptGame.cpp" />
     <ClCompile Include="io\gamefile\GameFileLoader.cpp" />
     <ClCompile Include="io\gamefile\GameFileMap.cpp" />
@@ -148,22 +140,11 @@
     <ClInclude Include="networking\Encryption.h" />
     <ClInclude Include="Gamestate.h" />
     <ClInclude Include="StateStack.h" />
-    <ClInclude Include="util\AlignedBuffer.h" />
-    <ClInclude Include="util\BufferBase.h" />
-    <ClInclude Include="util\ClassDefinition.h" />
     <ClInclude Include="gameobject\DataEntity.h" />
     <ClInclude Include="component\Animated.h" />
     <ClInclude Include="gameobject\DynamicEntity.h" />
     <ClInclude Include="gameobject\Entity.h" />
-    <ClInclude Include="util\BufferIO.h" />
-    <ClInclude Include="util\BufferReader.h" />
-    <ClInclude Include="util\BufferWriter.h" />
     <ClInclude Include="DataGame.h" />
-    <ClInclude Include="audio\CAudioBuffer.h" />
-    <ClInclude Include="audio\CAudioDevice.h" />
-    <ClInclude Include="audio\CAudioMixer.h" />
-    <ClInclude Include="audio\CAudioSignal.h" />
-    <ClInclude Include="audio\CAudioTrack.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="event\CKeyboardEvent.h" />
     <ClInclude Include="event\CMouseButton.h" />
@@ -176,10 +157,6 @@
     <ClInclude Include="io\gamefile\EGameFileChunkType.h" />
     <ClInclude Include="io\gamefile\GameFileChunk.h" />
     <ClInclude Include="lua\lua.h" />
-    <ClInclude Include="networking\CClientTCPConnection.h" />
-    <ClInclude Include="networking\CConnection.h" />
-    <ClInclude Include="util\BitCompare.h" />
-    <ClInclude Include="util\CBuffer.h" />
     <ClInclude Include="io\EFile.h" />
     <ClInclude Include="component\ActiveState.h" />
     <ClInclude Include="containers\CameraContainer.h" />
@@ -192,16 +169,12 @@
     <ClInclude Include="io\Input.h" />
     <ClInclude Include="gameobject\Map.h" />
     <ClInclude Include="component\Name.h" />
-    <ClInclude Include="networking\CNetwork.h" />
     <ClInclude Include="graphics\Renderer.h" />
     <ClInclude Include="gameobject\Scene.h" />
     <ClInclude Include="graphics\Sprite.h" />
     <ClInclude Include="graphics\SpriteManager.h" />
     <ClInclude Include="gameobject\Tile.h" />
-    <ClInclude Include="util\Error.h" />
-    <ClInclude Include="util\Member.h" />
     <ClInclude Include="util\Pipeline.h" />
-    <ClInclude Include="util\Timer.h" />
     <ClInclude Include="graphics\Window.h" />
     <ClInclude Include="gui\GUIButton.h" />
     <ClInclude Include="gui\GUICollapsibleMenu.h" />
@@ -246,28 +219,17 @@
     <ClInclude Include="containers\EntityContainer.h" />
     <ClInclude Include="component\Position.h" />
     <ClInclude Include="component\Area.h" />
-    <ClInclude Include="math\Vector2.h" />
-    <ClInclude Include="math\Vector3.h" />
-    <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="component\CGUID.h" />
-    <ClInclude Include="util\StringConverter.h" />
     <ClInclude Include="component\LuaCallback.h" />
-    <ClInclude Include="math\Matrix33.h" />
     <ClInclude Include="containers\SceneContainer.h" />
     <ClInclude Include="containers\WindowContainer.h" />
     <ClInclude Include="lua\LuaObjectFactory.h" />
-    <ClInclude Include="util\LuaUtils.h" />
+    <ClInclude Include="lua\LuaUtils.h" />
     <ClInclude Include="lua\LuaGlobalFactory.h" />
     <ClInclude Include="io\CFile.h" />
     <ClInclude Include="io\FileSystem.h" />
-    <ClInclude Include="networking\CTCPConnection.h" />
-    <ClInclude Include="networking\CTCPServer.h" />
     <ClInclude Include="component\CScriptable.h" />
     <ClInclude Include="lua\LuaMetatableFactory.h" />
-    <ClInclude Include="networking\CServerTCPConnection.h" />
-    <ClInclude Include="audio\IAudioEffect.h" />
-    <ClInclude Include="audio\IBitstreamDecoder.h" />
-    <ClInclude Include="audio\WavDecoder.h" />
     <ClInclude Include="ScriptGame.h" />
     <ClInclude Include="io\gamefile\GameFileLoader.h" />
     <ClInclude Include="io\gamefile\GameFileHeader.h" />
@@ -330,6 +292,15 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|ARM'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -353,9 +324,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\SDL2_image;$(ProjectDir)..\SDL2\include;$(ProjectDir)..\SDL2_net;$(ProjectDir)..\DataStructures;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Networking;$(ProjectDir)..\SDL2_image;$(ProjectDir)..\SDL2\include;$(ProjectDir)..\DataStructures;$(ProjectDir)..\Audio;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
-    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -394,7 +365,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BrowseInformation>true</BrowseInformation>
       <EnablePREfast>false</EnablePREfast>
       <StructMemberAlignment>16Bytes</StructMemberAlignment>
@@ -406,11 +377,12 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;DataStructures.lib;Networking.lib;Audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>false</Profile>
       <EnableCOMDATFolding>
       </EnableCOMDATFolding>

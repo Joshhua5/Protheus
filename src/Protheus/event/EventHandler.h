@@ -22,7 +22,7 @@ History:
 #include "CMouseButton.h"
 #include "CMouseWheel.h" 
 #include "..\lua\lib\lua.hpp"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 
 namespace Pro{
 	using namespace Event;

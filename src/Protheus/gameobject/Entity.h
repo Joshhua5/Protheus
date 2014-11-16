@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\util\ClassDefinition.h"
+#include <ClassDefinition.h>
 #include "..\component\CGUID.h"
 
 namespace Pro{

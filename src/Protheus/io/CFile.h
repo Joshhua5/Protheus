@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include "EFile.h"
-#include "..\util\CBuffer.h"
+#include <CBuffer.h>
 
 #include <fstream>
 #include <string>

@@ -12,7 +12,7 @@ History:
 #pragma once
 
 #include "..\Components.h"
-#include "..\util\ClassDefinition.h"
+#include <ClassDefinition.h>
 #include "Entity.h"
 
 namespace Pro{

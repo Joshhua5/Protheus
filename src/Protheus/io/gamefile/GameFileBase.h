@@ -16,9 +16,9 @@ History:
 #include <vector>
 #include <string>
 #include "GameFileChunk.h"
-#include "..\..\util\BufferReader.h"
-#include "..\..\util\BufferWriter.h"
-#include "..\..\util\CBuffer.h"
+#include <BufferReader.h>
+#include <BufferWriter.h>
+#include <CBuffer.h>
 
 namespace Pro{
 	namespace IO{

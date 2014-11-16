@@ -13,9 +13,9 @@ History:
 #pragma once
 #include "IGame.h"
 #include "graphics\Renderer.h"
-#include "networking\CNetwork.h"
-#include "util\LuaUtils.h"
-#include "util\Timer.h"
+#include <CNetwork.h> 
+#include "lua\LuaUtils.h"
+#include <Timer.h>
 #include "event\EventHandler.h"
 
 namespace Pro{

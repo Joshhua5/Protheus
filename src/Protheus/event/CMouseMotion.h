@@ -12,7 +12,8 @@ History:
 
 #pragma once
 
-#include "..\math\Vector2.h" 
+#include <Vector2.h>
+#include "..\lua\LuaUtils.h"
 
 namespace Pro{
 	namespace Event{
@@ -26,12 +27,12 @@ namespace Pro{
 
 			static int lGetPosition(lua_State* L){
 				const auto e = Util::luaP_touserdata<MouseMotion>(L, 1);
-				Util::luaP_newobject<Vector2>(L, e->window_position);
+				//Util::luaP_newobject<Vector2>(L, e->window_position);
 				return 1;
 			}
 			static int lGetRelativePosition(lua_State* L){
 				const auto e = Util::luaP_touserdata<MouseMotion>(L, 1);
-				Util::luaP_newobject<Vector2>(L, e->relative_position);
+				//Util::luaP_newobject<Vector2>(L, e->relative_position);
 				return 1;
 			}
 

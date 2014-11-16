@@ -29,11 +29,7 @@ namespace Pro{
 				};
 		public:
 			LuaGlobalFactory(lua_State* L){
-				const luaL_Reg globalFunctions[] = { 
-						{ "Vector2", &Vector2::lCreate},
-						{ "Buffer", &CBuffer::lCreate },
-						{ "BufferWriter", &BufferWriter::lCreate },
-						{ "BufferReader", &BufferReader::lCreate },
+				const luaL_Reg globalFunctions[] = {  
 						{ "GameState", &GameState::lCreate },
 						{ "getID", &GUIDLookup::lGetGUID },
 						{ "getName", &GUIDLookup::lGetName }, 
@@ -84,11 +80,11 @@ namespace Pro{
 				luaP_newobject<EventHandler>(lua_state, luaP_getEventHandler(lua_state));
 				lua_setglobal(lua_state, "EventHandler");
 
-				luaP_newobject<Timer>(lua_state, luaP_getTimer(lua_state));
-				lua_setglobal(lua_state, "Timer");
+			//	luaP_newobject<Timer>(lua_state, luaP_getTimer(lua_state));
+			//	lua_setglobal(lua_state, "Timer");
 
-				luaP_newobject<Network>(lua_state, luaP_getNetwork(lua_state));
-				lua_setglobal(lua_state, "Network");
+	/*			luaP_newobject<Network>(lua_state, luaP_getNetwork(lua_state));
+				lua_setglobal(lua_state, "Network");*/
 
 				luaP_newobject<TextRenderer>(lua_state, luaP_getTextRenderer(lua_state));
 				lua_setglobal(lua_state, "Text"); 

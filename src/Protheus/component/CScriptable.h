@@ -12,7 +12,7 @@ History:
 #pragma once
 
 #include "..\lua\lib\Lua.hpp"
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 #include <string>
 #include <vector>
 

@@ -98,16 +98,7 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="math\Vector2.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StateStack.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\CBuffer.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\ClassDefinition.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gameobject\DataEntity.cpp">
@@ -119,40 +110,10 @@
     <ClCompile Include="gameobject\DynamicEntity.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="util\BufferIO.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\BufferReader.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\BufferWriter.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataGame.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="audio\CAudioDevice.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio\CAudioMixer.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio\CAudioSignal.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="component\CScriptable.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\CClientTCPConnection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\CConnection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\CServerTCPConnection.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\CTCPConnection.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="component\ActiveState.cpp">
@@ -188,9 +149,6 @@
     <ClCompile Include="component\Name.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="networking\CNetwork.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\Renderer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
@@ -204,9 +162,6 @@
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gameobject\Tile.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\Timer.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Window.cpp">
@@ -359,19 +314,10 @@
     <ClCompile Include="component\Area.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="math\Vector3.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Vector4.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="component\CGUID.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="component\LuaCallback.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Matrix33.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="containers\SceneContainer.cpp">
@@ -387,12 +333,6 @@
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="io\FileSystem.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\CTCPServer.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="audio\WavDecoder.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ScriptGame.cpp">
@@ -451,15 +391,6 @@
     <ClInclude Include="StateStack.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\AlignedBuffer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\BufferBase.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\ClassDefinition.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gameobject\DataEntity.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
@@ -472,31 +403,7 @@
     <ClInclude Include="gameobject\Entity.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\BufferIO.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\BufferReader.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\BufferWriter.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DataGame.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\CAudioBuffer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\CAudioDevice.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\CAudioMixer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\CAudioSignal.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\CAudioTrack.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components.h">
@@ -535,18 +442,6 @@
     <ClInclude Include="lua\lua.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="networking\CClientTCPConnection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\CConnection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\BitCompare.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\CBuffer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="io\EFile.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
@@ -583,9 +478,6 @@
     <ClInclude Include="component\Name.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="networking\CNetwork.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\Renderer.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
@@ -601,16 +493,7 @@
     <ClInclude Include="gameobject\Tile.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\Error.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\Member.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="util\Pipeline.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\Timer.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Window.h">
@@ -745,25 +628,10 @@
     <ClInclude Include="component\Area.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\Vector2.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Vector3.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Vector4.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component\CGUID.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\StringConverter.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component\LuaCallback.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Matrix33.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="containers\SceneContainer.h">
@@ -775,9 +643,6 @@
     <ClInclude Include="lua\LuaObjectFactory.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\LuaUtils.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua\LuaGlobalFactory.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
@@ -787,28 +652,10 @@
     <ClInclude Include="io\FileSystem.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="networking\CTCPConnection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\CTCPServer.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="component\CScriptable.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lua\LuaMetatableFactory.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\CServerTCPConnection.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\IAudioEffect.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\IBitstreamDecoder.h">
-      <Filter>Engine Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="audio\WavDecoder.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScriptGame.h">
@@ -857,6 +704,9 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graphics\TextRenderer.h">
+      <Filter>Engine Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua\LuaUtils.h">
       <Filter>Engine Header Files</Filter>
     </ClInclude>
   </ItemGroup>

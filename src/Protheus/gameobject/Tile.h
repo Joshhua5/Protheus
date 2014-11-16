@@ -16,7 +16,7 @@ History:
 #include <SDL.h>
 #include <vector>
 #include <string>
-#include "..\util\LuaUtils.h"
+#include "..\lua\LuaUtils.h"
 
 namespace Pro{
 	namespace GameObject{
