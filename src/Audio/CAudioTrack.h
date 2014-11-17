@@ -14,7 +14,7 @@ History:
 - 09:06:2014 Waring J.
 *************************************************************************/
 #pragma once
-
+ 
 #include <CBuffer.h>
 #include <al.h>
 
