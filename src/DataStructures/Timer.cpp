@@ -13,11 +13,11 @@ void Timer::tick(){
 	currentTick = getNS();
 }
 
-double Timer::getTicksPerSec(){
+double Timer::getTicksPerSec() const{
 	return (double)high_resolution_clock_period / ((currentTick - lastTick) + 1);
 }
 
-unsigned long long Timer::getTickDelta(){
+unsigned long long Timer::getTickDelta() const{
 	return currentTick - lastTick;
 }
 

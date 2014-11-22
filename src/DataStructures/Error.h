@@ -1,99 +1,39 @@
 #pragma once
 #include <string>
 #include <fstream> 
+#include <mutex>
 using namespace std;
 
 namespace Pro{
 
 	static class Error{
-		fstream log; 
+		// Static so that multiple Error's will write to the same file.
+		static fstream log;
+		mutex file_lock;
+
+		// Declared to be uncopyable and moveable.
+		Error(const Error&);
+		Error(Error&&);
+		Error& operator=(Error&&);
+		Error& operator=(const Error&);
 	public:
-		Error(){ log.open("log.txt", std::ios::out | std::ios::binary | std::ios::trunc); }
-		~Error(){ log.close(); }
+		Error();
+		~Error();
 
-		unsigned long reportFatal(const string& msg){
-			static unsigned long errNum = 0;
-			if (log.is_open() == false)
-				return 0;
-			log << "START FATAL ";
-			log << errNum;
-			log << "\n";
-			log.write(msg.data(), msg.size()); 
-			log << "\nEND FATAL\n\n"; 
-			log.flush();
-			++errNum;
-			return errNum;
-		}
-		 
-		unsigned long reportError(const string& msg){
-			static unsigned long errNum = 0;
-			if (log.is_open() == false)
-				return 0;
-			log << "START ERROR ";
-			log << errNum;
-			log << "\n";
-			log.write(msg.data(), msg.size()); 
-			log << "\nEND ERROR\n\n"; 
-			++errNum;
-			log.flush();
-			return errNum;
-		}
+		unsigned long reportFatal(const string& msg);
 
-		unsigned long reportMessage(const string& msg){
-			static unsigned long msgNum = 0;
-			if (log.is_open() == false)
-				return 0;
-			log << "START MESSAGE ";
-			log << msgNum;
-			log << "\n";
-			log.write(msg.data(), msg.size()); 
-			log << "\nEND MESSAGE\n\n"; 
-			log.flush();
-			++msgNum;
-			return msgNum;
-		} 
-	
+		unsigned long reportError(const string& msg);
+
+		unsigned long reportMessage(const string& msg);
+
 		// NR stands for No Return 
-		void reportFatalNR(const string& msg) {
-			static unsigned long errNum = 0;
-			if (log.is_open() == false)
-				return;
-			log << "START FATAL ";
-			log << errNum;
-			log << "\n";
-			log.write(msg.data(), msg.size());
-			log << "\nEND FATAL\n\n";
-			log.flush();
-			++errNum; 
-		}
+		void reportFatalNR(const string& msg);
 
 		// NR stands for No Return
-		void reportErrorNR(const string& msg){
-			static unsigned long errNum = 0;
-			if (log.is_open() == false)
-				return;
-			log << "START ERROR ";
-			log << errNum;
-			log << "\n";
-			log.write(msg.data(), msg.size());
-			log << "\nEND ERROR\n\n";
-			++errNum;
-			log.flush(); 
-		}
+		void reportErrorNR(const string& msg);
 
 		// NR stands for No Return
-		void reportMessageNR(const string& msg){
-			static unsigned long msgNum = 0;
-			if (log.is_open() == false)
-				return;
-			log << "START MESSAGE ";
-			log << msgNum;
-			log << "\n";
-			log.write(msg.data(), msg.size());
-			log << "\nEND MESSAGE\n\n";
-			log.flush();
-			++msgNum; 
-		}
+		void reportMessageNR(const string& msg);
 
 	} error; 
 }

@@ -30,8 +30,8 @@ namespace Pro{
 		public:
 			Timer(); 
 
-			unsigned long long getTickDelta();
-			double getTicksPerSec();
+			unsigned long long getTickDelta() const;
+			double getTicksPerSec() const;
 			void tick();
 			  
 		};

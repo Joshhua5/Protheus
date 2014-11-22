@@ -17,6 +17,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B822C1BA-5047-430A-A47D-CA52829CB401}</ProjectGuid>
     <RootNamespace>DataStructures</RootNamespace>
+    <ProjectName>Utilities</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -87,6 +88,7 @@
     <ClInclude Include="CBuffer.h" />
     <ClInclude Include="ClassDefinition.h" />
     <ClInclude Include="DataStructures.h" />
+    <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Member.h" />
@@ -102,6 +104,7 @@
     <ClCompile Include="BufferWriter.cpp" />
     <ClCompile Include="CBuffer.cpp" />
     <ClCompile Include="ClassDefinition.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Matrix33.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector2.cpp" />

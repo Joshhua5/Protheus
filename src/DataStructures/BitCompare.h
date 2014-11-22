@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-A enum containing a number with a sinle bit checked
+A enum containing a number with a single bit checked
 Allows for comparison with other types using the & to check
 for set bits
 -------------------------------------------------------------------------
