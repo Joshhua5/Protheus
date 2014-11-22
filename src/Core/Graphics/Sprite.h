@@ -4,11 +4,37 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-The entry point will load the lua config, if the config can't be found
-DataGame will be assumed and will look for the game file, if neither
-can be found then the program will exit.
+
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
- 
+
+#pragma once
+
+#include <SDL.h> 
+#include <Vector2.h>
+#include <string>
+
+namespace Pro{
+	namespace Asset{
+		using namespace std;
+		using namespace Math; 
+
+		class Sprite 
+		{
+		private: 
+			SDL_Texture* texture; 
+			SDL_Point center;
+
+			Vector2 dimensions;
+
+		public: 
+			Sprite(SDL_Texture* tex);
+			~Sprite();
+
+			SDL_Texture* getTexture();
+			SDL_Point* getCenter();  
+		};
+	}
+}

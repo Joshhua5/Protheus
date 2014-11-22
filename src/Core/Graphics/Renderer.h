@@ -4,11 +4,32 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-The entry point will load the lua config, if the config can't be found
-DataGame will be assumed and will look for the game file, if neither
-can be found then the program will exit.
+
 -------------------------------------------------------------------------
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
- 
+
+#pragma once
+
+#include <unordered_map> 
+#include "SpriteBatcher.h"
+#include "Window.h"
+
+namespace Pro{
+	namespace Graphics{
+		class Renderer
+		{
+		private: 
+			SDL_Renderer* renderer; 
+		public:
+			Renderer(const Window& window);
+			~Renderer();
+
+			SDL_Renderer* getRenderer(); 
+			  
+			void startFrame();
+			void endFrame(); 
+		};
+	}
+}

@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debugging|Win32">
-      <Configuration>Debugging</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -15,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B2B7452F-586D-455B-9C10-F74F660AC87F}</ProjectGuid>
-    <RootNamespace>SDL2_ttf</RootNamespace>
+    <ProjectGuid>{9C7944F6-E79D-49A9-811A-8EB9B8CE9316}</ProjectGuid>
+    <RootNamespace>Core</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -32,9 +28,6 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|Win32'">
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -46,24 +39,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)external\include;$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)lib\</OutDir>
+    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\include;$(ProjectDir)external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Lib>
-      <AdditionalDependencies>libfreetype-6.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)\external\lib\x86;</AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -79,6 +65,51 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Audio\AudioListener.h" />
+    <ClInclude Include="Audio\CAudioBuffer.h" />
+    <ClInclude Include="Audio\CAudioSource.h" />
+    <ClInclude Include="Audio\CAudioTrack.h" />
+    <ClInclude Include="Audio\IAudioEffect.h" />
+    <ClInclude Include="Audio\IBitstreamDecoder.h" />
+    <ClInclude Include="Audio\WavDecoder.h" />
+    <ClInclude Include="Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
+    <ClInclude Include="Graphics\Sprite.h" />
+    <ClInclude Include="Graphics\SpriteBatcher.h" />
+    <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Networking\begin_code.h" />
+    <ClInclude Include="Networking\CClientTCPConnection.h" />
+    <ClInclude Include="Networking\CConnection.h" />
+    <ClInclude Include="Networking\close_code.h" />
+    <ClInclude Include="Networking\CNetwork.h" />
+    <ClInclude Include="Networking\CServerTCPConnection.h" />
+    <ClInclude Include="Networking\CTCPConnection.h" />
+    <ClInclude Include="Networking\CTCPServer.h" />
+    <ClInclude Include="Networking\SDLnetsys.h" />
+    <ClInclude Include="Networking\SDL_net.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Audio\CAudioSource.cpp" />
+    <ClCompile Include="Audio\WavDecoder.cpp" />
+    <ClCompile Include="Graphics\AnimatedSprite.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
+    <ClCompile Include="Graphics\SpriteBatcher.cpp" />
+    <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Networking\CClientTCPConnection.cpp" />
+    <ClCompile Include="Networking\CConnection.cpp" />
+    <ClCompile Include="Networking\CNetwork.cpp" />
+    <ClCompile Include="Networking\CServerTCPConnection.cpp" />
+    <ClCompile Include="Networking\CTCPConnection.cpp" />
+    <ClCompile Include="Networking\CTCPServer.cpp" />
+    <ClCompile Include="Networking\SDLnet.c" />
+    <ClCompile Include="Networking\SDLnetselect.c" />
+    <ClCompile Include="Networking\SDLnetTCP.c" />
+    <ClCompile Include="Networking\SDLnetUDP.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
