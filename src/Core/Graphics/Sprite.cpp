@@ -3,23 +3,36 @@
 using namespace Pro;
 using namespace Asset;
 
-Sprite::Sprite(SDL_Texture* tex){
-	texture = tex;
+Sprite::Sprite(Texture* tex){
+	m_texture = tex;
 	center.x = (int) (dimensions.x / 2);
 	center.y = (int) (dimensions.y / 2);
 }
 
-Sprite::~Sprite()
-{
-	SDL_DestroyTexture(texture);
+Sprite::~Sprite(){ 
+	m_texture = nullptr;
 }
 
-SDL_Texture* Sprite::getTexture(){
-	return texture;
+Texture* Sprite::getTexture(){
+	return m_texture;
 }
 
-SDL_Point* Sprite::getCenter(){
-	return &center;
+Vector2& Sprite::getCenter(){
+	return center;
+} 
+
+Vector3& Sprite::getPosition() {
+	return position;
 }
 
-void load(const CBuffer&);
+Vector2& Sprite::getDimensions() {
+	return dimensions;
+}
+
+void Sprite::setPosition(const Vector3& pos) {
+	position = pos;
+}
+
+void Sprite::setDimensions(const Vector2& dim) {
+	dimensions = dim;
+}

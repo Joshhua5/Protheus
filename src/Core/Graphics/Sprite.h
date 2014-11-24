@@ -14,8 +14,10 @@ History:
 
 #include <SDL.h> 
 #include <Vector2.h>
+#include <Vector3.h>
 #include <CBuffer.h>
 #include <string>
+#include "Texture.h"
 
 namespace Pro{
 	namespace Asset{
@@ -24,20 +26,26 @@ namespace Pro{
 
 		class Sprite 
 		{
-		private: 
-			SDL_Texture* texture; 
-			SDL_Point center;
+		private:  
+			Vector2 center;
 
 			Vector2 dimensions;
+			Vector3 position;
 
+			Texture* m_texture; 
 		public: 
-			Sprite(SDL_Texture* tex);
+			Sprite(Texture*); 
 			~Sprite();
 
-			SDL_Texture* getTexture();
-			SDL_Point* getCenter();  
+			Texture* getTexture();
+			Vector2& getCenter();
 
-			void load(const CBuffer&);
+			Vector3& getPosition();
+			Vector2& getDimensions();
+
+			void setPosition(const Vector3&);
+			void setDimensions(const Vector2&);
+
 		};
 	}
 }

@@ -37,8 +37,7 @@ namespace Pro{
 			SpriteBatcher(SDL_Renderer*);
 			 
 			void push(Sprite*, Vector4&, float scale = 1, float rotate = 0);
-			void flush();
-			 
+			void flush(); 
 		};
 	}
 }

@@ -74,6 +74,9 @@
     <ClInclude Include="Audio\IAudioEffect.h" />
     <ClInclude Include="Audio\IBitstreamDecoder.h" />
     <ClInclude Include="Audio\WavDecoder.h" />
+    <ClInclude Include="FileSystem\CFile.h" />
+    <ClInclude Include="FileSystem\EFile.h" />
+    <ClInclude Include="FileSystem\FileSystem.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Sprite.h" />
@@ -89,13 +92,16 @@
     <ClInclude Include="Networking\CTCPServer.h" />
     <ClInclude Include="Networking\SDLnetsys.h" />
     <ClInclude Include="Networking\SDL_net.h" />
-    <ClInclude Include="Graphics\SpriteLoader.h" />
+    <ClInclude Include="Graphics\TextureLoader.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Audio\CAudioSource.cpp" />
     <ClCompile Include="Audio\WavDecoder.cpp" />
+    <ClCompile Include="FileSystem\CFile.cpp" />
+    <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
@@ -111,8 +117,9 @@
     <ClCompile Include="Networking\SDLnetselect.c" />
     <ClCompile Include="Networking\SDLnetTCP.c" />
     <ClCompile Include="Networking\SDLnetUDP.c" />
-    <ClCompile Include="Graphics\SpriteLoader.cpp" />
+    <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

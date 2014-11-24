@@ -11,8 +11,7 @@ History:
 - 27:05:2014: Waring J.
 *************************************************************************/
 #pragma once
-
-#include "EFile.h"
+ 
 #include <CBuffer.h>
 
 #include <fstream>
@@ -21,6 +20,18 @@ History:
 namespace Pro{
 	namespace IO{
 		using namespace std;
+
+		enum struct EFile {
+			FILE_BUFFER_OVERFLOW,
+			FILE_NOT_FOUND,
+			FILE_INVALID_DATA,
+			FILE_CLOSED,
+			FILE_FAILED,
+			FILE_INVALID_OPERATION,
+			END_OF_FILE,
+			NO_FILE_ERROR
+		};
+
 		class CFile
 		{
 		private:
@@ -28,8 +39,7 @@ namespace Pro{
 			string m_file_path;
 			EFile flag;
 		public:
-			CFile(const std::string& file);
-			CFile();
+			CFile(const std::string& file); 
 			~CFile();
 
 			void CFile::open(const std::string& filePath);

@@ -25,6 +25,8 @@
  *  This is a simple file to encapsulate the OpenGL API headers.
  */
 
+#define GL_GLEXT_PROTOTYPES
+
 #ifndef _SDL_opengl_h
 #define _SDL_opengl_h
 

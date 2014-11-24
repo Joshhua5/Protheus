@@ -1,11 +1,14 @@
 //#include "Main.h"
 #include <Graphics\Window.h>
 #include <Graphics\Sprite.h>
+#include <Graphics\TextureLoader.h>
 #include <Graphics\Renderer.h>
+#include <FileSystem\FileSystem.h>
 #include <Vector4.h>
 #include <SDL_image.h> 
 
 using namespace Pro; 
+using namespace Util;
 using namespace Math;
 
 //int main(int argc, char* args[])
@@ -43,12 +46,19 @@ int main(int argc, char* args []) {
 	auto render = Graphics::Renderer(window);
 	auto batch = Graphics::SpriteBatcher(render.getRenderer());
 
-	IMG_Init(IMG_INIT_PNG); 
-	Graphics::Sprite spt(IMG_LoadTexture(render.getRenderer(), "test.png"));
+	FileSystem fileIO;
+
+	IMG_Init(IMG_INIT_PNG);
+
+	auto file = fileIO.getFile("text.bmp");
+
+	Texture* tex = TextureLoader::loadTexture(&file);
+
+	Graphics::Sprite sprite(tex); 
 	
 	render.startFrame();
 	
-	batch.push(&spt, Vector4(0, 0, 0, 1));
+	batch.push(&sprite, Vector4(0, 0, 0, 1));
 
 	batch.flush();
 

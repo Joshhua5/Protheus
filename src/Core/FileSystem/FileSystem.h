@@ -29,11 +29,13 @@ namespace Pro{
 			~FileSystem();
 
 			/*  Opens a file relative to the root directory */
-			IO::CFile& openFile(const string& path);
+			IO::CFile* openFile(const string& path);
 			/*  Sets the root directory */
 			void setRootDir(const string& dir);
 			/*  Returns a reference to the root directory */
 			string& getRootDir();
+
+			CBuffer getFile(const string& path);
 		};
 	}
 }

@@ -1,24 +1,8 @@
-#include "SpriteLoader.h"
+#include "TextureLoader.h"
 
 using namespace Pro;
 using namespace Util;
 using namespace Math;
-
-IMAGE_FORMAT SpriteLoader::queryFormat(CBuffer* buffer){
-	// check for BMP
-	BufferReader reader(buffer);
-
-	// TEST
-	if (reader.read<unsigned short>() == 'BM')
-		return BMP;
-	reader.reset();
-
-	reader.setPosition(1);
-	if (reader.read_array<char>(3) == "PNG")
-		return PNG;
-	reader.reset();
-
-}
 
 inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask, unsigned a_bitmask, ColorDefinition def){
 	// TEST
@@ -30,7 +14,23 @@ inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask
 	return out;
 }
 
-Texture* SpriteLoader::loadBPM(CBuffer* buffer){
+IMAGE_FORMAT TextureLoader::queryFormat(CBuffer* buffer){
+	// check for BMP
+	BufferReader reader(buffer);
+
+	// TEST
+	if (reader.read<unsigned short>() == 'BM')
+		return IMAGE_FORMAT::BMP; 
+	reader.reset();
+
+	reader.setPosition(1);
+	if (reader.read_array<char>(3) == "PNG")
+		return IMAGE_FORMAT::PNG;
+	reader.reset();
+
+} 
+
+Texture* TextureLoader::loadBMP(CBuffer* buffer){
 	BufferReader reader(buffer);
 	reader.setPosition(6);
 
@@ -204,9 +204,9 @@ Texture* SpriteLoader::loadBPM(CBuffer* buffer){
 	return new Texture(texture_id, Vector2((long)bmp_width, (long)bmp_height));
 }
 
-Texture* SpriteLoader::loadTexture(CBuffer* buffer){
+Texture* TextureLoader::loadTexture(CBuffer* buffer){
 	switch (queryFormat(buffer)){
 	BMP:
-		return loadBPM(buffer);
+		return loadBMP(buffer);
 	}
 }
