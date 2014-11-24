@@ -19,6 +19,7 @@ History:
 
 namespace Pro{
 	namespace Util{
+		// All reads and offsets are in bytes
 		class BufferReader :
 			public BufferIO
 		{
@@ -32,7 +33,7 @@ namespace Pro{
 
 			// returns a CBuffer to a copy of data
 			CBuffer read(const int size);
-
+			  
 			// reads until the deliminator is found
 			CBuffer read_delim(const char deliminator);
 
@@ -44,6 +45,9 @@ namespace Pro{
 
 			template<typename T>
 			inline T* read_array(unsigned int size);
+
+			// does not change the offset 
+			inline long BufferReader::read_bits(unsigned bits);
 
 			template<typename T>
 			T serialized_read(Serializer::ClassDefinition def);
@@ -60,6 +64,7 @@ namespace Pro{
 			return (T*) (read(sizeof(T) * size).data());
 		}
 
+	 
 		template<typename T>
 		T BufferReader::serialized_read(Serializer::ClassDefinition def) {
 			T out;

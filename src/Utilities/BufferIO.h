@@ -22,13 +22,17 @@ namespace Pro{
 			CBuffer* m_buffer;
 		public:
 
-			// sets the position of the writer
-			void setPosition(unsigned int);
+			// sets the position of the IO
+			void setPosition(const unsigned);
 
-			// returns the position of the writer
+
+			// sets the position of the IO to 0
+			void reset();
+
+			// returns the position of the IO
 			unsigned getPosition() const;
 
-			// skips over the current writing position
+			// skips over the current IO position
 			void skip(const int);
 
 			// get's the internal buffers size

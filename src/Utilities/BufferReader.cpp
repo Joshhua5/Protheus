@@ -15,7 +15,7 @@ inline char* BufferReader::read_raw() const{
 	return m_buffer->data<char>() + m_head;
 }
 
-CBuffer BufferReader::read(const int size){ 
+CBuffer BufferReader::read(const int size){
 	CBuffer out(read_raw(), size, true);
 	skip(size);
 	return move(out);
@@ -29,4 +29,15 @@ CBuffer BufferReader::read_delim(const char deliminator){
 CBuffer BufferReader::read_string(){
 	return read_delim('\0');
 }
- 
+
+long BufferReader::read_bits(unsigned bits){
+	if (bits < 8)
+		return read<char>() & static_cast<unsigned>((pow(2, bits) - 1));
+	else if (bits < 16)
+		return read<short>() & static_cast<unsigned>((pow(2, bits) - 1));
+	else if (bits < 32)
+		return read<int>() & static_cast<unsigned>((pow(2, bits) - 1));
+	else if (bits < 64)
+		return read<long>() & static_cast<unsigned>((pow(2, bits) - 1)); 
+	return 0;
+}

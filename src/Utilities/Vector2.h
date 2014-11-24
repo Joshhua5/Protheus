@@ -41,7 +41,8 @@ namespace Pro{
 			Vector2(double, double); 
 			Vector2(unsigned int, unsigned int);
 			Vector2(float, float);
-			Vector2(int, int);
+			Vector2(int, int); 
+			Vector2(long, long);
 
 			bool contains(float) const;
 			void move(float _x, float _y);

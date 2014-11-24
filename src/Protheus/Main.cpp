@@ -42,6 +42,7 @@ int main(int argc, char* args []) {
 	auto window = Graphics::Window("Window");
 	auto render = Graphics::Renderer(window);
 	auto batch = Graphics::SpriteBatcher(render.getRenderer());
+
 	IMG_Init(IMG_INIT_PNG); 
 	Graphics::Sprite spt(IMG_LoadTexture(render.getRenderer(), "test.png"));
 	

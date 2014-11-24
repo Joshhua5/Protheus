@@ -6,6 +6,9 @@ using namespace Math;
 Vector2::Vector2(int x, int y)
 	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 
+Vector2::Vector2(long x, long y)
+	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
+
 Vector2::Vector2(unsigned int x, unsigned int y)
 	: Vector2(static_cast<float>(x), static_cast<float>(y)) {}
 

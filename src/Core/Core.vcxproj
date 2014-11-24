@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,6 +89,8 @@
     <ClInclude Include="Networking\CTCPServer.h" />
     <ClInclude Include="Networking\SDLnetsys.h" />
     <ClInclude Include="Networking\SDL_net.h" />
+    <ClInclude Include="Graphics\SpriteLoader.h" />
+    <ClInclude Include="Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
@@ -109,6 +111,8 @@
     <ClCompile Include="Networking\SDLnetselect.c" />
     <ClCompile Include="Networking\SDLnetTCP.c" />
     <ClCompile Include="Networking\SDLnetUDP.c" />
+    <ClCompile Include="Graphics\SpriteLoader.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

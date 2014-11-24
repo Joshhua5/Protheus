@@ -14,6 +14,7 @@ History:
 
 #include <SDL.h> 
 #include <Vector2.h>
+#include <CBuffer.h>
 #include <string>
 
 namespace Pro{
@@ -35,6 +36,8 @@ namespace Pro{
 
 			SDL_Texture* getTexture();
 			SDL_Point* getCenter();  
+
+			void load(const CBuffer&);
 		};
 	}
 }

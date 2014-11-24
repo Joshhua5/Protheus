@@ -21,3 +21,5 @@ SDL_Texture* Sprite::getTexture(){
 SDL_Point* Sprite::getCenter(){
 	return &center;
 }
+
+void load(const CBuffer&);

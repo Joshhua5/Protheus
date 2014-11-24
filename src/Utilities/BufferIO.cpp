@@ -7,6 +7,15 @@ using namespace Util;
 void BufferIO::setPosition(const unsigned position){
 	m_head = position;
 }
+ 
+
+
+// sets the position of the IO to 0
+void BufferIO::reset(){
+	setPosition(0);
+}
+
+
 // returns the position of the writer
 unsigned BufferIO::getPosition() const{
 	return m_head;
