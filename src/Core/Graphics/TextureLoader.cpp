@@ -35,7 +35,7 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer){
 	reader.setPosition(6);
 
 	// Header
-	unsigned short bmp_size = reader.read<unsigned>();
+	unsigned short bmp_file_size = reader.read<unsigned>();
 	reader.skip(4);
 	unsigned short bmp_offset = reader.read<unsigned>();
 
@@ -47,7 +47,7 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer){
 	unsigned bit_depth;
 	// INFO
 	unsigned compression_method;
-	unsigned bmp_size;
+	unsigned bmp_image_size;
 	unsigned long pixel_per_meter_hor;
 	unsigned long pixel_per_meter_ver;
 	unsigned color_palette_count;
@@ -60,9 +60,9 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer){
 	unsigned        a_bitmask = 8;
 	unsigned        color_space_type;
 	CIEXYZTRIPLE	color_space_endpoints;
-	unsigned        r_gamma;
-	unsigned        g_gamma;
-	unsigned        b_gamma;
+	unsigned        r_gamma = 1;
+	unsigned        g_gamma = 1;
+	unsigned        b_gamma = 1;
 
 	// V5Header
 	unsigned        bV5Intent;
@@ -79,7 +79,7 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer){
 	// BITMAPINFOHEADER
 	if (header_size == 40 || header_size == 108 || header_size == 124){
 		compression_method = reader.read<unsigned>();
-		bmp_size = reader.read<unsigned>();
+		bmp_image_size = reader.read<unsigned>();
 		pixel_per_meter_hor = reader.read<unsigned>();
 		pixel_per_meter_ver = reader.read<unsigned>();
 		color_palette_count = reader.read<unsigned>();
@@ -206,7 +206,10 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer){
 
 Texture* TextureLoader::loadTexture(CBuffer* buffer){
 	switch (queryFormat(buffer)){
-	BMP:
+	case IMAGE_FORMAT::BMP:
 		return loadBMP(buffer);
 	}
+
+	error.reportError("Unknown image format");
+	return nullptr;
 }

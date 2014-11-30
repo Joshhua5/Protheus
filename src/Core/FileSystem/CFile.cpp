@@ -125,6 +125,6 @@ EFile CFile::peekError(){
 
 EFile CFile::getError(){
 	EFile f = peekError();
-	flag = EFile::NO_ERROR;
+	flag = EFile::NO_FILE_ERROR;
 	return f;
 }

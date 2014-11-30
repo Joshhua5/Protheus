@@ -58,8 +58,7 @@ int main(int argc, char* args []) {
 	
 	render.startFrame();
 	
-	batch.push(&sprite, Vector4(0, 0, 0, 1));
-
+	//batch.push(&sprite, Vector4(0, 0, 0, 1)); 
 	batch.flush();
 
 	render.endFrame();

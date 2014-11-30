@@ -18,7 +18,7 @@ History:
 namespace Pro{
 	namespace Math{
 
-		struct alignas(16) Vector2{
+		struct /*alignas(16)*/ Vector2{
 			float x, y;
 
 			// Copy constructor

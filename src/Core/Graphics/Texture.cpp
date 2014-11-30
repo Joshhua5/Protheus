@@ -25,6 +25,7 @@ Texture& Texture::operator=(Texture&& rhs) {
 	this->texture_id = rhs.texture_id;
 	this->dimensions = rhs.dimensions;
 	rhs.texture_id = 0;
+	return *this;
 }
 
 

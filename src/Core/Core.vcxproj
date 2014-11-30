@@ -16,7 +16,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -39,17 +39,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(SolutionDir)SDL2\include;$(ProjectDir)Audio\OpenAL_SDK\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -94,10 +101,11 @@
     <ClInclude Include="Networking\SDL_net.h" />
     <ClInclude Include="Graphics\TextureLoader.h" />
     <ClInclude Include="Graphics\Texture.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Graphics\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Audio\AudioListener.cpp" />
     <ClCompile Include="Audio\CAudioSource.cpp" />
     <ClCompile Include="Audio\WavDecoder.cpp" />
     <ClCompile Include="FileSystem\CFile.cpp" />
@@ -119,7 +127,7 @@
     <ClCompile Include="Networking\SDLnetUDP.c" />
     <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
-    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,7 +25,7 @@ public:
 	// which was used to pass data otherwise you'll
 	// delete the internal data aswell.
 	CBuffer(void* data, const unsigned size, const bool copy);
-	CBuffer(const unsigned size);
+	CBuffer(const unsigned size); 
 	CBuffer();
 	// Move
 	CBuffer(CBuffer&&);

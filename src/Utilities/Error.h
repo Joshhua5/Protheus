@@ -14,8 +14,8 @@ namespace Pro{
 		// Declared to be uncopyable and moveable.
 		Error(const Error&);
 		Error(Error&&);
-		Error& operator=(Error&&);
-		Error& operator=(const Error&);
+		/*Error& operator=(Error&&);
+		Error& operator=(const Error&);*/
 	public:
 		Error();
 		~Error();

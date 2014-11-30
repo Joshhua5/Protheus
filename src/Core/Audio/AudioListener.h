@@ -9,13 +9,33 @@ namespace Pro{
 
 		class CAudioListener
 		{
+		private:
+			static unsigned active_listener_id; 
+			int listener_id;
+
+			Vector3 position, orientation, velocity;
+			float gain;
+
+			unsigned& getCount();
+
 		public:
-			void setPosition(Vector3& v){ alListener3f(AL_POSITION, v.x, v.y, v.z); }
-			void setOrientation(Vector3& v){ alListener3f(AL_ORIENTATION, v.x, v.y, v.z); }
-			void setVelocity(Vector3& v) { alListener3f(AL_VELOCITY, v.x, v.y, v.z); } 
+			CAudioListener();
+			~CAudioListener();
+			CAudioListener(const CAudioListener&);
+			CAudioListener(CAudioListener&&);
+			CAudioListener& operator=(const CAudioListener&);
+			CAudioListener& operator=(CAudioListener&&);
+
+			void setPosition(const Vector3& v);
+
+			void setOrientation(const Vector3& v);
+
+			void setVelocity(const Vector3& v);
 
 			// Value between 1 and 0 with 1 being unattenuated
-			void setGain(float v) { alListenerf(AL_GAIN, v); }
+			void setGain(float v);
+
+			void setActive() const;
 		};
 	}
 

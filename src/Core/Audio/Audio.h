@@ -18,14 +18,13 @@ namespace Pro{
 			ALCdevice* device;
 			ALCcontext* context;
 
-			static atomic<short> duplicateCount;
-		public:
+			static atomic<short> duplicateCount; 
 			CAudioListener listener;
 		public:
 			CAudio();
 			~CAudio();
 			
-			CAudioBuffer loadAudio(IBitstreamDecoder* loader, CBuffer& file);
+			CAudioBuffer loadAudio(IBitstreamDecoder* loader, CBuffer& file); 
 			CAudioSource createSource(ALuint buffer);
 		};
 	}

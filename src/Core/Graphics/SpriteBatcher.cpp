@@ -1,46 +1,62 @@
 #include "SpriteBatcher.h"
 
 using namespace Pro;
+using namespace Util;
 using namespace Asset;
-using namespace Graphics; 
-using namespace Math; 
+using namespace Graphics;
+using namespace Math;
 
-SpriteBatcher::SpriteBatcher(SDL_Renderer* _renderer){
-	renderer = _renderer;
-}
- 
-void SpriteBatcher::push(Sprite* _s, Vector4& _r, float scale, float rotation){ 
-	Details details;
-	details.position = _r;
-	details.scale = scale;
-	details.sprite = _s;
-	details.rotation = rotation;
-	render_stack.push(details);
-}
- 
-void SpriteBatcher::flush(){
-	for (auto x = render_stack.size(); x != 0; --x){
-		auto details = render_stack.top(); 
-		auto dstRect = SDL_RectCreate(details.position); 
-		auto center = *details.sprite->getCenter();
-
-		// Scale
-		dstRect.w = (int)((float)dstRect.w * details.scale);
-		dstRect.h = (int)((float)dstRect.h * details.scale); 
-		// Scale the center as well
-		center.x = (int) ((float) center.x * details.scale);
-		center.y = (int) ((float) center.y * details.scale);
-
-		if (SDL_RenderCopyEx(
-			renderer,
-			details.sprite->getTexture(),
-			NULL,
-			&dstRect,
-			details.rotation,
-			&center,
-			SDL_FLIP_NONE) != 0) 
-			error.reportError("Error during SpriteBatcher Flush: " + string(SDL_GetError())); 
-
-		render_stack.pop(); 
+SpriteBatcher::SpriteBatcher(SDL_Renderer* _renderer) {
+	static bool first_init = true;
+	if (first_init) {
+		vertex_shader.init("", GL_VERTEX_SHADER);
+		fragment_shader.init("", GL_FRAGMENT_SHADER); 
 	}
+	renderer = _renderer;
+	verticies = new CBuffer(1024);
+	writer = new BufferWriter(verticies);
+}
+
+SpriteBatcher::~SpriteBatcher() {
+	delete writer;
+	delete verticies;
+}
+
+void init_shaders() { 
+}
+
+void SpriteBatcher::push(const Sprite&,
+	Vector2& position,
+	Vector2 dimensions,
+	const  float scale,
+	const  float rotate) {
+	 
+	dimensions *= scale;
+
+	writer->write<float>(position.x);
+	writer->write<float>(position.y);  
+
+	writer->write<float>(position.x);
+	writer->write<float>(position.y + dimensions.y);
+
+	writer->write<float>(position.x + dimensions.x);
+	writer->write<float>(position.y + dimensions.y);
+
+	writer->write<float>(position.x + dimensions.x);
+	writer->write<float>(position.y);
+	 
+	// Figure out how to apply rotation and a sprite
+	/*details.sprite = _s;
+	details.rotation = rotate; */
+}
+
+void SpriteBatcher::flush() {
+	// Create the VBO 
+	 
+	GLuint buffer_id;
+	glGenBuffers(1, &buffer_id);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+	glBufferData(GL_ARRAY_BUFFER, verticies->size(), verticies->data(), GL_STATIC_DRAW);
+
+ 
 }
