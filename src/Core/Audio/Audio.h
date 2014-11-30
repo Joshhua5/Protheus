@@ -1,10 +1,9 @@
 #pragma once
-
-#include <al.h>
+ 
 #include <string>
 #include <atomic>
 #include <Error.h>
-#include <alc.h>
+#include "openal\alc.h"
 #include "CAudioSource.h"
 #include "CAudioBuffer.h"
 #include "CAudioTrack.h"

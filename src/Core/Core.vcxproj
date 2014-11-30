@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\Utilities;$(SolutionDir)SDL2\include;$(ProjectDir)Audio\OpenAL_SDK\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
     <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -55,7 +55,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Utilities.lib;OpenAL32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,6 +85,9 @@
     <ClInclude Include="FileSystem\EFile.h" />
     <ClInclude Include="FileSystem\FileSystem.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Graphics\extern\glext.h" />
+    <ClInclude Include="Graphics\extern\glfw3.h" />
+    <ClInclude Include="Graphics\extern\glfw3native.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />

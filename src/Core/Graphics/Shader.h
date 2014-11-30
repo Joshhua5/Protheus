@@ -1,6 +1,5 @@
-#pragma once
+#pragma once 
 #include <CBuffer.h>
-#include <SDL_opengl.h>
 #include <Error.h>
 
 namespace Pro {

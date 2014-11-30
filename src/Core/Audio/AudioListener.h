@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Vector3.h>
-#include <al.h>
+#include "openal\al.h"
 
 namespace Pro{
 	namespace Audio{

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL_opengl.h>
+#include "extern\glcorearb.h"
 #include <Vector2.h>
 
 namespace Pro{

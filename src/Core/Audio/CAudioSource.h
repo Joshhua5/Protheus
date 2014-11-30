@@ -16,7 +16,7 @@ History:
 #include "IAudioEffect.h"
 #include <Vector3.h>
 #include <vector>
-#include <al.h>
+#include "openal\al.h"
 
 namespace Pro{
 	namespace Audio{

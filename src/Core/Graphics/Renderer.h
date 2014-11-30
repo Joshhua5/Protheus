@@ -19,15 +19,15 @@ History:
 namespace Pro{
 	namespace Graphics{
 		class Renderer
-		{
-		private: 
-			SDL_Renderer* renderer; 
+		{ 
+		private:
+			GLFWwindow* window;
 		public:
-			Renderer(const Window& window);
+			Renderer(const Window& window); 
 			~Renderer();
-
-			SDL_Renderer* getRenderer(); 
 			  
+
+			void setWindow(const Window& window);
 			void startFrame();
 			void endFrame(); 
 		};

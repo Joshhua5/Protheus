@@ -12,7 +12,6 @@ History:
 
 #pragma once
 
-#include <SDL.h> 
 #include <Vector2.h>
 #include <Vector3.h>
 #include <CBuffer.h>

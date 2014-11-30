@@ -118,8 +118,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)SDL2\include;$(ProjectDir)Layer 2\Audio\OpenAL_SDK\include;$(ProjectDir)..\Core;$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL2;$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Layer 2\Audio\OpenAL_SDK\include;$(ProjectDir)..\Core;$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <IntDir>$(Configuration)\</IntDir>
@@ -177,7 +177,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;Core.lib;Utilities.lib;opengl32.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;Utilities.lib;opengl32.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>false</Profile>
       <EnableCOMDATFolding>
       </EnableCOMDATFolding>

@@ -16,7 +16,7 @@ History:
 #pragma once
  
 #include <CBuffer.h>
-#include <al.h>
+#include "openal\al.h"
 
 namespace Pro{
 	namespace Audio{
