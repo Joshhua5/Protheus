@@ -1,15 +1,15 @@
-#include "ClassDefinition.h"
+#include "classDefinition.h"
 
 using namespace Pro;
 using namespace Serializer;
 using namespace std;
 
-ClassDefinition::ClassDefinition(void* class_pointer)
+classDefinition::classDefinition(void* class_pointer)
 {
 	base_pointer = class_pointer;
 }
  
-void ClassDefinition::addMember(const string& memberName,const void* member_pointer,const size_t size){
+void classDefinition::addMember(const string& memberName,const void* member_pointer,const size_t size){
 	auto m = Member();
 
 	m.name = memberName;
@@ -19,21 +19,21 @@ void ClassDefinition::addMember(const string& memberName,const void* member_poin
 	members.push_back(move(m));
 }
 
-const vector<Member>& ClassDefinition::getMembers() const{
+const vector<Member>& classDefinition::getMembers() const{
 	return members;
 }
 
-const unsigned ClassDefinition::getSizeOf() const{
+const unsigned classDefinition::getSizeOf() const{
 	unsigned sizeTotal = 0;
 	for each(const auto m in members)
 		sizeTotal += m.size;
 	return sizeTotal;
 }
 
-const void* ClassDefinition::getBase() const{
+const void* classDefinition::getBase() const{
 	return base_pointer;
 } 
 
-void ClassDefinition::finish(){
+void classDefinition::finish(){
 	delete base_pointer;
 }

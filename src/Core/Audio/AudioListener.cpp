@@ -57,19 +57,19 @@ CAudioListener& CAudioListener::operator=(CAudioListener&& rhs) {
 	return *this;
 }
 
-void CAudioListener::setPosition(const Vector3& v) {
+void CAudioListener::setPosition(const Vector3<float>& v) {
 	position = v;
 	if (active_listener_id == listener_id)
 		alListener3f(AL_POSITION, v.x, v.y, v.z);
 }
 
-void CAudioListener::setOrientation(const Vector3& v) {
+void CAudioListener::setOrientation(const Vector3<float>& v) {
 	orientation = v;
 	if (active_listener_id == listener_id)
 		alListener3f(AL_ORIENTATION, v.x, v.y, v.z);
 }
 
-void CAudioListener::setVelocity(const Vector3& v) {
+void CAudioListener::setVelocity(const Vector3<float>& v) {
 	velocity = v;
 	if (active_listener_id == listener_id)
 		alListener3f(AL_VELOCITY, v.x, v.y, v.z);

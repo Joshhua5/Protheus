@@ -18,6 +18,6 @@ History:
 #include "BufferReader.h"
 #include "BufferWriter.h"
 #include "CBuffer.h"
-#include "ClassDefinition.h" 
-// Move to vector class
+#include "classDefinition.h" 
+// Move to vector extern class
 #include "StringConverter.h"

@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-A class to provide io base functions for buffer writer/reader
+A extern class to provide io base functions for buffer writer/reader
 
 -------------------------------------------------------------------------
 History:
@@ -15,7 +15,7 @@ History:
 
 namespace Pro{
 	namespace Util{
-		class BufferIO
+		extern class BufferIO
 		{
 		protected:
 			unsigned m_head;

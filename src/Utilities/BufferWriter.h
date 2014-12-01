@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-A class to provide writing functions to a buffer
+A extern class to provide writing functions to a buffer
 
 -------------------------------------------------------------------------
 History:
@@ -14,13 +14,13 @@ History:
 
 #include "BufferIO.h"
 
-#include "ClassDefinition.h"
+#include "classDefinition.h"
 
 namespace Pro{
 	namespace Util{
 		using namespace Serializer;
 
-		class BufferWriter :
+		extern class BufferWriter :
 			public BufferIO
 		{
 		public:
@@ -56,10 +56,10 @@ namespace Pro{
 			}
 
 			template<typename T>
-			void serialized_write(ClassDefinition def, T* data){
+			void serialized_write(classDefinition def, T* data){
 				const auto members = def.getMembers();
 
-				// Write the amount of members in the class
+				// Write the amount of members in the extern class
 				write<unsigned short>(members.size());
 
 				// Write each member

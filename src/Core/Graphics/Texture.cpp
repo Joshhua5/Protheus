@@ -2,7 +2,7 @@
 
 using namespace Pro;
 
-Texture::Texture(const GLuint _texture_id,const Vector2& dim)
+Texture::Texture(const GLuint _texture_id,const Vector2<unsigned>& dim)
 {
 	texture_id = _texture_id;
 	dimensions = dim;
@@ -31,4 +31,9 @@ Texture& Texture::operator=(Texture&& rhs) {
 
 const GLuint Texture::getTextureID() const {
 	return texture_id;
+}
+
+
+Vector2<unsigned>& Texture::getDimensions() {
+	return dimensions;
 }

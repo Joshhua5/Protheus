@@ -16,7 +16,7 @@ History:
 
 #include "BufferBase.h"  
 
-class CBuffer :
+extern class CBuffer :
 	protected BufferBase
 {
 public:
@@ -48,6 +48,7 @@ public:
 
 	void* data() const;
 	unsigned size() const;
+	bool isEmpty() const;
 
 	// Provides bounds checking
 	void* at(const unsigned pos) const;

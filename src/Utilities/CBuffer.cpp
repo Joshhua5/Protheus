@@ -113,6 +113,10 @@ void* CBuffer::data() const{
 unsigned CBuffer::size() const{
 	return m_size;
 }
+ 
+bool CBuffer::isEmpty() const { 
+	return (m_size == 0) ? true : false;
+}
 
 void CBuffer::resize(const unsigned size){
 	const auto old_data = m_data;

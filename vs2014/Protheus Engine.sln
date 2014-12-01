@@ -5,7 +5,6 @@ VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protheus", "..\src\Protheus\Protheus.vcxproj", "{F9AC6516-613E-424E-BE31-5526A44185FF}"
 	ProjectSection(ProjectDependencies) = postProject
-		{B822C1BA-5047-430A-A47D-CA52829CB401} = {B822C1BA-5047-430A-A47D-CA52829CB401}
 		{9C7944F6-E79D-49A9-811A-8EB9B8CE9316} = {9C7944F6-E79D-49A9-811A-8EB9B8CE9316}
 	EndProjectSection
 EndProject

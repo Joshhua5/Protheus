@@ -14,7 +14,7 @@ History:
 
 #include "BufferBase.h"
 
-class AlignedBuffer :
+extern class AlignedBuffer :
 	public BufferBase
 {
 protected:

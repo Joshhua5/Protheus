@@ -5,10 +5,12 @@
 #include <BufferWriter.h>
 #include <Vector2.h>
 #include "Texture.h"
+
 namespace Pro {
 	enum struct IMAGE_FORMAT {
 		PNG,
-		BMP
+		BMP,
+		UNDEFINED
 	};
 
 	enum struct BMP_COMRESSION {
@@ -28,9 +30,7 @@ namespace Pro {
 		GLubyte r, g, b, a;
 	}; 
 
-	class TextureLoader {
-
-
+	class TextureLoader { 
 		static IMAGE_FORMAT queryFormat(CBuffer*);
 	public:
 

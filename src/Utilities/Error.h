@@ -6,10 +6,11 @@ using namespace std;
 
 namespace Pro{
 
-	static class Error{
+	class Error{
 		// Static so that multiple Error's will write to the same file.
-		static fstream log;
+		 fstream log;
 		mutex file_lock;
+
 
 		// Declared to be uncopyable and moveable.
 		Error(const Error&);
@@ -35,6 +36,8 @@ namespace Pro{
 		// NR stands for No Return
 		void reportMessageNR(const string& msg);
 
-	} error; 
+	}; 
+
+	extern Error error;
 }
 

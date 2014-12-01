@@ -1,7 +1,7 @@
 #include "AnimatedSprite.h"
 
 using namespace Pro;
-using namespace Asset;
+using namespace Graphics;
 
 AnimatedSprite::AnimatedSprite(){}
 AnimatedSprite::~AnimatedSprite(){}

@@ -3,8 +3,15 @@
 using namespace Pro;
 using namespace Graphics;
 
+static bool init = false;
+
 Window::Window(const WindowDefinition& def)
 {
+
+	if (init == false) {
+		glfwInit();
+		init = true;
+	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, def.gl_major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, def.gl_minor);
 	glfwWindowHint(GLFW_RESIZABLE, def.resizable);
@@ -31,14 +38,24 @@ Window::Window(const WindowDefinition& def)
 
 
 	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
-
+	setCurrent();
 	if (window == nullptr)
-		error.reportFatal("Unable to create window");
-
+		error.reportFatal("Unable to create window"); 
 }
 
-Window::~Window()
-{
+Window::Window(const string& title, const Vector2<int> dimensions) { 
+	if (init == false) {
+		glfwInit();
+		init = true;
+	}
+	 
+	window = glfwCreateWindow(dimensions.x, dimensions.y, title.data() , NULL, NULL);
+	setCurrent();
+	if (window == nullptr)
+		error.reportFatal("Unable to create window");
+}
+
+Window::~Window(){
 	if (window != nullptr)
 		glfwDestroyWindow(window);
 }
@@ -56,9 +73,21 @@ void Window::rename(const string& title){
 }
 
 bool Window::isFocused() const {  
-	return glfwGetWindowAttrib(window, GLFW_FOCUSED);
+	return (glfwGetWindowAttrib(window, GLFW_FOCUSED) == GL_TRUE) ? true : false;
 }
 
 void Window::setCurrent() {
 	glfwMakeContextCurrent(window);
+}
+
+
+void Window::startFrame() {
+	glClear(GL_COLOR_BUFFER_BIT |
+		GL_DEPTH_BUFFER_BIT |
+		GL_STENCIL_BUFFER_BIT |
+		GL_ACCUM_BUFFER_BIT);
+}
+
+void Window::endFrame() {
+	glfwSwapBuffers(window);
 }

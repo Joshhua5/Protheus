@@ -66,7 +66,7 @@ void SDLCALL SDLNet_SetError(const char *fmt, ...)
 {
     va_list argp;
     va_start(argp, fmt);
-    SDL_vsnprintf(errorbuf, sizeof(errorbuf), fmt, argp);
+    SDL_vsnprintf(errorbuf, sizeof(errorbuf), fmt, argp); 
     va_end(argp);
 #ifndef WITHOUT_SDL
     SDL_SetError("%s", errorbuf);

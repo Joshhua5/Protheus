@@ -19,12 +19,12 @@ namespace Pro{
 	namespace Serializer{
 		using namespace std;
 		 
-		class ClassDefinition
+		extern class classDefinition
 		{
 			void* base_pointer;
 			vector<Member> members;
 		public:
-			ClassDefinition(void* class_pointer); 
+			classDefinition(void* class_pointer); 
 
 			// Adds a member to the definition
 			void addMember(const string& memberName,const void* member_pointer,const size_t member_size);

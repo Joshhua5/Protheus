@@ -28,6 +28,8 @@ namespace Pro {
 		struct /*alignas(16)*/ Vector4 {
 			T x, y, z, w;
 
+			Vector4(){}
+
 			// Copy Constructor
 			Vector4(const Vector4& v) : Vector4(
 				v.x, v.y,
@@ -38,9 +40,7 @@ namespace Pro {
 				y = move(vec.y);
 				z = move(vec.z);
 				w = move(vec.w);
-			}
-
-			Vector4() {}
+			} 
 
 			Vector4(const Vector2& pos, const Vector2& dim) : Vector4(
 				pos.x, pos.y,

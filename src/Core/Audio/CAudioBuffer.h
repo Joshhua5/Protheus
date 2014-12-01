@@ -16,7 +16,7 @@ History:
 *************************************************************************/
 #pragma once
 
-#include <al.h>
+#include "openal\al.h"
 
 namespace Pro{
 	namespace Audio{ 

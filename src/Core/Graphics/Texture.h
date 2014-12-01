@@ -9,19 +9,20 @@ namespace Pro{
 	{
 	private:
 		GLuint texture_id;
-		Vector2 dimensions;
+		Vector2<unsigned> dimensions;
 
 		// prevent copying of a texture
 		// leave undefined
 		Texture(const Texture&); 
 		Texture& operator=(const Texture&);
 	public:
-		Texture(const GLuint texture_id, const Vector2& dim); 
+		Texture(const GLuint texture_id, const Vector2<unsigned>& dim); 
 		~Texture();
 
 		Texture(Texture&&);
 		Texture& operator=(Texture&&);
 
 		const GLuint getTextureID() const;
+		Vector2<unsigned>& getDimensions();
 	}; 
 }

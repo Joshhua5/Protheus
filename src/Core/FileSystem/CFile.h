@@ -101,7 +101,7 @@ namespace Pro{
 			/*  Reads a upto the deliminator
 			and returns between readPos and
 			the found deliminator */
-			string readToken(char delim);
+			string readToken(const char delim);
 
 			/*  Read's upto the first New line */
 			string readLine();

@@ -1,11 +1,11 @@
-//#include "Main.h"
+//#include "Main.h" 
+
 #include <Graphics\Window.h>
 #include <Graphics\Sprite.h>
-#include <Graphics\TextureLoader.h>
-#include <Graphics\Renderer.h>
+#include <Graphics\TextureLoader.h> 
 #include <FileSystem\FileSystem.h>
-#include <Vector4.h>
-#include <SDL_image.h> 
+#include <thread>
+#include <Vector4.h> 
 
 using namespace Pro; 
 using namespace Util;
@@ -42,27 +42,21 @@ using namespace Math;
 
 // Layer 2 test
 int main(int argc, char* args []) {
-	auto window = Graphics::Window("Window");
-	auto render = Graphics::Renderer(window);
-	auto batch = Graphics::SpriteBatcher(render.getRenderer());
+	auto window = Graphics::Window("Window", Vector2<int>(800, 600));  
 
 	FileSystem fileIO;
-
-	IMG_Init(IMG_INIT_PNG);
 
 	auto file = fileIO.getFile("text.bmp");
 
 	Texture* tex = TextureLoader::loadTexture(&file);
 
 	Graphics::Sprite sprite(tex); 
-	
-	render.startFrame();
-	
+	 
+	while (true) {
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		window.startFrame();
+		window.endFrame();
+	}
 	//batch.push(&sprite, Vector4(0, 0, 0, 1)); 
-	batch.flush();
-
-	render.endFrame();
-
-	while (true);
-
+	//batch.flush(); 
 }

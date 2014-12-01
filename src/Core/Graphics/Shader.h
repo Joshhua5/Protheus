@@ -1,14 +1,14 @@
 #pragma once 
 #include <CBuffer.h>
 #include <Error.h>
+#include "extern\glcorearb.h"
 
 namespace Pro {
 	class Shader
 	{
 		GLenum m_shader_type;
 		GLuint m_shader_id;
-
-
+		 
 		// uncopyable
 		Shader(const Shader&);
 		Shader& operator=(const Shader&);

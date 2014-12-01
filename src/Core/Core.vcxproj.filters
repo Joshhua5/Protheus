@@ -72,9 +72,6 @@
     <ClInclude Include="Graphics\AnimatedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -111,6 +108,12 @@
     <ClInclude Include="Graphics\extern\glfw3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\WindowDefinition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\extern\glcorearb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Networking\CClientTCPConnection.cpp">
@@ -129,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Networking\CTCPServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Networking\SDLnet.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Networking\SDLnetselect.c">
@@ -153,9 +153,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\AnimatedSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Sprite.cpp">
@@ -183,6 +180,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\SDLnet.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

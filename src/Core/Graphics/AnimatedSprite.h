@@ -16,7 +16,7 @@ History:
 #include "..\graphics\Sprite.h"
 
 namespace Pro{
-	namespace Asset{
+	namespace Graphics{
 		class AnimatedSprite
 		{
 		private:

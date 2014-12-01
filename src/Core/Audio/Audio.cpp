@@ -41,6 +41,6 @@ CAudioBuffer CAudio::loadAudio(IBitstreamDecoder* loader, CBuffer& file){
 CAudioSource CAudio::createSource(ALuint buffer){
 	CAudioSource source;
 	alGenSources(1, &source.id);
-	alSourcef(source.id, AL_BUFFER, buffer);
+	alSourcei(source.id, AL_BUFFER,static_cast<ALint>(buffer)); 
 	return source;
 }

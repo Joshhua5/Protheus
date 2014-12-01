@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -41,22 +41,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
-    <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GL_GLEXT_PROTOTYPES;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -85,13 +90,14 @@
     <ClInclude Include="FileSystem\EFile.h" />
     <ClInclude Include="FileSystem\FileSystem.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Graphics\extern\glcorearb.h" />
     <ClInclude Include="Graphics\extern\glext.h" />
     <ClInclude Include="Graphics\extern\glfw3.h" />
     <ClInclude Include="Graphics\extern\glfw3native.h" />
-    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
     <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Graphics\WindowDefinition.h" />
     <ClInclude Include="Networking\begin_code.h" />
     <ClInclude Include="Networking\CClientTCPConnection.h" />
     <ClInclude Include="Networking\CConnection.h" />
@@ -114,7 +120,6 @@
     <ClCompile Include="FileSystem\CFile.cpp" />
     <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
-    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />

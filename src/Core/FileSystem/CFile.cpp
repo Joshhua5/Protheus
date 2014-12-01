@@ -32,37 +32,55 @@ void CFile::open(const std::string& filePath){
 }
 
 bool CFile::isEndOfFile(){
+	if (!file.is_open())
+		return true;
 	return file.eof();
 }
 
 void CFile::setReadPosition(unsigned int pos){
+	if (!file.is_open())
+		return;
 	file.seekg(pos);
 }
 unsigned int CFile::getReadPosition(){
+	if (!file.is_open())
+		return 0;
 	return static_cast<unsigned int>(file.tellg());
 }
 void CFile::setWritePosition(unsigned int pos){
+	if (!file.is_open())
+		return;
 	file.seekp(pos);
 }
 unsigned int CFile::getWritePosition(){
+	if (!file.is_open())
+		return 0;
 	return static_cast<unsigned int>(file.tellp());
 }
 
 void CFile::write(CBuffer& buf){
+	if (!file.is_open())
+		return;
 	file.write(buf.data<const char>(), buf.size());
 } 
 
 void CFile::write(const std::string& str){
+	if (!file.is_open())
+		return;
 	file.write(str.data(), str.length());
 } 
 
 CBuffer CFile::read(){
+	if (!file.is_open())
+		return CBuffer(0);
 	CBuffer buf(this->getSize());
 	file.read(buf.data<char>(), buf.size());
 	return buf;
 }
 
 CBuffer CFile::read(unsigned int size){
+	if (!file.is_open())
+		CBuffer(0);
 	CBuffer buf(size);
 	file.read(buf.data<char>(), buf.size());
 	return buf;

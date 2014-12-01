@@ -22,17 +22,62 @@ namespace Pro {
 		struct /*alignas(16)*/ Vector2 {
 			T x, y;
 
+			Vector2(){}
+
 			// Copy constructor
 			Vector2(const Vector2& vec) {
 				x = std::move(vec.x);
 				y = std::move(vec.y);
 			}
-
-			Vector2& operator=(const Vector2& p) {
-				x = p.x;
-				y = p.y;
+			 
+			Vector2& operator=(const Vector2<int>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
 				return *this;
 			}
+
+			Vector2& operator=(const Vector2<unsigned>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<unsigned long>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<long>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<float>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<double>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<short>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			Vector2& operator=(const Vector2<char>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			} 
+
 			// Move Constructor
 
 			Vector2(Vector2&& vec) {
@@ -45,9 +90,7 @@ namespace Pro {
 				y = std::move(vec.y);
 				return *this;
 			}
-
-			Vector2() {}
-
+			 
 			Vector2(T _x, T _y) {
 				x = _x;
 				y = _y;
@@ -73,11 +116,18 @@ namespace Pro {
 				return out;
 			}
 
-			Vector2& operator=(T p) {
+			Vector2& operator=(const T& p) {
 				x = p;
 				y = p;
 				return *this;
 			}
+
+			//Vector2& operator=(const Vector2<unsigned>& rhs){
+			//	x = static_cast<T>(rhs.x);
+			//	y = static_cast<T>(rhs.y);
+			//	return *this;
+
+			//}
 
 			bool operator==(const Vector2& p) {
 				return (x == p.x && y == p.y) ? true : false;

@@ -66,6 +66,8 @@ bool Shader::init(const CBuffer& shader, GLenum shader_type) {
 		error.reportError("Unable to load shader: " + m_shader_id);
 		return false;
 	}
+
+	return true;
 }
 bool Shader::init(const char* shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);
@@ -83,4 +85,6 @@ bool Shader::init(const char* shader, GLenum shader_type) {
 		error.reportError("Unable to load shader: " + m_shader_id);
 		return false;
 	}
+
+	return true;
 }

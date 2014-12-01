@@ -24,31 +24,28 @@ History:
 namespace Pro{
 	namespace Graphics {
 		using namespace std;
-		using namespace Util;
-		using namespace Asset;
+		using namespace Util; 
 		using namespace Math;
 
 		class SpriteBatcher
-		{  
-			SDL_Renderer* renderer; 
-			
+		{    
 			CBuffer* verticies;
 			BufferWriter* writer;
 
 			static Shader vertex_shader;
 			static Shader fragment_shader;
 		public:
-			SpriteBatcher(SDL_Renderer*);
+			SpriteBatcher();
 			~SpriteBatcher();
 			 
 			void push(const Sprite&,
-				Vector2& position,
-				Vector2 dimensions,
+				Vector2<float>& position,
+				Vector2<float> dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
 
 			void push(const Sprite&,
-				const  Vector4& pos_dim,
+				const  Vector4<float>& pos_dim,
 				const  float scale = 1,
 				const  float rotate = 0);
 

@@ -18,10 +18,13 @@ History:
 #pragma once
 namespace Pro{
 	namespace Math{
+		template<typename T>
 		struct Vector3{
-			float x, y, z;
+			T x, y, z;
 
-			Vector3();
+			Vector3() {
+
+			}
 			 
 		};
 	}

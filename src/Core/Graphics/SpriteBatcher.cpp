@@ -1,18 +1,16 @@
 #include "SpriteBatcher.h"
 
 using namespace Pro;
-using namespace Util;
-using namespace Asset;
+using namespace Util; 
 using namespace Graphics;
 using namespace Math;
 
-SpriteBatcher::SpriteBatcher(SDL_Renderer* _renderer) {
+SpriteBatcher::SpriteBatcher() {
 	static bool first_init = true;
 	if (first_init) {
 		vertex_shader.init("", GL_VERTEX_SHADER);
 		fragment_shader.init("", GL_FRAGMENT_SHADER); 
-	}
-	renderer = _renderer;
+	} 
 	verticies = new CBuffer(1024);
 	writer = new BufferWriter(verticies);
 }
@@ -26,8 +24,8 @@ void init_shaders() {
 }
 
 void SpriteBatcher::push(const Sprite&,
-	Vector2& position,
-	Vector2 dimensions,
+	Vector2<float>& position,
+	Vector2<float> dimensions,
 	const  float scale,
 	const  float rotate) {
 	 

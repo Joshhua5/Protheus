@@ -4,7 +4,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
 Description:
-	abstract class for buffers
+	abstract extern class for buffers
 -------------------------------------------------------------------------
 History:
 - 13:07:2014: Waring J.
@@ -14,7 +14,7 @@ History:
 #include <memory> 
 #include "Error.h"
 
-class BufferBase
+extern class BufferBase
 {
 protected:
 	unsigned int m_size;
