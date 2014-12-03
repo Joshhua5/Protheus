@@ -20,17 +20,11 @@ History:
 
 namespace Pro{
 	namespace Audio{
-		struct CAudioTrack
+		struct CAudioData
 		{
 			CBuffer stream;
 			 
-			enum struct format_type{
-				MONO8 = AL_FORMAT_MONO8,
-				MONO16 = AL_FORMAT_MONO16,
-				STEREO8 = AL_FORMAT_STEREO8,
-				STEREO16 = AL_FORMAT_STEREO16
-			}format; 
-
+			ALenum format; 
 			// in Hertz
 			ALsizei frequency; 
 		};

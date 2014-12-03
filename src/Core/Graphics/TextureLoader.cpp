@@ -23,9 +23,7 @@ inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask
 IMAGE_FORMAT TextureLoader::queryFormat(CBuffer* buffer) {
 	// check for BMP
 	BufferReader reader(buffer);
-
-	// TEST
-
+	 
 	if (buffer->isEmpty())
 		return IMAGE_FORMAT::UNDEFINED;
 
@@ -154,8 +152,8 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer) {
 		ColorDefinition def;
 		switch (bit_depth) {
 		case 24:
-			for (long h_pos = bmp_height; h_pos > 0; --h_pos) {
-				for (long w_pos = 0; w_pos < bmp_width; ++w_pos) {
+			for (unsigned long h_pos = bmp_height; h_pos > 0; --h_pos) {
+				for (unsigned long w_pos = 0; w_pos < bmp_width; ++w_pos) {
 					def.b = reader.read<char>();
 					def.g = reader.read<char>();
 					def.r = reader.read<char>();
@@ -201,7 +199,7 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer) {
 		bmp_width,
 		bmp_height,
 		0,
-		GL_RGB,
+		GL_RGBA,
 		GL_UNSIGNED_BYTE, texture_data.data());
 	else if (bit_depth == 32)
 		glTexImage2D(GL_TEXTURE_2D,
@@ -213,17 +211,33 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer) {
 		GL_UNSIGNED_BYTE, texture_data.data());
 
 	// reset state
-	glBindTexture(GL_TEXTURE_2D, 0);
-
+	glBindTexture(GL_TEXTURE_2D, 0); 
 	return new Texture(texture_id, Vector2<unsigned>((unsigned) bmp_width, (unsigned) bmp_height));
 }
 
 Texture* TextureLoader::loadTexture(CBuffer* buffer) {
-	switch (queryFormat(buffer)) {
-	case IMAGE_FORMAT::BMP:
-		return loadBMP(buffer);
+	Texture* tex = nullptr;
+
+	if (buffer->isEmpty()) {
+		error.reportError("Empty buffer passed to TextureLoader, did file load correctly?\0");
+		return nullptr;
 	}
 
-	error.reportError("Unknown image format");
-	return nullptr;
+	switch (queryFormat(buffer)) {
+	case IMAGE_FORMAT::BMP:
+		tex = loadBMP(buffer);
+		break;
+	default:
+		error.reportError("Unknown image format");
+		return nullptr;
+		break;
+	}
+	tex->setBorder(GL_REPEAT);
+	tex->setFilter(GL_LINEAR);
+	return tex;
 }
+
+Texture* TextureLoader::loadTexture(CBuffer&& buffer) {
+	return loadTexture(&buffer);
+}
+ 

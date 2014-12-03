@@ -10,22 +10,101 @@ History:
 - 17:05:2014 Waring J.
 
 *************************************************************************/
- 
-#ifdef __SSE
-#include <xmmintrin.h>
-#endif
+
 
 #pragma once
-namespace Pro{
-	namespace Math{
-		template<typename T>
-		struct Vector3{
-			T x, y, z;
+namespace Pro {
+	template<typename T>
+	struct Vector3 {
+		T x, y, z;
 
-			Vector3() {
+		Vector3() {}
 
-			}
-			 
-		};
-	}
+		Vector3(const T& value) {
+			x = y = z = value;
+		}
+
+		Vector3(T _x, T _y, T _z) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
+
+		Vector3(Vector3&& rhs) {
+			x = std::move(rhs.x);
+			y = std::move(rhs.y);
+			z = std::move(rhs.z);
+		}
+
+		Vector3(const Vector3& rhs) {
+			x = rhs.x;
+			y = rhs.y;
+			z = rhs.z;
+		}
+
+		void operator=(const Vector3& rhs) {
+			x = rhs.x;
+			y = rhs.y;
+			z = rhs.z;
+		}
+
+		void operator=(Vector3&& rhs) {
+			x = std::move(rhs.x);
+			y = std::move(rhs.y);
+			z = std::move(rhs.z);
+		}
+
+		void operator+=(const Vector3& rhs) {
+			x += rhs.x;
+			y += rhs.y;
+			z += rhs.z;
+		}
+		void operator-=(const Vector3& rhs) {
+			x -= rhs.x;
+			y -= rhs.y;
+			z -= rhs.z;
+		}
+		void operator/=(const Vector3& rhs) {
+			x /= rhs.x;
+			y /= rhs.y;
+			z /= rhs.z;
+		}
+		void operator*=(const Vector3& rhs) {
+			x *= rhs.x;
+			y *= rhs.y;
+			z *= rhs.z;
+		}
+
+		Vector3&& operator+(const Vector3& rhs) {
+			Vector3<T> out;
+			out.x = x + rhs.x;
+			out.y = y + rhs.y;
+			out.z = z + rhs.z;
+			return std::move(out);
+		}
+		Vector3&& operator-(const Vector3& rhs) {
+			Vector3<T> out;
+			out.x = x - rhs.x;
+			out.y = y - rhs.y;
+			out.z = z - rhs.z;
+			return std::move(out);
+		}
+		Vector3&& operator*(const Vector3& rhs) {
+			Vector3<T> out;
+			out.x = x * rhs.x;
+			out.y = y * rhs.y;
+			out.z = z * rhs.z;
+			return std::move(out);
+		}
+		Vector3&& operator/(const Vector3& rhs) {
+			Vector3<T> out;
+			out.x = x / rhs.x;
+			out.y = y / rhs.y;
+			out.z = z / rhs.z;
+			return std::move(out);
+		}
+
+
+
+	};
 }

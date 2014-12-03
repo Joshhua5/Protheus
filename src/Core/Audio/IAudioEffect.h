@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CAudioTrack.h"
+#include "CAudioData.h"
 
 namespace Pro{
 	namespace Audio{
 		class IAudioEffect
 		{
 		public:
-			CAudioTrack process(CAudioTrack);
-			void process(CAudioTrack&);
+			CAudioData process(CAudioData);
+			void process(CAudioData&);
 		};
 	}
 }

@@ -7,34 +7,42 @@ Shader::Shader(const CBuffer& shader, GLenum shader_type)
 	m_shader_id = glCreateShader(shader_type);
 	 
 	GLint size = shader.size();
-	auto data = shader.data<char*>();
+	const GLchar* data = shader.data<GLchar>();
+
 	glShaderSource(m_shader_id,
 		1,
-		(const GLchar**) data,
-		(const GLint*) &size);
-
+		&data,
+		&size);
 	glCompileShader(m_shader_id);
 
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &size);
-	if (size == GL_FALSE)
-		error.reportError("Unable to load shader: " + m_shader_id);
+	if (size == GL_FALSE) {
+		CBuffer error_log(512);
+		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
+		error.reportError("Unable to load shader: " + string(error_log.data<char>()));
+	}
 
 }
 
-Shader::Shader(const char* shader, GLenum shader_type) {
+Shader::Shader(string shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);
+	 
+	GLint size = shader.length();
+	const GLchar* data = shader.data();
 
-	GLint size = sizeof(*shader);
 	glShaderSource(m_shader_id,
 		1,
-		(const GLchar**) shader,
-		(const GLint*) &size);
+		&data,
+		&size);
 
 	glCompileShader(m_shader_id);
 
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &size);
-	if (size == GL_FALSE) 
-		error.reportError("Unable to load shader: " + m_shader_id); 
+	if (size == GL_FALSE) {
+		CBuffer error_log(512);
+		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
+		error.reportError("Unable to load shader: " + string(error_log.data<char>()));
+	}
 }
 
 

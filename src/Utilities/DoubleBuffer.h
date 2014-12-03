@@ -4,7 +4,7 @@ namespace Pro {
 	using namespace std;
 	 
 	template <typename T>
-	extern class DoubleBuffer {
+	class DoubleBuffer {
 		// if the set is true then the back buffer is at the front
 		// otherwise the back buffer is
 		T* current;

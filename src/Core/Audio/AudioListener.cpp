@@ -3,6 +3,8 @@
 using namespace Pro;
 using namespace Audio;
 
+unsigned CAudioListener::active_listener_id;
+
 unsigned& CAudioListener::getCount() {
 	static unsigned listener_count = 0;
 	return listener_count;
@@ -10,7 +12,7 @@ unsigned& CAudioListener::getCount() {
 
 CAudioListener::CAudioListener() {
 	if (getCount() == 0)
-		active_listener_id = 0;
+		active_listener_id = 0;   
 	listener_id = getCount()++;
 }
 

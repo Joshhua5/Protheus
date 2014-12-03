@@ -151,7 +151,7 @@ extern "C" {
   #endif
 #else
   #if defined(GLFW_INCLUDE_GLCOREARB)
-    #include <GL/glcorearb.h>
+    #include "glcorearb.h"
   #elif defined(GLFW_INCLUDE_ES1)
     #include <GLES/gl.h>
   #elif defined(GLFW_INCLUDE_ES2)
@@ -159,7 +159,7 @@ extern "C" {
   #elif defined(GLFW_INCLUDE_ES3)
     #include <GLES3/gl3.h>
   #elif !defined(GLFW_INCLUDE_NONE)
-    #include <GL/gl.h>
+    #include <gl\GL.h>
   #endif
   #if defined(GLFW_INCLUDE_GLU)
     #include <GL/glu.h>

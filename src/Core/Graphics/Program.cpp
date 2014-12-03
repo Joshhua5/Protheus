@@ -1,0 +1,66 @@
+#include "Program.h"
+
+using namespace Pro;
+
+Program::Program() {
+	program_id = glCreateProgram();
+}
+
+
+Program::~Program() {
+	glDeleteProgram(program_id);
+}
+
+Program::Program(Program&& rhs) {
+	program_id = rhs.program_id;
+	rhs.program_id = 0;
+}
+
+Program& Program::operator=(Program&& rhs) {
+	program_id = rhs.program_id;
+	rhs.program_id = 0;
+	return *this;
+}
+
+void Program::attachShader(const Shader& shader) {
+	glAttachShader(program_id, shader.getShader());
+}
+void Program::setActive() {
+	glUseProgram(program_id);
+}
+
+void Program::link() {
+	glLinkProgram(program_id);
+}
+
+void Program::setVertexAttribute(const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
+	GLint location = glGetAttribLocation(program_id, attrib_name.data());
+	if (location == -1) {
+		error.reportError("Unable to locate shader attribute: " + attrib_name);
+		return;
+	}
+	glEnableVertexAttribArray(location);
+	glVertexAttribPointer(location, size, type, normalized, stride, (void*)offset); 
+	
+}
+
+void Program::setUniform(const string& uniform_name,const Vector3<float>& value) {
+	auto location = glGetUniformLocation(program_id, uniform_name.data());
+	if (location == -1) 
+		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name); 
+	glUniform3f(location, value.x, value.y, value.z); 
+}
+
+void Program::setUniform(const string& uniform_name, GLint value) {
+	auto location = glGetUniformLocation(program_id, uniform_name.data());
+	if (location == -1) 
+		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+	glUniform1i(location, value);
+}
+
+void Program::setUniform(const string& uniform_name,const Matrix44<float>& value) {
+	auto location = glGetUniformLocation(program_id, uniform_name.data());
+	if (location == -1)
+		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name); 
+	glUniformMatrix4fv(location, 1, GL_FALSE, (const float*)value._m);
+}

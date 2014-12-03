@@ -20,11 +20,32 @@ History:
 
 namespace Pro{
 	namespace Audio{ 
-		struct CAudioBuffer
-		{
+		class CAudioBuffer
+		{ 
+			// Leave undefined
+			CAudioBuffer(const CAudioBuffer& buffer);
+			CAudioBuffer& operator=(const CAudioBuffer&);
+		public:
 			ALuint id;
 
+			CAudioBuffer(){}
+			CAudioBuffer(CAudioBuffer&& rhs) {
+				id = rhs.id;
+				rhs.id = 0;
+			}
+			CAudioBuffer& operator=(CAudioBuffer&& rhs) { 
+				id = rhs.id;
+				rhs.id = 0;
+				return *this;
+			}
+
+			CAudioBuffer(ALuint _id) {
+				id = _id;
+			}
+
 			~CAudioBuffer(){
+				// CONSIDER 
+				// checking if 0 first
 				alDeleteBuffers(1, &id);
 			}
 		};

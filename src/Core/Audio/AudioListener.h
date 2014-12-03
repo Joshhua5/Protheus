@@ -4,8 +4,7 @@
 #include "openal\al.h"
 
 namespace Pro{
-	namespace Audio{
-		using namespace Math;
+	namespace Audio{ 
 
 		class CAudioListener
 		{
@@ -37,8 +36,7 @@ namespace Pro{
 
 			void setActive() const;
 		};
-	}
-
+	} 
 }
 
 

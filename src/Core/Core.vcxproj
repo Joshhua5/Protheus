@@ -48,7 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GL_GLEXT_PROTOTYPES;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
       <BrowseInformation>true</BrowseInformation>
@@ -57,7 +57,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -82,7 +82,7 @@
     <ClInclude Include="Audio\AudioListener.h" />
     <ClInclude Include="Audio\CAudioBuffer.h" />
     <ClInclude Include="Audio\CAudioSource.h" />
-    <ClInclude Include="Audio\CAudioTrack.h" />
+    <ClInclude Include="Audio\CAudioData.h" />
     <ClInclude Include="Audio\IAudioEffect.h" />
     <ClInclude Include="Audio\IBitstreamDecoder.h" />
     <ClInclude Include="Audio\WavDecoder.h" />
@@ -90,12 +90,18 @@
     <ClInclude Include="FileSystem\EFile.h" />
     <ClInclude Include="FileSystem\FileSystem.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
-    <ClInclude Include="Graphics\extern\glcorearb.h" />
-    <ClInclude Include="Graphics\extern\glext.h" />
+    <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\extern\glew.h" />
     <ClInclude Include="Graphics\extern\glfw3.h" />
     <ClInclude Include="Graphics\extern\glfw3native.h" />
+    <ClInclude Include="Graphics\extern\glxew.h" />
+    <ClInclude Include="Graphics\extern\wglew.h" />
+    <ClInclude Include="Graphics\Model.h" />
+    <ClInclude Include="Graphics\ModelLoader.h" />
+    <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
+    <ClInclude Include="Graphics\Transformation.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Graphics\WindowDefinition.h" />
     <ClInclude Include="Networking\begin_code.h" />
@@ -120,8 +126,12 @@
     <ClCompile Include="FileSystem\CFile.cpp" />
     <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\ModelLoader.cpp" />
+    <ClCompile Include="Graphics\Program.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
+    <ClCompile Include="Graphics\Transformation.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Networking\CConnection.cpp" />

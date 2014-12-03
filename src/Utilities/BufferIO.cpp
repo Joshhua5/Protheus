@@ -32,8 +32,7 @@ unsigned BufferIO::find(const char deliminator) const{
 	register auto buf = (char*)m_buffer->at(m_head);
 	while (*buf != deliminator)
 		++buf;
-	// include the deliminator
-	++buf;
-	return buf - (char*)m_buffer->at(m_head);
+	// include the deliminator 
+	return ++buf - (char*)m_buffer->at(m_head);
 }
  

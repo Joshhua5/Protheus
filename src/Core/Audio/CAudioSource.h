@@ -19,12 +19,11 @@ History:
 #include "openal\al.h"
 
 namespace Pro{
-	namespace Audio{
-		using namespace Math;
+	namespace Audio{ 
 		class CAudioSource
 		{
 		public: 
-			CAudioSource();
+			CAudioSource(ALuint id);
 			~CAudioSource();
 
 			ALuint id;
@@ -32,6 +31,8 @@ namespace Pro{
 			//void addEffect(IAudioEffect);
 	
 			void play(){
+
+
 				alSourcePlay(id);
 			}
 

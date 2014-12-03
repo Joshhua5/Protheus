@@ -6,25 +6,36 @@
 #include "openal\alc.h"
 #include "CAudioSource.h"
 #include "CAudioBuffer.h"
-#include "CAudioTrack.h"
+#include "CAudioData.h"
 #include "AudioListener.h"
-#include "IBitstreamDecoder.h"
- 
+#include "IBitstreamDecoder.h" 
+#include "WavDecoder.h"
 
 namespace Pro{
 	namespace Audio{
+		enum struct AUDIO_FORMAT {
+			WAV,
+			UNDEFINED
+		};
+
 		class CAudio{
 			ALCdevice* device;
 			ALCcontext* context;
 
-			static atomic<short> duplicateCount; 
-			CAudioListener listener;
+			static atomic<short> duplicateCount;
+
+			string getErrorString(ALenum);
+			  
 		public:
 			CAudio();
 			~CAudio();
-			
-			CAudioBuffer loadAudio(IBitstreamDecoder* loader, CBuffer& file); 
-			CAudioSource createSource(ALuint buffer);
-		};
+			 
+			CAudioBuffer loadAudio(AUDIO_FORMAT format, CBuffer* file);
+
+			// Doesn't create a source after creating the file
+			// returns the decoded audio file 
+
+			CAudioSource createSource(const CAudioBuffer& buffer);
+		}; 
 	}
 }

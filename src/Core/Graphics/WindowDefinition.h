@@ -25,7 +25,7 @@ namespace Pro {
 			unsigned samples = 0;
 			unsigned refresh_rate = 0;
 			bool srgb_capable = false;
-			bool debug = false;
+			bool debug = true;
 			bool ogl_core_profile = false;
 		};
 	}

@@ -16,7 +16,7 @@ History:
 
 #include "BufferBase.h"  
 
-extern class CBuffer :
+class CBuffer :
 	protected BufferBase
 {
 public:

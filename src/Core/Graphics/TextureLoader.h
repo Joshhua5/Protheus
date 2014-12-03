@@ -35,6 +35,7 @@ namespace Pro {
 	public:
 
 		static Texture* loadBMP(CBuffer*);
-		static Texture* loadTexture(CBuffer*);
+		static Texture* loadTexture(CBuffer*);  
+		static Texture* loadTexture(CBuffer&&);
 	};
 }

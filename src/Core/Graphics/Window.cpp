@@ -1,17 +1,19 @@
-#include "Window.h"
+﻿#include "Window.h"
 
 using namespace Pro;
 using namespace Graphics;
 
 static bool init = false;
 
+
+void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
+	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
+
 Window::Window(const WindowDefinition& def)
 {
 
-	if (init == false) {
-		glfwInit();
-		init = true;
-	}
+	if (init == false)  
+		glfwInit();  
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, def.gl_major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, def.gl_minor);
 	glfwWindowHint(GLFW_RESIZABLE, def.resizable);
@@ -33,24 +35,40 @@ Window::Window(const WindowDefinition& def)
 	glfwWindowHint(GLFW_REFRESH_RATE, def.refresh_rate);
 	glfwWindowHint(GLFW_SRGB_CAPABLE, def.srgb_capable);
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, def.debug);
+
 	if (def.ogl_core_profile)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	glEnable(GL_DEBUG_OUTPUT);
+	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
 
 	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
 	setCurrent();
+
+
+	if (init == false) { 
+		glewInit();
+		init = true;
+	}
+
 	if (window == nullptr)
 		error.reportFatal("Unable to create window"); 
 }
 
 Window::Window(const string& title, const Vector2<int> dimensions) { 
-	if (init == false) {
+	if (init == false)
 		glfwInit();
-		init = true;
-	}
-	 
+
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+
 	window = glfwCreateWindow(dimensions.x, dimensions.y, title.data() , NULL, NULL);
 	setCurrent();
+
+	if (init == false) {
+		glewInit();
+		init = true;
+	}
+
 	if (window == nullptr)
 		error.reportFatal("Unable to create window");
 }
@@ -84,10 +102,16 @@ void Window::setCurrent() {
 void Window::startFrame() {
 	glClear(GL_COLOR_BUFFER_BIT |
 		GL_DEPTH_BUFFER_BIT |
-		GL_STENCIL_BUFFER_BIT |
-		GL_ACCUM_BUFFER_BIT);
+		GL_STENCIL_BUFFER_BIT);
 }
 
 void Window::endFrame() {
 	glfwSwapBuffers(window);
+}
+
+
+void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
+	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
+	error.reportFatal(string(message​, length​));
+
 }

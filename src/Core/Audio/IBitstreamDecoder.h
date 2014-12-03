@@ -13,16 +13,14 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "CAudioTrack.h" 
+#include "CAudioData.h" 
 
 namespace Pro{
 	namespace Audio{
 		class IBitstreamDecoder
 		{
-		public:
-			IBitstreamDecoder();
-			~IBitstreamDecoder(); 
-			virtual CAudioTrack* load(CBuffer& buffer) = 0;
+		public: 
+			virtual CAudioData* load(CBuffer& buffer) = 0;
 		};
 	}
 }

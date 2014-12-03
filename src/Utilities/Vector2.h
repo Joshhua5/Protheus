@@ -29,7 +29,11 @@ namespace Pro {
 				x = std::move(vec.x);
 				y = std::move(vec.y);
 			}
-			 
+			Vector2(Vector2&& vec) {
+				x = std::move(vec.x);
+				y = std::move(vec.y);
+			}
+
 			Vector2& operator=(const Vector2<int>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
@@ -80,11 +84,7 @@ namespace Pro {
 
 			// Move Constructor
 
-			Vector2(Vector2&& vec) {
-				x = std::move(vec.x);
-				y = std::move(vec.y);
-			}
-
+			
 			Vector2& operator=(Vector2&& p) {
 				x = std::move(vec.x);
 				y = std::move(vec.y);

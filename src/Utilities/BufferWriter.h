@@ -20,7 +20,7 @@ namespace Pro{
 	namespace Util{
 		using namespace Serializer;
 
-		extern class BufferWriter :
+		class BufferWriter :
 			public BufferIO
 		{
 		public:

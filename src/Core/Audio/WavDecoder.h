@@ -22,11 +22,8 @@ namespace Pro{
 		class CWavDecoder :
 			public IBitstreamDecoder
 		{
-		public:
-			CWavDecoder();
-			~CWavDecoder();
-			 
-			CAudioTrack* load(CBuffer& buffer);
+		public:  
+			static CAudioData* load(CBuffer* buffer);
 		};
 	}
 }

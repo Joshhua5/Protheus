@@ -14,7 +14,7 @@ History:
 #include <memory> 
 #include "Error.h"
 
-extern class BufferBase
+class BufferBase
 {
 protected:
 	unsigned int m_size;

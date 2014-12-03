@@ -1,6 +1,6 @@
 #pragma once
 
-#include "extern\glcorearb.h"
+#include "extern\glew.h"
 #include <Vector2.h>
 
 namespace Pro{
@@ -24,5 +24,10 @@ namespace Pro{
 
 		const GLuint getTextureID() const;
 		Vector2<unsigned>& getDimensions();
+
+		void setFilter(GLenum type);
+		void setBorder(GLenum type);
+		void bind();
+		void unbind();
 	}; 
 }

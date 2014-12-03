@@ -20,11 +20,13 @@ History:
 namespace Pro {
 	namespace Util {
 		// All reads and offsets are in bytes
-		extern class BufferReader :
+		class BufferReader :
 			public BufferIO
 		{
+			BufferReader(const BufferReader&);
 		public:
 			BufferReader(CBuffer* buffer);
+			BufferReader(BufferReader&& buffer);
 			~BufferReader();
 
 			// returns a pointer to the internal buffer
@@ -32,19 +34,24 @@ namespace Pro {
 			char* read_raw() const;
 
 			// returns a CBuffer to a copy of data
-			CBuffer read(const unsigned size);
+			CBuffer read(const unsigned size, bool copy = true);
 
 			// reads until the deliminator is found
-			CBuffer read_delim(const char deliminator);
+			// including the deliminator
+			CBuffer read_delim(const char deliminator, bool copy = true);
 
 			// reads until a null terminator is found '\0'
-			CBuffer read_string();
+			string read_string();
+
+			string read_string(const unsigned size);
+
+			bool hasNext();
 
 			template<typename T>
 			inline T read();
 
 			template<typename T>
-			inline T* read_array(const unsigned size);
+			inline T* read_array(const unsigned size, bool copy = true);
 
 			// does not change the offset
 			long read_bits(const unsigned bits);

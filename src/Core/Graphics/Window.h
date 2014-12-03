@@ -14,9 +14,9 @@ History:
 
 #include <string> 
 #include <Vector2.h>
-#include <Error.h>
+#include <Error.h> 
+#include "extern\glew.h"
 #include "extern\glfw3.h"
-#include "extern\glcorearb.h"
 #include "WindowDefinition.h"
 
 namespace Pro {
@@ -29,6 +29,8 @@ namespace Pro {
 			GLFWwindow* window;
 			string windowTitle;
 			Vector2<unsigned> dimension;
+
+
 
 		public:
 			Window(const WindowDefinition&);

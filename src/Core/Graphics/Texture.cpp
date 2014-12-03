@@ -37,3 +37,28 @@ const GLuint Texture::getTextureID() const {
 Vector2<unsigned>& Texture::getDimensions() {
 	return dimensions;
 }
+
+void Texture::setFilter(GLenum type) {
+	glBindTexture(GL_TEXTURE_2D, texture_id); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, type);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, type);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::setBorder(GLenum type) {
+	// CONSIDER
+	// checking the passed in values to make sure they're valid
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, type);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, type);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+
+void Texture::bind() {
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+}
+
+void Texture::unbind() {
+	glBindTexture(GL_TEXTURE_2D, 0);
+}

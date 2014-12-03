@@ -15,7 +15,7 @@ History:
 
 namespace Pro{
 	namespace Util{
-		extern class BufferIO
+		class BufferIO
 		{
 		protected:
 			unsigned m_head;

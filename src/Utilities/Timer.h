@@ -20,7 +20,7 @@ History:
 namespace Pro{
 	namespace Util{
 		using namespace std;
-		extern class Timer
+		class Timer
 		{
 		private:
 			unsigned long long startTick;
@@ -33,7 +33,6 @@ namespace Pro{
 			unsigned long long getTickDelta() const;
 			double getTicksPerSec() const;
 			void tick();
-			  
 		};
 	}
 }

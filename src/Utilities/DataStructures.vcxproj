@@ -23,10 +23,10 @@
     <ClInclude Include="BufferWriter.h" />
     <ClInclude Include="CBuffer.h" />
     <ClInclude Include="ClassDefinition.h" />
-    <ClInclude Include="DataStructures.h" />
     <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="Matrix33.h" />
+    <ClInclude Include="Matrix44.h" />
     <ClInclude Include="Member.h" />
     <ClInclude Include="StringConverter.h" />
     <ClInclude Include="Timer.h" />
@@ -41,7 +41,6 @@
     <ClCompile Include="CBuffer.cpp" />
     <ClCompile Include="ClassDefinition.cpp" />
     <ClCompile Include="Error.cpp" />
-    <ClCompile Include="Matrix33.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

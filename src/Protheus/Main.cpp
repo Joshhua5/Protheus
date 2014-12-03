@@ -2,13 +2,16 @@
 
 #include <Graphics\Window.h>
 #include <Graphics\Sprite.h>
-#include <Graphics\TextureLoader.h> 
+#include <Graphics\TextureLoader.h>
+#include <Audio\WavDecoder.h>
+#include <Audio\Audio.h>
 #include <FileSystem\FileSystem.h>
 #include <thread>
 #include <Vector4.h> 
 
 using namespace Pro; 
 using namespace Util;
+using namespace Audio;
 using namespace Math;
 
 //int main(int argc, char* args[])
@@ -47,16 +50,23 @@ int main(int argc, char* args []) {
 	FileSystem fileIO;
 
 	auto file = fileIO.getFile("text.bmp");
+	auto audiof = fileIO.getFile("test.wav");
+
+	CAudio audio; 
+	auto buffer = audio.loadAudio(AUDIO_FORMAT::WAV, &audiof); 
+	auto source = audio.createSource(buffer); 
+	source.play(); 
 
 	Texture* tex = TextureLoader::loadTexture(&file);
 
-	Graphics::Sprite sprite(tex); 
-	 
-	while (true) {
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+	Graphics::Sprite sprite(tex);
+	  
+
+	while (true) { 
 		window.startFrame();
+		source.play();  
 		window.endFrame();
 	}
 	//batch.push(&sprite, Vector4(0, 0, 0, 1)); 
-	//batch.flush(); 
+	//batch.flush();
 }

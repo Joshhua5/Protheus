@@ -1,7 +1,7 @@
 #pragma once 
 #include <CBuffer.h>
 #include <Error.h>
-#include "extern\glcorearb.h"
+#include "extern\glew.h"
 
 namespace Pro {
 	class Shader
@@ -14,11 +14,11 @@ namespace Pro {
 		Shader& operator=(const Shader&);
 	public:
 		Shader(const CBuffer& shader, GLenum shader_type);
-		Shader(const char* shader, GLenum shader_type);
+		Shader(string shader, GLenum shader_type);
 		~Shader();
 
 		bool init(const CBuffer& shader, GLenum shader_type); 
 		bool init(const char* shader, GLenum shader_type);
 		GLuint getShader() const;
 	};
-}
+} 
