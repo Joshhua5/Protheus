@@ -19,4 +19,5 @@ class BufferBase
 protected:
 	unsigned int m_size;
 	void* m_data;
+	bool wasCopied;
 };

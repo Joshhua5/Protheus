@@ -75,10 +75,10 @@ namespace Pro {
 
 		// Possible memory leak, must delete returned value
 		template<typename T>
-		inline T* BufferReader::read_array(const unsigned size, bool copy) {  
+		inline T* BufferReader::read_array(const unsigned size, bool copy) {
 			auto buffer = read(sizeof(T) * size, copy);
 			auto out = buffer.data();
-			buffer.dereference(); 
+			buffer.dereference();
 			return static_cast<T*>(out);
 		}
 
@@ -90,14 +90,11 @@ namespace Pro {
 			// Scan over the buffer for the combination
 			for (unsigned head = m_head; head < m_buffer->size() - size; ++head) {
 				// Check that position for the combination
-				for (int x = 0; x <= size; ++x) {
-					if (*(buffer + head + x) == *(data + x))
-						if (x == size)
-							return head - m_head;
-					else
-						break;
-				} 
+				for (unsigned x = 0; *(buffer + head + x) == *(data + x) ; ++x) 
+						if (x == size - 1)
+							return head - m_head; 
 			}
+			return -1;
 		}
 
 		template<typename T>

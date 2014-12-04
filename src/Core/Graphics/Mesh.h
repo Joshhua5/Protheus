@@ -13,8 +13,7 @@ namespace Pro {
 
 		MeshObject();
 		MeshObject(MeshObject&&);
-		~MeshObject();
-
+		~MeshObject(); 
 	};
 
 	// All verticies are GL_FLOAT and elements are GLUINT
@@ -26,17 +25,22 @@ namespace Pro {
 
 		GLuint verticies;
 		GLuint elements;
+		GLenum format;
 		unsigned object_count = 0;
 		bool vertexW;
 		bool hasUV;
 		bool hasNormals;
 		 
 	public:
-		Mesh(GLuint verticies, GLuint elements, bool vertexContainsW, bool hasUV , bool hasNormals);
+		Mesh(GLuint verticies, GLuint elements, GLenum format, bool vertexContainsW, bool hasUV , bool hasNormals);
 		Mesh(Mesh&&);
 		Mesh& operator=(Mesh&&);
 		~Mesh();
 
 		void attachObject(MeshObject&&);
+	
+		void bind() const;
+		void unbind() const;
+		void draw() const;
 	};
 }

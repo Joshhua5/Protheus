@@ -38,7 +38,8 @@ namespace Pro{
 			// get's the internal buffers size
 			unsigned getBufferSize() const;
 
-			unsigned find(const char deliminator) const;
+			// Finds the offset of the next deliminator
+			unsigned find(const char deliminator);
 			 
 		};
 	}

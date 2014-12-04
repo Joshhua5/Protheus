@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnOGL.cpp" />
+    <ClCompile Include="MeshTest.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{478BCF73-99EB-4283-9468-64CC65ED6887}</ProjectGuid>

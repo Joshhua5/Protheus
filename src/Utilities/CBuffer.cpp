@@ -30,6 +30,7 @@ CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
 	else
 		m_data = _data;
 
+	wasCopied = copy;
 	m_size = _size;
 }
 
@@ -39,18 +40,21 @@ CBuffer::CBuffer(const unsigned _size)
 		m_data = nullptr; 
 	else
 		m_data = new char[_size];
+	wasCopied = false;
 	m_size = _size; 
 }
 
 CBuffer::CBuffer()
 {
+	wasCopied = false;
 	m_size = 0;
 	m_data = nullptr;
 }
 
-CBuffer::CBuffer(CBuffer&& b) : CBuffer(){
+CBuffer::CBuffer(CBuffer&& b){
 	m_data = b.data();
 	m_size = b.size();
+	wasCopied = b.wasCopied;
 	b.dereference();
 }
 
@@ -59,7 +63,8 @@ CBuffer& CBuffer::operator=(CBuffer&& b){
 		return *this;  
 	
 	m_data = b.data();
-	m_size = b.size();
+	m_size = b.size(); 
+	wasCopied = b.wasCopied;
 	b.dereference();
 	return *this;
 }
@@ -79,7 +84,8 @@ CBuffer& CBuffer::operator=(const CBuffer& b){
 
 CBuffer::~CBuffer()
 {
-	delete [] m_data;
+	if(wasCopied)
+		delete [] m_data;
 	m_data = nullptr;
 }
 
@@ -95,6 +101,7 @@ void CBuffer::init(const void* _data, const unsigned _size, const bool copy){
 	else
 		m_data = const_cast<void*>(_data);
 
+	wasCopied = copy;
 	m_size = _size;
 }
 

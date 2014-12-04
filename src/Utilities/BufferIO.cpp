@@ -28,11 +28,17 @@ void BufferIO::skip(const int position){
 unsigned BufferIO::getBufferSize() const{
 	return m_buffer->size();
 }
-unsigned BufferIO::find(const char deliminator) const{
+unsigned BufferIO::find(const char deliminator){
+	// Make sure we only check inside the buffer
 	register auto buf = (char*)m_buffer->at(m_head);
-	while (*buf != deliminator)
-		++buf;
+	register auto bufferEnd = (char*) m_buffer->at(m_buffer->size());
+	int offset = 0;
+	for (; *buf != deliminator && buf != bufferEnd; ++buf, ++offset);
+
+	if (*buf != deliminator)
+		offset = 0;
+
 	// include the deliminator 
-	return ++buf - (char*)m_buffer->at(m_head);
+	return ++offset;
 }
  
