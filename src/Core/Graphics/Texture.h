@@ -3,8 +3,7 @@
 #include "extern\glew.h"
 #include <Vector2.h>
 
-namespace Pro{
-	using namespace Math;
+namespace Pro{ 
 	class Texture
 	{
 	private:

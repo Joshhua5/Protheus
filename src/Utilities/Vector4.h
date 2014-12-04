@@ -50,7 +50,7 @@ namespace Pro {
 			}
 
 			// z and w are width and height in that order.
-			bool contains(const Math::Vector2& v) const {
+			bool contains(const Vector2& v) const {
 				if (v.x > x &&
 					x + z > v.x &&
 					v.y > y &&

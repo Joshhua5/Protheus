@@ -20,8 +20,7 @@ History:
 #include "WindowDefinition.h"
 
 namespace Pro {
-	namespace Graphics {
-		using namespace Math;
+	namespace Graphics { 
 		using namespace std;
 		 
 		class Window

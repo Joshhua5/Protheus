@@ -20,8 +20,7 @@ History:
 
 namespace Pro{
 	namespace Graphics{
-		using namespace std;
-		using namespace Math; 
+		using namespace std; 
 
 		class Sprite 
 		{

@@ -2,8 +2,7 @@
 
 using namespace Pro;
 using namespace Util; 
-using namespace Graphics;
-using namespace Math;
+using namespace Graphics; 
 
 SpriteBatcher::SpriteBatcher() {
 	static bool first_init = true;

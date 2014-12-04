@@ -4,6 +4,7 @@
 *.user
 *.idb
 *.exe
+*.opensdf
 *.ilk
 *.bsc
 *.log

@@ -48,7 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
       <BrowseInformation>true</BrowseInformation>
@@ -96,8 +96,8 @@
     <ClInclude Include="Graphics\extern\glfw3native.h" />
     <ClInclude Include="Graphics\extern\glxew.h" />
     <ClInclude Include="Graphics\extern\wglew.h" />
-    <ClInclude Include="Graphics\Model.h" />
-    <ClInclude Include="Graphics\ModelLoader.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Graphics\MeshLoader.h" />
     <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
@@ -127,7 +127,8 @@
     <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\ModelLoader.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\MeshLoader.cpp" />
     <ClCompile Include="Graphics\Program.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />

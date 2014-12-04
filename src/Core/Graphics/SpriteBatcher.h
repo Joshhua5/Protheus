@@ -24,8 +24,7 @@ History:
 namespace Pro{
 	namespace Graphics {
 		using namespace std;
-		using namespace Util; 
-		using namespace Math;
+		using namespace Util;  
 
 		class SpriteBatcher
 		{    

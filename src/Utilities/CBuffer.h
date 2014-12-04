@@ -23,7 +23,7 @@ public:
 	// if copy is true then the data is copied otherwise
 	// the data is moved, you can't delete the pointer
 	// which was used to pass data otherwise you'll
-	// delete the internal data aswell.
+	// delete the internal data aswell and visversa.
 	CBuffer(void* data, const unsigned size, const bool copy);
 	CBuffer(const unsigned size); 
 	CBuffer();

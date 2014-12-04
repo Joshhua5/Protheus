@@ -11,8 +11,7 @@
 
 using namespace Pro; 
 using namespace Util;
-using namespace Audio;
-using namespace Math;
+using namespace Audio; 
 
 //int main(int argc, char* args[])
 //{

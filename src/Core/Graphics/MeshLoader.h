@@ -8,7 +8,7 @@
 #include <Vector3.h>
 #include <vector>
 #include "extern\glew.h"
-#include "Model.h"
+#include "Mesh.h"
 
 namespace Pro { 
 
@@ -18,14 +18,14 @@ namespace Pro {
 		UNDEFINED
 	};
 
-	class ModelLoader {
+	class MeshLoader {
 		  
 		static MODEL_FORMAT queryFormat(CBuffer*);
 
 	public:
 		 
-		static Model* loadOBJ(CBuffer*);
-		static Model* loadModel(CBuffer*);
-		static Model* loadModel(CBuffer&&); 
+		static Mesh* loadOBJ(CBuffer*);
+		static Mesh* loadModel(CBuffer*);
+		static Mesh* loadModel(CBuffer&&); 
 	}; 
 }

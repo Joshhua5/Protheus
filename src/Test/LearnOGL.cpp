@@ -11,47 +11,13 @@
 
 using namespace Pro;
 using namespace Util;
-using namespace Graphics;
-using namespace Math;
+using namespace Graphics; 
 
 int main() {
 	Graphics::Window window("title", Vector2<int>(800, 800));
 
 	FileSystem fs;
-	//CBuffer verticies(sizeof(float) * 16 + 12);
-	//BufferWriter writer(&verticies);
-	//writer.write<float>(.5);
-	//writer.write<float>(.5);
-	//writer.write<char>(1);
-	//writer.write<char>(0);
-	//writer.write<char>(0);
-	//writer.write<float>(0);
-	//writer.write<float>(0);
-
-	//writer.write<float>(.5);
-	//writer.write<float>(-.5);
-	//writer.write<char>(0);
-	//writer.write<char>(1);
-	//writer.write<char>(0);
-	//writer.write<float>(1);
-	//writer.write<float>(0);
-
-	//writer.write<float>(-.5);
-	//writer.write<float>(-.5);
-	//writer.write<char>(0);
-	//writer.write<char>(0);
-	//writer.write<char>(1);
-	//writer.write<float>(1);
-	//writer.write<float>(1);
-
-	//writer.write<float>(-.5);
-	//writer.write<float>(.5);
-	//writer.write<char>(1);
-	//writer.write<char>(1);
-	//writer.write<char>(0);
-	//writer.write<float>(0);
-	//writer.write<float>(1);
-
+  
 	float f_cube[] = {
 		// X      Y     Z     R     G     B     U     V
 		-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
@@ -144,6 +110,8 @@ int main() {
 		window.startFrame();
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		program.setUniform("", 0); 
+		glDrawArrays(GL_TRIANGLES, 36, 36);
 		//camera.rotate({ 0, 0, 0.01f });
 		model.rotate(Vector3<float>(0, 0.01f, 0));
 		program.setUniform("model", model.getViewMatrix());
