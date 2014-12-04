@@ -4,13 +4,17 @@
 #include <BufferReader.h>
 #include <Vector3.h>
 #include <BufferWriter.h>
+#include <Vector4.h>
+#include <Vector3.h>
 #include <vector>
+#include "extern\glew.h"
 #include "Model.h"
 
 namespace Pro { 
 
 	enum struct MODEL_FORMAT {
 		OBJ,
+		COLLADA,
 		UNDEFINED
 	};
 

@@ -19,11 +19,7 @@ History:
 
 #include "Vector2.h"
 
-#define SDL_RectCreate(v) SDLP_RectCreate(v.x, v.y, v.z, v.w)
-#define SDL_ColorCreate(v)  SDLP_ColorCreate((Uint8) v.x, (Uint8) v.y, (Uint8) v.z, (Uint8) v.w)
-
-namespace Pro {
-	namespace Math {
+namespace Pro { 
 		template <typename T>
 		struct /*alignas(16)*/ Vector4 {
 			T x, y, z, w;
@@ -42,7 +38,7 @@ namespace Pro {
 				w = move(vec.w);
 			} 
 
-			Vector4(const Vector2& pos, const Vector2& dim) : Vector4(
+			Vector4(const Vector2<T>& pos, const Vector2<T>& dim) : Vector4(
 				pos.x, pos.y,
 				dim.x, dim.y) {}
 
@@ -172,5 +168,4 @@ namespace Pro {
 
 		};
 
-	}
-}
+	} 

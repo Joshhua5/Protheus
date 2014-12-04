@@ -47,8 +47,15 @@ namespace Pro {
 
 			bool hasNext();
 
+			// returns -1 if the string can't be found
+			// otherwise it'll return the offset from the current
+			// head
+			// Arguments: Array of values to test for, size of array
 			template<typename T>
-			inline T read();
+			int contains(const T*, unsigned size);
+
+			template<typename T>
+			inline T read(bool copy = true);
 
 			template<typename T>
 			inline T* read_array(const unsigned size, bool copy = true);
@@ -62,17 +69,35 @@ namespace Pro {
 		};
 
 		template<typename T>
-		inline T BufferReader::read() {
-			return *static_cast<T*>(read(sizeof(T)).data());
+		inline T BufferReader::read(bool copy) {
+			return *static_cast<T*>(read(sizeof(T), copy).data());
 		}
 
 		// Possible memory leak, must delete returned value
 		template<typename T>
-		inline T* BufferReader::read_array(const unsigned size) {  
-			auto buffer = read(sizeof(T) * size);
+		inline T* BufferReader::read_array(const unsigned size, bool copy) {  
+			auto buffer = read(sizeof(T) * size, copy);
 			auto out = buffer.data();
 			buffer.dereference(); 
 			return static_cast<T*>(out);
+		}
+
+		template<typename T>
+		int BufferReader::contains(const T* data, unsigned size) {
+			// TEST
+			// Create a local copy 
+			T* buffer = m_buffer->data<T>();
+			// Scan over the buffer for the combination
+			for (unsigned head = m_head; head < m_buffer->size() - size; ++head) {
+				// Check that position for the combination
+				for (int x = 0; x <= size; ++x) {
+					if (*(buffer + head + x) == *(data + x))
+						if (x == size)
+							return head - m_head;
+					else
+						break;
+				} 
+			}
 		}
 
 		template<typename T>

@@ -44,9 +44,15 @@ public:
 		return reinterpret_cast<T*>(m_data);
 	}
 
+	// Counts how many times value is present in the buffer
+	template<typename T> 
+	unsigned count(const T& value);
+
 	void resize(const unsigned);
 
+	// returns void* to the buffer
 	void* data() const;
+	// returns size in bytes
 	unsigned size() const;
 	bool isEmpty() const;
 
@@ -59,6 +65,15 @@ public:
 	// when CBuffer is deleted.
 	// don't dereference unless the data pointer
 	// has been stored somewhere else (memory leak)
-	void dereference();
-	  
+	void dereference(); 
 };
+
+template<typename T>
+unsigned CBuffer::count(const T& value) {
+	T* buffer = data<T>();
+	unsigned count = 0;
+	for (unsigned head = 0; head < (size() / sizeof(T)); ++head, ++buffer)
+		if (*buffer == value)
+			++count;
+	return count;
+}

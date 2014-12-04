@@ -39,7 +39,6 @@ namespace Pro {
 				y = static_cast<T>(p.y);
 				return *this;
 			}
-
 			Vector2& operator=(const Vector2<unsigned>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
