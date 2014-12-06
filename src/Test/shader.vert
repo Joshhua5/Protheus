@@ -1,9 +1,10 @@
 #version 420
 
 in vec3 position;
+/*
 in vec3 color;
 in vec2 texcoord;
-
+*/
 out vec2 tex_coord;
 out vec3 out_color;
 

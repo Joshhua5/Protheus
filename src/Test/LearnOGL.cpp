@@ -49,10 +49,11 @@ int main() {
 	program.attachShader(frag);
 	program.link();
 	program.setActive();
-	program.setVertexAttribute("position", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
-	program.setVertexAttribute("color", 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat) , 3 * sizeof(GLfloat));
-	program.setVertexAttribute("texcoord", 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 6 * sizeof(GLfloat));
-	 
+	program.setVertexAttribute("position", 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+	program.setUniform("inColor", { 1, 0, 1 });
+	/*program.setVertexAttribute("color", 0, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat) , 3 * sizeof(GLfloat));
+	program.setVertexAttribute("texcoord", 0, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 6 * sizeof(GLfloat));
+	*/ 
 
 	glActiveTexture(GL_TEXTURE0);
 	tex->bind();
