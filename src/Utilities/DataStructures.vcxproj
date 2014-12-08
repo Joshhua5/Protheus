@@ -93,6 +93,7 @@
     </Link>
     <Lib>
       <SubSystem>Console</SubSystem>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

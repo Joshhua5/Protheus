@@ -10,5 +10,5 @@ in vec2 tex_coord;
 layout(binding = 0) uniform sampler2D tex;
 
 void main() {
-  vcolor =vec4(inColor, 1); //texture(tex, tex_coord);;
+  vcolor = vec4(inColor, 1); //texture(tex, tex_coord);;
 }

@@ -58,6 +58,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -98,10 +99,12 @@
     <ClInclude Include="Graphics\extern\wglew.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\MeshLoader.h" />
+    <ClInclude Include="Graphics\MeshObject.h" />
     <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
     <ClInclude Include="Graphics\Transformation.h" />
+    <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Graphics\WindowDefinition.h" />
     <ClInclude Include="Networking\begin_code.h" />
@@ -129,10 +132,12 @@
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\MeshLoader.cpp" />
+    <ClCompile Include="Graphics\MeshObject.cpp" />
     <ClCompile Include="Graphics\Program.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
     <ClCompile Include="Graphics\Transformation.cpp" />
+    <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Networking\CConnection.cpp" />

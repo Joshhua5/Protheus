@@ -64,21 +64,22 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 
 
 		switch (line.data<char>()[0]) {
-		case 'o':
+		case 'o': {
+			liner.reset();
 			liner.skip(2);
 			// pointer will break outside of this function
 			object.push_back(MeshObject());
+			auto nameBuf = liner.read_delim('\n', false);
+			temp = &object.back();
 
-			obj.name = string(liner.read_delim('\n', false).data<char>());
-			obj.start = faceCount;
-
-			glGenVertexArrays(1, &obj.vba);
-			glBindVertexArray(0);
+			temp->name = string(nameBuf.data<char>(), nameBuf.size() - 1);
+			temp->start = faceCount; 
 
 			if (object.size() >= 2) {
 				temp = &object.at(object.size() - 2);
 				temp->size = faceCount - temp->start;
 			}
+		}
 			break;
 
 		case 'f':
@@ -313,7 +314,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 		error.reportError("Unable to load OBJ Model: Create Element Array");
 		return nullptr;
 	}
-	Mesh* m = new Mesh(vbo, ebo, face_type, containsW, uv.isEmpty(), normals.isEmpty());
+	Mesh* m = new Mesh(vbo, ebo, face_type, containsW, !uv.isEmpty(), !normals.isEmpty());
 	for (unsigned x = 0; x < object.size(); ++x)
 		m->attachObject(std::move(object[x]));
 

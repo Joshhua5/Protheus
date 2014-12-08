@@ -8,7 +8,7 @@ Mesh::Mesh(GLuint verticies, GLuint elements, GLenum format, bool vertexContains
 	this->elements = elements;
 	vertexW = vertexContainsW;
 	this->hasNormals = hasNormals;
-	this->hasUV = hasUV;
+	this->hasUV = hasUV; 
 }
 
 Mesh::Mesh(Mesh&& rhs) {
@@ -43,42 +43,48 @@ void Mesh::attachObject(MeshObject&& model) {
 	objects.push_back(model);
 }
 
-MeshObject::MeshObject(MeshObject&& rhs) {
-	name = std::move(rhs.name);
-	start = rhs.start;
-	size = rhs.size;
-	vba = rhs.vba;
-	rhs.vba = 0;
-}
-MeshObject::MeshObject() {
-	name = "";
-	start = 0;
-	size = 0;
-	vba = 0;
+MeshObject* Mesh::getObject(const string& object_name) { 
+	for (unsigned x = 0; x < objects.size(); ++x)
+		if (objects[x].name == object_name)
+			return &objects[x];
+	error.reportErrorNR("Unable to find mesh object" + object_name);  
+	return nullptr;
 }
 
-MeshObject::~MeshObject() {
-	glDeleteVertexArrays(1, &vba);
-}
-
-
-void Mesh::bind() const{
-	glBindBuffer(GL_ARRAY_BUFFER, verticies);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements);
-}
-
-void Mesh::unbind() const{
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void Mesh::draw() const{
-	bind();
-	for each(const auto& obj in objects) {
-		// Find a way to use the Object's VBA's
-		//glBindVertexArray(obj.vba); 
-		glDrawElements(format, obj.size, GL_UNSIGNED_INT, (const void*)obj.start);
+void Mesh::bindProgram(const string& object_name, GLuint program_id) { 
+	for (unsigned x = 0; x < objects.size(); ++x) {
+		auto& obj = objects[x];
+		if (obj.name == object_name)
+			obj.program = program_id;
 	}
-	glBindVertexArray(0);
+}
+void Mesh::bindProgram(GLuint program_id) {
+	for (unsigned x = 0; x < objects.size(); ++x)
+		objects[x].program = program_id;
+}
+ 
+void Mesh::bind(){
+	glBindBuffer(GL_ARRAY_BUFFER, verticies);
+	vao.bind();
+}
+
+void Mesh::unbind(){
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	vao.unbind();
+}
+
+void Mesh::draw(){
+	bind(); 
+	for (const auto& obj : objects) {
+		// Find a way to use the Object's VBA's 
+		obj.setUniforms();
+		glDrawElements(format, obj.size, GL_UNSIGNED_INT, (const void*)obj.start);
+	} 
 	unbind();
+}
+
+
+inline void  Mesh::setVertexAttribute(const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
+	for (const auto& obj : objects)
+		obj.setVertexAttribute(attrib_name, size, type, normalized, stride, offset); 
 }

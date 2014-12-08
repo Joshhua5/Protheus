@@ -24,9 +24,8 @@ int main() {
 
 	Transformation camera;
 	Transformation model;
-
-
-	camera.setPosition({0 , 0, -1 });
+	 
+	camera.setPosition({0 , -0 , 0});
 
 	GLenum err;
 	// TEST 
@@ -37,8 +36,7 @@ int main() {
 	GLuint vao = 0;
 	GLuint sampler = 0; 
 
-	cube->bind();
-	cube->unbind();
+	cube->bind(); 
 
 	Shader vert(fs.getFile("shader.vert"), GL_VERTEX_SHADER);
 	Shader frag(fs.getFile("shader.frag"), GL_FRAGMENT_SHADER);
@@ -50,25 +48,24 @@ int main() {
 	program.link();
 	program.setActive();
 	program.setVertexAttribute("position", 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-	program.setUniform("inColor", { 1, 0, 1 });
-	/*program.setVertexAttribute("color", 0, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat) , 3 * sizeof(GLfloat));
-	program.setVertexAttribute("texcoord", 0, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 6 * sizeof(GLfloat));
-	*/ 
+	program.setUniform("inColor", { 0, 1, 0 });
 
-	glActiveTexture(GL_TEXTURE0);
-	tex->bind();
-	program.setUniform("tex", 0);
+	cube->bindProgram(program.getID());
+	cube->getObject("Cube")->setUniform("inColor", {1, 1, 1});
+	cube->setModelMatrix(model.getViewMatrix()); 
+
+	glActiveTexture(GL_TEXTURE0); 
 
 	glBindVertexArray(0);
 	 
 	while (true) {
 		window.startFrame();
 		glBindVertexArray(vao);
-		cube->draw();
 		//camera.rotate({ 0, 0, 0.01f });
 		model.rotate(Vector3<float>(0, 0.01f, 0));
-		program.setUniform("model", model.getViewMatrix());
+		//program.setUniform("model", model.getViewMatrix());
 		program.setUniform("view", camera.getViewMatrix());
+		cube->draw();
 		glBindVertexArray(0);
 		window.endFrame();
 	}
