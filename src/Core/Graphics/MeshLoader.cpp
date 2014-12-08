@@ -77,7 +77,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 
 			if (object.size() >= 2) {
 				temp = &object.at(object.size() - 2);
-				temp->size = faceCount - temp->start;
+				temp->size = ((faceCount - temp->start) * ((face_type == GL_QUADS) ? 4 : 3));
 			}
 		}
 			break;
@@ -252,7 +252,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	}
 	// populate the size of the last object
 	temp = &object.at(object.size() - 1);
-	temp->size = faceCount - temp->start;
+	temp->size = ((faceCount - temp->start) * ((face_type == GL_QUADS) ? 4 : 3));
 
 
 	// Pack verticies

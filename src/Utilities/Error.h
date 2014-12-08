@@ -6,10 +6,10 @@ using namespace std;
 
 #define reportMessageNR(msg) _reportMessageNR(msg, __FUNCTION__, __LINE__)
 #define reportMessage(msg) _reportMessage(msg, __FUNCTION__, __LINE__)
-#define reportErrorNR(msg) _reportMessageNR(msg, __FUNCTION__, __LINE__)
-#define reportError(msg) _reportMessage(msg, __FUNCTION__, __LINE__)
-#define reportFatalNR(msg) _reportMessageNR(msg, __FUNCTION__, __LINE__)
-#define reportFatal(msg) _reportMessage(msg, __FUNCTION__, __LINE__)
+#define reportErrorNR(msg) _reportErrorNR(msg, __FUNCTION__, __LINE__)
+#define reportError(msg) _reportError(msg, __FUNCTION__, __LINE__)
+#define reportFatalNR(msg) _reportFatalNR(msg, __FUNCTION__, __LINE__)
+#define reportFatal(msg) _reportFatal(msg, __FUNCTION__, __LINE__)
 
 
 namespace Pro{

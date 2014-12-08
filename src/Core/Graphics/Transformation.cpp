@@ -7,9 +7,10 @@ Transformation::Transformation() {
 	isProcessed = false;
 	setRotation(Vector3<float>(0, 0, 0));
 	setPosition(Vector3<float>(0, 0, 0));
+	memset(scale_matrix._m, 0, sizeof(float) * 16);
+	setScale({ 1, 1, 1 });
 }
-
-
+ 
 void Transformation::setRotation(const Vector3<float>& xyz) {
 	rotation = xyz;
 	isProcessed = false;
@@ -80,6 +81,9 @@ Matrix44<float>& Transformation::getViewMatrix() {
 	trans_matrix._m[2][3] = 0;
 	trans_matrix._m[3][3] = 1;
 
+	// Scale
+	trans_matrix *= scale_matrix;
+
 	// finished processing
 	isProcessed = true;
 	
@@ -95,4 +99,12 @@ void Transformation::move(const Vector3<float>& delta) {
 	// flag to reprocess
 	isProcessed = false;
 	position += delta;
+}
+
+void Transformation::setScale(const Vector3<float>& scale) {
+	scale_matrix._m[0][0] = scale.x;
+	scale_matrix._m[1][1] = scale.y;
+	scale_matrix._m[2][2] = scale.z;
+	scale_matrix._m[3][3] = 1;
+	isProcessed = false;
 }

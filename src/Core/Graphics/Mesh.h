@@ -12,22 +12,21 @@
 namespace Pro { 
 	using namespace std; 
 	// All verticies are GL_FLOAT and elements are GLUINT
-	class Mesh { 
-		VertexArray vao;
+	class Mesh {  
 		Mesh(const Mesh&) = delete;
 		Mesh operator=(const Mesh&) = delete; 
 	 
-		std::vector<MeshObject> objects;
+		vector<MeshObject> objects;
 		GLuint verticies;
 		GLuint elements;
-		GLenum format;
+		GLenum mode;
 		unsigned object_count = 0;
 		bool vertexW;
 		bool hasUV;
 		bool hasNormals;
 		
 	public:
-		Mesh(GLuint verticies, GLuint elements, GLenum format, bool vertexContainsW, bool hasUV , bool hasNormals);
+		Mesh(GLuint verticies, GLuint elements, GLenum mode, bool vertexContainsW, bool hasUV , bool hasNormals);
 		Mesh(Mesh&&);
 		Mesh& operator=(Mesh&&);
 		~Mesh();
@@ -35,13 +34,11 @@ namespace Pro {
 		void attachObject(MeshObject&&);
 		
 		MeshObject* getObject(const string& object_name);
+		vector<MeshObject>& getObjects();
 
-		inline void setVertexAttribute(const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset);
-		void bindProgram(const string& object_name, GLuint program_id);
-		void bindProgram(GLuint program_id);
+		GLenum getMode() const;
 
-		inline void bind();
-		inline void unbind();
-		void draw();
+		void bind();
+		void unbind(); 
 	};
 }

@@ -2,8 +2,8 @@
 
 using namespace Pro;
 
-Mesh::Mesh(GLuint verticies, GLuint elements, GLenum format, bool vertexContainsW, bool hasUV, bool hasNormals) {
-	this->format = format;
+Mesh::Mesh(GLuint verticies, GLuint elements, GLenum mode, bool vertexContainsW, bool hasUV, bool hasNormals) {
+	this->mode = mode;
 	this->verticies = verticies;
 	this->elements = elements;
 	vertexW = vertexContainsW;
@@ -13,6 +13,7 @@ Mesh::Mesh(GLuint verticies, GLuint elements, GLenum format, bool vertexContains
 
 Mesh::Mesh(Mesh&& rhs) {
 	objects = std::move(rhs.objects);
+	mode = rhs.mode;
 	verticies = rhs.verticies;
 	elements = rhs.elements;
 	object_count = rhs.object_count;
@@ -24,6 +25,7 @@ Mesh::Mesh(Mesh&& rhs) {
 
 Mesh& Mesh::operator=(Mesh&& rhs) { 
 	objects = std::move(rhs.objects);
+		mode = rhs.mode;
 	verticies = rhs.verticies;
 	elements = rhs.elements;
 	object_count = rhs.object_count;
@@ -51,40 +53,21 @@ MeshObject* Mesh::getObject(const string& object_name) {
 	return nullptr;
 }
 
-void Mesh::bindProgram(const string& object_name, GLuint program_id) { 
-	for (unsigned x = 0; x < objects.size(); ++x) {
-		auto& obj = objects[x];
-		if (obj.name == object_name)
-			obj.program = program_id;
-	}
+
+vector<MeshObject>& Mesh::getObjects() {
+	return objects;
 }
-void Mesh::bindProgram(GLuint program_id) {
-	for (unsigned x = 0; x < objects.size(); ++x)
-		objects[x].program = program_id;
+
+GLenum Mesh::getMode() const {
+	return mode;
 }
- 
+
 void Mesh::bind(){
 	glBindBuffer(GL_ARRAY_BUFFER, verticies);
-	vao.bind();
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements); 
 }
 
 void Mesh::unbind(){
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	vao.unbind();
-}
-
-void Mesh::draw(){
-	bind(); 
-	for (const auto& obj : objects) {
-		// Find a way to use the Object's VBA's 
-		obj.setUniforms();
-		glDrawElements(format, obj.size, GL_UNSIGNED_INT, (const void*)obj.start);
-	} 
-	unbind();
-}
-
-
-inline void  Mesh::setVertexAttribute(const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
-	for (const auto& obj : objects)
-		obj.setVertexAttribute(attrib_name, size, type, normalized, stride, offset); 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

@@ -10,6 +10,7 @@ out vec3 out_color;
 */
 uniform mat4 view;
 uniform mat4 model;
+uniform mat4 scale;
 
 void main() {
 	//tex_coord = texcoord;

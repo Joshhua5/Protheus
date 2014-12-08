@@ -24,8 +24,8 @@ int main() {
 
 	Transformation camera;
 	Transformation model;
-	 
-	camera.setPosition({0 , -0 , 0});
+	   
+	camera.setPosition({0 , 0 , .7f});
 
 	GLenum err;
 	// TEST 
@@ -48,12 +48,8 @@ int main() {
 	program.link();
 	program.setActive();
 	program.setVertexAttribute("position", 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-	program.setUniform("inColor", { 0, 1, 0 });
-
-	cube->bindProgram(program.getID());
-	cube->getObject("Cube")->setUniform("inColor", {1, 1, 1});
-	cube->setModelMatrix(model.getViewMatrix()); 
-
+	program.setUniform("inColor", Vector3<float>(0, 1, 0));
+	  
 	glActiveTexture(GL_TEXTURE0); 
 
 	glBindVertexArray(0);
@@ -62,10 +58,15 @@ int main() {
 		window.startFrame();
 		glBindVertexArray(vao);
 		//camera.rotate({ 0, 0, 0.01f });
-		model.rotate(Vector3<float>(0, 0.01f, 0));
-		//program.setUniform("model", model.getViewMatrix());
-		program.setUniform("view", camera.getViewMatrix());
-		cube->draw();
+		model.rotate(Vector3<float>(0, 0.1f , 0.01f));
+		model.setScale({ 0.1f, 0.1f, 0.1f });
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		program.setUniform("model", model.getViewMatrix());
+		program.setUniform("view", camera.getViewMatrix()); 
+		cube->bind();
+		for (const auto& obj : cube->getObjects()) {
+			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);
+		}
 		glBindVertexArray(0);
 		window.endFrame();
 	}

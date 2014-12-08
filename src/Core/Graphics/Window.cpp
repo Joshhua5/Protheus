@@ -40,6 +40,7 @@ Window::Window(const WindowDefinition& def)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
 
 	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
@@ -64,6 +65,8 @@ Window::Window(const string& title, const Vector2<int> dimensions) {
 	window = glfwCreateWindow(dimensions.x, dimensions.y, title.data() , NULL, NULL);
 	setCurrent();
 
+
+
 	if (init == false) {
 		glewInit();
 		init = true;
@@ -71,6 +74,12 @@ Window::Window(const string& title, const Vector2<int> dimensions) {
 
 	if (window == nullptr)
 		error.reportFatal("Unable to create window");
+
+
+
+	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEPTH_TEST);
+	glDebugMessageCallback((GLDEBUGPROC) &debug_callback, nullptr);
 }
 
 Window::~Window(){

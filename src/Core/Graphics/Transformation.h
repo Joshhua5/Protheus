@@ -6,12 +6,7 @@
 
 namespace Pro {
 	namespace Graphics {
-		static float identity_matrix [] = {
-			1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1, 0,
-			0, 0, 0, 1
-		};
+
 
 		class Transformation {
 		protected:
@@ -19,6 +14,7 @@ namespace Pro {
 			Matrix33<float> x_matrix;
 			Matrix33<float> y_matrix;
 			Matrix33<float> z_matrix;
+			Matrix44<float> scale_matrix;
 			Vector3<float> position;
 			Vector3<float> rotation;
 
@@ -29,6 +25,7 @@ namespace Pro {
 			Transformation();
 			~Transformation() {};
 
+			void setScale(const Vector3<float>& scale);
 			void setRotation(const Vector3<float>& xyz);
 			void setPosition(const Vector3<float>& position);
 			void move(const Vector3<float>& delta);
