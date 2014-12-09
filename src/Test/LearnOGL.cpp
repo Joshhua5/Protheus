@@ -20,7 +20,7 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/v.obj"));
+	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/vn.obj"));
 
 	Transformation camera;
 	Transformation model;
@@ -47,10 +47,16 @@ int main() {
 	program.attachShader(frag);
 	program.link();
 	program.setActive();
-	program.setVertexAttribute("position", 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-	program.setUniform("inColor", Vector3<float>(0, 1, 0));
-	  
-	glActiveTexture(GL_TEXTURE0); 
+	 
+	program.setVertexAttribute("in_normal", cube->normalSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->normalOffset());
+	program.setVertexAttribute("position", cube->vertexSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->vertexOffset());
+	program.setVertexAttribute("in_tex", cube->texCoordSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->texCoordOffset());
+
+	program.setUniform("has_normal", cube->hasNormals());
+	program.setUniform("has_tex_coord", cube->hasTexCoord());
+
+	tex->bind();
+	glActiveTexture(GL_TEXTURE0);
 
 	glBindVertexArray(0);
 	 
@@ -59,6 +65,7 @@ int main() {
 		glBindVertexArray(vao);
 		//camera.rotate({ 0, 0, 0.01f });
 		model.rotate(Vector3<float>(0, 0.1f , 0.01f));
+		model.setPosition({ 5.0f, 0, 0 });
 		model.setScale({ 0.1f, 0.1f, 0.1f });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		program.setUniform("model", model.getViewMatrix());

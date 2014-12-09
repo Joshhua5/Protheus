@@ -38,7 +38,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	unsigned vertexCount = 0;
 	unsigned normalCount = 0;
 	unsigned faceCount = 0;
-	bool containsW = false;
+	bool vertex_w = false;
+	bool tex_coord_w = false;
 	FACE_FORMAT face_format;
 	GLenum face_type;
 
@@ -73,14 +74,14 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 			temp = &object.back();
 
 			temp->name = string(nameBuf.data<char>(), nameBuf.size() - 1);
-			temp->start = faceCount; 
+			temp->start = faceCount;
 
 			if (object.size() >= 2) {
 				temp = &object.at(object.size() - 2);
 				temp->size = ((faceCount - temp->start) * ((face_type == GL_QUADS) ? 4 : 3));
 			}
 		}
-			break;
+				  break;
 
 		case 'f':
 			// TEST
@@ -102,6 +103,9 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						face + 2, face + 3,
 						face + 4, face + 5);
 
+					for (unsigned char x = 0; x < 6; ++x)
+						*(face + x) -= 1;
+
 					faceWriter.write_elements<int>(face, 6);
 
 					++faceCount;
@@ -115,6 +119,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						"%*s %i %i %i",
 						face + 0, face + 1,
 						face + 2);
+					for (unsigned char x = 0; x < 3; ++x)
+						*(face + x) -= 1;
 
 					faceWriter.write_elements<int>(face, 3);
 
@@ -122,18 +128,17 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 					face_format = FACE_FORMAT::VERTEX;
 					break;
 				case 4:
-					// vertex/uv  
-					// TEST does atoi stop at the /
+					// vertex/uv   
 
 					sscanf(liner.read_raw(),
 						"f %i/%i %i/%i %i/%i",
 						face + 0, face + 1,
 						face + 2, face + 3,
 						face + 4, face + 5);
-
+					for (unsigned char x = 0; x < 6; ++x)
+						*(face + x) -= 1;
 					faceWriter.write_elements<int>(face, 6);
-
-
+					 
 					++faceCount;
 					face_format = FACE_FORMAT::VERTEX_UV;
 					break;
@@ -146,7 +151,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						face + 0, face + 1, face + 2,
 						face + 3, face + 4, face + 5,
 						face + 6, face + 7, face + 8);
-
+					for (unsigned char x = 0; x < 9; ++x)
+						*(face + x) -= 1;
 					faceWriter.write_elements<int>(face, 9);
 
 					++faceCount;
@@ -164,8 +170,11 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						face + 2, face + 3,
 						face + 4, face + 5,
 						face + 6, face + 7);
-					faceWriter.write_elements<int>(face, 8);
 
+					for (unsigned char x = 0; x < 8; ++x)
+						*(face + x) -= 1;
+					faceWriter.write_elements<int>(face, 8);
+					
 					++faceCount;
 					face_format = FACE_FORMAT::VERTEX_NORMAL;
 					break;
@@ -177,7 +186,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						"f %i %i %i %i",
 						face + 0, face + 1,
 						face + 2, face + 3);
-
+					for (unsigned char x = 0; x < 4; ++x)
+						*(face + x) -= 1;
 					faceWriter.write_elements<int>(face, 4);
 
 					++faceCount;
@@ -191,7 +201,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						face + 0, face + 1, face + 2,
 						face + 3, face + 4, face + 5,
 						face + 6, face + 7);
-
+					for (unsigned char x = 0; x < 8; ++x)
+						*(face + x) -= 1;
 					faceWriter.write_elements<int>(face, 8);
 
 					++faceCount;
@@ -206,7 +217,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 						face + 3, face + 4, face + 5,
 						face + 6, face + 7, face + 8,
 						face + 9, face + 10, face + 11);
-
+					for (unsigned char x = 0; x < 12; ++x)
+						*(face + x) -= 1;
 					faceWriter.write_elements<int>(face, 12);
 
 					++faceCount;
@@ -223,15 +235,14 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 
 		case 'v':
 			switch (line.data<char>()[1]) {
-			case 't': {
-				bool containsW = (sscanf(liner.read_raw(), "vt %f %f %f",
+			case 't':
+				tex_coord_w = (sscanf(liner.read_raw(), "vt %f %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2) == 3);
 
-				if (!containsW)
+				if (!tex_coord_w)
 					vertex[2] = 0;
 
 				uvWriter.write_elements<float>(vertex, 3);
-			}
 					  break;
 			case 'n':
 				sscanf(liner.read_raw(), "vn %f %f %f",
@@ -241,10 +252,10 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 				++normalCount;
 				break;
 			case ' ':
-				containsW = (sscanf(liner.read_raw(), "v %f %f %f %f",
+				vertex_w = (sscanf(liner.read_raw(), "v %f %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2, vertex + 3) == 4);
 
-				vertWriter.write_elements<float>(vertex, (containsW) ? 4 : 3);
+				vertWriter.write_elements<float>(vertex, (vertex_w) ? 4 : 3);
 				++vertexCount;
 				break;
 			}
@@ -252,7 +263,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	}
 	// populate the size of the last object
 	temp = &object.at(object.size() - 1);
-	temp->size = ((faceCount - temp->start) * ((face_type == GL_QUADS) ? 4 : 3));
+	temp->size = ((faceCount - temp->start) * (face_type == GL_QUADS ? 4 : 3));
 
 
 	// Pack verticies
@@ -262,46 +273,52 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	// okay because indicies will read ahead of the writer
 	BufferWriter newIndicies(&faces);
 	BufferReader indicies(&faces);
-	for (unsigned x = 0; x < faces.size(); ++x) {
+	for (unsigned x = 0; x < faceCount * (face_type == GL_QUADS ? 4 : 3); ++x) {
 		switch (face_format) {
 		case FACE_FORMAT::VERTEX:
 			packed.init(verticies.data(), verticies.size(), false);
-			x = faces.size();
+			// Exit the loop
+			x = faceCount * (face_type == GL_QUADS ? 4 : 3);
 			break;
 		case FACE_FORMAT::VERTEX_NORMAL:
-			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (containsW) ? 4 : 3), (containsW) ? 4 : 3);
-			writer.write_elements<float>(normals.data<float>() + indicies.read<int>() * 3, sizeof(GLfloat) * 3);
+			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (vertex_w ? 4 : 3)), (vertex_w) ? 4 : 3);
+			writer.write_elements<float>(normals.data<float>() + (indicies.read<int>() * 3), sizeof(GLfloat)  * (tex_coord_w ? 4 : 3));
 			newIndicies.write<unsigned>(x);
 			break;
 		case FACE_FORMAT::VERTEX_UV:
-			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (containsW) ? 4 : 3), (containsW) ? 4 : 3);
+			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (vertex_w ? 4 : 3)), (vertex_w ? 4 : 3));
 			writer.write_elements<float>(uv.data<float>() + indicies.read<int>() * 3, sizeof(GLfloat) * 3);
 			newIndicies.write<unsigned>(x);
 			break;
 		case FACE_FORMAT::VERTEX_UV_NORMAL:
-			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (containsW) ? 4 : 3), (containsW) ? 4 : 3);
-			writer.write_elements<float>(uv.data<float>() + indicies.read<int>() * 3, sizeof(GLfloat) * 3);
+			writer.write_elements<float>(verticies.data<float>() + (indicies.read<int>() * (vertex_w) ? 4 : 3), (vertex_w) ? 4 : 3);
+			writer.write_elements<float>(uv.data<float>() + indicies.read<int>() * (tex_coord_w ? 4 : 3), sizeof(GLfloat) * (tex_coord_w) ? 4 : 3);
 			writer.write_elements<float>(normals.data<float>() + indicies.read<int>() * 3, sizeof(GLfloat) * 3);
 			newIndicies.write<unsigned>(x);
 			break;
 		}
-	}
-
+	} 
 
 	// Create VBO in OpenGL
 
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	auto value = vertexCount * sizeof(float) * ((containsW) ? 4 : 3); 
+	auto value = 
+		newIndicies.getPosition() * 
+		sizeof(float) * 
+		((vertex_w ? 4 : 3) + 
+		(uv.isEmpty() ? 0 : (tex_coord_w ? 4 : 3)) + 
+		(normals.isEmpty() ? 0 : 3));
+	
+	
 	glBufferData(GL_ARRAY_BUFFER, value, packed.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
 		error.reportError("Unable to load OBJ Model: Create Array Buffer");
 		return nullptr;
-	}
-
+	} 
 
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
@@ -314,7 +331,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 		error.reportError("Unable to load OBJ Model: Create Element Array");
 		return nullptr;
 	}
-	Mesh* m = new Mesh(vbo, ebo, face_type, containsW, !uv.isEmpty(), !normals.isEmpty());
+	Mesh* m = new Mesh(vbo, ebo, face_type, vertex_w, tex_coord_w, !uv.isEmpty(), !normals.isEmpty());
 	for (unsigned x = 0; x < object.size(); ++x)
 		m->attachObject(std::move(object[x]));
 
