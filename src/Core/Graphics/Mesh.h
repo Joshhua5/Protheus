@@ -5,8 +5,7 @@
 #include <cassert>
 #include <vector>
 #include "Program.h"
-#include "MeshObject.h"
-#include "VertexArray.h"
+#include "MeshObject.h" 
 #include "extern\glew.h"
 
 namespace Pro { 

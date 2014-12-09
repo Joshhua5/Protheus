@@ -96,3 +96,11 @@ void Program::setUniform(GLuint program_id, const string& uniform_name, const Ma
 		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, (const float*) value._m);
 } 
+
+
+void Program::setUniform(GLuint program_id, const string& uniform_name, float* value, unsigned count) {
+	auto location = glGetUniformLocation(program_id, uniform_name.data());
+	if (location == -1)
+		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+	glUniform1fv(location, count, value);
+}

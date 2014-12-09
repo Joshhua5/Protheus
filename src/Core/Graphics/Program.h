@@ -36,5 +36,6 @@ namespace Pro {
 		static void setUniform(GLuint program_id, const string& uniform_name, const Vector3<float>& value);
 		static void setUniform(GLuint program_id, const string& uniform_name, GLint value);
 		static void setUniform(GLuint program_id, const string& uniform_name, const Matrix44<float>& value); 
+		static void setUniform(GLuint program_id, const string& uniform_name, float* value, unsigned count);
 	};
 }

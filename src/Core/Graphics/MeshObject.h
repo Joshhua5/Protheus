@@ -20,6 +20,7 @@ namespace Pro {
 		GLuint size;
 
 		MeshObject();
+		MeshObject(const string& name, unsigned start, unsigned size);
 		MeshObject(MeshObject&&);
 		MeshObject& operator=(MeshObject&&);
 		~MeshObject();

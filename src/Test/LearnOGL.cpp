@@ -5,6 +5,7 @@
 #include <Graphics\Camera.h>
 #include <Graphics\MeshLoader.h>
 #include <thread>
+#include <Graphics\Lighting.h>
 #include <Graphics\TextureLoader.h>
 #include <CBuffer.h>
 #include <BufferWriter.h>
@@ -20,7 +21,7 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/vn.obj"));
+	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/mon.obj"));
 
 	Transformation camera;
 	Transformation model;
@@ -54,22 +55,37 @@ int main() {
 
 	program.setUniform("has_normal", cube->hasNormals());
 	program.setUniform("has_tex_coord", cube->hasTexCoord());
+	program.setUniform("world_pos", Vector3<float>(.5, 0, 0));
 
 	tex->bind();
 	glActiveTexture(GL_TEXTURE0);
 
 	glBindVertexArray(0);
 	 
+	LightPoint point;
+	point.position = { 0, 5, 0 };
+	point.color = { 0, 1, 0 };
+	point.intensity = 10;
+	point.attenuation = 10;
+
+	Lighting lights;
+	lights.attachLight(point);
+	lights.setAmbient(Vector3<float>(0.1f, 0.1f, 0.1f));
+	lights.bindLights(program.getID());
+	
 	while (true) {
 		window.startFrame();
 		glBindVertexArray(vao);
 		//camera.rotate({ 0, 0, 0.01f });
-		model.rotate(Vector3<float>(0, 0.1f , 0.01f));
+		model.rotate(Vector3<float>(0, 0.1f , 0));
 		model.setPosition({ 5.0f, 0, 0 });
 		model.setScale({ 0.1f, 0.1f, 0.1f });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		program.setUniform("model", model.getViewMatrix());
 		program.setUniform("view", camera.getViewMatrix()); 
+		Matrix44<float> normal = model.getViewMatrix().invert();
+		normal.transpose();
+		program.setUniform("normal_matrix", normal);
 		cube->bind();
 		for (const auto& obj : cube->getObjects()) {
 			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);

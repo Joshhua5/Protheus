@@ -8,7 +8,7 @@ namespace Pro {
 		0, 1, 0, 0,
 		0, 0, 1, 0,
 		0, 0, 0, 1
-	};
+	}; 
 
 	template<typename T>
 	class Matrix44 {
