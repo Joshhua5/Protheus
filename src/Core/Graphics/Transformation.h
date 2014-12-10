@@ -14,12 +14,17 @@ namespace Pro {
 			Matrix33<float> x_matrix;
 			Matrix33<float> y_matrix;
 			Matrix33<float> z_matrix;
-			Matrix44<float> scale_matrix;
+			Matrix33<float> rotation_matrix;
+			Matrix44<float> normal_matrix;
+			Vector3<float> scale;
 			Vector3<float> position;
 			Vector3<float> rotation;
 
 			// true if matrix hasn't been changed
 			bool isProcessed;
+			bool isNormalProcessed;
+			// false if no rotations applied since last frame
+			bool isRotated; 
 
 		public:
 			Transformation();
@@ -30,7 +35,8 @@ namespace Pro {
 			void setPosition(const Vector3<float>& position);
 			void move(const Vector3<float>& delta);
 			void rotate(const Vector3<float>& xyz);
-			Matrix44<float>& getViewMatrix();
+			const Matrix44<float>& getMatrix();
+			const Matrix44<float>& getNormalMatrix();
 		};
 	}
 }

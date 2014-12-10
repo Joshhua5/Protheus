@@ -25,13 +25,13 @@ void main() {
 	vcolor = vec4(color, 1);
 	
 	if(has_tex_coord == 1 && has_normal == 1){
-		vcolor = vec4(out_normal, 1);//texture(tex, out_tex);
-		//vcolor = texture(tex, out_tex) * vec4(out_normal, 1);  
+		//vcolor = vec4(out_normal, 1);//texture(tex, out_tex);
+		vcolor = texture(tex, out_tex);// * vec4(out_normal, 1);  
 		vec3 light_position = vec3(light_points[0], light_points[1], light_points[2]);
 		vec4 light_color = vec4(light_points[3], light_points[4], light_points[5], 1);
 		vec3 light_direction = normalize(light_position - world_pos);
 		
-		//vcolor *= (light_color * dot(light_direction, normalize(out_normal))) + vec4(light_ambient, 1);
+		vcolor *= (light_color * dot(light_direction, normalize(out_normal))) + vec4(light_ambient, 1);
 		
 	}
 	else if(has_tex_coord == 1)

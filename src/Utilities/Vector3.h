@@ -75,6 +75,15 @@ namespace Pro {
 			z *= rhs.z;
 		}
 
+		bool operator==(const Vector3& rhs) const {
+			return x == rhs.x && y == rhs.y && z == rhs.z;
+		}
+
+		bool equals(T _x, T _y, T _z) const{
+			return x == _x && y == _y && z == _z;
+		}
+
+
 		Vector3&& operator+(const Vector3& rhs) {
 			Vector3<T> out;
 			out.x = x + rhs.x;

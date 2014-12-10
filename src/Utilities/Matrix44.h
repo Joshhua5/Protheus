@@ -134,16 +134,15 @@ namespace Pro {
 		}
 
 
-		void transpose() {
-			Matrix44<float>o;
+		Matrix44 transpose() {
+			Matrix44<float> o;
 			// Flip the matrix
 			for (char x = 0; x < 4; x++)
 				for (char y = 0; y < 4; y++)
 					o._m[x][y] = _m[y][x];
 
 			// copy the matrix over
-			*this = o;
-			return;
+			return o;
 		}
 
 		T determinate() const {

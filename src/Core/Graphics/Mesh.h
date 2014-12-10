@@ -19,12 +19,15 @@ namespace Pro {
 		GLuint verticies;
 		GLuint elements;
 		GLenum mode;
-		unsigned object_count = 0;
-		bool vertex_w;
-		bool tex_coord_w;
+		unsigned object_count = 0; 
 		bool has_tex_coord;
 		bool has_normals;
-		
+
+		unsigned char tex_coord_size = 0;
+		unsigned char vertex_size = 0;
+		unsigned char vertex_size_bytes = 0;
+		unsigned char tex_coord_size_bytes = 0;
+
 	public:
 		Mesh(GLuint verticies, GLuint elements, GLenum mode, bool vertexContainsW, bool tex_coord_w, bool hasUV , bool hasNormals);
 		Mesh(Mesh&&);

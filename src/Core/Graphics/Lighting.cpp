@@ -30,8 +30,9 @@ void Lighting::bindLights(GLuint program_id) {
 		points.data<float>() + (light_points.size() * 8), light_directional.size() * 11); 
 }
 
-void Lighting::attachLight(const LightPoint& point) { 
+LightPoint& Lighting::attachLight(const LightPoint& point) {
 	light_points.push_back(point);
+	return light_points.back();
 }
 
 

@@ -12,6 +12,7 @@ out vec3 color;
 uniform mat4 view;
 uniform mat4 model;
 uniform mat4 scale;
+uniform mat4 projection;
 uniform mat4 normal_matrix;
 
 uniform int has_normal;
@@ -30,5 +31,5 @@ void main() {
 		out_normal = _out.xyz; 
 	}
 	if(has_tex_coord == 1){out_tex = in_tex; }
-	gl_Position = view * model * vec4(position, 1);
+	gl_Position = projection * view * model * vec4(position, 1);
 }

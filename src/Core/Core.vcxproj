@@ -101,6 +101,7 @@
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\MeshLoader.h" />
     <ClInclude Include="Graphics\MeshObject.h" />
+    <ClInclude Include="Graphics\Projection.h" />
     <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Graphics\MeshLoader.cpp" />
     <ClCompile Include="Graphics\MeshObject.cpp" />
     <ClCompile Include="Graphics\Program.cpp" />
+    <ClCompile Include="Graphics\Projection.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
     <ClCompile Include="Graphics\Transformation.cpp" />

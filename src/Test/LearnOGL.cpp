@@ -4,6 +4,7 @@
 #include <Graphics\Program.h>
 #include <Graphics\Camera.h>
 #include <Graphics\MeshLoader.h>
+#include <Graphics\Projection.h>
 #include <thread>
 #include <Graphics\Lighting.h>
 #include <Graphics\TextureLoader.h>
@@ -21,10 +22,12 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/mon.obj"));
+	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/monkey.obj"));
 
 	Transformation camera;
+	Projection projection(0.01f, 1000.0f, 45, 1);
 	Transformation model;
+	Transformation light_t;
 	   
 	camera.setPosition({0 , 0 , .7f});
 
@@ -33,8 +36,7 @@ int main() {
 	// cbuffer is deleted after being passed as rvalue
 	auto tex = TextureLoader::loadTexture(fs.getFile("bananas.bmp"));
 
-	GLuint vbo = 0;
-	GLuint vao = 0;
+	GLuint vbo = 0; 
 	GLuint sampler = 0; 
 
 	cube->bind(); 
@@ -59,38 +61,53 @@ int main() {
 
 	tex->bind();
 	glActiveTexture(GL_TEXTURE0);
-
-	glBindVertexArray(0);
+	 
 	 
 	LightPoint point;
-	point.position = { 0, 5, 0 };
+	point.position = { 2, 0, 0 };
 	point.color = { 0, 1, 0 };
 	point.intensity = 10;
 	point.attenuation = 10;
 
+	light_t.setPosition(Vector3<float>(2, 0, 0));
+
 	Lighting lights;
-	lights.attachLight(point);
+
+	LightPoint& light = lights.attachLight(point); 
 	lights.setAmbient(Vector3<float>(0.1f, 0.1f, 0.1f));
-	lights.bindLights(program.getID());
+
 	
+	float pos = 0;
 	while (true) {
-		window.startFrame();
-		glBindVertexArray(vao);
+		window.startFrame(); 
 		//camera.rotate({ 0, 0, 0.01f });
+		if (pos >= 1)
+			pos = -1;
+		else
+			pos += 0.1f;
+		light.position.y = pos;
+		light_t.setPosition(light.position);
+		// 
 		model.rotate(Vector3<float>(0, 0.1f , 0));
-		model.setPosition({ 5.0f, 0, 0 });
 		model.setScale({ 0.1f, 0.1f, 0.1f });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
-		program.setUniform("model", model.getViewMatrix());
-		program.setUniform("view", camera.getViewMatrix()); 
-		Matrix44<float> normal = model.getViewMatrix().invert();
-		normal.transpose();
-		program.setUniform("normal_matrix", normal);
+		program.setUniform("model", model.getMatrix());
+		program.setUniform("view", camera.getMatrix()); 
+		program.setUniform("projection", projection.getPerspective());
+		lights.bindLights(program.getID());
+		program.setUniform("normal_matrix", model.getNormalMatrix());
 		cube->bind();
 		for (const auto& obj : cube->getObjects()) {
 			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);
-		}
-		glBindVertexArray(0);
+		} 
+		light_t.setScale({ 0.1f, 0.1f, 0.1f }); 
+		light_t.move({ 0, 0, 10 });
+		program.setUniform("model", light_t.getMatrix()); 
+		program.setUniform("normal_matrix", light_t.getNormalMatrix());
+
+		light_t.move({ 0, 0, -10 });
+		glDrawElements(cube->getMode(), cube->getObjects()[0].size, GL_UNSIGNED_INT, cube->getObjects()[0].p_start);
+		
 		window.endFrame();
 	}
 }

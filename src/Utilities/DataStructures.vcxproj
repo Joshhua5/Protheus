@@ -25,6 +25,7 @@
     <ClInclude Include="ClassDefinition.h" />
     <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Error.h" />
+    <ClInclude Include="ProMath.h" />
     <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Matrix44.h" />
     <ClInclude Include="Member.h" />

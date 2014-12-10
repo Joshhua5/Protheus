@@ -210,11 +210,12 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	BufferReader face_reader(&faces);
 	BufferWriter packed_writer(&packed);
 	// okay because indicies will read ahead of the writer 
-	
+
 	if (face_format == FACE_FORMAT::VERTEX)
 		packed.init(verticies.data(), verticies.size(), false);
 	else { 
 		face_writer.reset(); 
+		face_reader.reset();
 		for (unsigned x = 0; x < face_count * vertex_per_face; ++x)
 			switch (face_format) {
 			case FACE_FORMAT::VERTEX_NORMAL:
@@ -230,6 +231,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 			case FACE_FORMAT::VERTEX_UV_NORMAL:
 				packed_writer.write_elements<float>(verticies.data<float>() + face_reader.read<int>() * floats_per_vertex, floats_per_vertex);
 				packed_writer.write_elements<float>(tex_coords.data<float>() + face_reader.read<int>() * tex_coord_per_face, tex_coord_per_face);
+
 				packed_writer.write_elements<float>(normals.data<float>() + face_reader.read<int>() * 3, 3); 
 				face_writer.write<unsigned>(x);
 				break;
@@ -240,15 +242,8 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	 
-	unsigned strideSize = floats_per_vertex; 
-	if (!tex_coords.isEmpty())
-		strideSize +=  tex_coord_per_face;
-	if (!normals.isEmpty())
-		strideSize +=  3; 
-	unsigned buffer_size = (face_writer.getPosition() / 4) * strideSize * sizeof(GLfloat);
 	  
-	glBufferData(GL_ARRAY_BUFFER, buffer_size, packed.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER,packed_writer.getPosition() , packed.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
@@ -259,7 +254,7 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo); 
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer_size / strideSize, faces.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face_writer.getPosition(), faces.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {

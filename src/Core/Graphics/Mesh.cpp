@@ -5,11 +5,14 @@ using namespace Pro;
 Mesh::Mesh(GLuint verticies, GLuint elements, GLenum mode, bool vertexContainsW, bool tex_coord_w, bool hasUV, bool hasNormals) {
 	this->mode = mode;
 	this->verticies = verticies;
-	this->elements = elements;
-	this->tex_coord_w = tex_coord_w;
-	vertex_w = vertexContainsW;
+	this->elements = elements; 
 	has_normals = hasNormals;
 	has_tex_coord = hasUV;
+
+	vertex_size = (vertexContainsW ? 4 : 3);
+	vertex_size_bytes = vertex_size * sizeof(GLfloat);
+	tex_coord_size = (tex_coord_w ? 3 : 2);
+	tex_coord_size_bytes = tex_coord_size * sizeof(GLfloat); 
 }
 
 Mesh::Mesh(Mesh&& rhs) {
@@ -18,8 +21,6 @@ Mesh::Mesh(Mesh&& rhs) {
 	verticies = rhs.verticies;
 	elements = rhs.elements;
 	object_count = rhs.object_count;
-	tex_coord_w = rhs.tex_coord_w;
-	vertex_w = rhs.vertex_w;
 	has_tex_coord = rhs.has_tex_coord;
 	has_normals = rhs.has_normals;
 	rhs.verticies = rhs.elements = 0;
@@ -31,8 +32,6 @@ Mesh& Mesh::operator=(Mesh&& rhs) {
 	verticies = rhs.verticies;
 	elements = rhs.elements;
 	object_count = rhs.object_count;
-	tex_coord_w = rhs.tex_coord_w;
-	vertex_w = rhs.vertex_w;
 	has_tex_coord = rhs.has_tex_coord;
 	has_normals = rhs.has_normals;
 	rhs.verticies = rhs.elements = 0;
@@ -84,7 +83,7 @@ bool Mesh::hasNormals() const {
 }
 
 GLuint  Mesh::vertexSize() const {  
-	return  (vertex_w ? 4 : 3);
+	return  vertex_size;
 }
 
 GLuint  Mesh::normalSize() const {
@@ -96,32 +95,25 @@ GLuint  Mesh::normalSize() const {
 GLuint  Mesh::texCoordSize() const {
 	if (!has_tex_coord)
 		return 0;
-	return  (tex_coord_w ? 3 : 2);
+	return  tex_coord_size;
 }
 
 GLsizei  Mesh::stride() const {
 	if (has_normals && has_tex_coord)
-		return 
-		sizeof(GLfloat) * (tex_coord_w ? 3 : 2) +
-		sizeof(GLfloat) * (vertex_w ? 4 : 3) +
-		sizeof(GLfloat) * 3;
+		return tex_coord_size_bytes + vertex_size_bytes + sizeof(GLfloat) * 3;
 	else if (has_normals)
-		return 
-		sizeof(GLfloat) * (vertex_w ? 4 : 3) +
-		sizeof(GLfloat) * 3;
+		return vertex_size_bytes + sizeof(GLfloat) * 3;
 	else if (has_tex_coord)
-		return
-		sizeof(GLfloat) * (tex_coord_w ? 3 : 2) +
-		sizeof(GLfloat) * (vertex_w ? 4 : 3);
-	return sizeof(GLfloat) * (vertex_w ? 4 : 3);
+		return tex_coord_size_bytes + vertex_size_bytes;
+	return vertex_size_bytes;
 }
 
 GLuint  Mesh::normalOffset() const {
 	if (!has_normals)
 		return 0;
 	if (has_tex_coord)
-		return sizeof(GLfloat) * (vertex_w ? 4 : 3) + sizeof(GLfloat) * 3;
-	return sizeof(GLfloat) * (vertex_w ? 4 : 3);
+		return vertex_size_bytes + tex_coord_size_bytes;
+	return vertex_size_bytes;
 }
 
 GLuint  Mesh::vertexOffset() const {
@@ -131,5 +123,5 @@ GLuint  Mesh::vertexOffset() const {
 GLuint  Mesh::texCoordOffset() const {
 	if (!has_tex_coord)
 		return 0;
-	return sizeof(GLfloat) * (vertex_w ? 4 : 3);
+	return vertex_size_bytes;
 }

@@ -19,11 +19,8 @@ namespace Pro {
 		float attenuation, intensity;
 	};
 
-	struct LightDirectional {
-		Vector3<float> position;
-		Vector3<float> color;
-		Vector3<float> direction;
-		float attenuation, intensity;
+	struct LightDirectional : public LightPoint{ 
+		Vector3<float> direction; 
 	};
 	  
 	class Lighting {
@@ -33,7 +30,8 @@ namespace Pro {
 		Vector3<float> ambientColor;
 	public:
 		void bindLights(GLuint program_id);
-		void attachLight(const LightPoint&);  
+		LightPoint&  attachLight(const LightPoint&);  
 		void setAmbient(const Vector3<float>& ambient);
+		 
 	};
 }
