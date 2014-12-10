@@ -108,6 +108,9 @@ int main() {
 		light_t.move({ 0, 0, -10 });
 		glDrawElements(cube->getMode(), cube->getObjects()[0].size, GL_UNSIGNED_INT, cube->getObjects()[0].p_start);
 		
+		if (window.getKeyboard().isKeyDown(KEY::KEY_W))
+			light_t.move({ -1, 0, 0 });
+
 		window.endFrame();
 	}
 }

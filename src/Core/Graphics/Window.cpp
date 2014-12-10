@@ -9,11 +9,10 @@ static bool init = false;
 void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
 
-Window::Window(const WindowDefinition& def)
-{
-
-	if (init == false)  
-		glfwInit();  
+void Window::window_constructor(const WindowDefinition& def) {
+	 
+	if (init == false)
+		glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, def.gl_major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, def.gl_minor);
 	glfwWindowHint(GLFW_RESIZABLE, def.resizable);
@@ -39,33 +38,10 @@ Window::Window(const WindowDefinition& def)
 	if (def.ogl_core_profile)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	glEnable(GL_DEBUG_OUTPUT);
-	glEnable(GL_DEPTH_TEST);
-	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
 
 	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
+	
 	setCurrent();
-
-
-	if (init == false) { 
-		glewInit();
-		init = true;
-	}
-
-	if (window == nullptr)
-		error.reportFatal("Unable to create window"); 
-}
-
-Window::Window(const string& title, const Vector2<int> dimensions) { 
-	if (init == false)
-		glfwInit();
-
-	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-
-	window = glfwCreateWindow(dimensions.x, dimensions.y, title.data() , NULL, NULL);
-	setCurrent();
-
-
 
 	if (init == false) {
 		glewInit();
@@ -73,18 +49,43 @@ Window::Window(const string& title, const Vector2<int> dimensions) {
 	}
 
 	if (window == nullptr)
-		error.reportFatal("Unable to create window");
-
-
+		return error.reportFatalNR("Unable to create window");
 
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
-	glDebugMessageCallback((GLDEBUGPROC) &debug_callback, nullptr);
+ 	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
+
+	glfwSetWindowUserPointer(window, new InputPointers);
+
+	keyboard.attachWindow(window);
+
+
+}
+
+Window::Window(const WindowDefinition& def){
+	window_constructor(def);
+}
+
+Window::Window(const string& title, const Vector2<int> dimensions){ 
+	if (init == false)
+		glfwInit();
+
+	WindowDefinition def;
+	def.title = title;
+	def.width = dimensions.x;
+	def.height = dimensions.y;
+
+	window_constructor(def); 
 }
 
 Window::~Window(){
+	delete glfwGetWindowUserPointer(window);
 	if (window != nullptr)
 		glfwDestroyWindow(window);
+}
+
+Keyboard& Window::getKeyboard() {
+	return keyboard;
 }
 
 GLFWwindow* Window::getWindow() const {
@@ -112,6 +113,7 @@ void Window::startFrame() {
 	glClear(GL_COLOR_BUFFER_BIT |
 		GL_DEPTH_BUFFER_BIT |
 		GL_STENCIL_BUFFER_BIT);
+	glfwPollEvents();
 }
 
 void Window::endFrame() {
@@ -121,6 +123,5 @@ void Window::endFrame() {
 
 void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
-	error.reportFatal(string(message​, length​));
-
+	error.reportFatal(string(message​, length​)); 
 }

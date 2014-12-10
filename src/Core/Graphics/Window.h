@@ -19,17 +19,22 @@ History:
 #include "extern\glfw3.h"
 #include "WindowDefinition.h"
 
+// INCLUDE FROM INPUT
+#include "..\Input\Keyboard.h"
+
 namespace Pro {
 	namespace Graphics { 
 		using namespace std;
-		 
+
+
 		class Window
 		{
 			GLFWwindow* window;
 			string windowTitle;
 			Vector2<unsigned> dimension;
-
-
+			Keyboard keyboard;
+			 
+			void window_constructor(const WindowDefinition& def);
 
 		public:
 			Window(const WindowDefinition&);
@@ -43,7 +48,9 @@ namespace Pro {
 			void setCurrent();
 
 			void startFrame();
-			void endFrame(); 
+			void endFrame();
+
+			Keyboard& getKeyboard();
 		};
 	}
 }

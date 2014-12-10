@@ -109,6 +109,11 @@
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Graphics\WindowDefinition.h" />
+    <ClInclude Include="Input\Controller.h" />
+    <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Input\Keys.h" />
+    <ClInclude Include="Input\Mouse.h" />
+    <ClInclude Include="Input\UserPointers.h" />
     <ClInclude Include="Networking\begin_code.h" />
     <ClInclude Include="Networking\CClientTCPConnection.h" />
     <ClInclude Include="Networking\CConnection.h" />
@@ -143,6 +148,7 @@
     <ClCompile Include="Graphics\Transformation.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Networking\CConnection.cpp" />
     <ClCompile Include="Networking\CNetwork.cpp" />
