@@ -15,7 +15,7 @@ void Keyboard::attachWindow(GLFWwindow* window) {
 
 
 bool Keyboard::hasKey() {
-	return keyboard_key.empty();
+	return !keyboard_key.empty();
 }
 
 std::pair<KEY, KEY> Keyboard::poolKey() {
@@ -26,6 +26,6 @@ std::pair<KEY, KEY> Keyboard::poolKey() {
 	return k;
 }
 
-bool Keyboard::isKeyDown(KEY key) { 
-	return glfwGetKey(window, (int)key);
+KEY_PRESSED Keyboard::isKeyDown(KEY key) {
+	return (KEY_PRESSED)glfwGetKey(window, (int)key);
 }

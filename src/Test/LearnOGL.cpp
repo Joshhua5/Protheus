@@ -85,8 +85,8 @@ int main() {
 			pos = -1;
 		else
 			pos += 0.1f;
-		light.position.y = pos;
-		light_t.setPosition(light.position);
+		window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
+		light_t.setPosition(light.position); 
 		// 
 		model.rotate(Vector3<float>(0, 0.1f , 0));
 		model.setScale({ 0.1f, 0.1f, 0.1f });
@@ -108,7 +108,7 @@ int main() {
 		light_t.move({ 0, 0, -10 });
 		glDrawElements(cube->getMode(), cube->getObjects()[0].size, GL_UNSIGNED_INT, cube->getObjects()[0].p_start);
 		
-		if (window.getKeyboard().isKeyDown(KEY::KEY_W))
+		if (window.getKeyboard().isKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
 			light_t.move({ -1, 0, 0 });
 
 		window.endFrame();

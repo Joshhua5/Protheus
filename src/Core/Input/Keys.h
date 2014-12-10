@@ -1,5 +1,6 @@
 #pragma once
 
+#include "..\Graphics\extern\glfw3.h"
 
 namespace Pro {
 	enum struct KEY {
@@ -141,6 +142,12 @@ namespace Pro {
 		 MOUSE_BUTTON_LEFT = MOUSE_BUTTON_1,
 		 MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
 		 MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3,
+	};  
+
+	enum struct KEY_PRESSED {
+		RELEASED = 0,
+		PRESSED = 1,
+		REPEAT = 2  
 	}; 
-	 
+
 }

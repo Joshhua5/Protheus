@@ -149,6 +149,7 @@
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\Mouse.cpp" />
     <ClCompile Include="Networking\CClientTCPConnection.cpp" />
     <ClCompile Include="Networking\CConnection.cpp" />
     <ClCompile Include="Networking\CNetwork.cpp" />

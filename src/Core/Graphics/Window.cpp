@@ -58,7 +58,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 	glfwSetWindowUserPointer(window, new InputPointers);
 
 	keyboard.attachWindow(window);
-
+	mouse.attachWindow(window); 
 
 }
 
@@ -86,6 +86,10 @@ Window::~Window(){
 
 Keyboard& Window::getKeyboard() {
 	return keyboard;
+}
+
+Mouse& Window::getMouse() {
+	return mouse;
 }
 
 GLFWwindow* Window::getWindow() const {

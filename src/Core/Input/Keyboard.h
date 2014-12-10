@@ -1,6 +1,5 @@
 #pragma once
 
-#include "..\Graphics\extern\glfw3.h"
 
 #include <Vector2.h>
 #include "UserPointers.h"
@@ -19,7 +18,7 @@ namespace Pro {
 		bool hasKey();
 		// returns <modifier, key>
 		std::pair<KEY, KEY> poolKey();
-		bool isKeyDown(KEY);
+		KEY_PRESSED isKeyDown(KEY);
 
 		// depreciated
 		void attachWindow(GLFWwindow*);

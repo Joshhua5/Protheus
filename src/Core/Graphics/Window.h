@@ -21,6 +21,7 @@ History:
 
 // INCLUDE FROM INPUT
 #include "..\Input\Keyboard.h"
+#include "..\Input\Mouse.h"
 
 namespace Pro {
 	namespace Graphics { 
@@ -33,6 +34,7 @@ namespace Pro {
 			string windowTitle;
 			Vector2<unsigned> dimension;
 			Keyboard keyboard;
+			Mouse mouse;
 			 
 			void window_constructor(const WindowDefinition& def);
 
@@ -51,6 +53,7 @@ namespace Pro {
 			void endFrame();
 
 			Keyboard& getKeyboard();
+			Mouse& getMouse();
 		};
 	}
 }
