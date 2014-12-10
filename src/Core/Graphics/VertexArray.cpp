@@ -34,3 +34,13 @@ void VertexArray::bind() {
 void VertexArray::unbind() {
 	glBindVertexArray(0);
 }
+
+
+void VertexArray::preservedBind() {
+	glGetIntegerv(GL_ARB_vertex_array_object, (GLint*)&preserved_vao); 
+	glBindVertexArray(m_vao);
+}
+
+void VertexArray::preservedUnbind() {
+	glBindVertexArray(preserved_vao);
+}

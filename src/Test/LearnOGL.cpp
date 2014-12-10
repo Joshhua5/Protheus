@@ -61,11 +61,10 @@ int main() {
 
 	tex->bind();
 	glActiveTexture(GL_TEXTURE0);
-	 
-	 
+	  
 	LightPoint point;
 	point.position = { 2, 0, 0 };
-	point.color = { 0, 1, 0 };
+	point.color = { 1, 1, 1 };
 	point.intensity = 10;
 	point.attenuation = 10;
 
@@ -74,10 +73,11 @@ int main() {
 	Lighting lights;
 
 	LightPoint& light = lights.attachLight(point); 
-	lights.setAmbient(Vector3<float>(0.1f, 0.1f, 0.1f));
 
-	
+	lights.setAmbient(Vector3<float>(1.0f, 1.0f, 1.0f));
+	 
 	float pos = 0;
+
 	while (true) {
 		window.startFrame(); 
 		//camera.rotate({ 0, 0, 0.01f });

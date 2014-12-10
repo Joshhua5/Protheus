@@ -12,6 +12,7 @@ namespace Pro {
 	using namespace std;
 	class VertexArray {
 		GLuint m_vao;
+		GLuint preserved_vao;
 
 		VertexArray(const VertexArray&) = delete;
 		VertexArray& operator=(const VertexArray&) = delete;
@@ -28,5 +29,8 @@ namespace Pro {
 		
 		void bind();
 		void unbind();
+
+		void preservedBind();
+		void preservedUnbind();
 	}; 
 }

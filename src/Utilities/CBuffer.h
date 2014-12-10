@@ -31,7 +31,7 @@ public:
 	CBuffer(CBuffer&&);
 	CBuffer& operator=(CBuffer&&);
 	// Copy
-	CBuffer(const CBuffer&);
+	CBuffer(const CBuffer&, bool copy = true); 
 	CBuffer& operator=(const CBuffer&);
 	~CBuffer();
 

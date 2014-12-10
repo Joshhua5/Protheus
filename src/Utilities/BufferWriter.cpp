@@ -13,9 +13,9 @@ BufferWriter::~BufferWriter()
 	m_buffer = nullptr;
 }
 
-void BufferWriter::write(void* value, unsigned size){
+void BufferWriter::write(const void* value,const unsigned size){
 	if (m_buffer == nullptr)
-		return;  
+		return;
 
 	// Check if the write will overflow
 	if (m_head + size > m_buffer->size())

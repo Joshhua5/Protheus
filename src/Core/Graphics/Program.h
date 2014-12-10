@@ -30,6 +30,7 @@ namespace Pro {
 		void setUniform(const string& uniform_name, const Vector3<float>& value);
 		void setUniform(const string& uniform_name, GLint value);
 		void setUniform(const string& uniform_name, const Matrix44<float>& value); 
+		void setUniform(const string& uniform_name, const GLint* value, unsigned size);
 
 		// If the stride is equal to 0 then the function call is silently returned and no state is changed
 		static void setVertexAttribute(GLuint program_id, const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset);
@@ -37,5 +38,6 @@ namespace Pro {
 		static void setUniform(GLuint program_id, const string& uniform_name, GLint value);
 		static void setUniform(GLuint program_id, const string& uniform_name, const Matrix44<float>& value); 
 		static void setUniform(GLuint program_id, const string& uniform_name, float* value, unsigned count);
-	};
+			static void setUniform(GLuint program_id, const string& uniform_name, const GLint* value, unsigned size);
+	};	
 }

@@ -37,9 +37,9 @@ namespace Pro {
 		double _x, _y;
 		glfwGetCursorPos(window, &_x, &_y);
 		if (x != nullptr)
-			x = static_cast<T>(_x);
+			*x = static_cast<T>(_x);
 		if (y != nullptr)
-			y = static_cast<T>(_y); 
+			*y = static_cast<T>(_y); 
 	}
 
 }

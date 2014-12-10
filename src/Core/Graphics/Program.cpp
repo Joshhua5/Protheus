@@ -52,14 +52,16 @@ void Program::setVertexAttribute(const string& attrib_name, GLint size, GLenum t
 	setVertexAttribute(program_id, attrib_name, size, type, normalized, stride, offset);
 }
 
-void Program::setUniform(const string& uniform_name, const Vector3<float>& value) {
-
+void Program::setUniform(const string& uniform_name, const Vector3<float>& value) { 
 	setUniform(program_id, uniform_name, value);
 }
 
-void Program::setUniform(const string& uniform_name, GLint value) {
-
+void Program::setUniform(const string& uniform_name, GLint value) { 
 	setUniform(program_id, uniform_name, value);
+}
+
+void Program::setUniform(const string& uniform_name, const GLint* value, unsigned size) {
+	setUniform(program_id, uniform_name, value, size);
 }
 
 void Program::setUniform(const string& uniform_name, const Matrix44<float>& value) {
@@ -81,6 +83,13 @@ void Program::setUniform(GLuint program_id, const string& uniform_name, const Ve
 	if (location == -1)
 		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
 	glUniform3f(location, value.x, value.y, value.z);
+}
+
+void Program::setUniform(GLuint program_id, const string& uniform_name,const GLint* value, unsigned size) {
+	auto location = glGetUniformLocation(program_id, uniform_name.data());
+	if (location == -1)
+		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+	glUniform1iv(location, size, value); 
 }
 
 void Program::setUniform(GLuint program_id, const string& uniform_name, GLint value){

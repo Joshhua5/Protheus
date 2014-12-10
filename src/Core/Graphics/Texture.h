@@ -5,9 +5,11 @@
 
 namespace Pro{ 
 	class Texture
-	{
-	private:
+	{ 
 		GLuint texture_id;
+		// stores how many other components are 
+		// currently pointing at the texture
+		unsigned char refered;
 		Vector2<unsigned> dimensions;
 
 		// prevent copying of a texture
@@ -26,7 +28,14 @@ namespace Pro{
 
 		void setFilter(GLenum type);
 		void setBorder(GLenum type);
-		void bind();
-		void unbind();
+		void bind() const;
+		void unbind() const;
+
+		void addReference() const {
+			++(*const_cast<unsigned char*>(&refered));
+		}
+		void removeReference() const {
+			--(*const_cast<unsigned char*>(&refered));
+		}
 	}; 
 }

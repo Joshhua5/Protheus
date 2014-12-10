@@ -16,6 +16,12 @@ History:
 #include "BufferBase.h" 
 
 
+
+CBuffer::CBuffer(const CBuffer& b, bool copy) {
+	init(b.data<void>(), b.size(), copy);
+}
+
+
 CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
 	if (_size == 0){
 		m_data = nullptr;
@@ -68,10 +74,7 @@ CBuffer& CBuffer::operator=(CBuffer&& b){
 	b.dereference();
 	return *this;
 }
-
-CBuffer::CBuffer(const CBuffer& b) : CBuffer(){
-	init(b.data<void>(), b.size(), true); 
-}
+ 
 
 CBuffer& CBuffer::operator=(const CBuffer& b){
 	 

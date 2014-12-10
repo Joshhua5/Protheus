@@ -29,17 +29,15 @@ namespace Pro{
 
 			// writes a value to the buffer at the writer,
 			// of the size specified
-			void write(void* value, unsigned size);
+			void write(const void* value,const unsigned size);
 			  
 			template<typename T>
-			void inline write(T& data){ 
+			void inline write(const T& data){ 
 				write(&data, sizeof(T));
 			}
 
 			template<typename T>
-			void inline write(T&& data){
-				// Not sure about the behavior for r values
-				// because this is a Universal Reference.
+			void inline write(const T&& data){ 
 				write(&data, sizeof(T));
 			}
 

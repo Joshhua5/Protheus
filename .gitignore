@@ -12,6 +12,7 @@
 *.lastbuildstate
 *.tlog
 *.a
+log.txt
 *.manifest
 *.res
 *.o
