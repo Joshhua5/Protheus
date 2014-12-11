@@ -2,10 +2,16 @@
 
 using namespace Pro;
 
-Program::Program() {
-	program_id = glCreateProgram();
-}
+static int active_program_id = 0;
+static int preserved_id = 0;
 
+Program::Program(bool initialize_gl) {
+
+	if (initialize_gl)
+		program_id = glCreateProgram();
+	else
+		program_id = 0;
+}
 
 Program::~Program() {
 	glDeleteProgram(program_id);
@@ -23,16 +29,38 @@ Program& Program::operator=(Program&& rhs) {
 }
 
 void Program::attachShader(const Shader& shader) {
-	glAttachShader(program_id, shader.getShader());  
+	if (glIsShader(shader.getShader()))
+		glAttachShader(program_id, shader.getShader());
+	else
+		has_error = true;
 }
 
 
-GLuint Program::getID() {
+void Program::init() {
+	if (program_id == 0)
+		program_id = glCreateProgram();
+}
+
+GLuint Program::getID() const{
 	return program_id;
 }
 
-void Program::setActive() {
+void Program::use() {
+	if (active_program_id == program_id)
+		return;
+	active_program_id = program_id;
 	glUseProgram(program_id);
+}
+
+void Program::preservedUse() {
+	preserved_id = active_program_id;
+	if (program_id != active_program_id)
+		glUseProgram(program_id);
+}
+
+void Program::preservedDisuse() {
+	if (program_id != active_program_id)
+		glUseProgram(preserved_id);
 }
 
 void Program::link() {
@@ -45,71 +73,82 @@ void Program::link() {
 		CBuffer err(size);
 		glGetProgramInfoLog(program_id, err.size(), nullptr, err.data<char>());
 		error.reportErrorNR(err.data<char>());
+		has_error = true;
 	}
-} 
-
-void Program::setVertexAttribute(const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
-	setVertexAttribute(program_id, attrib_name, size, type, normalized, stride, offset);
 }
 
-void Program::setUniform(const string& uniform_name, const Vector3<float>& value) { 
-	setUniform(program_id, uniform_name, value);
+bool Program::hasError() const {
+	return has_error;
 }
 
-void Program::setUniform(const string& uniform_name, GLint value) { 
-	setUniform(program_id, uniform_name, value);
+inline GLint Program::getUniformLocation(GLuint program_id, const string& uniform_name) { 
+	GLint location = 0;
+	// Check if the location is already stored
+	auto iterator = locations.find(uniform_name);
+	if (iterator == locations.end()) {
+		location = glGetUniformLocation(program_id, uniform_name.data());
+		if (location == -1) {
+			error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+			return -1;
+		}
+		locations.insert({ uniform_name, location });
+	}
+	else
+		location = (*iterator).second;
+	return location;
+}
+ 
+
+void Program::setUniform(const string& uniform_name, const Vector3<float>& value) {
+	GLint location = 0;
+	auto iterator = locations.find(uniform_name);
+	if (iterator == locations.end()) {
+		location = getUniformLocation(program_id, uniform_name);
+		if (location == -1)
+			return;
+		locations.insert({ uniform_name, location });
+	}
+	else
+		location = (*iterator).second;
+
+	preservedUse();
+	glUniform3f(location, value.x, value.y, value.z);
+	preservedDisuse();
+}
+
+void Program::setUniform(const string& uniform_name, GLint value) {
+	auto location = getUniformLocation(program_id, uniform_name.data());
+	if (location == -1)
+		return;
+	preservedUse();
+	glUniform1i(location, value);
+	preservedDisuse();
 }
 
 void Program::setUniform(const string& uniform_name, const GLint* value, unsigned size) {
-	setUniform(program_id, uniform_name, value, size);
+	GLint location = getUniformLocation(program_id, uniform_name);
+	if (location == -1)
+		return;
+	preservedUse();
+	glUniform1iv(location, size, value);
+	preservedDisuse();
 }
 
 void Program::setUniform(const string& uniform_name, const Matrix44<float>& value) {
-	setUniform(program_id, uniform_name, value);
-} 
-
-void Program::setVertexAttribute(GLuint program_id, const string& attrib_name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
-	GLint location = glGetAttribLocation(program_id, attrib_name.data());
+	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + attrib_name);
-	glEnableVertexAttribArray(location);
-	if (size == 0) 
 		return;
-	glVertexAttribPointer(location, size, type, normalized, stride, (void*) offset);
+	preservedUse();
+	glUniformMatrix4fv(location, 1, GL_FALSE, (const float*)value._m);
+	preservedDisuse();
 }
 
-void Program::setUniform(GLuint program_id, const string& uniform_name, const Vector3<float>& value){
-	auto location = glGetUniformLocation(program_id, uniform_name.data());
+void Program::setUniform(const string& uniform_name, float* value, unsigned count) {
+	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
-	glUniform3f(location, value.x, value.y, value.z);
-}
-
-void Program::setUniform(GLuint program_id, const string& uniform_name,const GLint* value, unsigned size) {
-	auto location = glGetUniformLocation(program_id, uniform_name.data());
-	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
-	glUniform1iv(location, size, value); 
-}
-
-void Program::setUniform(GLuint program_id, const string& uniform_name, GLint value){
-	auto location = glGetUniformLocation(program_id, uniform_name.data());
-	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
-	glUniform1i(location, value);
-}
-
-void Program::setUniform(GLuint program_id, const string& uniform_name, const Matrix44<float>& value){
-	auto location = glGetUniformLocation(program_id, uniform_name.data());
-	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
-	glUniformMatrix4fv(location, 1, GL_FALSE, (const float*) value._m);
-} 
-
-
-void Program::setUniform(GLuint program_id, const string& uniform_name, float* value, unsigned count) {
-	auto location = glGetUniformLocation(program_id, uniform_name.data());
-	if (location == -1)
-		return error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+		return;
+	preservedUse();
 	glUniform1fv(location, count, value);
+	preservedDisuse();
 }
+

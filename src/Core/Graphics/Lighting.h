@@ -29,7 +29,7 @@ namespace Pro {
 		
 		Vector3<float> ambientColor;
 	public:
-		void bindLights(GLuint program_id);
+		void bindLights(Program& program);
 		LightPoint&  attachLight(const LightPoint&);  
 		void setAmbient(const Vector3<float>& ambient);
 		 

@@ -2,8 +2,7 @@
 #include <BufferReader.h>
 #include <BufferWriter.h>
 
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 using namespace Audio;
 
 // First 44 bytes of the file are assosiated with the header
@@ -87,7 +86,7 @@ CAudioData* CWavDecoder::load(CBuffer* buffer){
 	
 	//out->stream.init(sizeof(short) * numChannels * sample_count);
 
-	Pro::Util::BufferWriter writer(&out->stream);
+	Pro::BufferWriter writer(&out->stream);
 
 	switch (bitsPerSample){
 	case 8: 

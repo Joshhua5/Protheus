@@ -17,8 +17,7 @@ History:
 #include <chrono>
 #include <string>
 
-namespace Pro{
-	namespace Util{
+namespace Pro{ 
 		using namespace std;
 		class Timer
 		{
@@ -33,6 +32,5 @@ namespace Pro{
 			unsigned long long getTickDelta() const;
 			double getTicksPerSec() const;
 			void tick();
-		};
-	}
+		}; 
 }

@@ -6,6 +6,7 @@
 #include <BufferWriter.h>
 #include <Vector4.h>
 #include <Vector3.h>
+#include <smart_pointer.h>
 #include <vector>
 #include "extern\glew.h"
 #include "Mesh.h"
@@ -24,8 +25,8 @@ namespace Pro {
 
 	public:
 		 
-		static Mesh* loadOBJ(CBuffer*);
-		static Mesh* loadModel(CBuffer*);
-		static Mesh* loadModel(CBuffer&&); 
+		static smart_pointer<Mesh> loadOBJ(CBuffer*);
+		static smart_pointer<Mesh> loadModel(CBuffer*);
+		static smart_pointer<Mesh> loadModel(CBuffer&&);
 	}; 
 }

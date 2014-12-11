@@ -24,7 +24,7 @@ namespace Pro {
 
 
 		// Internally calls Program::setVertexAttribute with the same arguments
-		void setVertexAttribute(Program& program, const string& attrib_name,
+		void setVertexAttribute(const Program& program, const string& attrib_name,
 			GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset);
 		
 		void bind();

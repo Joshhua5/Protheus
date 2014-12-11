@@ -24,6 +24,11 @@ Shader::Shader(const CBuffer& shader, GLenum shader_type)
 
 }
 
+Shader::Shader() {
+	m_shader_id = 0;
+	m_shader_type = GL_INVALID_ENUM;
+}
+
 Shader::Shader(string shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);
 	 
@@ -77,19 +82,23 @@ bool Shader::init(const CBuffer& shader, GLenum shader_type) {
 
 	return true;
 }
-bool Shader::init(const char* shader, GLenum shader_type) {
+bool Shader::init(const string& shader, GLenum shader_type) {
+	if (m_shader_id != 0)
+		return false;
 	m_shader_id = glCreateShader(shader_type);
+	
+	const char* data = shader.data();
+	const GLint size = shader.size();
 
-	GLint size = sizeof(*shader); 
-	glShaderSource(m_shader_id,
-		1,
-		(const GLchar**) shader,
-		(const GLint*) &size);
+	glShaderSource(m_shader_id, 1,
+		&data,
+		&size);
 
 	glCompileShader(m_shader_id);
 
-	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &size);
-	if (size == GL_FALSE) {
+	GLint glError = 0; 
+	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &glError);
+	if (glError == GL_FALSE) {
 		error.reportError("Unable to load shader: " + m_shader_id);
 		return false;
 	}

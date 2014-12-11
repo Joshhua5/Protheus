@@ -13,8 +13,7 @@ History:
 #pragma once
 #include "CBuffer.h"
 
-namespace Pro{
-	namespace Util{
+namespace Pro{ 
 		class BufferIO
 		{
 		protected:
@@ -41,6 +40,5 @@ namespace Pro{
 			// Finds the offset of the next deliminator
 			unsigned find(const char deliminator);
 			 
-		};
-	}
+		}; 
 }

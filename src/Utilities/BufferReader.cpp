@@ -1,8 +1,7 @@
 #include "BufferReader.h"
 
 using namespace std;
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 
 
 BufferReader::BufferReader(BufferReader&& buffer) {

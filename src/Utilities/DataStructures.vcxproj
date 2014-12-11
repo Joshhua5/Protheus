@@ -23,12 +23,14 @@
     <ClInclude Include="BufferWriter.h" />
     <ClInclude Include="CBuffer.h" />
     <ClInclude Include="ClassDefinition.h" />
+    <ClInclude Include="Deferred.h" />
     <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="ProMath.h" />
     <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Matrix44.h" />
     <ClInclude Include="Member.h" />
+    <ClInclude Include="smart_pointer.h" />
     <ClInclude Include="StringConverter.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2.h" />
@@ -36,6 +38,7 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlignedBuffer.cpp" />
     <ClCompile Include="BufferIO.cpp" />
     <ClCompile Include="BufferReader.cpp" />
     <ClCompile Include="BufferWriter.cpp" />

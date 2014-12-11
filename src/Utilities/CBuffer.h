@@ -34,9 +34,7 @@ public:
 	CBuffer(const CBuffer&, bool copy = true); 
 	CBuffer& operator=(const CBuffer&);
 	~CBuffer();
-
-	
-
+	 
 	void init(const void* data, const unsigned size, const bool copy);
 	void init(const unsigned size);
 

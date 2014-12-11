@@ -1,7 +1,6 @@
 #include "BufferWriter.h"
 
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 
 BufferWriter::BufferWriter(CBuffer* _buffer){
 	m_buffer = _buffer;

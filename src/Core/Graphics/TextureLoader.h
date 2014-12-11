@@ -3,7 +3,8 @@
 #include <CBuffer.h>
 #include <BufferReader.h>
 #include <BufferWriter.h>
-#include <Vector2.h>
+#include <Vector2.h> 
+#include <smart_pointer.h>
 #include "Texture.h"
 
 namespace Pro {
@@ -34,8 +35,8 @@ namespace Pro {
 		static IMAGE_FORMAT queryFormat(CBuffer*);
 	public:
 
-		static Texture* loadBMP(CBuffer*);
-		static Texture* loadTexture(CBuffer*);  
-		static Texture* loadTexture(CBuffer&&);
+		static smart_pointer<Texture> loadBMP(CBuffer*);
+		static smart_pointer<Texture> loadTexture(CBuffer*);
+		static smart_pointer<Texture> loadTexture(CBuffer&&);
 	};
 }

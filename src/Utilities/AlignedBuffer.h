@@ -14,55 +14,56 @@ History:
 
 #include "BufferBase.h"
 
-class AlignedBuffer :
-	public BufferBase
-{
-protected:
-	unsigned m_alignment;
-	int m_offset;
-public:
-	// Aligns the internal structure to the byte bountry passed,
-	// The data in the buffer must be a multiple and smaller
-	// than the boundary, the copy is set to false but the data isn't correctly
-	// aligned then a copy will be performed anyway.
-	AlignedBuffer(void* data, const unsigned size,const int alignment,const bool copy);
-	// Aligns the internal structure to the byte bountry passed,
-	// The data in the buffer must be a multiple and smaller
-	// than the boundary
-	// if Padding is true then only the maximum amount of instances of the 
-	// data will be contained in a cahche line, if data is spread over two cachelines
-	// then the data will be padded to only use one line, this uses more memory
-	// size of object must be provided
-	AlignedBuffer(const unsigned size, unsigned alignment, const bool padding, const unsigned sizeOf);
-	// Padding is off by default
-	AlignedBuffer(const unsigned size, unsigned alignment);
-	// Default alignment of 64 Bytes
-	// to match a cache line
-	AlignedBuffer(const unsigned size);
-	~AlignedBuffer();
+namespace Pro {
 
-	// interate through the boundaries
-	// equivilant to 
-	// this->data()[pos * alignment];
-	void atBoundary(unsigned pos);
+	class AlignedBuffer :
+		public BufferBase
+	{
+	protected:
+		unsigned char m_offset;
+		unsigned char m_padding;
+		unsigned char m_alignment_crossover;
+		unsigned short m_sizeof;
+		unsigned m_alignment;
+	public:
+		// Aligns the internal structure to the byte bountry passed,
+		// The data in the buffer must be a multiple and smaller
+		// than the boundary, the copy is set to false but the data isn't correctly
+		// aligned then a copy will be performed anyway.
+		// The data type in the buffer must be a multiple and smaller  than the boundary
+		// if Padding is applied then only the maximum amount of instances of the 
+		// data will be contained in a cache line, if data is spread over two cachelines
+		// then the data will be padded to only use one line, this uses more memory
+		// size of object must be provided
+		// If passing in predefined data, the size variable now defined the size of the prexisting data in byte
+		// data will be copied
+		AlignedBuffer(const unsigned size, const unsigned sizeOf, void* data = nullptr, const unsigned alignment = 64);
 
-	// returns the data with bounds checking
-	void* at(unsigned pos);
+		~AlignedBuffer();
 
-	// returns the defined alignement for the data
-	unsigned alignment();
+		// interate through the boundaries
+		// equivilant to 
+		// this->data()[pos * alignment];
+		void* atBoundary(unsigned pos) const;
 
-	// returns a pointer to the internal data
-	void* data();
+		// returns the data with bounds checking
+		void* at(unsigned pos) const;
 
-	// size of the buffer in bytes
-	unsigned size();
+		// returns the defined alignement for the data
+		unsigned alignment() const;
 
-	// access data in the buffer without
-	// boundary checking
-	void* operator[](unsigned pos);
+		// returns a pointer to the internal data
+		void* data();
 
-	// Dereferencing does nothing with an
-	// aligned buffer
-	void dereference(){}
-};
+		// size of the buffer in bytes
+		unsigned size() const;
+
+		// access data in the buffer without
+		// boundary checking
+		void* operator[](unsigned pos);
+
+		// Dereferencing does nothing with an
+		// aligned buffer
+		void dereference() = delete;
+	};
+}

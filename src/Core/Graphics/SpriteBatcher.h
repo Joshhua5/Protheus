@@ -16,6 +16,7 @@ History:
 #include <Error.h> 
 #include <BufferWriter.h>
 #include <Vector4.h> 
+#include <smart_pointer.h>
 #include "Program.h"
 #include "Sprite.h"
 #include "VertexArray.h"
@@ -27,7 +28,6 @@ History:
 namespace Pro{
 	namespace Graphics {
 		using namespace std;
-		using namespace Util;  
 
 		class SpriteBatcher
 		{    
@@ -40,13 +40,12 @@ namespace Pro{
 			static GLint max_textures;
 			unsigned current_sprite_count = 0;
 
-			std::vector<const Texture*> textures;
+			std::vector<smart_pointer<Texture>> textures;
 			std::stack<unsigned short> free_textures;
 			unsigned current_texture_count = 0;
 
 			GLuint vertex_buffer_id;
-			GLuint texture_uniforms;
-			static GLuint tex_coord_buffer_id;
+			GLuint texture_uniforms; 
 
 			static Shader vertex_shader;
 			static Shader fragment_shader;
@@ -58,17 +57,19 @@ namespace Pro{
 		public:
 			SpriteBatcher(SpriteBatcher&&);
 			SpriteBatcher&& operator=(SpriteBatcher&&);
+			// Window must be created, before creating an instance of SpriteBatcher
 			SpriteBatcher();
 			~SpriteBatcher();
 			 
 			void push(int texture_id,
-				Vector3<float>& position,
+				Vector3<float> position,
 				Vector2<float> dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
 
+
 			// if -1, the maxiumum texture bindings has been hit.
-			int attachTexture(const Texture* tex);
+			int attachTexture(smart_pointer<Texture> tex);
 
 			void removeTexture(int);
 			

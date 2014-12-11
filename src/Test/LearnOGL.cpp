@@ -8,6 +8,7 @@
 #include <thread>
 #include <Graphics\Lighting.h>
 #include <Graphics\TextureLoader.h>
+#include <smart_pointer.h>
 #include <CBuffer.h>
 #include <BufferWriter.h>
 #include <Vector2.h>
@@ -22,7 +23,7 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	Mesh* cube = MeshLoader::loadOBJ(&fs.getFile("obj/monkey.obj"));
+	auto cube = MeshLoader::loadOBJ(&fs.getFile("obj/monkey.obj"));
 
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, 1);
@@ -49,11 +50,16 @@ int main() {
 	program.attachShader(vert);
 	program.attachShader(frag);
 	program.link();
-	program.setActive();
+	program.use();
+
+	VertexArray vao;
+	vao.bind();
 	 
-	program.setVertexAttribute("in_normal", cube->normalSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->normalOffset());
-	program.setVertexAttribute("position", cube->vertexSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->vertexOffset());
-	program.setVertexAttribute("in_tex", cube->texCoordSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->texCoordOffset());
+	vao.setVertexAttribute(program, "in_normal", cube->normalSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->normalOffset());
+	vao.setVertexAttribute(program, "position", cube->vertexSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->vertexOffset());
+	vao.setVertexAttribute(program, "in_tex", cube->texCoordSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->texCoordOffset());
+
+	vao.unbind();
 
 	program.setUniform("has_normal", cube->hasNormals());
 	program.setUniform("has_tex_coord", cube->hasTexCoord());
@@ -80,6 +86,7 @@ int main() {
 
 	while (true) {
 		window.startFrame(); 
+		vao.bind();
 		//camera.rotate({ 0, 0, 0.01f });
 		if (pos >= 1)
 			pos = -1;
@@ -94,9 +101,10 @@ int main() {
 		program.setUniform("model", model.getMatrix());
 		program.setUniform("view", camera.getMatrix()); 
 		program.setUniform("projection", projection.getPerspective());
-		lights.bindLights(program.getID());
+		lights.bindLights(program);
 		program.setUniform("normal_matrix", model.getNormalMatrix());
 		cube->bind();
+
 		for (const auto& obj : cube->getObjects()) {
 			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);
 		} 
@@ -108,6 +116,8 @@ int main() {
 		light_t.move({ 0, 0, -10 });
 		glDrawElements(cube->getMode(), cube->getObjects()[0].size, GL_UNSIGNED_INT, cube->getObjects()[0].p_start);
 		
+		vao.unbind();
+
 		if (window.getKeyboard().isKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
 			light_t.move({ -1, 0, 0 });
 

@@ -1,7 +1,6 @@
 #include "Timer.h"
 
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 using namespace std::chrono;
 
 #define getNS() duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count()

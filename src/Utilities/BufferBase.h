@@ -17,7 +17,7 @@ History:
 class BufferBase
 {
 protected:
+	bool wasCopied;
 	unsigned int m_size;
 	void* m_data;
-	bool wasCopied;
 };

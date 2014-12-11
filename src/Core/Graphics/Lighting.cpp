@@ -1,9 +1,8 @@
 #include "Lighting.h"
 
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 
-void Lighting::bindLights(GLuint program_id) {  
+void Lighting::bindLights(Program& program) {  
 	CBuffer points(light_points.size() * sizeof(float) * 8);
 	BufferWriter writer(&points);
 
@@ -22,11 +21,11 @@ void Lighting::bindLights(GLuint program_id) {
 		writer.write<float>(light.intensity);
 	}
 
-	Program::setUniform(program_id, "light_ambient", ambientColor); 
-	Program::setUniform(program_id, "light_point_count", light_points.size());
-	Program::setUniform(program_id, "light_points", points.data<float>(), light_points.size() * 8);
-	Program::setUniform(program_id, "light_directional_count", light_directional.size());
-	Program::setUniform(program_id, "light_directional",
+	program.setUniform("light_ambient", ambientColor); 
+	program.setUniform("light_point_count", light_points.size());
+	program.setUniform("light_points", points.data<float>(), light_points.size() * 8);
+	program.setUniform("light_directional_count", light_directional.size());
+	program.setUniform("light_directional",
 		points.data<float>() + (light_points.size() * 8), light_directional.size() * 11); 
 }
 

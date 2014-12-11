@@ -1,7 +1,6 @@
 #include "TextureLoader.h"
 
-using namespace Pro;
-using namespace Util; 
+using namespace Pro; 
 
 inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask, unsigned a_bitmask, ColorDefinition def) {
 	// TODO convert bitmask's into 8 bits per channel
@@ -37,7 +36,7 @@ IMAGE_FORMAT TextureLoader::queryFormat(CBuffer* buffer) {
 	return IMAGE_FORMAT::UNDEFINED;
 }
 
-Texture* TextureLoader::loadBMP(CBuffer* buffer) {
+smart_pointer<Texture> TextureLoader::loadBMP(CBuffer* buffer) {
 	BufferReader reader(buffer);
 	reader.setPosition(2);
 
@@ -214,8 +213,8 @@ Texture* TextureLoader::loadBMP(CBuffer* buffer) {
 	return new Texture(texture_id, Vector2<unsigned>((unsigned) bmp_width, (unsigned) bmp_height));
 }
 
-Texture* TextureLoader::loadTexture(CBuffer* buffer) {
-	Texture* tex = nullptr;
+smart_pointer<Texture> TextureLoader::loadTexture(CBuffer* buffer) {
+	smart_pointer<Texture> tex;
 
 	if (buffer->isEmpty()) {
 		error.reportError("Empty buffer passed to TextureLoader, did file load correctly?\0");
@@ -236,7 +235,7 @@ Texture* TextureLoader::loadTexture(CBuffer* buffer) {
 	return tex;
 }
 
-Texture* TextureLoader::loadTexture(CBuffer&& buffer) {
+smart_pointer<Texture> TextureLoader::loadTexture(CBuffer&& buffer) {
 	return loadTexture(&buffer);
 }
  

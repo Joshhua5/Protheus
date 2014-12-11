@@ -17,8 +17,7 @@ History:
 #include "BufferIO.h"
 #include "classDefinition.h"
 
-namespace Pro {
-	namespace Util {
+namespace Pro { 
 		// All reads and offsets are in bytes
 		class BufferReader :
 			public BufferIO
@@ -145,6 +144,5 @@ namespace Pro {
 						loaded_member.size);
 				}
 			return out;
-		}
-	}
+		} 
 }

@@ -11,6 +11,7 @@ History:
 
 *************************************************************************/
 
+#include <utility>
 
 #pragma once
 namespace Pro {
@@ -28,6 +29,16 @@ namespace Pro {
 			x = _x;
 			y = _y;
 			z = _z;
+		}
+
+		Vector3(std::initializer_list<T> list) {
+			if (list.size() < 2) {
+				x = y = z = 0;
+				return;
+			}
+			x = *list.begin();
+			y = *(list.begin() + 1);
+			z = *(list.begin() + 2);
 		}
 
 		Vector3(Vector3&& rhs) {

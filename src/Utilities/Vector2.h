@@ -24,6 +24,14 @@ namespace Pro {
 		Vector2() {}
 
 		// Copy constructor
+		Vector2(std::initializer_list<T> list) {
+			if (list.size() < 2) {
+				x = y = 0;
+				return;
+			}
+			x = *list.begin();
+			y = *(list.begin() + 1);
+		}
 		Vector2(const Vector2& vec) {
 			x = std::move(vec.x);
 			y = std::move(vec.y);

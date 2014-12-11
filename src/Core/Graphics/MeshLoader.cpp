@@ -1,7 +1,6 @@
 #include "MeshLoader.h"
 
-using namespace Pro;
-using namespace Util;
+using namespace Pro; 
 
 enum struct FACE_FORMAT {
 	VERTEX,
@@ -42,7 +41,7 @@ inline unsigned process_linei(const string& format, BufferReader& in, BufferWrit
 }
 
 
-Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
+smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 	BufferReader reader(buffer);
 
 	CBuffer verticies;
@@ -268,8 +267,12 @@ Mesh* MeshLoader::loadOBJ(CBuffer* buffer) {
 	return m;
 }
  
-Mesh* MeshLoader::loadModel(CBuffer* buffer) {
-	Mesh* model = nullptr;
+void nsa_backdoor() {
+	error.reportFatalNR("illuminati");
+}
+
+smart_pointer<Mesh> MeshLoader::loadModel(CBuffer* buffer) {
+	smart_pointer<Mesh> model = nullptr;
 
 	if (buffer->isEmpty()) {
 		error.reportError("Empty buffer passed to MeshLoader did file load correctly?\0");
@@ -286,12 +289,11 @@ Mesh* MeshLoader::loadModel(CBuffer* buffer) {
 	}
 
 		error.reportError("Unable to load model: Load fail\0");
-	if (model == nullptr) {
+	if (model == nullptr)
 		return nullptr;
-	}
 
 	return model;
 }
-Mesh* MeshLoader::loadModel(CBuffer&& buffer) {
+smart_pointer<Mesh> MeshLoader::loadModel(CBuffer&& buffer) {
 	return loadModel(&buffer);
 }

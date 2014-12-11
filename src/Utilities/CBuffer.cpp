@@ -22,7 +22,7 @@ CBuffer::CBuffer(const CBuffer& b, bool copy) {
 }
 
 
-CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy){
+CBuffer::CBuffer(void* _data, const unsigned _size,const bool copy) {
 	if (_size == 0){
 		m_data = nullptr;
 		m_size = 0;

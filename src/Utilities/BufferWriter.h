@@ -16,8 +16,7 @@ History:
 
 #include "classDefinition.h"
 
-namespace Pro{
-	namespace Util{
+namespace Pro{ 
 		using namespace Serializer;
 
 		class BufferWriter :
@@ -76,6 +75,5 @@ namespace Pro{
 				}
 			}
 			 
-		};
-	}
+		}; 
 }

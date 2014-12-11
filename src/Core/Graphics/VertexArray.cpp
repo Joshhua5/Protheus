@@ -21,10 +21,15 @@ VertexArray& VertexArray::operator=(VertexArray&& rhs) {
 	return *this;
 }
  
-void VertexArray::setVertexAttribute(Program& program, const string& attrib_name,
+void VertexArray::setVertexAttribute(const Program& program, const string& attrib_name,
 	GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
-
-	program.setVertexAttribute(attrib_name, size, type, normalized, stride, offset);
+	GLint location = glGetAttribLocation(program.getID(), attrib_name.data());
+	if (location == -1)
+		error.reportErrorNR("Unable to locate shader attribute: " + attrib_name);
+	if (size == 0)
+		return;
+	glEnableVertexAttribArray(location);
+	glVertexAttribPointer(location, size, type, normalized, stride, (void*)offset);
 }
 
 void VertexArray::bind() {
@@ -33,11 +38,10 @@ void VertexArray::bind() {
 
 void VertexArray::unbind() {
 	glBindVertexArray(0);
-}
-
+} 
 
 void VertexArray::preservedBind() {
-	glGetIntegerv(GL_ARB_vertex_array_object, (GLint*)&preserved_vao); 
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, (GLint*)&preserved_vao); 
 	glBindVertexArray(m_vao);
 }
 
