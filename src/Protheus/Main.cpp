@@ -56,9 +56,9 @@ int main(int argc, char* args []) {
 	auto source = audio.createSource(buffer); 
 	source.play(); 
 
-	Texture* tex = TextureLoader::loadTexture(&file);
+	auto tex = TextureLoader::loadTexture(&file);
 
-	Graphics::Sprite sprite(tex);
+	//Graphics::Sprite sprite(tex);
 	  
 
 	while (true) { 

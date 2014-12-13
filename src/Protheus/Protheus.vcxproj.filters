@@ -92,7 +92,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="LearnOGL.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
   </ItemGroup>

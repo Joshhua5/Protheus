@@ -103,8 +103,7 @@ namespace Pro {
 		}
 
 		bool contains(float p) const {
-			return ((x > p && y < p) || (x < p && y > p))
-				? true : false;
+			return ((x > p && y < p) || (x < p && y > p));
 		}
 
 		void move(T _x, T _y) {
