@@ -55,7 +55,7 @@ void Texture::setBorder(GLenum type) {
 }
 
 
-void Texture::bind() const{
+void Texture::bind() const{	
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 }
 

@@ -70,6 +70,7 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 	float vertex[4]; 
 	memset(vertex, 0, sizeof(float) * 4); 
 	 
+	object.push_back(MeshObject("", 0, 0));
 
 	while (reader.hasNext()) {
 		auto line = reader.read_delim('\n', false);
@@ -88,9 +89,15 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 				object.back().size =
 				((face_count - object.back().start) * vertex_per_face);
 
-			auto nameBuf = liner.read_delim('\n', false);
-			object.push_back(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), face_count, 0));
 
+			auto nameBuf = liner.read_delim('\n', false);
+			if (object.size() == 1) {
+				object.back().name = string(nameBuf.data<char>(), nameBuf.size() - 1);
+				object.back().start = face_count;
+			}
+			else 
+				object.push_back(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), face_count, 0));
+			
 		}
 				  break;
 

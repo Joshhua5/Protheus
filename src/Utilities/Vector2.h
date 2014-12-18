@@ -88,9 +88,7 @@ namespace Pro {
 			return *this;
 		}
 
-		// Move Constructor
-
-
+		// Move Constructor 
 		Vector2& operator=(Vector2&& p) {
 			x = std::move(vec.x);
 			y = std::move(vec.y);
@@ -109,6 +107,11 @@ namespace Pro {
 		void move(T _x, T _y) {
 			x += _x;
 			y += _y;
+		}
+
+		template<typename X>
+		Vector2<X> cast() {
+			return Vector2<X>(static_cast<X>(x), static_cast<X>(y));
 		}
 
 		float length()const {
@@ -135,7 +138,11 @@ namespace Pro {
 		//}
 
 		bool operator==(const Vector2& p) {
-			return (x == p.x && y == p.y) ? true : false;
+			return x == p.x && y == p.y;
+		}
+
+		bool operator!=(const Vector2& p) {
+			return x != p.x || y != p.y;
 		}
 
 		void operator+=(T val) {

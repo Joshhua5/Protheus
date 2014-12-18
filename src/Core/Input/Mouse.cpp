@@ -16,7 +16,7 @@ void Mouse::attachWindow(GLFWwindow* window) {
 Vector2<int> Mouse::getMousePosition() {  
 	double x, y;
 	glfwGetCursorPos(window, &x, &y);
-	return Vector2<int>(x, y);
+	return Vector2<int>(static_cast<int>(x), static_cast<int>(y));
 }
 
 std::pair<KEY, KEY> Mouse::getMouseKey() {

@@ -41,14 +41,18 @@ namespace Pro{
 			unsigned current_sprite_count = 0;
 
 			std::vector<smart_pointer<Texture>> textures;
+			std::vector<unsigned> sprite_count;
+			std::vector<std::vector<unsigned>> sprite_indicies;
 			std::stack<unsigned short> free_textures;
 			unsigned current_texture_count = 0;
 
 			GLuint vertex_buffer_id;
+			GLuint element_buffer_id;
 			GLuint texture_uniforms; 
 
 			static Shader vertex_shader;
 			static Shader fragment_shader;
+			static Shader geometry_shader;
 			static Program batch_program;
 
 			SpriteBatcher(const SpriteBatcher&) = delete;
@@ -61,6 +65,7 @@ namespace Pro{
 			SpriteBatcher();
 			~SpriteBatcher();
 			 
+			// Performance benifit to grouping textures together in push calls
 			void push(int texture_id,
 				Vector3<float> position,
 				Vector2<float> dimensions,
@@ -76,6 +81,10 @@ namespace Pro{
 			void setTransformation(const Transformation& trans);
 			 
 			void flush(); 
+
+			void render();
+			
+			void reset();
 		};
 	}
 }

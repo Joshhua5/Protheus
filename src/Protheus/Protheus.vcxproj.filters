@@ -91,9 +91,4 @@
       <UniqueIdentifier>{e70f0669-bf7b-456c-aabd-df5c99075cd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="LearnOGL.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
 </Project>

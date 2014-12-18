@@ -10,10 +10,10 @@ History:
 - 17:05:2014 Waring J.
 
 *************************************************************************/
-
+#pragma once
 #include <utility>
 
-#pragma once
+
 namespace Pro {
 	template<typename T>
 	struct Vector3 {

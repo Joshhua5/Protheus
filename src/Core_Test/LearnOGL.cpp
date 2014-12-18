@@ -23,7 +23,7 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	auto cube = MeshLoader::loadOBJ(&fs.getFile("obj/monkey.obj"));
+	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/scene.obj"));
 
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, 1);
@@ -35,15 +35,15 @@ int main() {
 	GLenum err;
 	// TEST 
 	// cbuffer is deleted after being passed as rvalue
-	auto tex = TextureLoader::loadTexture(fs.getFile("bananas.bmp"));
+	auto tex = TextureLoader::loadTexture(fs.getFile("scene/Wall.bmp"));
 
 	GLuint vbo = 0; 
 	GLuint sampler = 0; 
 
 	cube->bind(); 
 
-	Shader vert(fs.getFile("shader.vert"), GL_VERTEX_SHADER);
-	Shader frag(fs.getFile("shader.frag"), GL_FRAGMENT_SHADER);
+	Shader vert(fs.getFile("shaders/shader.vert"), GL_VERTEX_SHADER);
+	Shader frag(fs.getFile("shaders/shader.frag"), GL_FRAGMENT_SHADER);
 	if ((err = glGetError()) != GL_NO_ERROR)
 		return err;
 	Program program;
@@ -55,6 +55,7 @@ int main() {
 	VertexArray vao;
 	vao.bind();
 	 
+
 	vao.setVertexAttribute(program, "in_normal", cube->normalSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->normalOffset());
 	vao.setVertexAttribute(program, "position", cube->vertexSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->vertexOffset());
 	vao.setVertexAttribute(program, "in_tex", cube->texCoordSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->texCoordOffset());
@@ -65,8 +66,8 @@ int main() {
 	program.setUniform("has_tex_coord", cube->hasTexCoord());
 	program.setUniform("world_pos", Vector3<float>(.5, 0, 0));
 
-	tex->bind();
 	glActiveTexture(GL_TEXTURE0);
+	tex->bind();
 	  
 	LightPoint point;
 	point.position = { 2, 0, 0 };
@@ -78,25 +79,23 @@ int main() {
 
 	Lighting lights;
 
-	LightPoint& light = lights.attachLight(point); 
+	LightPoint& light = lights.attachLight(point);
 
 	lights.setAmbient(Vector3<float>(1.0f, 1.0f, 1.0f));
 	 
 	float pos = 0;
+	Vector3<float> rotation(0);
 
 	while (true) {
 		window.startFrame(); 
 		vao.bind();
-		//camera.rotate({ 0, 0, 0.01f });
-		if (pos >= 1)
-			pos = -1;
-		else
-			pos += 0.1f;
-		window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
-		light_t.setPosition(light.position); 
-		// 
-		model.rotate(Vector3<float>(0, 0.1f , 0));
-		model.setScale({ 0.1f, 0.1f, 0.1f });
+		//camera.rotate({ 0, 0, 0.01f }); 
+
+		//window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
+
+		light_t.setPosition(light.position);  
+		model.setScale({ 0.01f, 0.01f, 0.10f });
+		model.setPosition({ 0, -0.1f, 0 });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		program.setUniform("model", model.getMatrix());
 		program.setUniform("view", camera.getMatrix()); 
@@ -108,18 +107,16 @@ int main() {
 		for (const auto& obj : cube->getObjects()) {
 			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);
 		} 
-		light_t.setScale({ 0.1f, 0.1f, 0.1f }); 
-		light_t.move({ 0, 0, 10 });
-		program.setUniform("model", light_t.getMatrix()); 
-		program.setUniform("normal_matrix", light_t.getNormalMatrix());
-
-		light_t.move({ 0, 0, -10 });
-		glDrawElements(cube->getMode(), cube->getObjects()[0].size, GL_UNSIGNED_INT, cube->getObjects()[0].p_start);
-		
+  
 		vao.unbind();
 
 		if (window.getKeyboard().isKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
-			light_t.move({ -1, 0, 0 });
+			rotation.x += 0.1f;
+		if (window.getKeyboard().isKeyDown(KEY::KEY_D) != KEY_PRESSED::RELEASED)
+			rotation.y += 0.1f;
+		 
+		camera.setRotation(rotation);
+
 
 		window.endFrame();
 	}

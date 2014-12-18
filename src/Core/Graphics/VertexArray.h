@@ -24,6 +24,7 @@ namespace Pro {
 
 
 		// Internally calls Program::setVertexAttribute with the same arguments
+		// Optimisation is to have the vao bound before to prevent a preservedBind
 		void setVertexAttribute(const Program& program, const string& attrib_name,
 			GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset);
 		

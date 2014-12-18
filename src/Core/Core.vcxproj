@@ -57,7 +57,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalDependencies>OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
     <Bscmake>
