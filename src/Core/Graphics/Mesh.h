@@ -18,18 +18,10 @@ namespace Pro {
 		vector<MeshObject> objects;
 		GLuint verticies;
 		GLuint elements;
-		GLenum mode;
 		unsigned object_count = 0; 
-		bool has_tex_coord;
-		bool has_normals;
-
-		unsigned char tex_coord_size = 0;
-		unsigned char vertex_size = 0;
-		unsigned char vertex_size_bytes = 0;
-		unsigned char tex_coord_size_bytes = 0;
 
 	public:
-		Mesh(GLuint verticies, GLuint elements, GLenum mode, bool vertexContainsW, bool tex_coord_w, bool hasUV , bool hasNormals);
+		Mesh(GLuint verticies, GLuint elements);
 		Mesh(Mesh&&);
 		Mesh& operator=(Mesh&&);
 		~Mesh();
@@ -42,19 +34,6 @@ namespace Pro {
 		GLenum getMode() const;
 
 		void bind() const;
-		void unbind() const;
-		bool hasTexCoord() const;
-		bool hasNormals() const; 
-
-		GLuint normalSize() const;
-		GLuint texCoordSize() const;
-		GLuint vertexSize() const; 
-
-		GLsizei stride() const; 
-
-		GLuint normalOffset() const;
-		GLuint vertexOffset() const;
-		GLuint texCoordOffset() const;
-
+		void unbind() const;  
 	};
 }

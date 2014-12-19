@@ -120,12 +120,7 @@ SpriteBatcher::SpriteBatcher() {
 			GL_FALSE, stride_size, 3 * sizeof(GLfloat));
 
 		vao.setVertexAttribute(batch_program, "tex_coord", 4, GL_FLOAT, GL_FALSE,
-			stride_size, 5 * sizeof(GLfloat));
-
-		batch_program.setUniform("sampler1", 0);
-		batch_program.setUniform("sampler2", 1);
-		batch_program.setUniform("sampler3", 2);
-		batch_program.setUniform("sampler4", 3);
+			stride_size, 5 * sizeof(GLfloat)); 
 
 		sprite_count.resize(max_sprites);
 

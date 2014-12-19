@@ -22,11 +22,27 @@ namespace Pro {
 		class BufferReader :
 			public BufferIO
 		{
+
 			BufferReader(const BufferReader&);
 		public:
-			BufferReader(CBuffer* buffer);
+			BufferReader(CBuffer* buffer) {
+				using_smart = false;
+				m_head = 0;
+				m_buffer = buffer;
+			}
+			BufferReader(smart_pointer<CBuffer> pointer) {
+				using_smart = true;
+				m_head = 0;
+				m_buffer = pointer; 
+			}
 			BufferReader(BufferReader&& buffer);
-			~BufferReader();
+			~BufferReader() {
+				if (using_smart)
+					m_buffer = nullptr;
+				else
+					m_buffer.dereference();
+				m_head = 0;
+			}
 
 			// returns a pointer to the internal buffer
 			// doesn't skip memory once read
@@ -82,7 +98,7 @@ namespace Pro {
 		}
 
 		template<typename T>
-		int BufferReader::contains(const T* data, unsigned size) {
+		inline int BufferReader::contains(const T* data, unsigned size) {
 			// TEST
 			// Create a local copy 
 			T* buffer = m_buffer->data<T>();
@@ -97,7 +113,7 @@ namespace Pro {
 		}
 
 		template<typename T>
-		T BufferReader::serialized_read(Serializer::classDefinition def) {
+		inline T BufferReader::serialized_read(Serializer::classDefinition def) {
 			T out;
 
 			vector<Member> loaded_members;
@@ -146,25 +162,19 @@ namespace Pro {
 			return out;
 		}  
 
-		BufferReader::BufferReader(BufferReader&& buffer) {
+		inline BufferReader::BufferReader(BufferReader&& buffer) {
 			m_buffer = buffer.m_buffer;
 			m_head = buffer.m_head;
 			buffer.m_buffer = nullptr;
 		}
 
-		BufferReader::BufferReader(CBuffer* _buffer) {
-			m_buffer = _buffer;
-		}
-
-		BufferReader::~BufferReader() {
-			m_buffer = nullptr;
-		}
+		  
 
 		inline char* BufferReader::read_raw() const {
-			return m_buffer->data<char>() + m_head;
+			return m_buffer._ptr->data<char>() + m_head; 
 		}
 
-		CBuffer BufferReader::read(const unsigned size, bool copy) {
+		inline CBuffer BufferReader::read(const unsigned size, bool copy) {
 			if (m_head - m_buffer->size() <= size)
 				return CBuffer(0);
 			CBuffer out(read_raw(), size, copy);
@@ -172,16 +182,16 @@ namespace Pro {
 			return move(out);
 		}
 
-		CBuffer BufferReader::read_delim(const char deliminator, bool copy) {
+		inline CBuffer BufferReader::read_delim(const char deliminator, bool copy) {
 			return read(find(deliminator), copy);
 		}
 
 		// reads until a null terminator is found '\0'
-		string BufferReader::read_string() {
+		inline string BufferReader::read_string() {
 			return string(read_delim('\0').data<char>());
 		}
 
-		string BufferReader::read_string(const unsigned size) {
+		inline string BufferReader::read_string(const unsigned size) {
 			char* arr = read_array<char>(size + 1);
 			skip(-1);
 			arr[size] = '\0';
@@ -191,11 +201,11 @@ namespace Pro {
 		}
 
 
-		bool BufferReader::hasNext() {
+		inline bool BufferReader::hasNext() {
 			return (m_head < m_buffer->size()) ? true : false;
 		}
 
-		long BufferReader::read_bits(const unsigned bits) {
+		inline long BufferReader::read_bits(const unsigned bits) {
 			// TEST
 			if (bits < 8)
 				return read<char>() & static_cast<unsigned>((pow(2, bits) - 1));

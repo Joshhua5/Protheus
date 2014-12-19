@@ -18,12 +18,12 @@ using namespace Util;
 using namespace Graphics; 
 
 int main() {
-	Graphics::Window window("title", Vector2<int>(800, 800));
+	Graphics::Window window("title", Vector2<int>(1900, 960));
 
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
-	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/scene.obj"));
+	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/sceneb.obj"));
 
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, 1);
@@ -56,14 +56,14 @@ int main() {
 	vao.bind();
 	 
 
-	vao.setVertexAttribute(program, "in_normal", cube->normalSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->normalOffset());
-	vao.setVertexAttribute(program, "position", cube->vertexSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->vertexOffset());
-	vao.setVertexAttribute(program, "in_tex", cube->texCoordSize(), GL_FLOAT, GL_FALSE, cube->stride(), cube->texCoordOffset());
+	vao.setVertexAttribute(program, "in_normal", cube->getObjects().at(0).normalSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).normalOffset());
+	vao.setVertexAttribute(program, "position", cube->getObjects().at(0).vertexSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).vertexOffset());
+	vao.setVertexAttribute(program, "in_tex", cube->getObjects().at(0).texCoordSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).texCoordOffset());
 
 	vao.unbind();
 
-	program.setUniform("has_normal", cube->hasNormals());
-	program.setUniform("has_tex_coord", cube->hasTexCoord());
+	program.setUniform("has_normal", cube->getObjects().at(0).hasNormals());
+	program.setUniform("has_tex_coord", cube->getObjects().at(0).hasTexCoord());
 	program.setUniform("world_pos", Vector3<float>(.5, 0, 0));
 
 	glActiveTexture(GL_TEXTURE0);
@@ -104,9 +104,8 @@ int main() {
 		program.setUniform("normal_matrix", model.getNormalMatrix());
 		cube->bind();
 
-		for (const auto& obj : cube->getObjects()) {
-			glDrawElements(cube->getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start);
-		} 
+		for (const auto& obj : cube->getObjects()) 
+			glDrawElements(obj.getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start); 
   
 		vao.unbind();
 

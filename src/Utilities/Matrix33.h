@@ -2,8 +2,9 @@
 #pragma once
 #include <memory>
 #include "Error.h"
-
+ 
 #pragma once
+
 namespace Pro {
 	template<typename T>
 	class Matrix33

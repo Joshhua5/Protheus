@@ -45,12 +45,12 @@ namespace Pro {
 			void finish();
 		};
 
-		classDefinition::classDefinition(void* class_pointer)
+		inline classDefinition::classDefinition(void* class_pointer)
 		{
 			base_pointer = class_pointer;
 		}
 
-		void classDefinition::addMember(const string& memberName, const void* member_pointer, const size_t size) {
+		inline void classDefinition::addMember(const string& memberName, const void* member_pointer, const size_t size) {
 			auto m = Member();
 
 			m.name = memberName;
@@ -60,22 +60,22 @@ namespace Pro {
 			members.push_back(move(m));
 		}
 
-		const vector<Member>& classDefinition::getMembers() const {
+		inline const vector<Member>& classDefinition::getMembers() const {
 			return members;
 		}
 
-		const unsigned classDefinition::getSizeOf() const {
+		inline const unsigned classDefinition::getSizeOf() const {
 			unsigned sizeTotal = 0;
 			for each(const auto m in members)
 				sizeTotal += m.size;
 			return sizeTotal;
 		}
 
-		const void* classDefinition::getBase() const {
+		inline const void* classDefinition::getBase() const {
 			return base_pointer;
 		}
 
-		void classDefinition::finish() {
+		inline void classDefinition::finish() {
 			delete base_pointer;
 		}
 	}

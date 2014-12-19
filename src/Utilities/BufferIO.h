@@ -13,12 +13,14 @@ History:
 #pragma once
 #include "CBuffer.h"
 
+#include "smart_pointer.h"
 namespace Pro{ 
 		class BufferIO
 		{
 		protected:
 			unsigned m_head;
-			CBuffer* m_buffer;
+			smart_pointer<CBuffer> m_buffer; 
+			bool using_smart;
 		public:
 
 			// sets the position of the IO
@@ -44,28 +46,29 @@ namespace Pro{
 
 
 		// sets the position of the writer
-		void BufferIO::setPosition(const unsigned position) {
+		inline void BufferIO::setPosition(const unsigned position) {
 			m_head = position;
 		}
 
 		// sets the position of the IO to 0
-		void BufferIO::reset() {
+		inline void BufferIO::reset() {
 			setPosition(0);
 		}
 
 		// returns the position of the writer
-		unsigned BufferIO::getPosition() const {
+		inline unsigned BufferIO::getPosition() const {
 			return m_head;
 		}
 		// skips over the current writing position
-		void BufferIO::skip(const int position) {
+		inline void BufferIO::skip(const int position) {
 			m_head += position;
 		}
 		// get's the internal buffers size
-		unsigned BufferIO::getBufferSize() const {
-			return m_buffer->size();
+		inline unsigned BufferIO::getBufferSize() const {
+			return m_buffer._ptr->size();
 		}
-		unsigned BufferIO::find(const char deliminator) {
+
+		inline unsigned BufferIO::find(const char deliminator) {
 			// Make sure we only check inside the buffer
 			register auto buf = (char*)m_buffer->at(m_head);
 			register auto bufferEnd = (char*)m_buffer->at(m_buffer->size());

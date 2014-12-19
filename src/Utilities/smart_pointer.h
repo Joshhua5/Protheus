@@ -4,11 +4,11 @@
 namespace Pro {
 
 	template<typename T>
-	class smart_pointer { 
+	class smart_pointer {
 		unsigned *_references;
 	public:
 		T *_ptr;
-		 
+
 		smart_pointer() {
 			_ptr = nullptr;
 			_references = nullptr;
@@ -72,5 +72,15 @@ namespace Pro {
 		inline unsigned references() const {
 			return *_references;
 		}
-	}; 
+
+		// removed reference to an object and doesn't delete the instance unless the reference count is 1
+		inline void dereference() { 
+			if (_references != nullptr) {
+				delete _references;
+				_ptr = nullptr;
+				_references = nullptr;
+				_ptr = nullptr;
+			}
+		}
+	};
 }

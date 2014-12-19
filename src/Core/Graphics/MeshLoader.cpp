@@ -1,27 +1,19 @@
 #include "MeshLoader.h"
 
-using namespace Pro; 
+using namespace Pro;
 
-enum struct FACE_FORMAT {
-	VERTEX,
-	VERTEX_NORMAL,
-	VERTEX_UV_NORMAL,
-	VERTEX_UV
-};
 
 MODEL_FORMAT  MeshLoader::queryFormat(CBuffer* buffer) {
 
 	if (buffer->isEmpty())
 		return MODEL_FORMAT::UNDEFINED;
 
-	//switch () {
-
-
+	//switch () { 
 	//default:
 	//	return MODEL_FORMAT::UNDEFINED;
 	//}
 	return MODEL_FORMAT::UNDEFINED;
-} 
+}
 
 inline unsigned process_linei(const string& format, BufferReader& in, BufferWriter& out, unsigned& face_count) {
 	int face[12];
@@ -40,37 +32,14 @@ inline unsigned process_linei(const string& format, BufferReader& in, BufferWrit
 	return ret;
 }
 
+inline void processOBJ(std::vector<MeshObject>& objects, CBuffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
+	BufferReader reader(file);
 
-smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
-	BufferReader reader(buffer);
+	float vertex[4];
+	bool first_object = true;
+	memset(vertex, 0, sizeof(float) * 4);
 
-	CBuffer verticies;
-	BufferWriter vertex_writer(&verticies);
-	CBuffer normals;
-	BufferWriter normal_writer(&normals);
-	CBuffer tex_coords;
-	BufferWriter tex_coord_writer(&tex_coords);
-	CBuffer faces;
-	BufferWriter face_writer(&faces);
-	unsigned verticie_count = 0;
-	unsigned normal_count = 0;
-	unsigned face_count = 0;
-	bool vertex_w = false;
-	bool tex_coord_w = false;
-	unsigned vertex_per_face = 0;
-	unsigned floats_per_vertex = 0;
-	unsigned tex_coord_per_face = 0;
-	FACE_FORMAT face_format;
-	GLenum gl_render_mode;
-
-	// code below uses a pointer, 
-	// kept pointer so I didn't have to edit
-	std::vector<MeshObject> object;
-	 
-	float vertex[4]; 
-	memset(vertex, 0, sizeof(float) * 4); 
-	 
-	object.push_back(MeshObject("", 0, 0));
+	MeshObject* object = &objects.back();
 
 	while (reader.hasNext()) {
 		auto line = reader.read_delim('\n', false);
@@ -85,93 +54,96 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 			liner.setPosition(2);
 			// pointer will break outside of this function
 
-			if (object.size() >= 1)
-				object.back().size =
-				((face_count - object.back().start) * vertex_per_face);
-
-
 			auto nameBuf = liner.read_delim('\n', false);
-			if (object.size() == 1) {
-				object.back().name = string(nameBuf.data<char>(), nameBuf.size() - 1);
-				object.back().start = face_count;
+
+			if (first_object) {
+				object->name = string(nameBuf.data<char>(), nameBuf.size() - 1);
+				first_object = false;
 			}
-			else 
-				object.push_back(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), face_count, 0));
-			
+			else
+				objects.push_back(std::move(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), 0, 0)));
+
+			object = &objects.back();
+			object->temp = new CBuffer(1000);
+			object->tempWriter = new BufferWriter(object->temp);
 		}
 				  break;
-
 		case 'f':
-			// TEST
-			// Check for what kind of face
 
-			if (line.count<char>(' ') == 3) {
-				gl_render_mode = GL_TRIANGLE_STRIP;
-				vertex_per_face = 3;
-			}
-			else {
-				gl_render_mode = GL_QUADS;
-				vertex_per_face = 4;
-			}
+			if (line.count<char>(' ') == 3)  
+				object->vertex_per_face = 3; 
+			else 
+				object->vertex_per_face = 4; 
 
-			switch (gl_render_mode) {
-			case GL_TRIANGLE_STRIP:
+			switch (object->vertex_per_face) {
+			case 3:
 				if (liner.contains<char>("//", 2) != -1) {
 					// Vector//Normal  
-					process_linei("f %i//%i %i//%i %i//%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_NORMAL;
+					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_NORMAL;
 					break;
 				}
 				switch (line.count<char>('/')) {
 				case 0:
 					// simple vertex 
-					process_linei("f %i %i %i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX;
+					process_linei("f %i %i %i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX;
 					break;
 				case 3:
 					// vertex/uv   
-					process_linei("f %i/%i %i/%i %i/%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_UV;
+					process_linei("f %i/%i %i/%i %i/%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_UV;
 					break;
 				case 6:
 					// vertex/uv/normal 
 					// TEST does atoi stop at the /
-					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
+					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
 					break;
 				}
 				break;
 
-			case GL_QUADS:
+			case 4:
 				if (liner.contains<char>("//", 2) != -1) {
 					// Vector//Normal   
-					process_linei("f %i//%i %i//%i %i//%i %i//%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_NORMAL;
+					process_linei("f %i//%i %i//%i %i//%i %i//%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_NORMAL;
 					break;
 				}
 				switch (line.count<char>('/')) {
 				case 0:
 					// simple vertex 
-					process_linei("f %i %i %i %i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX;
+					process_linei("f %i %i %i %i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX;
 					break;
 				case 4:
 					// vertex/uv  
 					// TEST does atoi stop at the /
-					process_linei("f %i/%i %i/%i %i/%i %i/%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_UV;
+					process_linei("f %i/%i %i/%i %i/%i %i/%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_UV;
+					object->has_tex_coord = true;
 					break;
 				case 8:
 					// vertex/uv/normal 
 					// TEST does atoi stop at the /
-					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i %i/%i/%i", liner, face_writer, face_count);
-					face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
+					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter._ptr, object->face_count);
+					object->face_count++;
+					object->face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
+					object->has_normals = true;
+					object->has_tex_coord = true;
 					break;
 				}
 				break;
 			default:
 				error.reportErrorNR("Unsupported face type in .obj\0");
-				return nullptr;
+				return; 
 			}
 
 			break;
@@ -179,77 +151,150 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 		case 'v':
 			switch (line.data<char>()[1]) {
 			case 't':
-				tex_coord_w = 
-					(sscanf(liner.read_raw(), "vt %f %f %f %f",
-					vertex + 0, vertex + 1, vertex + 2) == 3);
-
-				if (!tex_coord_w)
-					vertex[2] = 0;
-				tex_coord_per_face = (tex_coord_w ? 3 : 2);
-
-				tex_coord_writer.write_elements<float>(vertex, tex_coord_per_face);
+				object->tex_coord_per_vertex =
+					sscanf(liner.read_raw(), "vt %f %f %f %f",
+					vertex + 0, vertex + 1, vertex + 2);
+				  
+				tex_coord_writer.write_elements<float>(vertex, object->tex_coord_per_vertex);
 				break;
 			case 'n':
 				sscanf(liner.read_raw(), "vn %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2);
-				normal_writer.write_elements<float>(vertex, 3);
+				normal_writer.write_elements<float>(vertex, 3); 
 
-				++normal_count;
 				break;
 			case ' ':
-				vertex_w = (sscanf(liner.read_raw(), "v %f %f %f %f",
-					vertex + 0, vertex + 1, vertex + 2, vertex + 3) == 4);
-				floats_per_vertex = (vertex_w ? 4 : 3);
+				object->floats_per_vertex = sscanf(liner.read_raw(), "v %f %f %f %f",
+					vertex + 0, vertex + 1, vertex + 2, vertex + 3);
 
-				vertex_writer.write_elements<float>(vertex, floats_per_vertex);
-				++verticie_count;
+				vertex_writer.write_elements<float>(vertex, object->floats_per_vertex);
 				break;
 			}
 		}
 	}
+	// Set the last size of the object
+	object->size =
+		((object->face_count - object->start) * object->vertex_per_face);
+}
+
+
+smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
+	BufferReader reader(buffer);
+	CBuffer verticies;
+	BufferWriter vertex_writer(&verticies);
+	CBuffer normals;
+	BufferWriter normal_writer(&normals);
+	CBuffer tex_coords;
+	BufferWriter tex_coord_writer(&tex_coords);
+
+	FACE_FORMAT face_format = FACE_FORMAT::UNDEFINED;
+
+	// code below uses a pointer, 
+	// kept pointer so I didn't have to edit
+	std::vector<MeshObject> object;
+
+	object.push_back(MeshObject("", 0, 0));
+
+	processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer);
+
 	// populate the size of the last object 
-	object.back().size =
-		((face_count - object.back().start) * vertex_per_face);
 
 	// Pack verticies 
 	CBuffer packed(4000);
-	BufferReader face_reader(&faces);
+	CBuffer elements(4000);
+	BufferWriter element_writer(&elements);
 	BufferWriter packed_writer(&packed);
-	// okay because indicies will read ahead of the writer 
 
-	if (face_format == FACE_FORMAT::VERTEX)
-		packed.init(verticies.data(), verticies.size(), false);
-	else { 
-		face_writer.reset(); 
-		face_reader.reset();
-		for (unsigned x = 0; x < face_count * vertex_per_face; ++x)
+	CBuffer search_face(4 * sizeof(float));
+	BufferWriter search_face_writer(&search_face);
+	// okay because indicies will read ahead of the writer 
+	// Perfect for OpenCL
+
+	unsigned current_element = 0;
+	unsigned current_position = 0;
+
+	struct Face {
+		int vertex = -1;
+		int normal = -1;
+		int tex_coord = 1;
+
+		inline bool operator==(const Face& face) {
+			return vertex == face.vertex && normal == face.normal && tex_coord == face.tex_coord;
+		}
+	};
+
+	std::vector<Face> faces;
+
+	for (auto& obj : object) {
+		BufferReader reader(obj.temp);
+
+		// get the next faces
+		// compair to see if they have already be defined
+		// if true then use it's index in the element buffer
+		// otherwise add the verticies into the buffer 
+		// and insert the new index into the element
+
+		for (unsigned face_id = 0; face_id < obj.face_count; ++face_id) {
+
+			// Get Faces
+			Face face;
+			bool existing = false;
+
+			face.vertex = reader.read<int>();
 			switch (face_format) {
 			case FACE_FORMAT::VERTEX_NORMAL:
-				packed_writer.write_elements<float>(verticies.data<float>() + face_reader.read<int>() * floats_per_vertex, floats_per_vertex);
-				packed_writer.write_elements<float>(normals.data<float>() + face_reader.read<int>() * 3, 3);
-				face_writer.write<unsigned>(x);
+				face.normal = reader.read<int>();
 				break;
 			case FACE_FORMAT::VERTEX_UV:
-				packed_writer.write_elements<float>(verticies.data<float>() + face_reader.read<int>() * floats_per_vertex, floats_per_vertex);
-				packed_writer.write_elements<float>(tex_coords.data<float>() + face_reader.read<int>() * tex_coord_per_face, tex_coord_per_face);
-				face_writer.write<unsigned>(x);
+				face.tex_coord = reader.read<int>();
 				break;
 			case FACE_FORMAT::VERTEX_UV_NORMAL:
-				packed_writer.write_elements<float>(verticies.data<float>() + face_reader.read<int>() * floats_per_vertex, floats_per_vertex);
-				packed_writer.write_elements<float>(tex_coords.data<float>() + face_reader.read<int>() * tex_coord_per_face, tex_coord_per_face);
-
-				packed_writer.write_elements<float>(normals.data<float>() + face_reader.read<int>() * 3, 3); 
-				face_writer.write<unsigned>(x);
+				face.tex_coord = reader.read<int>();
+				face.normal = reader.read<int>();
 				break;
 			}
+
+			// Check if face has already been defined
+			for (unsigned x = 0; x < faces.size(); ++x)
+				if (faces[x] == face) {
+					existing = true;
+					element_writer.write<unsigned>(x);
+					break;
+				}
+
+			// If no duplicates, add into the verticies and element buffer
+			if (existing == false) {
+				packed_writer.write_elements<float>(verticies.data<float>() + face.vertex * obj.floats_per_vertex, obj.floats_per_vertex);
+				switch (face_format) {
+				case FACE_FORMAT::VERTEX_NORMAL:
+					packed_writer.write_elements<float>(normals.data<float>() + face.normal * 3, 3);
+					break;
+				case FACE_FORMAT::VERTEX_UV:
+					packed_writer.write_elements<float>(tex_coords.data<float>() + face.tex_coord * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
+					break;
+				case FACE_FORMAT::VERTEX_UV_NORMAL:
+					packed_writer.write_elements<float>(tex_coords.data<float>() + face.tex_coord  * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
+					packed_writer.write_elements<float>(normals.data<float>() + face.normal * 3, 3);
+					break;
+				}
+				faces.push_back(face);
+				element_writer.write<unsigned>(current_element++);
+			}
+		}
 	}
+
+	for (int x = 0; x < object.size(); x++) { 
+		object[x].temp = nullptr;
+		object[x].tempWriter = nullptr;
+	}
+	 
 	// Create VBO in OpenGL
 
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	  
-	glBufferData(GL_ARRAY_BUFFER,packed_writer.getPosition() , packed.data(), GL_STATIC_DRAW);
+
+	glBufferData(GL_ARRAY_BUFFER, packed_writer.getPosition(), packed.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
@@ -259,21 +304,21 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo); 
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face_writer.getPosition(), faces.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_writer.getPosition(), elements.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
 		error.reportError("Unable to load OBJ Model: Create Element Array");
 		return nullptr;
 	}
-	Mesh* m = new Mesh(vbo, ebo, gl_render_mode, vertex_w, tex_coord_w, !tex_coords.isEmpty(), !normals.isEmpty());
+	Mesh* m = new Mesh(vbo, ebo);
 	for (unsigned x = 0; x < object.size(); ++x)
 		m->attachObject(std::move(object[x]));
 
 	return m;
 }
- 
+
 void nsa_backdoor() {
 	error.reportFatalNR("illuminati");
 }
@@ -295,7 +340,7 @@ smart_pointer<Mesh> MeshLoader::loadModel(CBuffer* buffer) {
 		return nullptr;
 	}
 
-		error.reportError("Unable to load model: Load fail\0");
+	error.reportError("Unable to load model: Load fail\0");
 	if (model == nullptr)
 		return nullptr;
 
