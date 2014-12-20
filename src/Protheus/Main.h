@@ -11,5 +11,4 @@ can be found then the program will exit.
 History:
 - 20:05:2014: Waring J.
 *************************************************************************/
-
-#include "lua/Lua.h"
+ 

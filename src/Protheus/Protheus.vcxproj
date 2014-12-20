@@ -38,215 +38,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="networking\Encryption.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="StateStack.cpp" />
-    <ClCompile Include="gameobject\DataEntity.cpp" />
-    <ClCompile Include="component\Animated.cpp" />
-    <ClCompile Include="gameobject\DynamicEntity.cpp" />
-    <ClCompile Include="DataGame.cpp" />
-    <ClCompile Include="component\CScriptable.cpp" />
-    <ClCompile Include="component\ActiveState.cpp" />
-    <ClCompile Include="containers\CameraContainer.cpp" />
-    <ClCompile Include="graphics\AnimatedSprite.cpp" />
-    <ClCompile Include="gui\GUIContainer.cpp" />
-    <ClCompile Include="event\EventHandler.cpp" />
-    <ClCompile Include="gui\GraphicalUI.cpp" />
-    <ClCompile Include="gui\GUIEntity.cpp" />
-    <ClCompile Include="GUIDLookup.cpp" />
-    <ClCompile Include="io\Input.cpp" />
-    <ClCompile Include="gameobject\Map.cpp" />
-    <ClCompile Include="component\Name.cpp" />
-    <ClCompile Include="graphics\Renderer.cpp" />
-    <ClCompile Include="gameobject\Scene.cpp" />
-    <ClCompile Include="graphics\Sprite.cpp" />
-    <ClCompile Include="graphics\SpriteManager.cpp" />
-    <ClCompile Include="gameobject\Tile.cpp" />
-    <ClCompile Include="graphics\Window.cpp" />
-    <ClCompile Include="gui\GUIButton.cpp" />
-    <ClCompile Include="gui\GUICollapsibleMenu.cpp" />
-    <ClCompile Include="gui\GUIContext.cpp" />
-    <ClCompile Include="gui\GUIEditor.cpp" />
-    <ClCompile Include="gui\GUILabel.cpp" />
-    <ClCompile Include="gui\GUISlider.cpp" />
-    <ClCompile Include="gui\GUIText.cpp" />
-    <ClCompile Include="gui\GUIWindow.cpp" />
-    <ClCompile Include="gui\GUIMenuBar.cpp" />
-    <ClCompile Include="gui\GUIDropDownMenu.cpp" />
-    <ClCompile Include="lua\Lua.cpp" />
-    <ClCompile Include="lua\lib\lapi.c" />
-    <ClCompile Include="lua\lib\lauxlib.c" />
-    <ClCompile Include="lua\lib\lbaselib.c" />
-    <ClCompile Include="lua\lib\lbitlib.c" />
-    <ClCompile Include="lua\lib\lcode.c" />
-    <ClCompile Include="lua\lib\lcorolib.c" />
-    <ClCompile Include="lua\lib\lctype.c" />
-    <ClCompile Include="lua\lib\ldblib.c" />
-    <ClCompile Include="lua\lib\ldebug.c" />
-    <ClCompile Include="lua\lib\ldo.c" />
-    <ClCompile Include="lua\lib\ldump.c" />
-    <ClCompile Include="lua\lib\lfunc.c" />
-    <ClCompile Include="lua\lib\lgc.c" />
-    <ClCompile Include="lua\lib\linit.c" />
-    <ClCompile Include="lua\lib\liolib.c" />
-    <ClCompile Include="lua\lib\llex.c" />
-    <ClCompile Include="lua\lib\lmathlib.c" />
-    <ClCompile Include="lua\lib\lmem.c" />
-    <ClCompile Include="lua\lib\loadlib.c" />
-    <ClCompile Include="lua\lib\lobject.c" />
-    <ClCompile Include="lua\lib\lopcodes.c" />
-    <ClCompile Include="lua\lib\loslib.c" />
-    <ClCompile Include="lua\lib\lparser.c" />
-    <ClCompile Include="lua\lib\lstate.c" />
-    <ClCompile Include="lua\lib\lstring.c" />
-    <ClCompile Include="lua\lib\lstrlib.c" />
-    <ClCompile Include="lua\lib\ltable.c" />
-    <ClCompile Include="lua\lib\ltablib.c" />
-    <ClCompile Include="lua\lib\ltm.c" />
-    <ClCompile Include="lua\lib\lundump.c" />
-    <ClCompile Include="lua\lib\lvm.c" />
-    <ClCompile Include="lua\lib\lzio.c" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="graphics\SpriteBatcher.cpp" />
-    <ClCompile Include="gameobject\MapSection.cpp" />
-    <ClCompile Include="containers\EntityContainer.cpp" />
-    <ClCompile Include="component\Position.cpp" />
-    <ClCompile Include="component\Area.cpp" />
-    <ClCompile Include="component\CGUID.cpp" />
-    <ClCompile Include="component\LuaCallback.cpp" />
-    <ClCompile Include="containers\SceneContainer.cpp" />
-    <ClCompile Include="containers\WindowContainer.cpp" />
-    <ClCompile Include="lua\LuaObjectFactory.cpp" />
-    <ClCompile Include="io\CFile.cpp" />
-    <ClCompile Include="io\FileSystem.cpp" />
-    <ClCompile Include="ScriptGame.cpp" />
-    <ClCompile Include="io\gamefile\GameFileLoader.cpp" />
-    <ClCompile Include="io\gamefile\GameFileMap.cpp" />
-    <ClCompile Include="io\gamefile\GameFileScript.cpp" />
-    <ClCompile Include="io\gamefile\GameFileMapTile.cpp" />
-    <ClCompile Include="io\gamefile\GameFileBase.cpp" />
-    <ClCompile Include="io\gamefile\GameFileIndex.cpp" />
-    <ClCompile Include="io\gamefile\GameFileRaw.cpp" />
-    <ClCompile Include="io\gamefile\GameFileImage.cpp" />
-    <ClCompile Include="io\gamefile\GameFileAudio.cpp" />
-    <ClCompile Include="io\gamefile\GameFileObject.cpp" />
-    <ClCompile Include="gameobject\StaticEntity.cpp" />
-    <ClCompile Include="component\Textured.cpp" />
-    <ClCompile Include="io\gamefile\GameFileSaver.cpp" />
-    <ClCompile Include="graphics\TextRenderer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="networking\Encryption.h" />
-    <ClInclude Include="Gamestate.h" />
-    <ClInclude Include="StateStack.h" />
-    <ClInclude Include="gameobject\DataEntity.h" />
-    <ClInclude Include="component\Animated.h" />
-    <ClInclude Include="gameobject\DynamicEntity.h" />
-    <ClInclude Include="gameobject\Entity.h" />
-    <ClInclude Include="DataGame.h" />
-    <ClInclude Include="Components.h" />
-    <ClInclude Include="event\CKeyboardEvent.h" />
-    <ClInclude Include="event\CMouseButton.h" />
-    <ClInclude Include="event\CMouseMotion.h" />
-    <ClInclude Include="event\CMouseWheel.h" />
-    <ClInclude Include="event\EKeyboardKey.h" />
-    <ClInclude Include="event\EMouseButton.h" />
-    <ClInclude Include="GUIDLookup.h" />
-    <ClInclude Include="IGame.h" />
-    <ClInclude Include="io\gamefile\EGameFileChunkType.h" />
-    <ClInclude Include="io\gamefile\GameFileChunk.h" />
-    <ClInclude Include="lua\lua.h" />
-    <ClInclude Include="io\EFile.h" />
-    <ClInclude Include="component\ActiveState.h" />
-    <ClInclude Include="containers\CameraContainer.h" />
-    <ClInclude Include="graphics\AnimatedSprite.h" />
-    <ClInclude Include="event\EventHandler.h" />
-    <ClInclude Include="gui\GraphicalUI.h" />
-    <ClInclude Include="gui\GUIEntity.h" />
-    <ClInclude Include="GameObjects.h" />
-    <ClInclude Include="Containers.h" />
-    <ClInclude Include="io\Input.h" />
-    <ClInclude Include="gameobject\Map.h" />
-    <ClInclude Include="component\Name.h" />
-    <ClInclude Include="graphics\Renderer.h" />
-    <ClInclude Include="gameobject\Scene.h" />
-    <ClInclude Include="graphics\Sprite.h" />
-    <ClInclude Include="graphics\SpriteManager.h" />
-    <ClInclude Include="gameobject\Tile.h" />
-    <ClInclude Include="util\Pipeline.h" />
-    <ClInclude Include="graphics\Window.h" />
-    <ClInclude Include="gui\GUIButton.h" />
-    <ClInclude Include="gui\GUICollapsibleMenu.h" />
-    <ClInclude Include="gui\GUIContext.h" />
-    <ClInclude Include="gui\GUIEditor.h" />
-    <ClInclude Include="gui\GUILabel.h" />
-    <ClInclude Include="gui\GUISlider.h" />
-    <ClInclude Include="gui\GUIText.h" />
-    <ClInclude Include="gui\GUIWindow.h" />
-    <ClInclude Include="gui\GUIMenuBar.h" />
-    <ClInclude Include="gui\GUIDropDownMenu.h" />
-    <ClInclude Include="lua\lib\lapi.h" />
-    <ClInclude Include="lua\lib\lauxlib.h" />
-    <ClInclude Include="lua\lib\lcode.h" />
-    <ClInclude Include="lua\lib\lctype.h" />
-    <ClInclude Include="lua\lib\ldebug.h" />
-    <ClInclude Include="lua\lib\ldo.h" />
-    <ClInclude Include="lua\lib\lfunc.h" />
-    <ClInclude Include="lua\lib\lgc.h" />
-    <ClInclude Include="lua\lib\llex.h" />
-    <ClInclude Include="lua\lib\llimits.h" />
-    <ClInclude Include="lua\lib\lmem.h" />
-    <ClInclude Include="lua\lib\lobject.h" />
-    <ClInclude Include="lua\lib\lopcodes.h" />
-    <ClInclude Include="lua\lib\lparser.h" />
-    <ClInclude Include="lua\lib\lstate.h" />
-    <ClInclude Include="lua\lib\lstring.h" />
-    <ClInclude Include="lua\lib\ltable.h" />
-    <ClInclude Include="lua\lib\ltm.h" />
-    <ClInclude Include="lua\lib\lua.h" />
-    <ClInclude Include="lua\lib\lua.hpp" />
-    <ClInclude Include="lua\lib\luaconf.h" />
-    <ClInclude Include="lua\lib\lualib.h" />
-    <ClInclude Include="lua\lib\lundump.h" />
-    <ClInclude Include="lua\lib\lvm.h" />
-    <ClInclude Include="lua\lib\lzio.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="graphics\SpriteBatcher.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="gui\GUIContainer.h" />
-    <ClInclude Include="gameobject\MapSection.h" />
-    <ClInclude Include="containers\EntityContainer.h" />
-    <ClInclude Include="component\Position.h" />
-    <ClInclude Include="component\Area.h" />
-    <ClInclude Include="component\CGUID.h" />
-    <ClInclude Include="component\LuaCallback.h" />
-    <ClInclude Include="containers\SceneContainer.h" />
-    <ClInclude Include="containers\WindowContainer.h" />
-    <ClInclude Include="lua\LuaObjectFactory.h" />
-    <ClInclude Include="lua\LuaUtils.h" />
-    <ClInclude Include="lua\LuaGlobalFactory.h" />
-    <ClInclude Include="io\CFile.h" />
-    <ClInclude Include="io\FileSystem.h" />
-    <ClInclude Include="component\CScriptable.h" />
-    <ClInclude Include="lua\LuaMetatableFactory.h" />
-    <ClInclude Include="ScriptGame.h" />
-    <ClInclude Include="io\gamefile\GameFileLoader.h" />
-    <ClInclude Include="io\gamefile\GameFileHeader.h" />
-    <ClInclude Include="io\gamefile\GameFileMap.h" />
-    <ClInclude Include="io\gamefile\GameFileScript.h" />
-    <ClInclude Include="io\gamefile\GameFileMapTile.h" />
-    <ClInclude Include="io\gamefile\GameFileBase.h" />
-    <ClInclude Include="io\gamefile\GameFileIndex.h" />
-    <ClInclude Include="io\gamefile\GameFileRaw.h" />
-    <ClInclude Include="io\gamefile\GameFileImage.h" />
-    <ClInclude Include="io\gamefile\GameFileAudio.h" />
-    <ClInclude Include="io\gamefile\GameFileObject.h" />
-    <ClInclude Include="gameobject\StaticEntity.h" />
-    <ClInclude Include="component\Textured.h" />
-    <ClInclude Include="io\gamefile\GameFileSaver.h" />
-    <ClInclude Include="graphics\TextRenderer.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F9AC6516-613E-424E-BE31-5526A44185FF}</ProjectGuid>
     <RootNamespace>BombMan</RootNamespace>
@@ -256,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
@@ -274,7 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -293,7 +84,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|Win32'">
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debugging|ARM'">
     <PlatformToolset>v140</PlatformToolset>
@@ -324,11 +115,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\Networking;$(ProjectDir)..\SDL2_image;$(ProjectDir)..\SDL2\include;$(ProjectDir)..\DataStructures;$(ProjectDir)..\Audio;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Layer 2\Audio\OpenAL_SDK\include;$(ProjectDir)..\Core;$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <IntDir>$(Configuration)\</IntDir>
+    <SourcePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\Core;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <IncludePath>$(ProjectDir)..\SDL2\include;$(IncludePath)</IncludePath>
@@ -382,12 +174,11 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;DataStructures.lib;Networking.lib;Audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>false</Profile>
       <EnableCOMDATFolding>
       </EnableCOMDATFolding>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalOptions>/MAP /NODEFAULTLIB:MSVCRTD %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

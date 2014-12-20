@@ -4,6 +4,7 @@
 *.user
 *.idb
 *.exe
+*.opensdf
 *.ilk
 *.bsc
 *.log
@@ -11,8 +12,10 @@
 *.lastbuildstate
 *.tlog
 *.a
+log.txt
 *.manifest
 *.res
+*.ipch
 *.o
 *.v12.suo
 *.v11.suo
@@ -22,8 +25,14 @@
 /x64
 /arm
 /Debug
+/src/Utilities_test/Debug
+/src/Test/Debug
+/src/Protheus/Debug
+/src/Core/Debug
+/src/Utilities/Debug
 src/Protheus/log.txt
 /vs2014/lib
+*/Debug
 /vs2014/Debug
 src/Protheus/Debug
 Protheus Engine.sdf

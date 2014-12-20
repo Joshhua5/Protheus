@@ -13,8 +13,7 @@ History:
 #pragma once
 
 #include <unordered_map>
-#include "..\graphics\AnimatedSprite.h"
-#include "..\graphics\SpriteManager.h"
+#include <AnimatedSprite.h> 
 
 namespace Pro{
 	namespace Component{

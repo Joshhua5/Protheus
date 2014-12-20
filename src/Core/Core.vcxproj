@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9C7944F6-E79D-49A9-811A-8EB9B8CE9316}</ProjectGuid>
+    <RootNamespace>Core</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <BrowseInformation>true</BrowseInformation>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Audio\AudioListener.h" />
+    <ClInclude Include="Audio\CAudioBuffer.h" />
+    <ClInclude Include="Audio\CAudioSource.h" />
+    <ClInclude Include="Audio\CAudioData.h" />
+    <ClInclude Include="Audio\IAudioEffect.h" />
+    <ClInclude Include="Audio\IBitstreamDecoder.h" />
+    <ClInclude Include="Audio\WavDecoder.h" />
+    <ClInclude Include="FileSystem\CFile.h" />
+    <ClInclude Include="FileSystem\EFile.h" />
+    <ClInclude Include="FileSystem\FileSystem.h" />
+    <ClInclude Include="Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\extern\glew.h" />
+    <ClInclude Include="Graphics\extern\glfw3.h" />
+    <ClInclude Include="Graphics\extern\glfw3native.h" />
+    <ClInclude Include="Graphics\extern\glxew.h" />
+    <ClInclude Include="Graphics\extern\wglew.h" />
+    <ClInclude Include="Graphics\Lighting.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Graphics\MeshLoader.h" />
+    <ClInclude Include="Graphics\MeshObject.h" />
+    <ClInclude Include="Graphics\Projection.h" />
+    <ClInclude Include="Graphics\Program.h" />
+    <ClInclude Include="Graphics\Sprite.h" />
+    <ClInclude Include="Graphics\SpriteBatcher.h" />
+    <ClInclude Include="Graphics\Transformation.h" />
+    <ClInclude Include="Graphics\VertexArray.h" />
+    <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Graphics\WindowDefinition.h" />
+    <ClInclude Include="Input\Controller.h" />
+    <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Input\Keys.h" />
+    <ClInclude Include="Input\Mouse.h" />
+    <ClInclude Include="Input\UserPointers.h" />
+    <ClInclude Include="Networking\begin_code.h" />
+    <ClInclude Include="Networking\CClientTCPConnection.h" />
+    <ClInclude Include="Networking\CConnection.h" />
+    <ClInclude Include="Networking\close_code.h" />
+    <ClInclude Include="Networking\CNetwork.h" />
+    <ClInclude Include="Networking\CServerTCPConnection.h" />
+    <ClInclude Include="Networking\CTCPConnection.h" />
+    <ClInclude Include="Networking\CTCPServer.h" />
+    <ClInclude Include="Networking\SDLnetsys.h" />
+    <ClInclude Include="Networking\SDL_net.h" />
+    <ClInclude Include="Graphics\TextureLoader.h" />
+    <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Audio\AudioListener.cpp" />
+    <ClCompile Include="Audio\CAudioSource.cpp" />
+    <ClCompile Include="Audio\WavDecoder.cpp" />
+    <ClCompile Include="FileSystem\CFile.cpp" />
+    <ClCompile Include="FileSystem\FileSystem.cpp" />
+    <ClCompile Include="Graphics\AnimatedSprite.cpp" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\Lighting.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\MeshLoader.cpp" />
+    <ClCompile Include="Graphics\MeshObject.cpp" />
+    <ClCompile Include="Graphics\Program.cpp" />
+    <ClCompile Include="Graphics\Projection.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
+    <ClCompile Include="Graphics\SpriteBatcher.cpp" />
+    <ClCompile Include="Graphics\Transformation.cpp" />
+    <ClCompile Include="Graphics\VertexArray.cpp" />
+    <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\Mouse.cpp" />
+    <ClCompile Include="Networking\CClientTCPConnection.cpp" />
+    <ClCompile Include="Networking\CConnection.cpp" />
+    <ClCompile Include="Networking\CNetwork.cpp" />
+    <ClCompile Include="Networking\CServerTCPConnection.cpp" />
+    <ClCompile Include="Networking\CTCPConnection.cpp" />
+    <ClCompile Include="Networking\CTCPServer.cpp" />
+    <ClCompile Include="Networking\SDLnet.c" />
+    <ClCompile Include="Networking\SDLnetselect.c" />
+    <ClCompile Include="Networking\SDLnetTCP.c" />
+    <ClCompile Include="Networking\SDLnetUDP.c" />
+    <ClCompile Include="Graphics\TextureLoader.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
