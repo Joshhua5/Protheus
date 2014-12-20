@@ -34,10 +34,10 @@ namespace Pro {
 		unsigned char vertex_per_face = 0;
 		unsigned char floats_per_vertex = 0;
 		unsigned char tex_coord_per_vertex = 0; 
-		unsigned face_count = 0; 
+		unsigned vertex_count = 0; 
 
-		bool has_tex_coord;
-		bool has_normals;
+		bool has_tex_coord = false;
+		bool has_normals = false;
 		 
 		FACE_FORMAT face_format = FACE_FORMAT::UNDEFINED;
 

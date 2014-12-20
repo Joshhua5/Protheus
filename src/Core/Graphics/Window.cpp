@@ -9,10 +9,18 @@ static bool init = false;
 void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
 
+void glfw_error_callback(int error_code, const char* desctiption) {
+	error.reportFatal(desctiption);
+}
+
 void Window::window_constructor(const WindowDefinition& def) {
 	 
 	if (init == false)
 		glfwInit();
+
+	glewExperimental = true;
+	glfwSetErrorCallback(&glfw_error_callback);
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, def.gl_major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, def.gl_minor);
 	glfwWindowHint(GLFW_RESIZABLE, def.resizable);
@@ -53,12 +61,18 @@ void Window::window_constructor(const WindowDefinition& def) {
 
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
  	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
 
 	glfwSetWindowUserPointer(window, new InputPointers);
 
 	keyboard.attachWindow(window);
 	mouse.attachWindow(window); 
+
+	GLuint err = glGetError();
+	if (err != GL_NO_ERROR)
+		error.reportError("Unable to create window, " + std::string((char*)glewGetErrorString(err)));
+	
 
 }
 
@@ -105,7 +119,7 @@ void Window::rename(const string& title){
 }
 
 bool Window::isFocused() const {  
-	return (glfwGetWindowAttrib(window, GLFW_FOCUSED) == GL_TRUE) ? true : false;
+	return glfwGetWindowAttrib(window, GLFW_FOCUSED) != 0 ? true : false;
 }
 
 void Window::setCurrent() {

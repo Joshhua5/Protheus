@@ -14,7 +14,7 @@ MeshObject::MeshObject() {
 	size = 0; 
 	vertex_per_face = 0;
 	floats_per_vertex = 0; 
-	face_count = 0;
+	vertex_count = 0;
 	face_format = FACE_FORMAT::UNDEFINED;
 
 	temp = nullptr;
@@ -28,15 +28,21 @@ MeshObject::MeshObject(MeshObject&& rhs) {
 	*this = rhs;
 }
 
+inline void copy(MeshObject* ptr, const MeshObject& rhs){ 
+	ptr->start = rhs.start;
+	ptr->size = rhs.size; 
+	ptr->vertex_per_face = rhs.vertex_per_face;
+	ptr->tex_coord_per_vertex = rhs.tex_coord_per_vertex;
+	ptr->floats_per_vertex = rhs.floats_per_vertex; 
+	ptr->vertex_count = rhs.vertex_count;
+	ptr->face_format = rhs.face_format;
+	ptr->has_tex_coord = rhs.has_tex_coord;
+	ptr->has_normals = rhs.has_normals;
+}
+
 MeshObject& MeshObject::operator=(MeshObject&& rhs) {
 	name = std::move(rhs.name);
-	start = rhs.start;
-	size = rhs.size; 
-	vertex_per_face = rhs.vertex_per_face;
-	floats_per_vertex = rhs.floats_per_vertex; 
-	face_count = rhs.face_count;
-	face_format = rhs.face_format;
-
+	copy(this, rhs);
 	rhs.temp = nullptr;
 	rhs.tempWriter = nullptr;
 	return *this;
@@ -45,25 +51,21 @@ MeshObject::MeshObject(const MeshObject& rhs) {
 	*this = rhs;
 }
 MeshObject& MeshObject::operator=(const MeshObject& rhs) {
-	name = rhs.name;
-	start = rhs.start;
-	size = rhs.size; 
-	vertex_per_face = rhs.vertex_per_face;
-	floats_per_vertex = rhs.floats_per_vertex; 
-	face_count = rhs.face_count;
-	face_format = rhs.face_format;
+	name = rhs.name; 
+
+	copy(this, rhs); 
 
 	temp = rhs.temp;
 	tempWriter = rhs.tempWriter;
 	return *this;
 }
 
-bool     MeshObject::hasTexCoord() const {
-	return has_tex_coord;
+bool MeshObject::hasTexCoord() const {
+	return has_tex_coord ? 1 : 0;
 }
 
-bool     MeshObject::hasNormals() const {
-	return has_normals;
+bool MeshObject::hasNormals() const {
+	return has_normals ? 1 : 0;
 }
 
 GLuint   MeshObject::vertexSize() const {
@@ -110,5 +112,5 @@ GLuint   MeshObject::texCoordOffset() const {
 	return floats_per_vertex * sizeof(GLfloat);
 }
 GLenum   MeshObject::getMode() const {
-	return vertex_per_face == 4 ? GL_QUADS : GL_TRIANGLE_STRIP;
+	return GL_TRIANGLES;
 }

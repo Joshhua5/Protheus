@@ -1,4 +1,3 @@
-*.obj
 *.sbr
 *.sdf
 *.user
@@ -30,9 +29,16 @@ log.txt
 /src/Protheus/Debug
 /src/Core/Debug
 /src/Utilities/Debug
+/src/Utilities_test/Release
+/src/Test/Release
+/src/Protheus/Release
+/src/Core/Release
+/src/Utilities/Release
 src/Protheus/log.txt
 /vs2014/lib
 */Debug
 /vs2014/Debug
-src/Protheus/Debug
+src/Protheus/Debug 
+/vs2014/Release
+src/Protheus/Release
 Protheus Engine.sdf
