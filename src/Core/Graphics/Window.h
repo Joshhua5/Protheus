@@ -55,6 +55,7 @@ namespace Pro {
 
 			Keyboard& getKeyboard();
 			Mouse& getMouse();
+			float getAspect() const;
 		};
 	}
 }

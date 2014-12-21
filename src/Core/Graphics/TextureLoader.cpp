@@ -19,37 +19,40 @@ inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask
 
 	return out;
 }
+namespace Pro {
+	namespace Graphics { 
+		struct BMPHeader {
+			unsigned header_size;
+			unsigned long bmp_width;
+			unsigned long bmp_height;
+			unsigned color_planes;
+			unsigned bit_depth;
+			// INFO
+			unsigned compression_method;
+			unsigned bmp_image_size;
+			unsigned long pixel_per_meter_hor;
+			unsigned long pixel_per_meter_ver;
+			unsigned color_palette_count;
+			unsigned important_colors;
 
-struct BMPHeader {
-	unsigned header_size;
-	unsigned long bmp_width;
-	unsigned long bmp_height;
-	unsigned color_planes;
-	unsigned bit_depth;
-	// INFO
-	unsigned compression_method;
-	unsigned bmp_image_size;
-	unsigned long pixel_per_meter_hor;
-	unsigned long pixel_per_meter_ver;
-	unsigned color_palette_count;
-	unsigned important_colors;
+			// V4Header
+			unsigned        r_bitmask = 8;
+			unsigned        g_bitmask = 8;
+			unsigned        b_bitmask = 8;
+			unsigned        a_bitmask = 8;
+			unsigned        color_space_type;
+			//CIEXYZTRIPLE	color_space_endpoints;
+			unsigned        r_gamma = 1;
+			unsigned        g_gamma = 1;
+			unsigned        b_gamma = 1;
 
-	// V4Header
-	unsigned        r_bitmask = 8;
-	unsigned        g_bitmask = 8;
-	unsigned        b_bitmask = 8;
-	unsigned        a_bitmask = 8;
-	unsigned        color_space_type;
-	//CIEXYZTRIPLE	color_space_endpoints;
-	unsigned        r_gamma = 1;
-	unsigned        g_gamma = 1;
-	unsigned        b_gamma = 1;
-
-	// V5Header
-	unsigned        bV5Intent;
-	unsigned        bV5ProfileData;
-	unsigned        bV5ProfileSize;
-};
+			// V5Header
+			unsigned        bV5Intent;
+			unsigned        bV5ProfileData;
+			unsigned        bV5ProfileSize;
+		};
+	}
+}
 
 inline void decodeBitmapHeader(BMPHeader& header, BufferReader& reader) {
 	switch (header.header_size) {
@@ -141,13 +144,13 @@ smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 	// load header core 
 	BMPHeader header;
 	header.header_size = reader.read<unsigned>();
- 
+
 	decodeBitmapHeader(header, reader);
 
 	// Color table
 
-	if (!(header.header_size == 12   || header.header_size == 40 || header.header_size == 108 ||
-		header.header_size == 124  || header.header_size == 52 || header.header_size == 56)) {
+	if (!(header.header_size == 12 || header.header_size == 40 || header.header_size == 108 ||
+		header.header_size == 124 || header.header_size == 52 || header.header_size == 56)) {
 		error.reportError("Unsupported BMP header");
 		return nullptr;
 	}

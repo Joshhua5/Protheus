@@ -131,12 +131,12 @@ namespace Pro {
 				Returns the data at a specific alignment boundary
 				equivilant to data()[pos * m_alignment_crossover * m_alignment];
 			*/
-			void* atBoundary(unsigned pos) const {
+			inline void* atBoundary(unsigned pos) const {
 				return static_cast<char*>(m_data) + (pos * m_alignment_crossover * m_alignment);
 			}
 
 			/*! Returns the data at the index with bounds checking */
-			void* at(unsigned index) const {
+			inline void* at(unsigned index) const {
 				const unsigned offset = index * m_sizeof;
 				const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
 				if (index >= position)
@@ -145,24 +145,39 @@ namespace Pro {
 			};
 
 			/*! Returns the defined alignement for the data */
-			unsigned alignment() const {
+			inline unsigned alignment() const {
 				return m_alignment;
 			}
 
 			/*! Returns a pointer to the internal data with offset
 				Not safe to call delete on
 			*/
-			void* data() {
+			inline void* data() {
 				return m_data;
 			}
 
+			/*! Returns the size of internal data being stored
+				Value is used to calculate alignment
+			*/
+			inline unsigned sizeOf() const {
+				return m_sizeof;
+			}
+
+			/*! Returns a pointer to the internal data with offset and casts the pointer to type T
+				Not safe to call delete on
+			*/
+			template<typename T>
+			inline T* data() {
+				return static_cast<T*>(m_data);
+			}
+
 			/*! Size of the buffer in bytes excluding offset */
-			unsigned size() const {
+			inline unsigned size() const {
 				return m_size;
 			}
 
 			/*! Returns the data at the index */
-			void* operator[](unsigned index) {
+			inline void* operator[](unsigned index) {
 				const unsigned offset = index * m_sizeof;
 				const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
 				return static_cast<char*>(m_data) + position;

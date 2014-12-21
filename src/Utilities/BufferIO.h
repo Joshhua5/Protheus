@@ -12,6 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 #include "Buffer.h" 
+#include "AlignedBuffer.h"
 #include "smart_pointer.h"
 
 namespace Pro {
@@ -21,11 +22,18 @@ namespace Pro {
 		protected:
 			/*! Position in the buffer currently being access */
 			unsigned m_head;
-			/*! Pointer to the buffer being accessed */
-			smart_pointer<Buffer> m_buffer;
+			
+			union {
+				/*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
+				smart_pointer<Buffer> m_buffer;
+				/*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
+				smart_pointer<AlignedBuffer> aligned_buffer;
+			};
 			/*! False if a simple pointer is passed */
 			bool using_smart;
 		public:
+			BufferIO(){}
+			~BufferIO(){}
 
 			//! Sets the position of the @m_head
 			void setPosition(const unsigned position) {
@@ -46,7 +54,7 @@ namespace Pro {
 			/*! Skips over the current @m_head position in bytes
 				Used to progress the @m_head
 			*/
-			void skip(const int position) {
+			inline void skip(const int position) {
 				m_head += position;
 			}
 

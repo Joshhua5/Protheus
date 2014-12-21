@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlignedBuffer.h" />
+    <ClInclude Include="AlignedReader.h" />
     <ClInclude Include="BitCompare.h" />
     <ClInclude Include="BufferBase.h" />
     <ClInclude Include="BufferIO.h" />

@@ -15,18 +15,21 @@
 
 using namespace Pro;
 using namespace Util;
+using namespace Input;
 using namespace Graphics; 
 
 int main() {
-	Graphics::Window window("title", Vector2<int>(960, 960));
+	Graphics::Window window("title", Vector2<int>(1800, 960));
 
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
  	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/monkey.obj"));
 
+	
+
 	Transformation camera;
-	Projection projection(0.01f, 1000.0f, 45, 1);
+	Projection projection(0.01f, 1000.0f, 45, window.getAspect());
 	Transformation model;
 	Transformation light_t;
 	   
@@ -36,6 +39,10 @@ int main() {
 	// TEST 
 	// cbuffer is deleted after being passed as rvalue
 	auto tex = TextureLoader::loadTexture(fs.getFile("textures/box.bmp"));
+
+	if (tex == nullptr || cube == nullptr) {
+		return 1;
+	}
 
 	GLuint vbo = 0; 
 	GLuint sampler = 0; 

@@ -61,8 +61,7 @@ namespace Pro {
 			inline void write(const T& data) {
 				write(&data, sizeof(T));
 			}
-
-
+			 
 			/*! Writes an object into the buffer */
 			template<typename T>
 			inline void write(const T&& data) {

@@ -117,8 +117,7 @@ namespace Pro {
 			/*!
 				Reads the next T in the buffer
 				If copy is false then the Bufferpoints at the internal buffer.
-			*/
-
+			*/ 
 			template<typename T>
 			inline T read(bool copy = true) {
 				return *static_cast<T*>(read(sizeof(T), copy).data());
@@ -127,8 +126,7 @@ namespace Pro {
 			/*!
 				Reads the an array of T in the buffer
 				If copy is false then the Bufferpoints at the internal buffer.
-			*/
-
+			*/ 
 			template<typename T>
 			inline T* read_array(const unsigned size, bool copy = true) {
 				auto buffer = read(sizeof(T) * size, copy);

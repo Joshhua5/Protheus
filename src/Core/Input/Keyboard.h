@@ -6,21 +6,20 @@
 #include <utility>
 #include <queue>
 #include "Keys.h"
- 
-namespace Pro { 
 
+namespace Pro {
+	namespace Input {
+		class Keyboard {
+			std::queue<std::pair<KEY, KEY>> keyboard_key;
+			GLFWwindow* window;
+		public:
+			bool hasKey();
+			// returns <modifier, key>
+			std::pair<KEY, KEY> poolKey();
+			KEY_PRESSED isKeyDown(KEY);
 
-
-	class Keyboard {
-		std::queue<std::pair<KEY, KEY>> keyboard_key; 
-		GLFWwindow* window;
-	public: 
-		bool hasKey();
-		// returns <modifier, key>
-		std::pair<KEY, KEY> poolKey();
-		KEY_PRESSED isKeyDown(KEY);
-
-		// depreciated
-		void attachWindow(GLFWwindow*);
-	};
+			// depreciated
+			void attachWindow(GLFWwindow*);
+		};
+	}
 }

@@ -58,7 +58,7 @@ const Matrix44<float>& Projection::getPerspective(){
 	float fov = Math::degToRad(m_fov); 
 	float w, h, Q;
 
-	w = static_cast<float>(1.0f / tan(fov * m_aspect * 0.5));
+	w = static_cast<float>(1.0f / tan(fov * 0.5)) / m_aspect;
 	h = static_cast<float>(1.0f / tan(fov * 0.5));
 	Q = m_far - (m_far - m_near);
 

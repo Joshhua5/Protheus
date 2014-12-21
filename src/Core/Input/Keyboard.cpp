@@ -1,6 +1,7 @@
 #include "Keyboard.h"
 
 using namespace Pro;
+using namespace Input;
 
 void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))

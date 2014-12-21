@@ -90,8 +90,8 @@ namespace Pro {
 
 			// Move Constructor 
 			Vector2& operator=(Vector2&& p) {
-				x = std::move(vec.x);
-				y = std::move(vec.y);
+				x = std::move(p.x);
+				y = std::move(p.y);
 				return *this;
 			}
 

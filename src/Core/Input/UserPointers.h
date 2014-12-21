@@ -2,10 +2,12 @@
 
 #include <queue>
 
-namespace Pro {   
-	enum struct KEY;
-	struct InputPointers {
-		std::queue<std::pair<KEY, KEY>>* keyboard;
-		std::queue<std::pair<KEY, KEY>>* mouse;
-	};
+namespace Pro {
+	namespace Input {
+		enum struct KEY;
+		struct InputPointers {
+			std::queue<std::pair<KEY, KEY>>* keyboard;
+			std::queue<std::pair<KEY, KEY>>* mouse;
+		};
+	}
 }

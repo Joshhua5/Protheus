@@ -1,6 +1,7 @@
 #include "Mouse.h"
 
 using namespace Pro;
+using namespace Input;
 
 void mouse_callback(GLFWwindow* window, int key, int action, int mod) {
 	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))

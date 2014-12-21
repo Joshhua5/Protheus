@@ -18,9 +18,8 @@ MODEL_FORMAT  MeshLoader::queryFormat(Buffer* buffer) {
 }
 
 inline unsigned process_linei(const string& format, BufferReader& in, BufferWriter& out) {
-	int face[12];
-	// vertex/uv/normal 
-	// TEST does atoi stop at the /
+	int face[12]; 
+
 	auto ret = sscanf(in.read_raw(), format.data(),
 		face + 0, face + 1, face + 2,
 		face + 3, face + 4, face + 5,
@@ -153,8 +152,10 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 
 	object.push_back(MeshObject("", 0, 0));
 
-	if (processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer) == false)
+	if (processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer) == false) {
+		error.reportError("Unable to load object file\0");
 		return nullptr;
+	}
 
 	// populate the size of the last object 
 
@@ -213,12 +214,12 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 			}
 
 			// Check if face has already been defined
-			for (unsigned x = 0; x < current_verticies.size(); ++x)
-			if (current_verticies[x] == vertex) {
-				existing = true;
-				element_writer.write<unsigned>(x);
-				break;
-			}
+			//for (unsigned x = 0; x < current_verticies.size(); ++x)
+			//if (current_verticies[x] == vertex) {
+			//	existing = true;
+			//	element_writer.write<unsigned>(x);
+			//	break;
+			//}
 
 			// If no duplicates, add into the verticies and element buffer
 			if (existing == false) {
@@ -243,7 +244,8 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	}
 
 	object[0].temp = nullptr;
-	object[0].tempWriter = nullptr;
+	object[0].tempWriter = nullptr; 
+	object[0].size = object[0].vertex_count;
 
 	for (unsigned x = 1; x < object.size(); x++) {
 		object[x].start = object[x - 1].vertex_count;

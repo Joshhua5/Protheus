@@ -46,7 +46,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 	if (def.ogl_core_profile)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
+	dimension = { def.width, def.height };
 	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
 	
 	setCurrent();
@@ -85,7 +85,7 @@ Window::Window(const string& title, const Vector2<int> dimensions){
 		glfwInit();
 
 	WindowDefinition def;
-	def.title = title;
+	def.title = title; 
 	def.width = dimensions.x;
 	def.height = dimensions.y;
 
@@ -138,6 +138,10 @@ void Window::endFrame() {
 	glfwSwapBuffers(window);
 }
 
+
+float Window::getAspect() const {
+	return  (float)dimension.x / (float)dimension.y ;
+}
 
 void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
