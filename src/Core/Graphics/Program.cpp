@@ -70,7 +70,7 @@ void Program::link() {
 	if (error_id == GL_FALSE) {
 		GLint size;
 		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &size);
-		CBuffer err(size);
+		Buffer err(size);
 		glGetProgramInfoLog(program_id, err.size(), nullptr, err.data<char>());
 		error.reportErrorNR(err.data<char>());
 		has_error = true;

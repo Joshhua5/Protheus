@@ -58,7 +58,7 @@ unsigned int CFile::getWritePosition(){
 	return static_cast<unsigned int>(file.tellp());
 }
 
-void CFile::write(CBuffer& buf){
+void CFile::write(Buffer& buf){
 	if (!file.is_open())
 		return;
 	file.write(buf.data<const char>(), buf.size());
@@ -70,18 +70,18 @@ void CFile::write(const std::string& str){
 	file.write(str.data(), str.length());
 } 
 
-CBuffer CFile::read(){
+Buffer CFile::read(){
 	if (!file.is_open())
-		return CBuffer(0);
-	CBuffer buf(this->getSize());
+		return Buffer(0);
+	Buffer buf(this->getSize());
 	file.read(buf.data<char>(), buf.size());
 	return buf;
 }
 
-CBuffer CFile::read(unsigned int size){
+Buffer CFile::read(unsigned size){
 	if (!file.is_open())
-		CBuffer(0);
-	CBuffer buf(size);
+		Buffer(0);
+	Buffer buf(size);
 	file.read(buf.data<char>(), buf.size());
 	return buf;
 } 

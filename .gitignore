@@ -28,11 +28,13 @@ log.txt
 /src/Test/Debug
 /src/Protheus/Debug
 /src/Core/Debug
+/src/Core_Test/Debug
 /src/Utilities/Debug
 /src/Utilities_test/Release
 /src/Test/Release
 /src/Protheus/Release
 /src/Core/Release
+/src/Core_Test/Release
 /src/Utilities/Release
 src/Protheus/log.txt
 /vs2014/lib
@@ -42,3 +44,4 @@ src/Protheus/Debug
 /vs2014/Release
 src/Protheus/Release
 Protheus Engine.sdf
+src/Core_Test/Debug/LearnOGL.obj

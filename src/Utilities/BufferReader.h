@@ -18,19 +18,19 @@ History:
 #include "ClassDefinition.h"
 
 namespace Pro { 
-	/*! Class to add on reading functionality to a CBuffer and AlignedBuffer(Planned) */
+	/*! Class to add on reading functionality to a Bufferand AlignedBuffer(Planned) */
 	class BufferReader :
 		public BufferIO
 	{ 
 	public:
 		BufferReader(const BufferReader&) = delete;
 
-		BufferReader(CBuffer* buffer) {
+		BufferReader(Buffer* buffer) {
 			using_smart = false;
 			m_head = 0;
 			m_buffer = buffer;
 		}
-		BufferReader(smart_pointer<CBuffer> pointer) {
+		BufferReader(smart_pointer<Buffer> pointer) {
 			using_smart = true;
 			m_head = 0;
 			m_buffer = pointer;
@@ -41,7 +41,7 @@ namespace Pro {
 			buffer.m_buffer = nullptr;
 		}
 		~BufferReader() {
-m_head = 0;
+			m_head = 0;
 			if (using_smart)
 				m_buffer = nullptr;
 			else
@@ -55,23 +55,23 @@ m_head = 0;
 		}
 		 
 		/*!
-			Returns a CBuffer containing the read data,
-			if copy is false then the CBuffer points to the
+			Returns a Buffercontaining the read data,
+			if copy is false then the Bufferpoints to the
 			existing data in @m_buffer.
 		*/
-		CBuffer read(const unsigned size, bool copy = true) {
+		Buffer read(const unsigned size, bool copy = true) {
 			if (m_head - m_buffer->size() <= size)
-				return CBuffer(0);
-			CBuffer out(read_raw(), size, copy);
+				return Buffer(0);
+			Buffer out(read_raw(), size, copy);
 			skip(size);
 			return move(out);
 		}
 
 		/*! Reads through the buffer until the next deliminator is found.
 			Includes the found deliminator the deliminator.
-			If copy is false then the CBuffer points at the internal buffer.
+			If copy is false then the Bufferpoints at the internal buffer.
 		*/
-		CBuffer read_delim(const char deliminator, bool copy = true) {
+		Buffer read_delim(const char deliminator, bool copy = true) {
 			return read(find(deliminator), copy);
 		}
 
@@ -115,7 +115,7 @@ m_head = 0;
 
 		/*!
 			Reads the next T in the buffer
-			If copy is false then the CBuffer points at the internal buffer.
+			If copy is false then the Bufferpoints at the internal buffer.
 		*/
 
 		template<typename T>
@@ -125,7 +125,7 @@ m_head = 0;
 
 		/*!
 			Reads the an array of T in the buffer
-			If copy is false then the CBuffer points at the internal buffer.
+			If copy is false then the Bufferpoints at the internal buffer.
 		*/
 			
 		template<typename T>

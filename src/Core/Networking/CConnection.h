@@ -17,7 +17,7 @@ History:
 #include <mutex>
 #include <atomic>
 #include <BufferReader.h>
-#include <CBuffer.h>
+#include <Buffer.h>
 
 typedef int connection_id;
 
@@ -27,8 +27,8 @@ namespace Pro{
 		struct CConnection
 		{
 			mutex mutex;
-			queue<CBuffer> inputStack;
-			queue<CBuffer> outputStack;
+			queue<Buffer> inputStack;
+			queue<Buffer> outputStack;
 			atomic<bool> connected;
 			connection_id id;
 		public:
@@ -37,16 +37,16 @@ namespace Pro{
 			connection_id getID() { return id; }
 
 			// returns the amount of bytes recieved
-			CBuffer recv();
+			Buffer recv();
 
 			// returns the amount of bytes recieved without clearing the buffer
-			unsigned int peek();
+			unsigned peek() const;
 
 			// returns true if the connection is active
 			bool isConnected();
 
 			// sends the buffer through the connection
-			void send(CBuffer& buffer); 
+			void send(Buffer& buffer); 
 		};
 	}
 }

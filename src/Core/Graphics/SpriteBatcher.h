@@ -31,7 +31,7 @@ namespace Pro{
 
 		class SpriteBatcher
 		{    
-			CBuffer* verticies;
+			Buffer* verticies;
 			BufferWriter* writer;
 			Transformation batch_transformation;
 			VertexArray vao;

@@ -12,7 +12,7 @@ History:
 
 #pragma once
 
-#include <CBuffer.h>
+#include <Buffer.h>
 #include "CServerTCPConnection.h"
 #include "CClientTCPConnection.h"
 #include "CTCPServer.h"

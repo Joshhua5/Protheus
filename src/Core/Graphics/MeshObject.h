@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 #include "Program.h"
-#include <CBuffer.h>
+#include <Buffer.h>
 #include <smart_pointer.h>
 #include <BufferWriter.h>
 #include "VertexArray.h"
@@ -41,7 +41,7 @@ namespace Pro {
 		 
 		FACE_FORMAT face_format = FACE_FORMAT::UNDEFINED;
 
-		smart_pointer<CBuffer> temp = nullptr;
+		smart_pointer<Buffer> temp = nullptr;
 		smart_pointer<BufferWriter> tempWriter = nullptr;
 
 		MeshObject();

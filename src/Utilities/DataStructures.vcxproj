@@ -21,7 +21,7 @@
     <ClInclude Include="BufferIO.h" />
     <ClInclude Include="BufferReader.h" />
     <ClInclude Include="BufferWriter.h" />
-    <ClInclude Include="CBuffer.h" />
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="ClassDefinition.h" />
     <ClInclude Include="Deferred.h" />
     <ClInclude Include="DoubleBuffer.h" />

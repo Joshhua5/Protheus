@@ -12,7 +12,7 @@ History:
 *************************************************************************/
 #pragma once
  
-#include <CBuffer.h>
+#include <Buffer.h>
 
 #include <fstream>
 #include <string>
@@ -63,7 +63,7 @@ namespace Pro{
 			unsigned int getWritePosition();
 
 			/*	Writes the buffer to the file */
-			void write(CBuffer&); 
+			void write(Buffer&); 
 
 			/*  Writes the string to the file */
 			void write(const std::string&);
@@ -77,10 +77,10 @@ namespace Pro{
 			/*  Read's from the file and
 			copies everything between the position
 			and the size + position into the buffer */
-			CBuffer read(unsigned int size);
+			Buffer read(unsigned size);
 
 			// Reads the whole file
-			CBuffer CFile::read();
+			Buffer CFile::read();
 
 			// Read a primative data type
 			template<typename T>

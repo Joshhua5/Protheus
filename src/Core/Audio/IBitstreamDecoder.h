@@ -20,7 +20,7 @@ namespace Pro{
 		class IBitstreamDecoder
 		{
 		public: 
-			virtual CAudioData* load(CBuffer& buffer) = 0;
+			virtual CAudioData* load(Buffer& buffer) = 0;
 		};
 	}
 }

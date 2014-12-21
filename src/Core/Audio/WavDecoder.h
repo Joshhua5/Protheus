@@ -23,7 +23,7 @@ namespace Pro{
 			public IBitstreamDecoder
 		{
 		public:  
-			static CAudioData* load(CBuffer* buffer);
+			static CAudioData* load(Buffer* buffer);
 		};
 	}
 }

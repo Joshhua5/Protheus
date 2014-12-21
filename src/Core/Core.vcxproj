@@ -67,6 +67,7 @@
     <Lib>
       <AdditionalDependencies>OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -126,13 +127,13 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\Keys.h" />
     <ClInclude Include="Input\Mouse.h" />
-    <ClInclude Include="Input\UserPointers.h" /> 
+    <ClInclude Include="Input\UserPointers.h" />
     <ClInclude Include="Networking\CClientTCPConnection.h" />
-    <ClInclude Include="Networking\CConnection.h" /> 
+    <ClInclude Include="Networking\CConnection.h" />
     <ClInclude Include="Networking\CNetwork.h" />
     <ClInclude Include="Networking\CServerTCPConnection.h" />
     <ClInclude Include="Networking\CTCPConnection.h" />
-    <ClInclude Include="Networking\CTCPServer.h" /> 
+    <ClInclude Include="Networking\CTCPServer.h" />
     <ClInclude Include="Graphics\TextureLoader.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Graphics\Shader.h" />
@@ -168,7 +169,7 @@
     <ClCompile Include="Networking\CNetwork.cpp" />
     <ClCompile Include="Networking\CServerTCPConnection.cpp" />
     <ClCompile Include="Networking\CTCPConnection.cpp" />
-    <ClCompile Include="Networking\CTCPServer.cpp" /> 
+    <ClCompile Include="Networking\CTCPServer.cpp" />
     <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />

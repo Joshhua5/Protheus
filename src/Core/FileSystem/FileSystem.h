@@ -35,7 +35,7 @@ namespace Pro{
 			/*  Returns a reference to the root directory */
 			string& getRootDir();
 
-			CBuffer getFile(const string& path);
+			Buffer getFile(const string& path);
 		};
 	}
 }

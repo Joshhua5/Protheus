@@ -3,7 +3,7 @@
 using namespace Pro; 
 
 void Lighting::bindLights(Program& program) {  
-	CBuffer points(light_points.size() * sizeof(float) * 8);
+	Buffer points(light_points.size() * sizeof(float) * 8);
 	BufferWriter writer(&points);
 
 	for (auto& light : light_points) {

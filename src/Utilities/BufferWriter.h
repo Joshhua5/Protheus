@@ -16,22 +16,22 @@ History:
 #include "ClassDefinition.h"
 
 namespace Pro {
-	using namespace Serializer; 
-	/*! Class to add on writing functionality to a CBuffer and AlignedBuffer(Planned) */
+	using namespace Serializer;
+	/*! Class to add on writing functionality to a Bufferand AlignedBuffer(Planned) */
 	class BufferWriter :
 		public BufferIO
 	{
-	public:  
-		BufferWriter(CBuffer* buffer) {
+	public:
+		BufferWriter(Buffer* buffer) {
 			using_smart = false;
 			m_buffer = buffer;
 			m_head = 0;
 		}
-		BufferWriter(smart_pointer<CBuffer> pointer) {
+		BufferWriter(smart_pointer<Buffer> pointer) {
 			using_smart = true;
 			m_buffer = pointer;
-						m_head = 0;
-		} 
+			m_head = 0;
+		}
 		~BufferWriter() {
 			m_head = 0;
 			if (using_smart)
@@ -39,7 +39,7 @@ namespace Pro {
 			else
 				m_buffer.dereference();
 		}
-		   
+
 		/*!	Writes an array into the buffer
 			Size is in bytes
 		*/
@@ -55,7 +55,7 @@ namespace Pro {
 			memcpy(m_buffer->at(m_head), value, size);
 			skip(size);
 		}
-		 
+
 		template<typename T>
 		inline void write(const T& data) {
 			write(&data, sizeof(T));
@@ -69,7 +69,7 @@ namespace Pro {
 		}
 
 		/*! Writes the array into the buffer
-			size in bytes 
+			size in bytes
 		*/
 		template<typename T>
 		inline void write_array(const T* data, unsigned size) {
@@ -106,6 +106,6 @@ namespace Pro {
 				// Write the data of the member
 				write(member_pointer, member.size);
 			}
-		} 
+		}
 	};
 }

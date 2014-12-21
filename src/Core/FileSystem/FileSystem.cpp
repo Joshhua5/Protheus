@@ -23,7 +23,7 @@ std::string& FileSystem::getRootDir(){
 }
 
 
-CBuffer FileSystem::getFile(const string& path) {
+Buffer FileSystem::getFile(const string& path) {
 	auto file = openFile(path);
 	auto buffer = file->read();
 	delete file;

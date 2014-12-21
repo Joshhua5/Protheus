@@ -14,7 +14,7 @@ History:
 
 #include <Vector2.h> 
 #include <Vector3.h>
-#include <CBuffer.h>
+#include <Buffer.h>
 #include <string>
 #include "Texture.h"
 

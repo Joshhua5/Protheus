@@ -30,7 +30,7 @@ namespace Pro{
 			CAudio();
 			~CAudio();
 			 
-			CAudioBuffer loadAudio(AUDIO_FORMAT format, CBuffer* file);
+			CAudioBuffer loadAudio(AUDIO_FORMAT format, Buffer* file);
 
 			// Doesn't create a source after creating the file
 			// returns the decoded audio file 

@@ -21,7 +21,7 @@ void TCPConnection::messenger(){
 		if (!outputStack.empty()){
 			mutex.lock();
 			// Grab the message
-			CBuffer buffOut = outputStack.front();
+			Buffer buffOut = outputStack.front();
 			outputStack.pop();
 			mutex.unlock();
 
@@ -40,12 +40,12 @@ void TCPConnection::messenger(){
 void TCPConnection::listener(){
 	// Get data recieved
 	const int INPUT_BUFFER_SIZE = 1024;
-	CBuffer inputBuffer(INPUT_BUFFER_SIZE);
+	Buffer inputBuffer(INPUT_BUFFER_SIZE);
 	unsigned bufferSize = 0;
 	while ((bufferSize = SDLNet_TCP_Recv(socket, inputBuffer.data(), INPUT_BUFFER_SIZE)) > 0 &&
 		connected.load()){
 		// Get Data Recieved
-		CBuffer buf(inputBuffer.data(), bufferSize, true);
+		Buffer buf(inputBuffer.data(), bufferSize, true);
 		mutex.lock();
 		inputStack.push(move(buf));
 		mutex.unlock();

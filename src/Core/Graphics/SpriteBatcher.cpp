@@ -74,7 +74,7 @@ SpriteBatcher::SpriteBatcher() {
 	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &max_sprites);
 	max_textures = 4;
 
-	verticies = new CBuffer(max_sprites * 5 * sizeof(GLfloat));
+	verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
 	writer = new BufferWriter(verticies);
 
 	static bool first_init = true;
@@ -102,7 +102,7 @@ SpriteBatcher::SpriteBatcher() {
 		vao.preservedBind();
 
 		// CHECK OFFSETS 
-		//CBuffer vertex_buffer(max_sprites * stride_size * 6, false);
+		//Buffervertex_buffer(max_sprites * stride_size * 6, false);
 		//BufferWriter vertex_buffer_writer(&vertex_buffer);
 
 		glGenBuffers(1, &vertex_buffer_id);

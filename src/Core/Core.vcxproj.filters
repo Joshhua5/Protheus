@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Networking\begin_code.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Networking\CClientTCPConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Networking\CConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking\close_code.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Networking\CNetwork.h">
@@ -37,12 +31,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Networking\CTCPServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking\SDL_net.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking\SDLnetsys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Audio\Audio.h">
@@ -191,15 +179,6 @@
     <ClCompile Include="Networking\CTCPServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Networking\SDLnetselect.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Networking\SDLnetTCP.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Networking\SDLnetUDP.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Audio\Audio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -237,9 +216,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Networking\SDLnet.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Program.cpp">

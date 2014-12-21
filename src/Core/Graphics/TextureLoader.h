@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CBuffer.h>
+#include <Buffer.h>
 #include <BufferReader.h>
 #include <BufferWriter.h>
 #include <Vector2.h> 
@@ -32,11 +32,11 @@ namespace Pro {
 	}; 
 
 	class TextureLoader { 
-		static IMAGE_FORMAT queryFormat(CBuffer*);
+		static IMAGE_FORMAT queryFormat(Buffer*);
 	public:
 
-		static smart_pointer<Texture> loadBMP(CBuffer*);
-		static smart_pointer<Texture> loadTexture(CBuffer*);
-		static smart_pointer<Texture> loadTexture(CBuffer&&);
+		static smart_pointer<Texture> loadBMP(Buffer*);
+		static smart_pointer<Texture> loadTexture(Buffer*);
+		static smart_pointer<Texture> loadTexture(Buffer&&);
 	};
 }

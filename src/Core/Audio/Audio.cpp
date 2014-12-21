@@ -45,7 +45,7 @@ CAudioSource CAudio::createSource(const CAudioBuffer& buffer) {
 	return source;
 }
 
-CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, CBuffer* file) { 
+CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, Buffer* file) { 
 	CAudioBuffer buffer = 0;
 	alGenBuffers(1, &buffer.id);
 	// Load an audio file here

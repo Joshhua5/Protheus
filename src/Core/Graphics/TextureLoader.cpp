@@ -109,7 +109,7 @@ inline void decodeBitmapHeader(BMPHeader& header, BufferReader& reader) {
 }
 
 
-IMAGE_FORMAT TextureLoader::queryFormat(CBuffer* buffer) {
+IMAGE_FORMAT TextureLoader::queryFormat(Buffer* buffer) {
 	// check for BMP
 	BufferReader reader(buffer);
 
@@ -127,7 +127,7 @@ IMAGE_FORMAT TextureLoader::queryFormat(CBuffer* buffer) {
 	return IMAGE_FORMAT::UNDEFINED;
 }
 
-smart_pointer<Texture> TextureLoader::loadBMP(CBuffer* buffer) {
+smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 	BufferReader reader(buffer);
 	reader.setPosition(2);
 
@@ -180,7 +180,7 @@ smart_pointer<Texture> TextureLoader::loadBMP(CBuffer* buffer) {
 			);
 	}
 
-	CBuffer texture_data(header.bmp_height * header.bmp_width * sizeof(GLuint));
+	Buffer texture_data(header.bmp_height * header.bmp_width * sizeof(GLuint));
 	BufferWriter writer(&texture_data);
 	reader.setPosition(bmp_offset);
 
@@ -251,7 +251,7 @@ smart_pointer<Texture> TextureLoader::loadBMP(CBuffer* buffer) {
 	return new Texture(texture_id, Vector2<unsigned>((unsigned)header.bmp_width, (unsigned)header.bmp_height));
 }
 
-smart_pointer<Texture> TextureLoader::loadTexture(CBuffer* buffer) {
+smart_pointer<Texture> TextureLoader::loadTexture(Buffer* buffer) {
 	smart_pointer<Texture> tex;
 
 	if (buffer->isEmpty()) {
@@ -273,6 +273,6 @@ smart_pointer<Texture> TextureLoader::loadTexture(CBuffer* buffer) {
 	return tex;
 }
 
-smart_pointer<Texture> TextureLoader::loadTexture(CBuffer&& buffer) {
+smart_pointer<Texture> TextureLoader::loadTexture(Buffer&& buffer) {
 	return loadTexture(&buffer);
 }

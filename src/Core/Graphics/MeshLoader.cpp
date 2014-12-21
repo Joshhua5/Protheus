@@ -3,7 +3,7 @@
 using namespace Pro;
 
 
-MODEL_FORMAT  MeshLoader::queryFormat(CBuffer* buffer) {
+MODEL_FORMAT  MeshLoader::queryFormat(Buffer* buffer) {
 
 	if (buffer->isEmpty())
 		return MODEL_FORMAT::UNDEFINED;
@@ -30,7 +30,7 @@ inline unsigned process_linei(const string& format, BufferReader& in, BufferWrit
 	out.write_elements<int>(face, ret); 
 	return ret;
 } 
-inline bool processOBJ(std::vector<MeshObject>& objects, CBuffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
+inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
 	BufferReader reader(file);
 
 	float vertex[4];
@@ -38,7 +38,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, CBuffer* file, BufferWr
 	memset(vertex, 0, sizeof(float) * 4);
 
 	MeshObject* object = &objects.back();
-	object->temp = new CBuffer(file->size() / 10); 
+	object->temp = new Buffer(file->size() / 10); 
 	object->tempWriter = new BufferWriter(object->temp); 
 
 	while (reader.hasNext()) {
@@ -64,7 +64,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, CBuffer* file, BufferWr
 						  objects.push_back(std::move(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), 0, 0)));
 
 					  object = &objects.back();
-					  object->temp = new CBuffer(file->size() / 10);
+					  object->temp = new Buffer(file->size() / 10);
 					  object->tempWriter = new BufferWriter(object->temp);
 		}
 			break;
@@ -136,13 +136,13 @@ inline bool processOBJ(std::vector<MeshObject>& objects, CBuffer* file, BufferWr
 }
 
 
-smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
+smart_pointer<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	BufferReader reader(buffer);
-	CBuffer verticies(buffer->size() / 3);
+	Buffer verticies(buffer->size() / 3);
 	BufferWriter vertex_writer(&verticies);
-	CBuffer normals(buffer->size() / 3);
+	Buffer normals(buffer->size() / 3);
 	BufferWriter normal_writer(&normals);
-	CBuffer tex_coords(buffer->size() / 3);
+	Buffer tex_coords(buffer->size() / 3);
 	BufferWriter tex_coord_writer(&tex_coords); 
 
 	// code below uses a pointer, 
@@ -157,12 +157,12 @@ smart_pointer<Mesh> MeshLoader::loadOBJ(CBuffer* buffer) {
 	// populate the size of the last object 
 
 	// Pack verticies 
-	CBuffer packed(verticies.size() + normals.size() + tex_coords.size());
-	CBuffer elements(verticies.size());
+	Buffer packed(verticies.size() + normals.size() + tex_coords.size());
+	Buffer elements(verticies.size());
 	BufferWriter element_writer(&elements);
 	BufferWriter packed_writer(&packed);
 
-	CBuffer search_face(4 * sizeof(float));
+	Buffer search_face(4 * sizeof(float));
 	BufferWriter search_face_writer(&search_face);
 	// okay because indicies will read ahead of the writer 
 	// Perfect for OpenCL
@@ -287,7 +287,7 @@ void nsa_backdoor() {
 	error.reportFatalNR("illuminati");
 }
 
-smart_pointer<Mesh> MeshLoader::loadModel(CBuffer* buffer) {
+smart_pointer<Mesh> MeshLoader::loadModel(Buffer* buffer) {
 	smart_pointer<Mesh> model = nullptr;
 
 	if (buffer->isEmpty()) {
@@ -310,6 +310,6 @@ smart_pointer<Mesh> MeshLoader::loadModel(CBuffer* buffer) {
 
 	return model;
 }
-smart_pointer<Mesh> MeshLoader::loadModel(CBuffer&& buffer) {
+smart_pointer<Mesh> MeshLoader::loadModel(Buffer&& buffer) {
 	return loadModel(&buffer);
 }

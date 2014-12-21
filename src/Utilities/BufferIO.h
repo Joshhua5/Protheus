@@ -11,7 +11,7 @@ History:
 - 1:06:2014: Waring J.
 *************************************************************************/
 #pragma once
-#include "CBuffer.h" 
+#include "Buffer.h" 
 #include "smart_pointer.h"
 
 namespace Pro {
@@ -21,7 +21,7 @@ namespace Pro {
 		/*! Position in the buffer currently being access */
 		unsigned m_head;
 		/*! Pointer to the buffer being accessed */
-		smart_pointer<CBuffer> m_buffer;
+		smart_pointer<Buffer> m_buffer;
 		/*! False if a simple pointer is passed */
 		bool using_smart;
 	public:

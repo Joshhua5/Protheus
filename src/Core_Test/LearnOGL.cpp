@@ -9,7 +9,7 @@
 #include <Graphics\Lighting.h>
 #include <Graphics\TextureLoader.h>
 #include <smart_pointer.h>
-#include <CBuffer.h>
+#include <Buffer.h>
 #include <BufferWriter.h>
 #include <Vector2.h>
 
@@ -35,7 +35,7 @@ int main() {
 	GLenum err;
 	// TEST 
 	// cbuffer is deleted after being passed as rvalue
-	auto tex = TextureLoader::loadTexture(fs.getFile("textures/face.bmp"));
+	auto tex = TextureLoader::loadTexture(fs.getFile("textures/box.bmp"));
 
 	GLuint vbo = 0; 
 	GLuint sampler = 0; 

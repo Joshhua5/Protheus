@@ -15,14 +15,14 @@ History:
 *************************************************************************/
 #pragma once
  
-#include <CBuffer.h>
+#include <Buffer.h>
 #include "openal\al.h"
 
 namespace Pro{
 	namespace Audio{
 		struct CAudioData
 		{
-			CBuffer stream;
+			Buffer stream;
 			 
 			ALenum format; 
 			// in Hertz

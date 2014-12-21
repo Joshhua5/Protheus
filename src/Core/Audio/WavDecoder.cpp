@@ -7,7 +7,7 @@ using namespace Audio;
 
 // First 44 bytes of the file are assosiated with the header
 
-CAudioData* CWavDecoder::load(CBuffer* buffer){
+CAudioData* CWavDecoder::load(Buffer* buffer){
 	/*
 	WAVE header
 	0  : Chunk ID, contains "RIFF"
