@@ -141,6 +141,12 @@
     <ClInclude Include="Networking\SDL_net\close_code.h" />
     <ClInclude Include="Networking\SDL_net\SDLnetsys.h" />
     <ClInclude Include="Networking\SDL_net\SDL_net.h" />
+    <ClInclude Include="OpenCL\extern\cl.h" />
+    <ClInclude Include="OpenCL\extern\cl_ext.h" />
+    <ClInclude Include="OpenCL\extern\cl_gl.h" />
+    <ClInclude Include="OpenCL\extern\cl_gl_ext.h" />
+    <ClInclude Include="OpenCL\extern\cl_platform.h" />
+    <ClInclude Include="OpenCL\extern\opencl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />

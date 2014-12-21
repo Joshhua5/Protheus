@@ -22,18 +22,17 @@ namespace Pro {
 		protected:
 			/*! Position in the buffer currently being access */
 			unsigned m_head;
-			
-			union {
-				/*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
-				smart_pointer<Buffer> m_buffer;
-				/*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
-				smart_pointer<AlignedBuffer> aligned_buffer;
-			};
+
+			/*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
+			smart_pointer<Buffer> m_buffer;
+			/*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
+			smart_pointer<AlignedBuffer> m_aligned_buffer;
+
 			/*! False if a simple pointer is passed */
 			bool using_smart;
 		public:
-			BufferIO(){}
-			~BufferIO(){}
+			BufferIO() {}
+			~BufferIO() {}
 
 			//! Sets the position of the @m_head
 			void setPosition(const unsigned position) {
@@ -60,7 +59,7 @@ namespace Pro {
 
 			//! Get's the internal buffers size
 			unsigned getBufferSize() const {
-				return m_buffer._ptr->size();
+				return m_buffer->size();
 			}
 
 			//! Finds the offset of the next deliminator

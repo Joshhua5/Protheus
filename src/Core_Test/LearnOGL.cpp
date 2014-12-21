@@ -12,6 +12,7 @@
 #include <Buffer.h>
 #include <BufferWriter.h>
 #include <Vector2.h>
+#include <BufferVector.h>
 
 using namespace Pro;
 using namespace Util;
@@ -25,9 +26,7 @@ int main() {
    
 	this_thread::sleep_for(std::chrono::seconds(1));
  	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/monkey.obj"));
-
-	
-
+  
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, window.getAspect());
 	Transformation model;
@@ -86,11 +85,11 @@ int main() {
 	LightPoint& light = lights.attachLight(point);
 
 	lights.setAmbient(Vector3<float>(1.0f, 1.0f, 1.0f));
-	 
+
 	float pos = 0;
 	Vector3<float> rotation(0);
 
-	while (true) {
+	while (false) {
 		window.startFrame(); 
 		vao.bind();
 		//camera.rotate({ 0, 0, 0.01f }); 

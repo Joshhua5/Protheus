@@ -28,6 +28,11 @@ namespace Pro{
 			FileSystem();
 			~FileSystem();
 
+			FileSystem& operator=(const FileSystem& rhs) {
+				rootDir = string(rhs.rootDir);
+				return *this;
+			}
+
 			/*  Opens a file relative to the root directory */
 			IO::CFile* openFile(const string& path);
 			/*  Sets the root directory */

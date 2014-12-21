@@ -78,5 +78,11 @@
     <ClInclude Include="AlignedReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AlignedWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

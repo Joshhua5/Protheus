@@ -17,10 +17,12 @@
   <ItemGroup>
     <ClInclude Include="AlignedBuffer.h" />
     <ClInclude Include="AlignedReader.h" />
+    <ClInclude Include="AlignedWriter.h" />
     <ClInclude Include="BitCompare.h" />
     <ClInclude Include="BufferBase.h" />
     <ClInclude Include="BufferIO.h" />
     <ClInclude Include="BufferReader.h" />
+    <ClInclude Include="BufferVector.h" />
     <ClInclude Include="BufferWriter.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="ClassDefinition.h" />

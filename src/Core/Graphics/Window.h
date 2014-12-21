@@ -28,6 +28,7 @@ namespace Pro {
 	namespace Graphics { 
 		using namespace std;
 		using namespace Math;
+		using namespace Input;
 
 		class Window
 		{
