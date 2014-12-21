@@ -19,6 +19,9 @@ History:
 
 namespace Pro {
 	using namespace std;
+	/*! Timer class will keep track of ticks and time
+		Resolution of of nanoseconds
+	*/
 	class Timer
 	{
 	private:
@@ -27,34 +30,30 @@ namespace Pro {
 		unsigned long long currentTick;
 		unsigned long long high_resolution_clock_period;
 	public:
-		Timer();
+		Timer() {
+			currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				std::chrono::high_resolution_clock::now().time_since_epoch()).count(); 
+			tick();
+			high_resolution_clock_period = std::chrono::high_resolution_clock::period::den;
+		} 
 
-		unsigned long long getTickDelta() const;
-		double getTicksPerSec() const;
-		void tick();
-	}; 
+		/*! Get time since last tick*/
+		unsigned long long getTickDelta() const {
+			return currentTick - lastTick;
+		}
 
-	void Timer::tick() {
-		lastTick = currentTick;
-		// We reduce the accuracy of the timer by 1NS to prevent division by 0
-		currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
-			std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-	}
+		/*! Count how many ticks occur per second, value is extrapolated */
+		double getTicksPerSec() const {
+			// We reduce the accuracy of the timer by 1NS to prevent division by 0
+			return (double)high_resolution_clock_period / ((currentTick - lastTick) + 1);
+		}
 
-	double Timer::getTicksPerSec() const {
-		return (double)high_resolution_clock_period / ((currentTick - lastTick) + 1);
-	}
-
-	unsigned long long Timer::getTickDelta() const {
-		return currentTick - lastTick;
-	}
-
-	Timer::Timer() {
-		currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
-			std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-
-		tick();
-		high_resolution_clock_period = std::chrono::high_resolution_clock::period::den;
-	} 
-
+		/*! Update the timer with a new tick*/
+		void tick() {
+			lastTick = currentTick;
+			currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+		}
+		 
+	};
 }

@@ -1,8 +1,25 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 21:12:2014 Waring J.
+
+*************************************************************************/
+
 #pragma once
-
-
+ 
 namespace Pro {
 
+	/*! Keeps count of how many times a pointer is references
+		And deleted the pointer when the last reference is removed
+		
+		Use Pro::Deferred for controlling when objects should be deleted
+	*/
 	template<typename T>
 	class smart_pointer {
 		unsigned *_references;
@@ -39,42 +56,49 @@ namespace Pro {
 		}
 
 		smart_pointer& operator=(smart_pointer&& rhs) {
+			if (this == &rhs)
+				return *this;
 			_ptr = rhs._ptr;
 			_references = rhs._references;
 			rhs._ptr = nullptr;
 			rhs._references = nullptr;
 			return *this;
-		}
-		bool operator==(void* rhs) {
-			return (void*)_ptr == rhs;
-		}
+		} 
+
 		smart_pointer& operator=(const smart_pointer& rhs) {
+			if (this == &rhs)
+				return *this;
 			_ptr = rhs._ptr;
 			_references = rhs._references;
 			++*_references;
 			return *this;
 		}
-		smart_pointer& operator=(T* rhs) {
+
+		smart_pointer& operator=(T* rhs) { 
 			if (_references != nullptr)
 				if (--*_references == 0) {
 					delete _ptr;
 					delete _references;
 				}
-
 			_ptr = rhs;
 			_references = new unsigned(1);
 			return *this;
 		}
-		T* operator ->() {
+		
+		T* operator ->() const {
 			return _ptr;
 		}
-
+		
+		bool operator==(void* rhs) {
+			return (void*)_ptr == rhs;
+		}
+		/*! Returns the current reference count */
 		inline unsigned references() const {
 			return *_references;
 		}
 
 		// removed reference to an object and doesn't delete the instance unless the reference count is 1
-		inline void dereference() { 
+		inline void dereference() {
 			if (_references != nullptr) {
 				delete _references;
 				_ptr = nullptr;

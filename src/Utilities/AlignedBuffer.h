@@ -16,27 +16,49 @@ History:
 
 namespace Pro {
 
+	/*!
+		AlignedBuffer will create a buffer with an alignment in bytes on the heap.
+		AlignedBuffer::data() % alignment, will always equal 0
+
+		Purpose is to allow for optimised access to data by being more cache friendly,
+		also works well with SSE with an alignment of 16 bytes.
+
+		Copy and move constructors must be utilised to handle pointer offsets when parsing
+	*/
 	class AlignedBuffer :
 		public BufferBase
 	{
 	protected:
 		unsigned char m_offset;
+
+		/*! How much data in bytes is added per instance to keep valid alignment */
 		unsigned char m_padding;
+
+		/*! The amount of times a single instance of data crosses over the alignment size
+			EG. an alignment of 2 storing data of size 4 will cross over 2 alignment barriers.
+		*/
 		unsigned char m_alignment_crossover;
+
+		/*! Size of the instances being stored in bytes*/
 		unsigned short m_sizeof;
 		unsigned m_alignment;
 	public:
-		// Aligns the internal structure to the byte bountry passed,
-		// The data in the buffer must be a multiple and smaller
-		// than the boundary, the copy is set to false but the data isn't correctly
-		// aligned then a copy will be performed anyway.
-		// The data type in the buffer must be a multiple and smaller  than the boundary
-		// if Padding is applied then only the maximum amount of instances of the 
-		// data will be contained in a cache line, if data is spread over two cachelines
-		// then the data will be padded to only use one line, this uses more memory
-		// size of object must be provided
-		// If passing in predefined data, the size variable now defined the size of the prexisting data in byte
-		// data will be copied
+		/*! Non copyable */
+		AlignedBuffer(const AlignedBuffer&) = delete;
+		/*! Non copyable */
+		AlignedBuffer& operator=(const AlignedBuffer&) = delete;
+
+		/*!
+			Arguments:
+			size - size of data to reserve in bytes
+			sizeOf - Size of the object which is going to be stored (used to process alignment data)
+			data (default nullptr) - pointer to a struture to be copied into the alignment buffer.
+			alignment (default 64) - The alignment of memory in bytes (data % alignmnet will equal 0)
+
+			Note:
+				-The size of the @data must be larger than or equal to the @size
+				-All sizes are calculated in bytes
+		*/
 		AlignedBuffer(const unsigned size, const unsigned sizeOf, void* data = nullptr, const unsigned alignment = 64) {
 
 			// Check sizeof
@@ -44,7 +66,7 @@ namespace Pro {
 			if (sizeOf == 0 || size < sizeOf)
 				return;
 
-			// Calculate padding
+			// Calculate padding and alignment_crossover
 
 			m_alignment = alignment;
 			m_sizeof = sizeOf;
@@ -58,8 +80,7 @@ namespace Pro {
 			m_offset = static_cast<unsigned char>(m_alignment - (i_data % m_alignment));
 			m_data = static_cast<char*>(m_data) + m_offset;
 
-			// Copy the data into the new buffer,
-			// adding in padding
+			// Copy the data into the new buffer, adding in padding
 			if (data != nullptr) {
 				if (m_padding == 0)
 					memcpy(m_data, data, size);
@@ -76,52 +97,74 @@ namespace Pro {
 		}
 
 		~AlignedBuffer() {
+			// recrease the m_data so that delete[] will get the correct pointer
 			m_data = static_cast<char*>(m_data) - m_offset;
 			delete[] m_data;
 		}
 
-		// interate through the boundaries
-		// equivilant to 
-		// this->data()[pos * alignment];
+		AlignedBuffer(AlignedBuffer&& rhs) {
+			m_offset = rhs.m_offset;  
+			m_padding = rhs.m_padding;
+			m_alignment_crossover = rhs.m_alignment_crossover;
+			m_alignment = rhs.m_alignment;
+			m_data = rhs.m_data;
+			m_size = rhs.m_size;
+			m_sizeof = rhs.m_sizeof;
+			// dereference in the move
+			rhs.m_data = nullptr;
+		}
+
+		inline AlignedBuffer& operator=(AlignedBuffer&& rhs) {
+			m_offset = rhs.m_offset;
+			m_padding = rhs.m_padding;
+			m_alignment_crossover = rhs.m_alignment_crossover;
+			m_alignment = rhs.m_alignment;
+			m_data = rhs.m_data;
+			m_size = rhs.m_size;
+			m_sizeof = rhs.m_sizeof;
+			// dereference in the move
+			rhs.m_data = nullptr;
+		} 
+
+		/*!
+			Returns the data at a specific alignment boundary
+			equivilant to data()[pos * m_alignment_crossover * m_alignment];
+		*/
 		void* atBoundary(unsigned pos) const {
 			return static_cast<char*>(m_data) + (pos * m_alignment_crossover * m_alignment);
 		}
 
-		// returns the data with bounds checking
-		void* at(unsigned pos) const {
-			const unsigned offset = pos * m_sizeof;
+		/*! Returns the data at the index with bounds checking */
+		void* at(unsigned index) const {
+			const unsigned offset = index * m_sizeof;
 			const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
-			if (pos >= position)
+			if (index >= position)
 				return nullptr;
 			return static_cast<char*>(m_data) + position;
 		};
 
-		// returns the defined alignement for the data
+		/*! Returns the defined alignement for the data */
 		unsigned alignment() const {
 			return m_alignment;
 		}
 
-		// returns a pointer to the internal data
+		/*! Returns a pointer to the internal data with offset
+			Not safe to call delete on
+		*/
 		void* data() {
 			return m_data;
 		}
 
-		// size of the buffer in bytes
+		/*! Size of the buffer in bytes excluding offset */
 		unsigned size() const {
 			return m_size;
 		}
 
-		// access data in the buffer without
-		// boundary checking
-		void* operator[](unsigned pos) {
-			const unsigned offset = pos * m_sizeof;
+		/*! Returns the data at the index */
+		void* operator[](unsigned index) {
+			const unsigned offset = index * m_sizeof;
 			const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
 			return static_cast<char*>(m_data) + position;
 		}
-
-		// Dereferencing does nothing with an
-		// aligned buffer
-		void dereference() = delete;
 	};
-
 }

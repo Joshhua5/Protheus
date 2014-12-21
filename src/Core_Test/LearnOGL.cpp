@@ -18,12 +18,12 @@ using namespace Util;
 using namespace Graphics; 
 
 int main() {
-	Graphics::Window window("title", Vector2<int>(1900, 960));
+	Graphics::Window window("title", Vector2<int>(960, 960));
 
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
- 	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/SceneCleaned.obj"));
+ 	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/monkey.obj"));
 
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, 1);
@@ -90,7 +90,7 @@ int main() {
 
 		//window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
 		light_t.setPosition(light.position);  
-		model.setScale({ 0.01f, 0.01f, 0.01f });
+		model.setScale({ 0.1f, 0.1f, 0.1f });
 		model.setPosition({ 0, -0.5f, 0 });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 		program.setUniform("model", model.getMatrix());

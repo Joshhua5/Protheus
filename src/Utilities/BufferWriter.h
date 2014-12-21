@@ -13,16 +13,15 @@ History:
 #pragma once
 
 #include "BufferIO.h" 
-#include "classDefinition.h"
+#include "ClassDefinition.h"
 
 namespace Pro {
-	using namespace Serializer;
-
+	using namespace Serializer; 
+	/*! Class to add on writing functionality to a CBuffer and AlignedBuffer(Planned) */
 	class BufferWriter :
 		public BufferIO
 	{
-	public: 
-
+	public:  
 		BufferWriter(CBuffer* buffer) {
 			using_smart = false;
 			m_buffer = buffer;
@@ -34,17 +33,16 @@ namespace Pro {
 						m_head = 0;
 		} 
 		~BufferWriter() {
+			m_head = 0;
 			if (using_smart)
 				m_buffer = nullptr;
 			else
 				m_buffer.dereference();
-			m_head = 0;
 		}
-		 
-
-
-		// writes a value to the buffer at the writer,
-		// of the size specified
+		   
+		/*!	Writes an array into the buffer
+			Size is in bytes
+		*/
 		inline void write(const void* value, const unsigned size) {
 			if (m_buffer == nullptr)
 				return;
@@ -57,32 +55,38 @@ namespace Pro {
 			memcpy(m_buffer->at(m_head), value, size);
 			skip(size);
 		}
-
-
+		 
 		template<typename T>
 		inline void write(const T& data) {
 			write(&data, sizeof(T));
 		}
 
+
+		/*! Writes an object into the buffer */
 		template<typename T>
 		inline void write(const T&& data) {
 			write(&data, sizeof(T));
 		}
 
-		// Writes the array into the buffer, size in bytes
+		/*! Writes the array into the buffer
+			size in bytes 
+		*/
 		template<typename T>
-		inline void write_array(T* data, unsigned size) {
+		inline void write_array(const T* data, unsigned size) {
 			write((void*)data, size);
 		}
 
-		// writes the amount of elements in an array
+		/*! Writes the array into the buffer
+			size in array size
+		*/
 		template<typename T>
-		inline void write_elements(T* data, unsigned elements) {
+		inline void write_elements(const T* data, unsigned elements) {
 			write((void*)data, elements * sizeof(T));
 		}
 
+		/*! Writes a complex data type from the buffer according to the class definition */
 		template<typename T>
-		inline void serialized_write(classDefinition def, T* data) {
+		inline void serialized_write(const ClassDefinition& def, const T* data) {
 			const auto members = def.getMembers();
 
 			// Write the amount of members in the extern class
@@ -102,7 +106,6 @@ namespace Pro {
 				// Write the data of the member
 				write(member_pointer, member.size);
 			}
-		}
-
+		} 
 	};
 }

@@ -1,3 +1,15 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 21:12:2014 Waring J.
+
+*************************************************************************/
 #pragma once
 
 #include <vector>
@@ -5,15 +17,20 @@
 
 namespace Pro {
 
+	/*! Provides control on when an objects deconstructor should be called
+		Objects will be destroyed when check() is called and only one reference remains
+	*/
 	template<typename T>
 	class Deferred {
 		std::vector<smart_pointer<T>> flagged_deleted;
 
 	public:
+		/*! Add a instance to be destoyed */
 		void flag(smart_pointer<T>&& rhs) {
 			flagged_deleted.push_back(rhs);
 		}
 
+		/*! Check instances that should be destroyed*/
 		void check() {
 			for (size_t i = 0; i < flagged_deleted.size(); ++i)
 				if (flagged_deleted[i].references())

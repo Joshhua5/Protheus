@@ -1,8 +1,21 @@
+/*************************************************************************
+Protheus Source File.
+Copyright (C), Protheus Studios, 2013-2014.
+-------------------------------------------------------------------------
+
+Description:
+
+-------------------------------------------------------------------------
+History:
+- 21:12:2014 Waring J.
+
+*************************************************************************/
 #pragma once
 #include "Matrix33.h"
 #include "Error.h"
 
 namespace Pro {
+
 	static float identity_matrix[] = {
 		1, 0, 0, 0,
 		0, 1, 0, 0,
@@ -36,6 +49,7 @@ namespace Pro {
 			memcpy(_m, value._m, sizeof(T) * 16);
 		}
 
+		/*! Initializes all elements of the matrix to the value */
 		Matrix44(T value) { for (char x = 0; x < 16; ++x) _m[0][x] = value; }
 		Matrix44() {}
 		~Matrix44() {}
@@ -133,18 +147,19 @@ namespace Pro {
 				_m[0][y] *= m;
 		}
 
-
+		/*! Transposes the matrix*/
 		Matrix44 transpose() {
-			Matrix44<float> o;
+			Matrix44 o;
 			// Flip the matrix
 			for (char x = 0; x < 4; x++)
 				for (char y = 0; y < 4; y++)
 					o._m[x][y] = _m[y][x];
 
 			// copy the matrix over
-			return o;
+			return std::move(o);
 		}
 
+		/*! Returns the determinate */
 		T determinate() const {
 			T det = 0;
 			det = _m[0][0] * Matrix33<T>({ _m[1][1], _m[2][1], _m[3][1], _m[1][2], _m[2][2], _m[3][2], _m[1][3], _m[2][3], _m[3][3] }).determinate();
@@ -154,6 +169,7 @@ namespace Pro {
 			return det;
 		}
 
+		/*! Inverts the Matrix44*/
 		Matrix44 invert() const {  
 			float inv[16], det;
 			int i;
@@ -191,6 +207,7 @@ namespace Pro {
 			return out; 
 		}
 
+		/*! Returns a pointer to the matrix */
 		T* data() { return _m; }
 	};
 }

@@ -12,12 +12,15 @@ History:
 #pragma once
 
 #include <memory> 
-#include "Error.h"
+#include "Error.h" 
 
 class BufferBase
 {
 protected:
+	/*! Remembers if the buffer was copied to prevent the deconstructor from deleting data which it doesn't own */
 	bool wasCopied;
+	/*! Size of the buffer in bytes */
 	unsigned int m_size;
+	/*! Pointer to the data in the heap*/
 	void* m_data;
 };

@@ -19,64 +19,54 @@ namespace Pro {
 	namespace Serializer {
 		using namespace std;
 
-		class classDefinition
+		/*! Allows a class to be packed for transmission between computers and classes of the same type with different padding */
+
+		class ClassDefinition
 		{
 			void* base_pointer;
 			vector<Member> members;
-		public:
-			classDefinition(void* class_pointer);
+		public: 
+			/*! Must be called with ClassDefinition(new T)*/
+			ClassDefinition(void* class_pointer) {
+				base_pointer = class_pointer; 
+			}
+			 
+			/*! Adds a member to the ClassDefinition */
+			void addMember(const string& memberName, const void* member_pointer, const size_t member_size) {
+				auto m = Member();
 
-			// Adds a member to the definition
-			void addMember(const string& memberName, const void* member_pointer, const size_t member_size);
+				m.name = memberName;
+				m.offset = static_cast<unsigned>((char*)member_pointer - (char*)base_pointer);
+				m.size = static_cast<unsigned>(member_size);
 
-			// returns a vector of all members
-			const vector<Member>& getMembers() const;
+				members.push_back(move(m));
+			}
 
-			// returns the sizeof all members
-			const unsigned getSizeOf() const;
+			/*! Returns a vector of all members */
+			const vector<Member>& getMembers() const {
+				return members;
+			}
 
-			// returns the internal base pointer
-			// use for offsets
-			const void* getBase() const;
 
-			// deletes the unused data
-			// no new members can be added afterwards
-			// and the passed pointer is deleted
-			void finish();
+			/*! Returns the sizeof all members */
+			const unsigned getSizeOf() const { 
+				unsigned sizeTotal = 0;
+				for each(const auto m in members)
+					sizeTotal += m.size;
+				return sizeTotal;
+			}
+
+			/*! Returns the internal base pointer.
+				Used for offsets. */
+			const void* getBase() const {
+				return base_pointer;
+			}
+			  
+			/*! Call onces finished adding members,
+				Deletes the base pointer*/
+			void finish() {
+				delete base_pointer;
+			}
 		};
-
-		inline classDefinition::classDefinition(void* class_pointer)
-		{
-			base_pointer = class_pointer;
-		}
-
-		inline void classDefinition::addMember(const string& memberName, const void* member_pointer, const size_t size) {
-			auto m = Member();
-
-			m.name = memberName;
-			m.offset = static_cast<unsigned>((char*)member_pointer - (char*)base_pointer);
-			m.size = static_cast<unsigned>(size);
-
-			members.push_back(move(m));
-		}
-
-		inline const vector<Member>& classDefinition::getMembers() const {
-			return members;
-		}
-
-		inline const unsigned classDefinition::getSizeOf() const {
-			unsigned sizeTotal = 0;
-			for each(const auto m in members)
-				sizeTotal += m.size;
-			return sizeTotal;
-		}
-
-		inline const void* classDefinition::getBase() const {
-			return base_pointer;
-		}
-
-		inline void classDefinition::finish() {
-			delete base_pointer;
-		}
 	}
 }

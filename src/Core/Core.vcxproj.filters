@@ -159,6 +159,18 @@
     <ClInclude Include="Input\UserPointers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Networking\SDL_net\begin_code.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\SDL_net\close_code.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\SDL_net\SDL_net.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\SDL_net\SDLnetsys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Networking\CClientTCPConnection.cpp">
@@ -261,6 +273,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input\Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\SDL_net\SDLnetUDP.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\SDL_net\SDLnet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\SDL_net\SDLnetselect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\SDL_net\SDLnetTCP.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,52 +14,54 @@ History:
 
 #pragma once
 
-enum struct BIT{
-	_1 = (long)0x1,
-	_2 = (long)0x2,
-	_3 = (long)0x4,
-	_4 = (long)0x8,
-	_5 = (long)0x10,
-	_6 = (long)0x20,
-	_7 = (long)0x40,
-	_8 = (long)0x80,
-
-	_9 = (long)0x100,
-	_10 = (long)0x200,
-	_11 = (long)0x400,
-	_12 = (long)0x800,
-	_13 = (long)0x1000,
-	_14 = (long)0x2000,
-	_15 = (long)0x4000,
-	_16 = (long)0x8000,
-
-	_17 = (long)0x10000,
-	_18 = (long)0x20000,
-	_19 = (long)0x40000,
-	_20 = (long)0x80000,
-	_21 = (long)0x100000,
-	_22 = (long)0x200000,
-	_23 = (long)0x400000,
-	_24 = (long)0x800000,
-
-	_25 = (long)0x1000000,
-	_26 = (long)0x2000000,
-	_27 = (long)0x4000000,
-	_28 = (long)0x8000000,
-	_29 = (long)0x10000000,
-	_30 = (long)0x20000000,
-	_31 = (long)0x40000000,
-	_32 = (long)0x80000000,
+/*! Allow to check if a single bit has been checked */
+enum struct BIT {
+	_1 = (int)0x1,
+	_2 = (int)0x2,
+	_3 = (int)0x4,
+	_4 = (int)0x8,
+	_5 = (int)0x10,
+	_6 = (int)0x20,
+	_7 = (int)0x40,
+	_8 = (int)0x80,
+		 
+	_9 = (int)0x100,
+	_10 = (int)0x200,
+	_11 = (int)0x400,
+	_12 = (int)0x800,
+	_13 = (int)0x1000,
+	_14 = (int)0x2000,
+	_15 = (int)0x4000,
+	_16 = (int)0x8000,
+		   
+	_17 = (int)0x10000,
+	_18 = (int)0x20000,
+	_19 = (int)0x40000,
+	_20 = (int)0x80000,
+	_21 = (int)0x100000,
+	_22 = (int)0x200000,
+	_23 = (int)0x400000,
+	_24 = (int)0x800000,
+		   
+	_25 = (int)0x1000000,
+	_26 = (int)0x2000000,
+	_27 = (int)0x4000000,
+	_28 = (int)0x8000000,
+	_29 = (int)0x10000000,
+	_30 = (int)0x20000000,
+	_31 = (int)0x40000000,
+	_32 = (int)0x80000000,
 };
 
-inline BIT operator|(BIT a, BIT b){
+inline BIT operator|(BIT a, BIT b) {
 	return static_cast<BIT>(static_cast<long>(a) | static_cast<long>(b));
 }
 
-inline BIT operator&(BIT a, BIT b){
-	return static_cast<BIT>(static_cast<long>(a)& static_cast<long>(b));
+inline BIT operator&(BIT a, BIT b) {
+	return static_cast<BIT>(static_cast<long>(a) & static_cast<long>(b));
 }
 
-inline bool checkBit(int value, int bit){
+/*! Check if the bit is set */
+inline bool checkBit(int value, int bit) {
 	return static_cast<bool>((value >> bit) & 1);
 }
