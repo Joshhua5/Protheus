@@ -20,6 +20,7 @@ History:
 
 namespace Pro{
 	namespace Audio{
+		using namespace Util;
 		struct CAudioData
 		{
 			Buffer stream;

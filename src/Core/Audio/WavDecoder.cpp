@@ -86,7 +86,7 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 	
 	//out->stream.init(sizeof(short) * numChannels * sample_count);
 
-	Pro::BufferWriter writer(&out->stream);
+	BufferWriter writer(&out->stream);
 
 	switch (bitsPerSample){
 	case 8: 

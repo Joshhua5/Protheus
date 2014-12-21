@@ -5,7 +5,7 @@
 
 namespace Pro{
 	namespace Audio{ 
-
+		using namespace Math;
 		class CAudioListener
 		{
 		private:

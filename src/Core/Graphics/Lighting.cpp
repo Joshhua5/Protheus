@@ -1,6 +1,8 @@
 #include "Lighting.h"
 
 using namespace Pro; 
+using namespace Util;
+using namespace Graphics;
 
 void Lighting::bindLights(Program& program) {  
 	Buffer points(light_points.size() * sizeof(float) * 8);

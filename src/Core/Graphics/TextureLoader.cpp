@@ -1,6 +1,8 @@
 #include "TextureLoader.h"
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Math;
 
 inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask, unsigned a_bitmask, ColorDefinition def) {
 	// TODO convert bitmask's into 8 bits per channel

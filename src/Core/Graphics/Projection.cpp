@@ -1,6 +1,8 @@
 #include "Projection.h"
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Math;
 
 Projection::Projection(float near, float far, float fov, float aspect) {
 	m_near = near;

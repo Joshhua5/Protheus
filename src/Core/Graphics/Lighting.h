@@ -13,25 +13,28 @@
 		//point_count
 
 namespace Pro {
-	struct LightPoint{
-		Vector3<float> position;
-		Vector3<float> color;
-		float attenuation, intensity;
-	};
+	namespace Graphics {
+		using namespace Math;
+		struct LightPoint {
+			Vector3<float> position;
+			Vector3<float> color;
+			float attenuation, intensity;
+		};
 
-	struct LightDirectional : public LightPoint{ 
-		Vector3<float> direction; 
-	};
-	  
-	class Lighting {
-		std::vector<LightPoint> light_points;
-		std::vector<LightDirectional> light_directional;
-		
-		Vector3<float> ambientColor;
-	public:
-		void bindLights(Program& program);
-		LightPoint&  attachLight(const LightPoint&);  
-		void setAmbient(const Vector3<float>& ambient);
-		 
-	};
+		struct LightDirectional : public LightPoint {
+			Vector3<float> direction;
+		};
+
+		class Lighting {
+			std::vector<LightPoint> light_points;
+			std::vector<LightDirectional> light_directional;
+
+			Vector3<float> ambientColor;
+		public:
+			void bindLights(Program& program);
+			LightPoint&  attachLight(const LightPoint&);
+			void setAmbient(const Vector3<float>& ambient);
+
+		};
+	}
 }

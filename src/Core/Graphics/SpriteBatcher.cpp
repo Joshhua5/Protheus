@@ -3,10 +3,10 @@
 using namespace Pro;
 using namespace Graphics;
 
-Pro::Shader Pro::Graphics::SpriteBatcher::vertex_shader;
-Pro::Shader Pro::Graphics::SpriteBatcher::fragment_shader; 
-Pro::Shader Pro::Graphics::SpriteBatcher::geometry_shader;
-Pro::Program Pro::Graphics::SpriteBatcher::batch_program(false);
+Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::vertex_shader;
+Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::fragment_shader; 
+Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::geometry_shader;
+Pro::Graphics::Program Pro::Graphics::SpriteBatcher::batch_program(false);
 
 GLint Pro::Graphics::SpriteBatcher::max_sprites = 0;
 GLint Pro::Graphics::SpriteBatcher::max_textures = 0;

@@ -1,6 +1,8 @@
 #include "Shader.h"
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Util;
   
 Shader::Shader(const Buffer& shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);

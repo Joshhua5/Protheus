@@ -1,6 +1,7 @@
 #include "Mesh.h"
 
 using namespace Pro;
+using namespace Graphics;
 
 Mesh::Mesh(GLuint verticies, GLuint elements) {
 	this->verticies = verticies;

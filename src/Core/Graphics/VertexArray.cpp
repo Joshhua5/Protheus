@@ -1,6 +1,7 @@
 #include "VertexArray.h"
 
 using namespace Pro;
+using namespace Graphics;
 
 static unsigned active_vertex_array = 0;
 

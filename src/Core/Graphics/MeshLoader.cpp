@@ -1,6 +1,8 @@
 #include "MeshLoader.h"
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Util;
 
 
 MODEL_FORMAT  MeshLoader::queryFormat(Buffer* buffer) {

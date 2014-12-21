@@ -6,7 +6,7 @@
 
 namespace Pro {
 	namespace Graphics {
-
+		using namespace Math;
 
 		class Transformation {
 		protected:

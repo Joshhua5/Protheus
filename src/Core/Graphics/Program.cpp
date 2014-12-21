@@ -1,6 +1,9 @@
 #include "Program.h"
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Util;
+using namespace Math;
 
 static int active_program_id = 0;
 static int preserved_id = 0;

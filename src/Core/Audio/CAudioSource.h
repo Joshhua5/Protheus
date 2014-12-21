@@ -20,6 +20,7 @@ History:
 
 namespace Pro{
 	namespace Audio{ 
+		using namespace Math;
 		class CAudioSource
 		{
 		public: 

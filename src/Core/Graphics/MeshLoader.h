@@ -11,22 +11,25 @@
 #include "extern\glew.h"
 #include "Mesh.h"
 
-namespace Pro { 
+namespace Pro {
+	namespace Graphics {
+		using namespace Util;
+		using namespace Math;
+		enum struct MODEL_FORMAT {
+			OBJ,
+			COLLADA,
+			UNDEFINED
+		};
 
-	enum struct MODEL_FORMAT {
-		OBJ,
-		COLLADA,
-		UNDEFINED
-	};
+		class MeshLoader {
 
-	class MeshLoader {
-		  
-		static MODEL_FORMAT queryFormat(Buffer*);
+			static MODEL_FORMAT queryFormat(Buffer*);
 
-	public:
-		 
-		static smart_pointer<Mesh> loadOBJ(Buffer*);
-		static smart_pointer<Mesh> loadModel(Buffer*);
-		static smart_pointer<Mesh> loadModel(Buffer&&);
-	}; 
+		public:
+
+			static smart_pointer<Mesh> loadOBJ(Buffer*);
+			static smart_pointer<Mesh> loadModel(Buffer*);
+			static smart_pointer<Mesh> loadModel(Buffer&&);
+		};
+	}
 }

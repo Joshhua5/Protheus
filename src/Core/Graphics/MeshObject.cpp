@@ -1,6 +1,8 @@
 #include "MeshObject.h"
 
 using namespace Pro;
+using namespace Graphics;
+
 
 MeshObject::MeshObject(const string& name, unsigned start, unsigned size) : MeshObject() {
 	this->name = name;

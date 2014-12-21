@@ -8,32 +8,34 @@
 #include "MeshObject.h" 
 #include "extern\glew.h"
 
-namespace Pro { 
-	using namespace std; 
-	// All verticies are GL_FLOAT and elements are GLUINT
-	class Mesh {  
-		Mesh(const Mesh&) = delete;
-		Mesh operator=(const Mesh&) = delete; 
-	 
-		vector<MeshObject> objects;
-		GLuint verticies;
-		GLuint elements;
-		unsigned object_count = 0; 
+namespace Pro {
+	namespace Graphics {
+		using namespace std;
+		// All verticies are GL_FLOAT and elements are GLUINT
+		class Mesh {
+			Mesh(const Mesh&) = delete;
+			Mesh operator=(const Mesh&) = delete;
 
-	public:
-		Mesh(GLuint verticies, GLuint elements);
-		Mesh(Mesh&&);
-		Mesh& operator=(Mesh&&);
-		~Mesh();
+			vector<MeshObject> objects;
+			GLuint verticies;
+			GLuint elements;
+			unsigned object_count = 0;
 
-		void attachObject(MeshObject&&);
-		
-		MeshObject* getObject(const string& object_name);
-		vector<MeshObject>& getObjects();
+		public:
+			Mesh(GLuint verticies, GLuint elements);
+			Mesh(Mesh&&);
+			Mesh& operator=(Mesh&&);
+			~Mesh();
 
-		GLenum getMode() const;
+			void attachObject(MeshObject&&);
 
-		void bind() const;
-		void unbind() const;  
-	};
+			MeshObject* getObject(const string& object_name);
+			vector<MeshObject>& getObjects();
+
+			GLenum getMode() const;
+
+			void bind() const;
+			void unbind() const;
+		};
+	}
 }

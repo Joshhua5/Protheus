@@ -19,12 +19,13 @@ History:
 
 #include "Vector2.h"
 
-namespace Pro { 
+namespace Pro {
+	namespace Math {
 		template <typename T>
 		struct /*alignas(16)*/ Vector4 {
 			T x, y, z, w;
 
-			Vector4(){}
+			Vector4() {}
 
 			// Copy Constructor
 			Vector4(const Vector4& v) : Vector4(
@@ -36,7 +37,7 @@ namespace Pro {
 				y = move(vec.y);
 				z = move(vec.z);
 				w = move(vec.w);
-			} 
+			}
 
 			Vector4(const Vector2<T>& pos, const Vector2<T>& dim) : Vector4(
 				pos.x, pos.y,
@@ -167,5 +168,5 @@ namespace Pro {
 			}
 
 		};
-
-	} 
+	}
+}

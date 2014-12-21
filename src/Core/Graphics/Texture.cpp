@@ -1,6 +1,7 @@
 #include "Texture.h"
 
 using namespace Pro;
+using namespace Graphics;
 
 Texture::Texture(const GLuint _texture_id,const Vector2<unsigned>& dim)
 {

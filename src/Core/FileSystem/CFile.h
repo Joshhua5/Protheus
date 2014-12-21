@@ -20,6 +20,7 @@ History:
 namespace Pro{
 	namespace IO{
 		using namespace std;
+		using namespace Util;
 
 		enum struct EFile {
 			FILE_BUFFER_OVERFLOW,

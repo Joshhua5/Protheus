@@ -7,7 +7,7 @@
 #include <queue>
 
 namespace Pro {
-
+	using namespace Math;
 	class Mouse { 
 		std::queue<std::pair<KEY, KEY>> mouse_keys;
 		GLFWwindow* window;

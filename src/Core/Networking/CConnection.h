@@ -24,6 +24,7 @@ typedef int connection_id;
 namespace Pro{
 	namespace Networking{
 		using namespace std;
+		using namespace Util;
 		struct CConnection
 		{
 			mutex mutex;

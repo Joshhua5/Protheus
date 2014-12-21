@@ -2,6 +2,7 @@
 
 using namespace Pro;
 using namespace Audio;
+using namespace Math;
 
 unsigned CAudioListener::active_listener_id;
 

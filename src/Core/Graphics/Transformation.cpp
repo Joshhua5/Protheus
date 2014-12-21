@@ -2,6 +2,7 @@
 
 using namespace Pro;
 using namespace Graphics;
+using namespace Math;
 
 Transformation::Transformation() {
 	isProcessed = false;

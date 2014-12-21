@@ -15,22 +15,24 @@ History:
 #include "Member.h"
 #include <vector>
 
-namespace Pro{
-	namespace Serializer{
-		using namespace std;
+namespace Pro {
+	namespace Util {
+		namespace Serializer {
+			using namespace std;
 
-		/*! Defines a variable inside of a class, used in ClassDefinitions */
-		struct Member{
-			union{
-				/*! The offset from the base pointer*/
-				unsigned offset;
-				/*! Points to data inside a object being loaded */
-				void* data;
+			/*! Defines a variable inside of a class, used in ClassDefinitions */
+			struct Member {
+				union {
+					/*! The offset from the base pointer*/
+					unsigned offset;
+					/*! Points to data inside a object being loaded */
+					void* data;
+				};
+				/*! Size of a member's data */
+				unsigned size;
+				/*! Name of the memeber */
+				string name;
 			};
-			/*! Size of a member's data */
-			unsigned size;
-			/*! Name of the memeber */
-			string name;
-		};
+		}
 	}
 }
