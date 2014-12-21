@@ -11,7 +11,7 @@ History:
 *************************************************************************/
 #pragma once
  
-#include "SDL_net.h"
+#include "SDL_net/SDL_net.h"
 #include <queue>
 #include <stack>
 #include <mutex>
