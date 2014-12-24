@@ -14,6 +14,7 @@ uniform int has_normal;
 uniform int has_tex_coord;
 
 uniform vec3 world_pos;
+uniform vec3 camera_pos;
 uniform mat4 model;
 uniform int light_point_count;
 uniform vec3 light_ambient;
@@ -34,18 +35,27 @@ void main() {
 	
 	if(has_tex_coord == 1 && has_normal == 1){
 		//vcolor = vec4(out_normal, 1);//texture(tex, out_tex); 
-		vcolor = texture(tex, out_tex);// * vec4(out_normal, 1);  
-		Light light;
+		// * vec4(out_normal, 1);  
+		Light light; 
 		light.position = vec3(light_points[0], light_points[1], light_points[2]);
 		light.color = vec4(light_points[3], light_points[4], light_points[5], 1);
 		light.vector = normalize(light.position - world_pos);
 		light.attenuation = light_points[6];
 		light.intensity = light_points[7];
-		
-		//vcolor *= (light_color * dot(light_direction, normalize(out_normal))) + vec4(light_ambient, 1);  
-
-		vcolor *= pow((dot(light.vector, normalize(out_normal)) * 0.5) + 0.5, 2.0) * light.color * light.intensity;
 		 
+		vec4 ambient = vec4(light_ambient, 1);
+		
+		vec4 diffuse = pow((dot(light.vector, normalize(out_normal)) * 0.5) + 0.5, 2.0) * light.color * light.intensity; 
+		 
+		vec3 E = normalize(camera_pos - world_pos);
+		vec3 R = reflect(-1, normalize(camera_pos));
+		 
+		float distance = camera_pos - world_pos;
+		 
+		vec4 specular = pow(clamp(dot(E , R ), 0, 1), 5) / distance*distance;
+		 
+		vcolor = texture(tex, out_tex) * ambient + diffuse + specular;
+ 
 		//vcolor += pow((light.dot_nl * 0.5) + 0.5, power) * base_color * light.contribution;
 
 	}

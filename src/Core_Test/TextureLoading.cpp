@@ -19,12 +19,8 @@ int main(int argc, char* args []) {
 	FileSystem fileIO;
 
 	auto file = fileIO.getFile("text.bmp"); 
-	Texture* tex = TextureLoader::loadTexture(&file);
-
-	Graphics::Sprite sprite(tex);
-
-	while (true) {
-		window.startFrame(); 
-		window.endFrame();
-	}
+	auto tex = TextureLoader::loadTexture(&file);
+	  
+	// Smart pointer will delete the texture since it's the last reference
+	tex = nullptr;
 }

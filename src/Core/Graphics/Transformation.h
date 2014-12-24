@@ -33,6 +33,7 @@ namespace Pro {
 			void setScale(const Vector3<float>& scale);
 			void setRotation(const Vector3<float>& xyz);
 			void setPosition(const Vector3<float>& position);
+			Vector3<float> getPosition() const;
 			void move(const Vector3<float>& delta);
 			void rotate(const Vector3<float>& xyz);
 			const Matrix44<float>& getMatrix();

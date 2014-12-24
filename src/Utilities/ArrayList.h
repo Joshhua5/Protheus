@@ -72,10 +72,14 @@ namespace Pro {
 				return m_buffer[index];
 			}
 
+			inline unsigned size() const {
+				return m_size;
+			}
+
 			/*! Adds a element to the end of the buffer */
 			inline void push_back(T&& value) {
 				if (m_reserved == 0)
-					reserve(m_size * 1.2 + 5);
+					reserve(static_cast<unsigned>(m_size * 1.2 + 5));
 				--m_reserved;
 				m_buffer[m_size++] = value;
 			}

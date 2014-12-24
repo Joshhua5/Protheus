@@ -30,14 +30,18 @@ struct Entity {
 
 int main() {
 	// Load Window
-	auto window = Window("Breakout", { 800, 600 });
+	auto window = Window("Breakout", { 1600, 800 });
 
 	FileSystem textures("textures/");
-	FileSystem audio("Audio/");
+	FileSystem audiofs("Audio/");
 
 	Timer timer;
 	Keyboard keyboard = window.getKeyboard();
-
+	CAudio audio;
+	CAudioListener listener;
+	listener.setActive();
+	listener.setGain(1);
+	listener.setPosition(Vector3<float>(.5f, 0, 0));
 	SpriteBatcher batcher(window.getDimensions().cast<float>());
 
 	// Load Textures
@@ -48,6 +52,11 @@ int main() {
 	auto ball_id = batcher.attachTexture(ball);
 	auto paddle_id = batcher.attachTexture(paddle);
 	 
+	// Load Audio
+	 
+	auto boing_data = audio.loadAudio(AUDIO_FORMAT::WAV, &audiofs.getFile("boing.wav"));
+	auto boing = audio.createSource(boing_data);
+	 
 	// Initialize Entities
 
 	Entity e_paddle;
@@ -55,7 +64,7 @@ int main() {
 	e_paddle.dimensions = paddle->getDimensions().cast<float>();
 
 	Entity e_ball;
-	e_ball.position = window.getDimensions() / 2.f;
+	e_ball.position = window.getDimensions().cast<float>() / 2.f;
 	e_ball.dimensions = ball->getDimensions().cast<float>();
 	e_ball.velocity = { 3, 3 };
 
@@ -70,9 +79,9 @@ int main() {
 		std::cout << timer.getTicksPerSec() << "\n";
 		// Input
 
-		if ((bool)keyboard.isKeyDown(KEY::KEY_A))
+		if ((bool)keyboard.isKeyDown(KEY::KEY_A) && e_paddle.position.x > 0)
 			e_paddle.position.x -= 5;
-		if ((bool)keyboard.isKeyDown(KEY::KEY_D))
+		if ((bool)keyboard.isKeyDown(KEY::KEY_D) && e_paddle.position.x + e_paddle.dimensions.x <= window.getWidth())
 			e_paddle.position.x += 5;
 
 		// Update
@@ -87,17 +96,19 @@ int main() {
 
 		// Check ball with paddle
 		 
-		if (e_ball.position.y < e_paddle.position.y + e_paddle.dimensions.y && 
+		if (e_ball.position.y < e_paddle.position.y + e_paddle.dimensions.y &&
 			e_ball.position.x <= e_paddle.position.x + e_paddle.dimensions.x &&
-			e_ball.position.x + e_ball.dimensions.x >= e_paddle.position.x)
-			e_ball.velocity.y *= -1;
+			e_ball.position.x + e_ball.dimensions.x >= e_paddle.position.x) {
+			e_ball.velocity.y *= -1; 
+			boing.setPosition(Vector3<float>(e_ball.position.x / window.getWidth(), 0, 0));  
+			boing.play();
+		}
 
 		// Render
 
 		batcher.push(paddle_id, toVector3<float>(e_paddle.position), e_paddle.dimensions);
 		batcher.push(ball_id, toVector3<float>(e_ball.position), e_ball.dimensions);
-
-		 
+		  
 		batcher.flush();
 		window.endFrame();
 	}

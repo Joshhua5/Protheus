@@ -13,19 +13,19 @@ GLint Pro::Graphics::SpriteBatcher::max_textures = 0;
 
 
 const char* source_vertex_shader =
-"#version 420												\n"
-"in vec3 vertex;											\n"
-"in vec4 tex_coord;		 									\n"
-"in vec2 dim;												\n"
-"out vec4 v_tex_coord;		 								\n"
-"out vec2 g_dim;											\n"
-"uniform vec3 camera_window;								\n"
-"uniform vec3 camera_position;							    \n"
-"void main() {					 							\n"
-"	g_dim = dim / camera_window.xy;							\n"
-"	v_tex_coord = tex_coord;								\n"
-"	gl_Position = vec4(((vertex - camera_position ) / camera_window) * 2 - 1, 1);		\n"
-"}\0														\n"
+"#version 420																			\n"
+"in vec3 vertex;																		\n"
+"in vec4 tex_coord;		 																\n"
+"in vec2 dim;																			\n"
+"out vec4 v_tex_coord;		 															\n"
+"out vec2 g_dim;																		\n"
+"uniform vec3 camera_window;															\n"
+"uniform vec3 camera_position;															\n"
+"void main() {					 														\n"
+"	g_dim = dim / camera_window.xy;													\n"
+"	v_tex_coord = tex_coord;															\n"
+"	gl_Position = vec4(((vertex - camera_position ) / camera_window) - 1, 1);		\n"
+"}\0																					\n"
 ;
 
 const char* source_fragment_shader =
@@ -97,7 +97,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		batch_program.link();
 
 		batch_program.setUniform("camera_window", 
-			Vector3<float>(window_dimensions.x, window_dimensions.y, 1.f));
+			Vector3<float>(window_dimensions.x / 2, window_dimensions.y / 2, 1.f));
 		batch_program.setUniform("camera_position",
 			Vector3<float>(0.f, 0.f, 0.f));
 
@@ -216,6 +216,23 @@ int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
 	return textures.size() - 1;
 }
 
+
+int SpriteBatcher::attachTexture(ArrayList<int>& indicies,const ArrayList<smart_pointer<Texture>>& texs) {
+	unsigned size = texs.size();
+	if (size == 0)
+		return -1; 
+
+	indicies.reserve(size);
+	  
+	for (unsigned x = 0; x < size; ++x) {
+		++current_texture_count;
+		sprite_indicies.push_back(std::vector<unsigned>());
+		textures.push_back(texs[x]);
+		indicies.push_back(textures.size() - 1); 
+	} 
+	return size;
+}
+
 void SpriteBatcher::removeTexture(int texture_id) {
 	if (texture_id < 0 || texture_id >(int)textures.size())
 		return;
@@ -276,6 +293,10 @@ void SpriteBatcher::reset() {
 
 void SpriteBatcher::setCameraPosition(const Vector3<float>& position) {
 	batch_program.setUniform("camera_position", position);
+}
+
+void SpriteBatcher::setCameraDimensions(const Vector2<float>& position) {
+	batch_program.setUniform("camera_window", Vector3<float>(position.x / 2, position.y / 2, 1.f));
 }
 
 void SpriteBatcher::flush() {

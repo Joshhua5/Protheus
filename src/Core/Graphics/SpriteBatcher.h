@@ -18,14 +18,13 @@ History:
 #include <initializer_list>
 #include <Vector4.h> 
 #include <smart_pointer.h>
+#include <ArrayList.h>
 #include "Program.h"
 #include "Sprite.h"
 #include "VertexArray.h"
 #include "Shader.h" 
 #include "Transformation.h"
-
-// Create a shader to take in position, dimensions and a texture
-// use a 
+ 
 namespace Pro{
 	namespace Graphics {
 		using namespace std;
@@ -75,12 +74,14 @@ namespace Pro{
 
 			// if -1, the maxiumum texture bindings has been hit.
 			int attachTexture(smart_pointer<Texture> tex);
-			int attachTexture(initializer_list<Texture> texs);
+			/*! indicies will be populated with the index of the texture inside the sprite batcher */
+			int attachTexture(ArrayList<int>& indicies, const ArrayList<smart_pointer<Texture>>& texs);
 
 			void removeTexture(int);
 			  
 			void flush(); 
 
+			void setCameraDimensions(const Vector2<float>& position);
 			void setCameraPosition(const Vector3<float>& position);
 
 			void render();

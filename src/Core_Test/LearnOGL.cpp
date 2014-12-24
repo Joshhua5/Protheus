@@ -67,8 +67,8 @@ int main() {
 
 	vao.unbind(); 
 
-	program.setUniform("world_pos", Vector3<float>(.5, 0, 0));
-
+	program.setUniform("world_pos", Vector3<float>(0, 0, 0));
+	program.setUniform("camera_pos", camera.getPosition());
 	glActiveTexture(GL_TEXTURE0);
 	tex->bind();
 	  

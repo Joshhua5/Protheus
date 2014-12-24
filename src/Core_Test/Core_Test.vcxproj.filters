@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Breakout.cpp">
+    <ClCompile Include="LearnOGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

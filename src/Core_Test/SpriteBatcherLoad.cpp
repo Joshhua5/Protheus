@@ -7,7 +7,7 @@
 #include <ProMath.h>
 #include <iostream>
 
-unsigned const ball_count = 1E6;
+unsigned const ball_count = 1E5;
 
 using namespace Pro;
 using namespace Graphics;

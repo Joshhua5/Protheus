@@ -118,6 +118,12 @@ void Transformation::setPosition(const Vector3<float>& _position) {
 	isProcessed = false;
 	position = _position;
 }
+
+
+Vector3<float> Transformation::getPosition() const {
+	return position;
+}
+
 void Transformation::move(const Vector3<float>& delta) {
 	if (delta.equals(0, 0, 0))
 		return;
