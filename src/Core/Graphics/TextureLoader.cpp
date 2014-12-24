@@ -226,6 +226,7 @@ smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 			break;
 		case 32:
 			writer.write<GLuint>(colorTable.at(reader.read<unsigned>()));
+			writer.write<Texture>(Texture(1, { 1, 1 }));
 			break;
 		}
 

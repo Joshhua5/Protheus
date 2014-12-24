@@ -37,6 +37,10 @@ namespace Pro {
 			void rotate(const Vector3<float>& xyz);
 			const Matrix44<float>& getMatrix();
 			const Matrix44<float>& getNormalMatrix();
+
+
+			Transformation& operator=(const Transformation&);
+			Transformation& operator=(Transformation&&);
 		};
 	}
 }

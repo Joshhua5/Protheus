@@ -4,7 +4,7 @@ using namespace Pro;
 using namespace Graphics;
 
 Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::vertex_shader;
-Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::fragment_shader; 
+Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::fragment_shader;
 Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::geometry_shader;
 Pro::Graphics::Program Pro::Graphics::SpriteBatcher::batch_program(false);
 
@@ -13,25 +13,26 @@ GLint Pro::Graphics::SpriteBatcher::max_textures = 0;
 
 
 const char* source_vertex_shader =
-"#version 420							\n"
-"in vec3 vertex;						\n"
-"in vec4 tex_coord;		 				\n"
-"in vec2 dim;							\n"
-"out vec4 v_tex_coord;		 			\n"
-"out vec2 g_dim;						\n"
-"void main() {					 		\n"
-"	g_dim = dim;						\n"
-"	v_tex_coord = tex_coord;			\n"
-"	gl_Position = vec4(vertex, 1);		\n"
-"}\0									\n"
+"#version 420												\n"
+"in vec3 vertex;											\n"
+"in vec4 tex_coord;		 									\n"
+"in vec2 dim;												\n"
+"out vec4 v_tex_coord;		 								\n"
+"out vec2 g_dim;											\n"
+"uniform vec3 camera_window;								\n"
+"uniform vec3 camera_position;							    \n"
+"void main() {					 							\n"
+"	g_dim = dim / camera_window.xy;							\n"
+"	v_tex_coord = tex_coord;								\n"
+"	gl_Position = vec4(((vertex - camera_position ) / camera_window) * 2 - 1, 1);		\n"
+"}\0														\n"
 ;
-
 
 const char* source_fragment_shader =
 "#version 420   														\n"
 "out vec4 out_color;  													\n"
 "																		\n"
-"smooth in vec2 f_tex_coord; 											\n" 
+"smooth in vec2 f_tex_coord; 											\n"
 "																		\n"
 "layout(binding = 0) uniform sampler2D sampler1;						\n"
 "																		\n"
@@ -70,9 +71,12 @@ const char* source_geomerty_shader = "									 \n"
 "}\0"
 ;
 
-SpriteBatcher::SpriteBatcher() {
-	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &max_sprites);
+SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
+	glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &max_sprites);
 	max_textures = 4;
+
+	if (max_sprites >= 10000000)
+		max_sprites = 10000000;
 
 	verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
 	writer = new BufferWriter(verticies);
@@ -92,13 +96,18 @@ SpriteBatcher::SpriteBatcher() {
 		batch_program.attachShader(geometry_shader);
 		batch_program.link();
 
+		batch_program.setUniform("camera_window", 
+			Vector3<float>(window_dimensions.x, window_dimensions.y, 1.f));
+		batch_program.setUniform("camera_position",
+			Vector3<float>(0.f, 0.f, 0.f));
+
 		if (batch_program.hasError()) {
 			first_init = true;
 			return;
 		}
 
 		const unsigned stride_size = sizeof(GLfloat) * 9;
-		 
+
 		vao.preservedBind();
 
 		// CHECK OFFSETS 
@@ -115,12 +124,12 @@ SpriteBatcher::SpriteBatcher() {
 
 		vao.setVertexAttribute(batch_program, "vertex", 3, GL_FLOAT,
 			GL_FALSE, stride_size, 0);
-		  
+
 		vao.setVertexAttribute(batch_program, "dim", 2, GL_FLOAT,
 			GL_FALSE, stride_size, 3 * sizeof(GLfloat));
 
 		vao.setVertexAttribute(batch_program, "tex_coord", 4, GL_FLOAT, GL_FALSE,
-			stride_size, 5 * sizeof(GLfloat)); 
+			stride_size, 5 * sizeof(GLfloat));
 
 		sprite_count.resize(max_sprites);
 
@@ -136,13 +145,46 @@ SpriteBatcher::~SpriteBatcher() {
 	glDeleteBuffers(1, &vertex_buffer_id);
 }
 
+
+
+SpriteBatcher::SpriteBatcher(SpriteBatcher&& rhs) {
+	*this = std::move(rhs);
+}
+
+SpriteBatcher& SpriteBatcher::operator=(SpriteBatcher&& rhs) {
+	verticies = rhs.verticies;
+	writer = rhs.writer;
+
+	vao = std::move(rhs.vao);
+	current_sprite_count = rhs.current_sprite_count;
+	textures = std::move(rhs.textures);
+	sprite_count = std::move(rhs.sprite_count);
+	sprite_indicies = std::move(rhs.sprite_indicies);
+	free_textures = std::move(rhs.free_textures);
+
+
+	vertex_buffer_id = rhs.vertex_buffer_id;
+	element_buffer_id = rhs.element_buffer_id;
+	texture_uniforms = rhs.texture_uniforms;
+
+	rhs.vertex_buffer_id =
+		rhs.element_buffer_id =
+		rhs.texture_uniforms =
+		rhs.current_texture_count =
+		rhs.current_sprite_count = 0;
+
+	rhs.verticies = nullptr;
+	rhs.writer = nullptr;
+	return *this;
+}
+
 void SpriteBatcher::push(int texture,
 	Vector3<float> position,
 	Vector2<float> dimensions,
 	const  float scale,
 	const  float rotate) {
 	if (texture < 0)
-		return; 
+		return;
 
 	dimensions *= scale;
 
@@ -155,7 +197,7 @@ void SpriteBatcher::push(int texture,
 	writer->write<float>(0);
 	writer->write<float>(1);
 	writer->write<float>(1);
-	sprite_indicies.at(texture).push_back(current_sprite_count); 
+	sprite_indicies.at(texture).push_back(current_sprite_count);
 
 	++sprite_count.at(texture);
 	++current_sprite_count;
@@ -183,7 +225,7 @@ void SpriteBatcher::removeTexture(int texture_id) {
 	--current_texture_count;
 }
 
-void SpriteBatcher::render() { 
+void SpriteBatcher::render() {
 	vao.preservedBind();
 
 	// Copy in new vertex data
@@ -198,15 +240,19 @@ void SpriteBatcher::render() {
 	// Apply textures to texture units
 	// WARNING, textures may have gaps from removeTexture(int)
 	for (unsigned x = 0; x < current_texture_count % max_textures; ++x) {
+		if (sprite_count.at(x) == 0)
+			continue; 
+
 		glActiveTexture(GL_TEXTURE0);
-		textures.at(x)->bind(); 
+		textures.at(x)->bind();
 
 		// Copy in new element data
-		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sprite_indicies.at(x).size() * sizeof(GLint), sprite_indicies.at(x).data()); 
-		glDrawElements(GL_POINTS, sprite_count.at(x), GL_UNSIGNED_INT, 0);
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sprite_indicies.at(x).size() * sizeof(GLint), sprite_indicies.at(x).data());
 		 
-		offset += sprite_count.at(x) * sizeof(GLint); 
-	} 
+		glDrawElements(GL_POINTS, sprite_count.at(x), GL_UNSIGNED_INT, 0);
+
+		offset += sprite_count.at(x) * sizeof(GLint);
+	}
 
 	vao.preservedUnbind();
 
@@ -218,14 +264,21 @@ void SpriteBatcher::render() {
 void SpriteBatcher::reset() {
 	// CONSIDER making a class to allow
 	// resetting of the vector without deallocating the internal array.
-	for (unsigned x = 0; x < current_texture_count % max_textures; ++x)
+	for (unsigned x = 0; x < current_texture_count % max_textures; ++x) {
 		sprite_indicies.at(x) = std::vector<unsigned>();
+		sprite_count.at(x) = 0;
+	}
 	 
 	writer->reset();
-	current_sprite_count = 0;   
+	current_sprite_count = 0;
 }
 
-void SpriteBatcher::flush() { 
+
+void SpriteBatcher::setCameraPosition(const Vector3<float>& position) {
+	batch_program.setUniform("camera_position", position);
+}
+
+void SpriteBatcher::flush() {
 	render();
-	reset(); 
+	reset();
 }

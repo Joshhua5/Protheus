@@ -22,7 +22,7 @@
     <ClInclude Include="BufferBase.h" />
     <ClInclude Include="BufferIO.h" />
     <ClInclude Include="BufferReader.h" />
-    <ClInclude Include="BufferVector.h" />
+    <ClInclude Include="ArrayList.h" />
     <ClInclude Include="BufferWriter.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="ClassDefinition.h" />

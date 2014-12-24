@@ -51,14 +51,14 @@ namespace Pro {
 			}
 
 			// z and w are width and height in that order.
-			bool contains(const Vector2& v) const {
-				if (v.x > x &&
+			bool contains(const Vector2<T>& v) const {
+				return
+					v.x > x &&
 					x + z > v.x &&
 					v.y > y &&
-					x + y > v.y)
-					return true;
-				return false;
+					x + y > v.y;
 			}
+
 			bool overlaps(const Vector4&) const {
 				if ((x >= v.x && x + w <= v.x + v.x) &
 					((y + w <= v.y && y >= v.y) |

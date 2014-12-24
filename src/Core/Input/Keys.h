@@ -145,10 +145,13 @@ namespace Pro {
 			MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3,
 		};
 
+		/*! Can be cased with bool for use inside of a if-statement
+			PRESSED and REPEAT will both return true
+		*/
 		enum struct KEY_PRESSED {
-			RELEASED = 0,
-			PRESSED = 1,
-			REPEAT = 2
-		};
+			 RELEASED = 0,
+			 PRESSED = 1,
+			 REPEAT = 2
+		}; 
 	}
 }

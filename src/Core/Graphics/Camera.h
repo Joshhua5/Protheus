@@ -5,6 +5,7 @@
 namespace Pro {
 	namespace Graphics { 
 		class Camera : public Transformation{
+			
 		};
 	}
 }

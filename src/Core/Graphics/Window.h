@@ -38,7 +38,7 @@ namespace Pro {
 			Keyboard keyboard;
 			Mouse mouse;
 			 
-			void window_constructor(const WindowDefinition& def);
+			void window_constructor(const WindowDefinition& def); 
 
 		public:
 			Window(const WindowDefinition&);
@@ -50,9 +50,14 @@ namespace Pro {
 			bool isFocused() const;
 			GLFWwindow* getWindow() const;
 			void setCurrent();
+			bool isExitRequested() const;
 
 			void startFrame();
 			void endFrame();
+
+			unsigned getWidth() const;
+			unsigned getHeight() const;
+			Vector2<unsigned> getDimensions() const;
 
 			Keyboard& getKeyboard();
 			Mouse& getMouse();

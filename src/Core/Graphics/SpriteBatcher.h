@@ -15,6 +15,7 @@ History:
 #include <stack>
 #include <Error.h> 
 #include <BufferWriter.h>
+#include <initializer_list>
 #include <Vector4.h> 
 #include <smart_pointer.h>
 #include "Program.h"
@@ -32,8 +33,7 @@ namespace Pro{
 		class SpriteBatcher
 		{    
 			Buffer* verticies;
-			BufferWriter* writer;
-			Transformation batch_transformation;
+			BufferWriter* writer; 
 			VertexArray vao;
 
 			static GLint max_sprites;
@@ -60,9 +60,9 @@ namespace Pro{
 
 		public:
 			SpriteBatcher(SpriteBatcher&&);
-			SpriteBatcher&& operator=(SpriteBatcher&&);
+			SpriteBatcher& operator=(SpriteBatcher&&);
 			// Window must be created, before creating an instance of SpriteBatcher
-			SpriteBatcher();
+			SpriteBatcher(const Vector2<float>& window_dimensions = { 100, 100 });
 			~SpriteBatcher();
 			 
 			// Performance benifit to grouping textures together in push calls
@@ -75,12 +75,13 @@ namespace Pro{
 
 			// if -1, the maxiumum texture bindings has been hit.
 			int attachTexture(smart_pointer<Texture> tex);
+			int attachTexture(initializer_list<Texture> texs);
 
 			void removeTexture(int);
-			
-			void setTransformation(const Transformation& trans);
-			 
+			  
 			void flush(); 
+
+			void setCameraPosition(const Vector3<float>& position);
 
 			void render();
 			

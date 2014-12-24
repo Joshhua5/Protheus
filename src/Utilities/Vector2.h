@@ -24,7 +24,7 @@ namespace Pro {
 			Vector2() {}
 
 			// Copy constructor
-			Vector2(std::initializer_list<T> list) {
+			inline Vector2(std::initializer_list<T> list) {
 				if (list.size() < 2) {
 					x = y = 0;
 					return;
@@ -32,57 +32,57 @@ namespace Pro {
 				x = *list.begin();
 				y = *(list.begin() + 1);
 			}
-			Vector2(const Vector2& vec) {
+			inline Vector2(const Vector2& vec) {
 				x = std::move(vec.x);
 				y = std::move(vec.y);
 			}
-			Vector2(Vector2&& vec) {
+			inline Vector2(Vector2&& vec) {
 				x = std::move(vec.x);
 				y = std::move(vec.y);
 			}
 
-			Vector2& operator=(const Vector2<int>& p) {
+			inline Vector2& operator=(const Vector2<int>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
-			Vector2& operator=(const Vector2<unsigned>& p) {
-				x = static_cast<T>(p.x);
-				y = static_cast<T>(p.y);
-				return *this;
-			}
-
-			Vector2& operator=(const Vector2<unsigned long>& p) {
+			inline Vector2& operator=(const Vector2<unsigned>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
 
-			Vector2& operator=(const Vector2<long>& p) {
+			inline Vector2& operator=(const Vector2<unsigned long>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
 
-			Vector2& operator=(const Vector2<float>& p) {
+			inline Vector2& operator=(const Vector2<long>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
 
-			Vector2& operator=(const Vector2<double>& p) {
+			inline Vector2& operator=(const Vector2<float>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
 
-			Vector2& operator=(const Vector2<short>& p) {
+			inline Vector2& operator=(const Vector2<double>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
 			}
 
-			Vector2& operator=(const Vector2<char>& p) {
+			inline Vector2& operator=(const Vector2<short>& p) {
+				x = static_cast<T>(p.x);
+				y = static_cast<T>(p.y);
+				return *this;
+			}
+
+			inline Vector2& operator=(const Vector2<char>& p) {
 				x = static_cast<T>(p.x);
 				y = static_cast<T>(p.y);
 				return *this;
@@ -95,36 +95,36 @@ namespace Pro {
 				return *this;
 			}
 
-			Vector2(T _x, T _y) {
+			inline Vector2(T _x, T _y) {
 				x = _x;
 				y = _y;
 			}
 
-			bool contains(float p) const {
+			inline bool contains(float p) const {
 				return ((x > p && y < p) || (x < p && y > p));
 			}
 
-			void move(T _x, T _y) {
+			inline void move(T _x, T _y) {
 				x += _x;
 				y += _y;
 			}
 
 			template<typename X>
-			Vector2<X> cast() {
+			Vector2<X> cast() const {
 				return Vector2<X>(static_cast<X>(x), static_cast<X>(y));
+			} 
+
+			inline float length() const {
+					return sqrtf((x * x) + (y * y));
 			}
 
-			float length()const {
-				return sqrtf((x * x) + (y * y));
-			}
-
-			Vector2 normalize() const {
+			inline Vector2 normalize() const {
 				Vector2 out(*this);
 				out /= out.length();
 				return out;
 			}
 
-			Vector2& operator=(const T& p) {
+			inline Vector2& operator=(const T& p) {
 				x = p;
 				y = p;
 				return *this;
@@ -137,34 +137,34 @@ namespace Pro {
 
 			//}
 
-			bool operator==(const Vector2& p) {
+			inline bool operator==(const Vector2& p) {
 				return x == p.x && y == p.y;
 			}
 
-			bool operator!=(const Vector2& p) {
+			inline bool operator!=(const Vector2& p) {
 				return x != p.x || y != p.y;
 			}
 
-			void operator+=(T val) {
+			inline void operator+=(T val) {
 				x += val;
 				y += val;
 			}
-			void operator+=(Vector2& p) {
+			inline void operator+=(Vector2& p) {
 				x += p.x;
 				y += p.y;
 			}
-			Vector2 operator+(Vector2& val) {
+			inline Vector2 operator+(Vector2& val) {
 				Vector2 out(*this);
 				out += val;
 				return out;
 			}
-			Vector2 operator+(T val) {
+			inline Vector2 operator+(T val) {
 				Vector2 out(*this);
 				out += val;
 				return out;
 			}
 
-			Vector2 operator-(T val) {
+			inline Vector2 operator-(T val) {
 				Vector2 out(*this);
 				out -= val;
 				return out;

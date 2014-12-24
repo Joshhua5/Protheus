@@ -25,7 +25,7 @@ namespace Pro{
 		{
 			string rootDir;
 		public:
-			FileSystem();
+			FileSystem(const string& root = "");
 			~FileSystem();
 
 			FileSystem& operator=(const FileSystem& rhs) {

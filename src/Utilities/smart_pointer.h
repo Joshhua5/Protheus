@@ -85,7 +85,7 @@ namespace Pro {
 				return *this;
 			}
 
-			T* operator ->() const {
+			inline T* operator ->() const {
 				return _ptr;
 			}
 

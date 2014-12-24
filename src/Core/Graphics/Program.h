@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Vector3.h>
-#include <Matrix44.h>
+#include <ProMath.h>
 #include <mutex>
 #include <unordered_map>
 #include "extern\glew.h"
@@ -50,6 +49,7 @@ namespace Pro {
 
 			// If the stride is equal to 0 then the function call is silently returned and no state is changed
 			void setUniform(const string& uniform_name, const Vector3<float>& value);
+			void setUniform(const string& uniform_name, const Vector2<float>& value);
 			void setUniform(const string& uniform_name, GLint value);
 			void setUniform(const string& uniform_name, const Matrix44<float>& value);
 			void setUniform(const string& uniform_name, const GLint* value, unsigned size);

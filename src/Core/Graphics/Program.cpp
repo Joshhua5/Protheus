@@ -103,19 +103,20 @@ inline GLint Program::getUniformLocation(GLuint program_id, const string& unifor
  
 
 void Program::setUniform(const string& uniform_name, const Vector3<float>& value) {
-	GLint location = 0;
-	auto iterator = locations.find(uniform_name);
-	if (iterator == locations.end()) {
-		location = getUniformLocation(program_id, uniform_name);
-		if (location == -1)
-			return;
-		locations.insert({ uniform_name, location });
-	}
-	else
-		location = (*iterator).second;
-
+	GLint location = getUniformLocation(program_id, uniform_name);
+	if (location == -1)
+		return;
 	preservedUse();
 	glUniform3f(location, value.x, value.y, value.z);
+	preservedDisuse();
+}
+
+void Program::setUniform(const string& uniform_name, const Vector2<float>& value) {
+	GLint location = getUniformLocation(program_id, uniform_name);
+	if (location == -1)
+		return;
+	preservedUse();
+	glUniform2f(location, value.x, value.y);
 	preservedDisuse();
 }
 

@@ -12,7 +12,7 @@
 #include <Buffer.h>
 #include <BufferWriter.h>
 #include <Vector2.h>
-#include <BufferVector.h>
+#include <ArrayList.h>
 
 using namespace Pro;
 using namespace Util;
@@ -30,7 +30,7 @@ int main() {
 	Transformation camera;
 	Projection projection(0.01f, 1000.0f, 45, window.getAspect());
 	Transformation model;
-	Transformation light_t;
+	Transformation light_t; 
 	   
 	camera.setPosition({0 , 0 , .7f});
 
@@ -89,7 +89,7 @@ int main() {
 	float pos = 0;
 	Vector3<float> rotation(0);
 
-	while (false) {
+	while (true) {
 		window.startFrame(); 
 		vao.bind();
 		//camera.rotate({ 0, 0, 0.01f }); 

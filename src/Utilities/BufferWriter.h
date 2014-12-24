@@ -22,14 +22,18 @@ namespace Pro {
 		class BufferWriter :
 			public BufferIO
 		{
+			unsigned char m_reoccurring_resize;
+
 		public:
 			BufferWriter(Buffer* buffer) {
 				using_smart = false;
+				m_reoccurring_resize = 0;
 				m_buffer = buffer;
 				m_head = 0;
 			}
 			BufferWriter(smart_pointer<Buffer> pointer) {
 				using_smart = true;
+				m_reoccurring_resize = 0;
 				m_buffer = pointer;
 				m_head = 0;
 			}
@@ -50,8 +54,8 @@ namespace Pro {
 
 				// Check if the write will overflow
 				if (m_head + size > m_buffer->size())
-					// Resizes the buffer with 64 bytes overhead
-					m_buffer->resize(m_head + size + 64);
+					// Resizes the buffer exponentially as more resizes are called
+					m_buffer->resize(static_cast<unsigned>((float)(m_head + size) * (1.f + (m_reoccurring_resize++ / 10.f))));
 
 				memcpy(m_buffer->at(m_head), value, size);
 				skip(size);
@@ -61,13 +65,13 @@ namespace Pro {
 			inline void write(const T& data) {
 				write(&data, sizeof(T));
 			}
-			 
+			  
 			/*! Writes an object into the buffer */
 			template<typename T>
 			inline void write(const T&& data) {
 				write(&data, sizeof(T));
 			}
-
+			 
 			/*! Writes the array into the buffer
 				size in bytes
 			*/

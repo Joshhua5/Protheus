@@ -72,8 +72,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 	GLuint err = glGetError();
 	if (err != GL_NO_ERROR)
 		error.reportError("Unable to create window, " + std::string((char*)glewGetErrorString(err)));
-	
-
+	 
 }
 
 Window::Window(const WindowDefinition& def){
@@ -126,6 +125,20 @@ void Window::setCurrent() {
 	glfwMakeContextCurrent(window);
 }
 
+bool Window::isExitRequested() const {
+	return glfwWindowShouldClose(window);
+}
+ 
+unsigned Window::getWidth() const {
+	return dimension.x;
+}
+unsigned Window::getHeight() const {
+	return dimension.y;
+} 
+
+Vector2<unsigned> Window::getDimensions() const {
+	return dimension;
+}
 
 void Window::startFrame() {
 	glClear(GL_COLOR_BUFFER_BIT |

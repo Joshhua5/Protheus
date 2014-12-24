@@ -3,9 +3,9 @@
 using namespace Pro;
 using namespace Util;
 
-FileSystem::FileSystem()
+FileSystem::FileSystem(const string& root)
 {
-	rootDir = "";
+	rootDir = root;
 }
 
 FileSystem::~FileSystem()

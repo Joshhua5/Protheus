@@ -132,3 +132,12 @@ void Transformation::setScale(const Vector3<float>& _scale) {
 	scale = _scale;
 	isProcessed = false;
 }
+
+Transformation& Transformation::operator=(const Transformation& rhs){
+	memcpy(this, &rhs, sizeof(Transformation));
+	return *this;
+}
+Transformation& Transformation::operator=(Transformation&& rhs){
+	memcpy(this, &rhs, sizeof(Transformation));
+	return *this;
+}

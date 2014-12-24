@@ -46,13 +46,13 @@ namespace Pro {
 			/*! Count how many ticks occur per second, value is extrapolated */
 			double getTicksPerSec() const {
 				// We reduce the accuracy of the timer by 1NS to prevent division by 0
-				return (double)high_resolution_clock_period / ((currentTick - lastTick) + 1);
+				return (double)1E9 / ((currentTick - lastTick) + 1);
 			}
 
 			/*! Update the timer with a new tick*/
-			void tick() {
+			unsigned long long tick() {
 				lastTick = currentTick;
-				currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				return currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
 
