@@ -15,6 +15,7 @@ History:
 #include <string> 
 #include <Vector2.h>
 #include <Error.h> 
+#include "TextureUnit.h"
 #include "extern\glew.h"
 #include "extern\glfw3.h"
 #include "WindowDefinition.h"

@@ -23,6 +23,7 @@ History:
 #include "Sprite.h"
 #include "VertexArray.h"
 #include "Shader.h" 
+#include "TextureUnit.h"
 #include "Transformation.h"
  
 namespace Pro{
@@ -81,6 +82,8 @@ namespace Pro{
 			  
 			void flush(); 
 
+
+			void alpha(const Vector3<float>& color);
 			void setCameraDimensions(const Vector2<float>& position);
 			void setCameraPosition(const Vector3<float>& position);
 

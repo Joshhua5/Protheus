@@ -59,6 +59,8 @@ int main() {
 		entities.push_back(e_ball);
 	}
 
+	batcher.alpha(Vector3<float>(255.f, 255.f, 255.f));
+
 	// Game Loop
 	while (!window.isExitRequested()) {
 		window.startFrame(); 

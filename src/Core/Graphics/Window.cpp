@@ -59,6 +59,9 @@ void Window::window_constructor(const WindowDefinition& def) {
 	if (window == nullptr)
 		return error.reportFatalNR("Unable to create window");
 
+	// Initialize the texture unit class
+	TextureUnit();
+
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -126,7 +129,7 @@ void Window::setCurrent() {
 }
 
 bool Window::isExitRequested() const {
-	return glfwWindowShouldClose(window);
+	return static_cast<bool>(glfwWindowShouldClose(window));
 }
  
 unsigned Window::getWidth() const {

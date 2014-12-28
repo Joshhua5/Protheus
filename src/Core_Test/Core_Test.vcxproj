@@ -92,6 +92,11 @@
   <ItemGroup>
     <ClCompile Include="LearnOGL.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\material.glsl" />
+    <None Include="shaders\Materials.glsl" />
+    <None Include="shaders\PhongLighting.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

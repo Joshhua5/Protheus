@@ -83,7 +83,7 @@ namespace Pro {
 				_ptr = rhs;
 				_references = new unsigned(1);
 				return *this;
-			}
+			} 
 
 			inline T* operator ->() const {
 				return _ptr;

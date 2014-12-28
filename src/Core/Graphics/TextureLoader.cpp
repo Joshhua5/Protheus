@@ -254,6 +254,14 @@ smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 
 	// reset state
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR) {
+		error.reportErrorNR(string((char*)glewGetErrorString(err)) + ": Unable to load texture");
+		glDeleteTextures(1, &texture_id);
+	}
+
 	return new Texture(texture_id, Vector2<unsigned>((unsigned)header.bmp_width, (unsigned)header.bmp_height));
 }
 

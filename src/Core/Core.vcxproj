@@ -120,6 +120,7 @@
     <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
+    <ClInclude Include="Graphics\TextureUnit.h" />
     <ClInclude Include="Graphics\Transformation.h" />
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\Window.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Graphics\Projection.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
+    <ClCompile Include="Graphics\TextureUnit.cpp" />
     <ClCompile Include="Graphics\Transformation.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />

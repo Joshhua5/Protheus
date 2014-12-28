@@ -22,9 +22,9 @@ const char* source_vertex_shader =
 "uniform vec3 camera_window;															\n"
 "uniform vec3 camera_position;															\n"
 "void main() {					 														\n"
-"	g_dim = dim / camera_window.xy;													\n"
+"	g_dim = dim / camera_window.xy;														\n"
 "	v_tex_coord = tex_coord;															\n"
-"	gl_Position = vec4(((vertex - camera_position ) / camera_window) - 1, 1);		\n"
+"	gl_Position = vec4(((vertex - camera_position ) / camera_window) - 1, 1);			\n"
 "}\0																					\n"
 ;
 
@@ -33,11 +33,14 @@ const char* source_fragment_shader =
 "out vec4 out_color;  													\n"
 "																		\n"
 "smooth in vec2 f_tex_coord; 											\n"
-"																		\n"
+"uniform vec3 alpha;													\n"
 "layout(binding = 0) uniform sampler2D sampler1;						\n"
 "																		\n"
 "void main() {				 											\n"
-"	out_color = texture(sampler1, f_tex_coord); 						\n"
+"	vec4 color = texture(sampler1, f_tex_coord);						\n"
+"	bvec3 eql = equal(color.rgb, alpha); 								\n"
+"	if(color.x >=  alpha.x - 0.1 && color.x <= alpha.x + 0.1 ) discard;	\n"
+"	out_color = color; 													\n"
 "}\0																	\n"
 ;
 
@@ -53,19 +56,19 @@ const char* source_geomerty_shader = "									 \n"
 "																		 \n"
 "void main() {															 \n"
 "	gl_Position = gl_in[0].gl_Position + vec4(0, g_dim[0].y, 0, 0);		 \n"
-"	f_tex_coord = v_tex_coord[0].xy + vec2(0, v_tex_coord[0].w);			 \n"
+"	f_tex_coord = v_tex_coord[0].xy + vec2(0, v_tex_coord[0].w);		 \n"
 "	EmitVertex();														 \n"
 "																		 \n"
 "	gl_Position = gl_in[0].gl_Position;									 \n"
-"	f_tex_coord = v_tex_coord[0].xy;										 \n"
+"	f_tex_coord = v_tex_coord[0].xy;									 \n"
 "	EmitVertex();														 \n"
 "																		 \n"
 "	gl_Position = gl_in[0].gl_Position + vec4(g_dim[0], 0, 0);			 \n"
-"	f_tex_coord = v_tex_coord[0].xy +  v_tex_coord[0].zw;						 \n"
+"	f_tex_coord = v_tex_coord[0].xy +  v_tex_coord[0].zw;				 \n"
 "	EmitVertex();														 \n"
 "																		 \n"
 "	gl_Position = gl_in[0].gl_Position + vec4(g_dim[0].x, 0, 0, 0);		 \n"
-"	f_tex_coord = v_tex_coord[0].xy + vec2(v_tex_coord[0].z, 0);				 \n"
+"	f_tex_coord = v_tex_coord[0].xy + vec2(v_tex_coord[0].z, 0);		 \n"
 "	EmitVertex();														 \n"
 "	EndPrimitive();														 \n"
 "}\0"
@@ -78,15 +81,15 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 	if (max_sprites >= 10000000)
 		max_sprites = 10000000;
 
-	verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
+	if(verticies == nullptr)
+		verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
 	writer = new BufferWriter(verticies);
 
 	static bool first_init = true;
 	if (first_init) {
 		batch_program.init();
 		// Breakpoint to make sure only run once
-
-
+		 
 		vertex_shader.init(source_vertex_shader, GL_VERTEX_SHADER);
 		fragment_shader.init(source_fragment_shader, GL_FRAGMENT_SHADER);
 		geometry_shader.init(source_geomerty_shader, GL_GEOMETRY_SHADER);
@@ -96,7 +99,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		batch_program.attachShader(geometry_shader);
 		batch_program.link();
 
-		batch_program.setUniform("camera_window", 
+		batch_program.setUniform("camera_window",
 			Vector3<float>(window_dimensions.x / 2, window_dimensions.y / 2, 1.f));
 		batch_program.setUniform("camera_position",
 			Vector3<float>(0.f, 0.f, 0.f));
@@ -109,11 +112,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		const unsigned stride_size = sizeof(GLfloat) * 9;
 
 		vao.preservedBind();
-
-		// CHECK OFFSETS 
-		//Buffervertex_buffer(max_sprites * stride_size * 6, false);
-		//BufferWriter vertex_buffer_writer(&vertex_buffer);
-
+		  
 		glGenBuffers(1, &vertex_buffer_id);
 		glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
 		glBufferData(GL_ARRAY_BUFFER, verticies->size(), verticies->data(), GL_STREAM_DRAW);
@@ -135,6 +134,14 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 
 		vao.preservedUnbind();
 		first_init = false;
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			error.reportErrorNR(string((char*)glewGetErrorString(err)) + ": Unable to initialize sprite_batcher");
+			first_init = true;
+			glDeleteBuffers(1, &vertex_buffer_id);
+			glDeleteBuffers(1, &element_buffer_id);
+		}
 	}
 }
 
@@ -143,6 +150,7 @@ SpriteBatcher::~SpriteBatcher() {
 	delete verticies;
 
 	glDeleteBuffers(1, &vertex_buffer_id);
+	glDeleteBuffers(1, &element_buffer_id);
 }
 
 
@@ -217,19 +225,19 @@ int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
 }
 
 
-int SpriteBatcher::attachTexture(ArrayList<int>& indicies,const ArrayList<smart_pointer<Texture>>& texs) {
+int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart_pointer<Texture>>& texs) {
 	unsigned size = texs.size();
 	if (size == 0)
-		return -1; 
+		return -1;
 
 	indicies.reserve(size);
-	  
+
 	for (unsigned x = 0; x < size; ++x) {
 		++current_texture_count;
 		sprite_indicies.push_back(std::vector<unsigned>());
 		textures.push_back(texs[x]);
-		indicies.push_back(textures.size() - 1); 
-	} 
+		indicies.push_back(textures.size() - 1);
+	}
 	return size;
 }
 
@@ -258,15 +266,14 @@ void SpriteBatcher::render() {
 	// WARNING, textures may have gaps from removeTexture(int)
 	for (unsigned x = 0; x < current_texture_count % max_textures; ++x) {
 		if (sprite_count.at(x) == 0)
-			continue; 
+			continue;
 
-		glActiveTexture(GL_TEXTURE0);
-		textures.at(x)->bind();
-
+		TextureUnit::bind(0, textures.at(x));
+		  
 		// Copy in new element data
 		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sprite_indicies.at(x).size() * sizeof(GLint), sprite_indicies.at(x).data());
-		 
-		glDrawElements(GL_POINTS, sprite_count.at(x), GL_UNSIGNED_INT, 0);
+
+		glDrawElements(GL_POINTS, sprite_count.at(x), GL_UNSIGNED_INT, (void*)offset);
 
 		offset += sprite_count.at(x) * sizeof(GLint);
 	}
@@ -275,7 +282,12 @@ void SpriteBatcher::render() {
 
 	GLuint err = glGetError();
 	if (err != GL_NO_ERROR)
-		error.reportError((char*)glewGetErrorString(err));
+		error.reportError(string((char*)glewGetErrorString(err)) + ": Unable to render the spritebatcher\0");
+}
+
+
+void SpriteBatcher::alpha(const Vector3<float>& color) {
+	batch_program.setUniform("alpha", color);
 }
 
 void SpriteBatcher::reset() {
@@ -285,7 +297,7 @@ void SpriteBatcher::reset() {
 		sprite_indicies.at(x) = std::vector<unsigned>();
 		sprite_count.at(x) = 0;
 	}
-	 
+
 	writer->reset();
 	current_sprite_count = 0;
 }

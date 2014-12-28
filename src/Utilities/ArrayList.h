@@ -1,6 +1,7 @@
 #pragma once
 
 #include <initializer_list>
+#include "Error.h"
 
 namespace Pro {
 	namespace Util {
@@ -62,8 +63,10 @@ namespace Pro {
 
 			/*! Returns the element at a specified index with bounds checking*/
 			inline T& at(unsigned index) const {
-				if (index > m_size)
-					return error.reportErrorNR("Out of bounds exception");
+				if (index > m_size) {
+					error.reportErrorNR("Out of bounds exception");  
+					return m_buffer[0];
+				}
 				return m_buffer[index];
 			}
 
@@ -108,6 +111,13 @@ namespace Pro {
 					push_back(std::move(T(constructor_args)));
 			}
 
+			void resize(const unsigned size) {
+				if (size < m_size)
+					return;
+				for (unsigned x = 0; x < m_size; ++x)
+					push_back(std::move(T()));
+			}
+
 			/*! Reserved data to be written into, appends onto the current array
 				no-op if the size is resize is smaller than the current size.
 			*/
@@ -133,7 +143,7 @@ namespace Pro {
 				Reduces the amount of pakcs that the vector must perform to 1 per batch
 				TEST
 			*/
-			inline void erase(initializer_list<unsigned> indicies) {
+			inline void erase(std::initializer_list<unsigned> indicies) {
 				if (indicies.size == 0 && indicies.size < m_size)
 					return;
 				unsigned current_shift = 1;

@@ -43,7 +43,7 @@ int main() {
 		return 1;
 	}
 
-	GLuint vbo = 0; 
+	GLuint dwvbo = 0; 
 	GLuint sampler = 0; 
 
 	cube->bind(); 
@@ -60,17 +60,17 @@ int main() {
 
 	VertexArray vao;
 	vao.bind(); 
-
+	 
 	vao.setVertexAttribute(program, "in_normal", cube->getObjects().at(0).normalSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).normalOffset());
 	vao.setVertexAttribute(program, "position", cube->getObjects().at(0).vertexSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).vertexOffset());
 	vao.setVertexAttribute(program, "in_tex", cube->getObjects().at(0).texCoordSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).texCoordOffset());
-
+ 
 	vao.unbind(); 
 
 	program.setUniform("world_pos", Vector3<float>(0, 0, 0));
 	program.setUniform("camera_pos", camera.getPosition());
-	glActiveTexture(GL_TEXTURE0);
-	tex->bind();
+ 
+	TextureUnit::bind(0, tex);
 	  
 	LightPoint point;
 	point.position = { 2, 0, 0 };
