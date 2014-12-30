@@ -12,6 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 #include "Matrix33.h"
+#include <initializer_list>
 #include "Error.h"
 
 namespace Pro {

@@ -67,16 +67,24 @@ int main() {
 	e_ball.position = window.getDimensions().cast<float>() / 2.f;
 	e_ball.dimensions = ball->getDimensions().cast<float>();
 	e_ball.velocity = { 3, 3 };
-
-	// Create panels
+	 
+	// Create blocks
 
 	ArrayList<Entity> blocks(50);
+	 
+	Entity e_block;
+	e_block.dimensions = { 30, 15 };
+	for (unsigned x = 0; x < window.getWidth() / (e_block.dimensions.x + 15); ++x)
+		for (unsigned y = 0; y < 5; ++y) {
+			e_block.position = { x * (e_block.dimensions.x + 15), window.getHeight() - (y * (e_block.dimensions.y + 15)) };
+			e_block.velocity = { 0, 0 };
+			blocks.push_back(e_block);
+		}
 
 	// Game Loop
 	while (!window.isExitRequested()) {
 		window.startFrame();
-		timer.tick();
-		std::cout << timer.getTicksPerSec() << "\n";
+		timer.tick(); 
 		// Input
 
 		if ((bool)keyboard.isKeyDown(KEY::KEY_A) && e_paddle.position.x > 0)
@@ -101,10 +109,26 @@ int main() {
 			e_ball.position.x + e_ball.dimensions.x >= e_paddle.position.x) {
 			e_ball.velocity.y *= -1; 
 			boing.setPosition(Vector3<float>(e_ball.position.x / window.getWidth(), 0, 0));  
-			boing.play();
+			//boing.play();
 		}
 
+		// Check ball with blocks
+
+		for (unsigned x = 0; x < blocks.size(); ++x)
+		if (e_ball.position.y < blocks[x].position.y + blocks[x].dimensions.y &&
+			e_ball.position.y + e_ball.dimensions.y >= blocks[x].position.y &&
+			e_ball.position.x <= blocks[x].position.x + blocks[x].dimensions.x &&
+			e_ball.position.x + e_ball.dimensions.x >= blocks[x].position.x) {
+			e_ball.velocity.y *= -1;
+			boing.setPosition(Vector3<float>(e_ball.position.x / window.getWidth(), 0, 0));
+			//boing.play();
+			blocks.erase({ x });
+		}
+		 
 		// Render
+
+		for (unsigned x = 0; x < blocks.size(); ++x)
+			batcher.push(paddle_id, toVector3<float>(blocks.at(x).position), blocks.at(x).dimensions);
 
 		batcher.push(paddle_id, toVector3<float>(e_paddle.position), e_paddle.dimensions);
 		batcher.push(ball_id, toVector3<float>(e_ball.position), e_ball.dimensions);

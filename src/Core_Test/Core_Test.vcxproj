@@ -90,7 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LearnOGL.cpp" />
+    <ClCompile Include="Breakout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\material.glsl" />

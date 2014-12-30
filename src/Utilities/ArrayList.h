@@ -144,17 +144,23 @@ namespace Pro {
 				TEST
 			*/
 			inline void erase(std::initializer_list<unsigned> indicies) {
-				if (indicies.size == 0 && indicies.size < m_size)
+				if (indicies.size() == 0 && indicies.size() < m_size)
 					return;
-				unsigned current_shift = 1;
-				for (unsigned index = indicies.begin; index < m_size; indicies += current_shift) {
-					if (index == indicies)
+				unsigned current_shift = 0;
+				unsigned* indicie = (unsigned*)indicies.begin();
+				for (unsigned index = *indicies.begin(); index < m_size; index += current_shift) {
+					if(indicie != nullptr && index == *indicie) {
 						++current_shift;
+						++indicie;
+						if (indicie == indicies.end())
+							indicie = nullptr;  
+					} 
 					for (unsigned shift = 0; shift < current_shift; ++shift)
 						m_buffer[index + shift] = std::move(m_buffer[index + shift + current_shift]);
 				}
-				m_reserved += indicies.size;
-			}
+				m_reserved += indicies.size();
+				m_size -= indicies.size();
+			} 
 		};
 	}
 }

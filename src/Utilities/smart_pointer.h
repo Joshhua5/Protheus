@@ -32,9 +32,12 @@ namespace Pro {
 			}
 			~smart_pointer() {
 				if (_references != nullptr)
-					if (--*_references == 0) {
+					if (--*_references == 0) { 
 						delete _ptr;
 						delete _references;
+
+						_references = nullptr;
+						_ptr = nullptr;
 					}
 			}
 

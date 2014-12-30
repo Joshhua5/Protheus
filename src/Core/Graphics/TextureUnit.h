@@ -13,7 +13,7 @@ namespace Pro {
 			static GLint max_texture_units;
 		public:
 			TextureUnit() {
-				glGetIntegerv(GL_MAX_TEXTURE_UNITS, &max_texture_units);
+				glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &max_texture_units);
 				bound_textures.resize(max_texture_units);
 			}
 				
@@ -33,6 +33,10 @@ namespace Pro {
 
 			inline static bool bind(int texture_unit, const smart_pointer<Texture>& texture) {
 				return bind(texture_unit, texture._ptr);
+			}
+
+			inline static GLint max_textures(){
+				return max_texture_units;
 			}
 		};
 	}

@@ -19,6 +19,7 @@ History:
 #include "extern\glew.h"
 #include "extern\glfw3.h"
 #include "WindowDefinition.h"
+#include <Parallel.h>
 
 // INCLUDE FROM INPUT
 #include "..\Input\Keyboard.h"

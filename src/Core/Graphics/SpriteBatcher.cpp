@@ -39,7 +39,7 @@ const char* source_fragment_shader =
 "void main() {				 											\n"
 "	vec4 color = texture(sampler1, f_tex_coord);						\n"
 "	bvec3 eql = equal(color.rgb, alpha); 								\n"
-"	if(color.x >=  alpha.x - 0.1 && color.x <= alpha.x + 0.1 ) discard;	\n"
+"	//if(color.x >=  alpha.x - 0.1 && color.x <= alpha.x + 0.1 ) discard;	\n"
 "	out_color = color; 													\n"
 "}\0																	\n"
 ;
@@ -76,13 +76,12 @@ const char* source_geomerty_shader = "									 \n"
 
 SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 	glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &max_sprites);
-	max_textures = 4;
+	max_textures = TextureUnit::max_textures();
 
 	if (max_sprites >= 10000000)
 		max_sprites = 10000000;
-
-	if(verticies == nullptr)
-		verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
+	 
+	verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
 	writer = new BufferWriter(verticies);
 
 	static bool first_init = true;
@@ -233,6 +232,8 @@ int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart
 	indicies.reserve(size);
 
 	for (unsigned x = 0; x < size; ++x) {
+		if (texs.at(x) == nullptr)
+			continue;
 		++current_texture_count;
 		sprite_indicies.push_back(std::vector<unsigned>());
 		textures.push_back(texs[x]);
