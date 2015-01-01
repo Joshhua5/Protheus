@@ -52,12 +52,14 @@ namespace Pro {
 				if (m_buffer == nullptr)
 					return;
 
+				m_buffer->lk.lock();
 				// Check if the write will overflow
 				if (m_head + size > m_buffer->size())
 					// Resizes the buffer exponentially as more resizes are called
 					m_buffer->resize(static_cast<unsigned>((float)(m_head + size) * (1.f + (m_reoccurring_resize++ / 10.f))));
 
 				memcpy(m_buffer->at(m_head), value, size);
+				m_buffer->lk.unlock();
 				skip(size);
 			}
 
@@ -91,8 +93,10 @@ namespace Pro {
 			/*! Writes a complex data type from the buffer according to the class definition */
 			template<typename T>
 			inline void serialized_write(const ClassDefinition& def, const T* data) {
+
 				const auto members = def.getMembers();
 
+				m_buffer->lk.lock();
 				// Write the amount of members in the extern class
 				write<unsigned short>(members.size());
 
@@ -109,7 +113,8 @@ namespace Pro {
 					write<unsigned>(member.size);
 					// Write the data of the member
 					write(member_pointer, member.size);
-				}
+				} 
+				m_buffer->lk.unlock();
 			}
 		};
 	}

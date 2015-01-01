@@ -12,7 +12,9 @@ History:
 #pragma once
 
 #include <memory> 
+#include <mutex>
 #include "Error.h" 
+
 namespace Pro {
 	namespace Util {
 		class BufferBase
@@ -24,6 +26,8 @@ namespace Pro {
 			unsigned int m_size;
 			/*! Pointer to the data in the heap*/
 			void* m_data;
+		public:
+			std::mutex lk;
 		};
 	}
 }

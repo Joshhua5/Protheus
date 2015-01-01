@@ -109,7 +109,7 @@ int main() {
 			e_ball.position.x + e_ball.dimensions.x >= e_paddle.position.x) {
 			e_ball.velocity.y *= -1; 
 			boing.setPosition(Vector3<float>(e_ball.position.x / window.getWidth(), 0, 0));  
-			//boing.play();
+			boing.play();
 		}
 
 		// Check ball with blocks
@@ -121,7 +121,7 @@ int main() {
 			e_ball.position.x + e_ball.dimensions.x >= blocks[x].position.x) {
 			e_ball.velocity.y *= -1;
 			boing.setPosition(Vector3<float>(e_ball.position.x / window.getWidth(), 0, 0));
-			//boing.play();
+			boing.play();
 			blocks.erase({ x });
 		}
 		 

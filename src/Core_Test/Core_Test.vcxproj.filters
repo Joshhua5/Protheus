@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Breakout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shaders\material.glsl" />
     <None Include="shaders\PhongLighting.glsl" />
     <None Include="shaders\Materials.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SpriteBatcherLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

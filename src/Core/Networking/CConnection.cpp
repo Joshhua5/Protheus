@@ -4,7 +4,7 @@ using namespace Pro;
 using namespace Networking;
 
 Buffer CConnection::recv(){
-	const auto buffer = inputStack.front();
+	Buffer buffer = inputStack.front();
 	inputStack.pop();
 	return move(buffer);
 }

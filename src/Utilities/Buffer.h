@@ -20,12 +20,14 @@ namespace Pro {
 	namespace Util {
 		/*! Wrapper around char arrays */
 		class Buffer :
-			protected BufferBase
+			public BufferBase
 		{
 		public:
 			/*! If copy is false then the original pointer can't be deleted without breaking the Cbuffer */
 			Buffer(const Buffer& b, bool copy = true) {
+				const_cast<Buffer*>(&b)->lk.lock();
 				init(b.data(), b.size(), copy);
+				const_cast<Buffer*>(&b)->lk.unlock();
 			}
 			Buffer(void* _data, const unsigned _size, const bool copy = true) {
 				if (_size == 0) {
@@ -68,23 +70,25 @@ namespace Pro {
 
 			~Buffer()
 			{
+				lk.lock();
 				if (wasCopied && m_size != 0)
 					delete[] m_data;
 				m_data = nullptr;
+				lk.unlock();
 			}
 
 			inline Buffer&  operator=(Buffer&& b) {
 				if (this == &b)
 					return *this;
-
+				lk.lock();
 				m_data = b.data();
 				m_size = b.size();
 				wasCopied = b.wasCopied;
 				b.dereference();
+				lk.unlock();
 				return *this;
 			}
-			inline Buffer&  operator=(const Buffer& b) {
-
+			inline Buffer&  operator=(const Buffer& b) { 
 				if (this == &b)
 					return *this;
 
@@ -96,6 +100,7 @@ namespace Pro {
 				Deleted existing data is already initialized.
 			*/
 			inline void  init(const void* _data, const unsigned _size, const bool copy) {
+				lk.lock();
 				// Check if data has been initialized
 				if (wasCopied && m_data != nullptr)
 					delete[] m_data;
@@ -109,6 +114,7 @@ namespace Pro {
 
 				wasCopied = copy;
 				m_size = _size;
+				lk.unlock();
 			}
 
 			inline void  init(const unsigned _size) {
@@ -147,6 +153,7 @@ namespace Pro {
 			/*! Resizes the buffer to the new defined size and copies accross data
 				If resized to be smaller, data is silently lost */
 			inline void resize(const unsigned size) {
+				lk.lock();
 				const auto old_data = m_data;
 				m_data = new char[size];
 
@@ -159,6 +166,7 @@ namespace Pro {
 
 				m_size = size;
 				delete[] old_data;
+				lk.unlock();
 			}
 			template<typename T>
 
