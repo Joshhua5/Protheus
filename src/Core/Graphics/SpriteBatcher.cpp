@@ -8,6 +8,8 @@ Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::fragment_shader;
 Pro::Graphics::Shader Pro::Graphics::SpriteBatcher::geometry_shader;
 Pro::Graphics::Program Pro::Graphics::SpriteBatcher::batch_program(false);
 
+ std::mutex Pro::Graphics::SpriteBatcher::lk;
+
 GLint Pro::Graphics::SpriteBatcher::max_sprites = 0;
 GLint Pro::Graphics::SpriteBatcher::max_textures = 0;
 
@@ -39,7 +41,7 @@ const char* source_fragment_shader =
 "void main() {				 											\n"
 "	vec4 color = texture(sampler1, f_tex_coord);						\n"
 "	bvec3 eql = equal(color.rgb, alpha); 								\n"
-"	//if(color.x >=  alpha.x - 0.1 && color.x <= alpha.x + 0.1 ) discard;	\n"
+"	if(eql.z && eql.x && eql.y){ discard; };							\n"
 "	out_color = color; 													\n"
 "}\0																	\n"
 ;
@@ -163,7 +165,7 @@ SpriteBatcher& SpriteBatcher::operator=(SpriteBatcher&& rhs) {
 	writer = rhs.writer;
 
 	vao = std::move(rhs.vao);
-	current_sprite_count = rhs.current_sprite_count;
+	current_sprite_count = rhs.current_sprite_count.load();
 	textures = std::move(rhs.textures);
 	sprite_count = std::move(rhs.sprite_count);
 	sprite_indicies = std::move(rhs.sprite_indicies);
@@ -195,30 +197,52 @@ void SpriteBatcher::push(int texture,
 
 	dimensions *= scale;
 
-	writer->write<float>(position.x);
-	writer->write<float>(position.y);
-	writer->write<float>(position.z);
-	writer->write<float>(dimensions.x);
-	writer->write<float>(dimensions.y);
-	writer->write<float>(0);
-	writer->write<float>(0);
-	writer->write<float>(1);
-	writer->write<float>(1);
-	sprite_indicies.at(texture).push_back(current_sprite_count);
+	float values[9] = { position.x , position.y , position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
 
-	++sprite_count.at(texture);
-	++current_sprite_count;
+	writer->write_elements(values, 9);  
+
+	sprite_indicies.at(texture).push_back(current_sprite_count++); 
+	++sprite_count.at(texture);   
 
 	// Figure out how to apply rotation and a sprite
 	/*details.sprite = _s;
 	details.rotation = rotate; */
 }
 
+void SpriteBatcher::batch_push(int texture,
+	Vector3<float> position,
+	Vector2<float> dimensions,
+	const  float scale,
+	const  float rotate) {
+	if (texture < 0)
+		return;
+
+	dimensions *= scale;
+
+	float values[9] = { position.x, position.y, position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
+
+	writer->write_elements(values, 9); 
+
+	current_sprite_count++;
+	sprite_indicies.at(texture).push_back(current_sprite_count);
+
+	// Figure out how to apply rotation and a sprite
+	/*details.sprite = _s;
+	details.rotation = rotate; */
+}
+
+void SpriteBatcher::batch_update(int texture, unsigned count){
+	if (texture < 0)
+		return;
+	//current_sprite_count += count;
+	sprite_count.at(texture) += count;
+}
+
 int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
 	if (tex._ptr == nullptr)
 		return -1;
 	++current_texture_count;
-	sprite_indicies.push_back(std::vector<unsigned>());
+	sprite_indicies.push_back(ArrayList<unsigned>());
 	textures.push_back(std::move(tex));
 	return textures.size() - 1;
 }
@@ -227,15 +251,14 @@ int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
 int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart_pointer<Texture>>& texs) {
 	unsigned size = texs.size();
 	if (size == 0)
-		return -1;
-
+		return -1; 
 	indicies.reserve(size);
 
 	for (unsigned x = 0; x < size; ++x) {
 		if (texs.at(x) == nullptr)
 			continue;
 		++current_texture_count;
-		sprite_indicies.push_back(std::vector<unsigned>());
+		sprite_indicies.push_back(ArrayList<unsigned>());
 		textures.push_back(texs[x]);
 		indicies.push_back(textures.size() - 1);
 	}
@@ -295,7 +318,7 @@ void SpriteBatcher::reset() {
 	// CONSIDER making a class to allow
 	// resetting of the vector without deallocating the internal array.
 	for (unsigned x = 0; x < current_texture_count % max_textures; ++x) {
-		sprite_indicies.at(x) = std::vector<unsigned>();
+		sprite_indicies.at(x) = ArrayList<unsigned>();
 		sprite_count.at(x) = 0;
 	}
 

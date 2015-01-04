@@ -68,6 +68,7 @@ namespace Pro {
 
 			/*! Copied the front buffer to the back and clears the old value of the back buffer*/
 			void swap() {
+				memcpy(getBackValue(), getCurrentValue(), sizeof(T));
 				*back = *front;
 			}
 		};

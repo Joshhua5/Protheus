@@ -1,4 +1,4 @@
-#include <Parallel.h>
+#include <Parallel.h> 
 #include <iostream>
 
 using namespace Pro;
@@ -9,34 +9,36 @@ struct Object {
 	Object() {
 		x = 5; y = 3;
 	}
-	void add(void*) { 
+	void add(void*) {
 		x += y;
 	}
 };
 
 void call(void* argument) {
-	++*static_cast<unsigned*>(argument); 
+	++*static_cast<unsigned*>(argument);
 	std::cout << "Finished";
 }
 
-int main() {  
-	bool finished;
+int main() {
+	Future finished;
 	unsigned args = 0;
+	std::function<void(void*)> func(&call);
+	Parallel::batch(func, &finished, &args);
+	
+	finished.wait();
 
-	Parallel::batch(&call, &args, nullptr);
-	Parallel::batch(&call, &args, nullptr); 
-	Parallel::batch(&call, &args, nullptr);
-	Parallel::batch(&call, &args, nullptr); 
-	Parallel::batch(&call, &args, nullptr); 
-	Parallel::batch(&call, &args, &finished);
-	 
-	Object* object = new Object[50];
+	Object* object = new Object[41];
+	Object* object1 = new Object[40];
+	Object* object2 = new Object[2];
 
-	//Parallel::process(array*, func*, size, offset)
-	Parallel::process<Object>(object, &Object::add, 50, 0);
+	////Parallel::process(array*, func*, size, offset)
+	Parallel::process<Object>(object, std::function<void(Object&, void*)>(&Object::add), 41, 0, nullptr, nullptr);
+	Parallel::process<Object>(object1, std::function<void(Object&, void*)>(&Object::add), 40, 0, nullptr, nullptr);
+	Parallel::process<Object>(object2, std::function<void(Object&, void*)>(&Object::add), 2, 0, &finished, nullptr);
 
-	while (!finished) { } 
 
 	delete[] object;
+	delete[] object1;
+	delete[] object2;
 	return 0;
 }

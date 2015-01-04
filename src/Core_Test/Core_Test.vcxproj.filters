@@ -20,7 +20,7 @@
     <None Include="shaders\Materials.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SpriteBatcherLoad.cpp">
+    <ClCompile Include="TemplateArgs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -38,11 +38,11 @@ namespace Pro{
 
 			static GLint max_sprites;
 			static GLint max_textures;
-			unsigned current_sprite_count = 0;
+			std::atomic<unsigned> current_sprite_count = 0;
 
-			std::vector<smart_pointer<Texture>> textures;
-			std::vector<unsigned> sprite_count;
-			std::vector<std::vector<unsigned>> sprite_indicies;
+			ArrayList<smart_pointer<Texture>> textures;
+			ArrayList<unsigned> sprite_count;
+			ArrayList<ArrayList<unsigned>> sprite_indicies;
 			std::stack<unsigned short> free_textures;
 			unsigned current_texture_count = 0;
 
@@ -54,6 +54,8 @@ namespace Pro{
 			static Shader fragment_shader;
 			static Shader geometry_shader;
 			static Program batch_program;
+
+			static std::mutex lk;
 
 			SpriteBatcher(const SpriteBatcher&) = delete;
 			SpriteBatcher operator=(const SpriteBatcher&) = delete;
@@ -72,6 +74,14 @@ namespace Pro{
 				const  float scale = 1,
 				const  float rotate = 0);
 
+
+			void batch_push(int texture,
+				Vector3<float> position,
+				Vector2<float> dimensions,
+				const  float scale = 1,
+				const  float rotate = 0);
+
+			void batch_update(int texture, unsigned count);
 
 			// if -1, the maxiumum texture bindings has been hit.
 			int attachTexture(smart_pointer<Texture> tex);

@@ -5,9 +5,10 @@
 #include <Graphics\TextureLoader.h>
 #include <ArrayList.h> 
 #include <ProMath.h>
+#include <DoubleBuffer.h>
 #include <iostream>
 
-unsigned const ball_count = 1E5;
+unsigned const ball_count = 1E2;
 
 using namespace Pro;
 using namespace Graphics;
@@ -35,8 +36,6 @@ struct Entity {
 			velocity.y *= -1;
 
 		position += velocity;
-
-		window->spt->push(window->texture_id, toVector3<float>(position), dimensions);
 	}
 };
 
@@ -62,28 +61,32 @@ int main() {
 	Entity e_ball; 
 	e_ball.dimensions = ball->getDimensions().cast<float>(); 
 
-	ArrayList<Entity> entities(ball_count);
+	ArrayList<Entity> entities (ball_count);
+
 	for (unsigned x = 0; x < ball_count; ++x) {
 		e_ball.position = Vector2<float>(rand() % window.getWidth(), rand() % window.getHeight());
 		e_ball.velocity = Vector2<float>((((rand() % 5000) + 1) / 1000), (((rand() % 5000) + 1) / 1000));
 		entities.push_back(e_ball);
 	}
 
-	batcher.alpha(Vector3<float>(255.f, 255.f, 255.f));
+	batcher.alpha(Vector3<float>(1.f, 1.f, 1.f));
 
 	// Game Loop
 	while (!window.isExitRequested()) {
 		window.startFrame(); 
 
-		volatile bool finished; 
+		Future finished; 
 		args wnd;
 		wnd.window = window.getDimensions().cast<float>();
 		wnd.texture_id = ball_id;
 		wnd.spt = &batcher;
 
 		Parallel::process<Entity>(entities.data(), &Entity::update, ball_count, 0, &finished, &wnd);
+		 
+		finished.wait(); 
 
-		while (finished == false); 
+		for (unsigned x = 0; x < ball_count; ++x)
+			batcher.push(ball_id, toVector3<float>(entities[x].position), entities[x].dimensions);
 		 
 		batcher.flush();
 		window.endFrame();
