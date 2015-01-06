@@ -53,7 +53,7 @@ namespace Pro {
 			}
 
 		public:
-			Parallel(unsigned count = 8) {
+			Parallel(unsigned count = 2) {
 				std::call_once(initialized,
 					[](unsigned count) {
 					pool_running.store(true);

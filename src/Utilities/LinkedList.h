@@ -52,8 +52,8 @@ namespace Pro {
 				_edit_position.store(0);
 				_start->_prev = node;
 				_start = node;
-				_size++
-					_edit_position.store(_size);
+				_size++;
+				_edit_position.store(_size);
 			}
 
 			inline void _append(T* ptr) {
@@ -107,7 +107,7 @@ namespace Pro {
 			}
 
 			void prepend(T* ptr) {
-				std::lock_guard(edit_lock);
+				std::lock_guard<std::mutex> lk(edit_lock);
 				if (_empty.load())
 					return first_node(ptr);
 				_prepend(ptr); 

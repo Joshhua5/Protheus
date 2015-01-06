@@ -5,7 +5,7 @@ using namespace Pro;
 using namespace Util;
 
 struct Object {
-	float x, y;
+	mutable float x, y;
 	Object() {
 		x = 5; y = 3;
 	}
@@ -32,6 +32,7 @@ int main() {
 	Object* object2 = new Object[2];
 
 	////Parallel::process(array*, func*, size, offset)
+	
 	Parallel::process<Object>(object, std::function<void(Object&, void*)>(&Object::add), 41, 0, nullptr, nullptr);
 	Parallel::process<Object>(object1, std::function<void(Object&, void*)>(&Object::add), 40, 0, nullptr, nullptr);
 	Parallel::process<Object>(object2, std::function<void(Object&, void*)>(&Object::add), 2, 0, &finished, nullptr);
