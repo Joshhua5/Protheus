@@ -18,15 +18,13 @@ void test(LinkedList<long>* list){
 }
 
 int main(){
-
-	std::function<void(LinkedList<long>*)> func(&test);
-
+	  
 	LinkedList<long> list;
 	Future future;
 	 
 	for (unsigned x = 0; x < batch_size; ++x)
-		Parallel::batch(func, nullptr, &list);
-	Parallel::batch(func, &future, &list);
+		Parallel::batch(&test, nullptr, &list);
+	Parallel::batch(&test, &future, &list);
 
 	future.wait();
 

@@ -56,6 +56,11 @@ namespace Pro {
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
 
+			static unsigned long long getTime() {
+				return std::chrono::duration_cast<std::chrono::nanoseconds>(
+					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+			}
+
 		};
 	}
 }

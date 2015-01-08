@@ -92,6 +92,10 @@ namespace Pro {
 				return _ptr;
 			}
 
+			T& operator[](const unsigned index) const{
+				return _ptr[index];
+			}
+			
 			bool operator==(void* rhs) {
 				return (void*)_ptr == rhs;
 			}

@@ -1,5 +1,5 @@
 /**********************************************************************************
- * Copyright (c) 2008-2013 The Khronos Group Inc.
+ * Copyright (c) 2008-2012 The Khronos Group Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and/or associated documentation files (the
@@ -36,7 +36,7 @@ extern "C" {
 #ifdef __APPLE__
     #include <OpenCL/cl_gl.h>
 #else
-    #include "cl_gl.h"
+    #include"cl_gl.h"
 #endif
 
 /*

@@ -143,12 +143,16 @@
     <ClInclude Include="Networking\SDL_net\close_code.h" />
     <ClInclude Include="Networking\SDL_net\SDLnetsys.h" />
     <ClInclude Include="Networking\SDL_net\SDL_net.h" />
+    <ClInclude Include="OpenCL\Context.h" />
+    <ClInclude Include="OpenCL\Device.h" />
     <ClInclude Include="OpenCL\extern\cl.h" />
+    <ClInclude Include="OpenCL\extern\cl.hpp" />
     <ClInclude Include="OpenCL\extern\cl_ext.h" />
     <ClInclude Include="OpenCL\extern\cl_gl.h" />
     <ClInclude Include="OpenCL\extern\cl_gl_ext.h" />
     <ClInclude Include="OpenCL\extern\cl_platform.h" />
     <ClInclude Include="OpenCL\extern\opencl.h" />
+    <ClInclude Include="OpenCL\Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
@@ -186,6 +190,7 @@
     <ClCompile Include="Networking\SDL_net\SDLnetselect.c" />
     <ClCompile Include="Networking\SDL_net\SDLnetTCP.c" />
     <ClCompile Include="Networking\SDL_net\SDLnetUDP.c" />
+    <ClCompile Include="OpenCL\Platform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
