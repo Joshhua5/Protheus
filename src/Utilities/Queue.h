@@ -60,7 +60,7 @@ namespace Pro {
 				_queue.load()[pos] = obj; 
 			}
 
-			inline T pop(const T& obj) {
+			inline T pop() {
 				// Check if empty
 				if (empty()) {
 					error.reportError("Popped a empty queue, returned a default object.");
@@ -72,8 +72,7 @@ namespace Pro {
 
 				// Move object
 				auto ret_obj = std::move(_queue.load()[pos]);
-				// Deconstruct local object
-				_queue.load()[pos]::~T();
+				// Deconstruct local object 
 				
 				return ret_obj; 
 			}
@@ -83,7 +82,7 @@ namespace Pro {
 			}
 
 			bool empty() const {
-				return size == 0;
+				return _size.load() == 0;
 			}
 
 		};

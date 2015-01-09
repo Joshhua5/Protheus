@@ -129,7 +129,7 @@ void Window::setCurrent() {
 }
 
 bool Window::isExitRequested() const {
-	return glfwWindowShouldClose(window);
+	return glfwWindowShouldClose(window) == 0;
 }
  
 unsigned Window::getWidth() const {

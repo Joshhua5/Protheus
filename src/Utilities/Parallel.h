@@ -16,7 +16,7 @@ History:
 #include <condition_variable>
 #include <mutex>  
 #include "ObjectPool.h"
-#include "LinkedList.h" 
+#include "Queue.h" 
 #include "Future.h"
 
 namespace Pro {
@@ -45,7 +45,7 @@ namespace Pro {
 			static std::condition_variable cv;
 			static std::atomic<bool> pool_running;
 			static ObjectPool<BatchPack> obj_pool;
-			static LinkedList<BatchPack> work;
+			static Queue<BatchPack*> work(10000);
 			static std::once_flag initialized;
 			static Future default_result;
 			static unsigned thread_count;
@@ -65,9 +65,9 @@ namespace Pro {
 				while (pool_running.load()) {
 					// Get a work item when it's ready 
 					if (work.empty()){ 
-						cv.wait_for(lk, std::chrono::milliseconds(500));
+						cv.wait_for(lk, std::chrono::milliseconds(100));
 					}else{
-						item = work.pop_back();
+						item = work.pop();
 						if (item == nullptr)
 							continue;
 
@@ -91,9 +91,12 @@ namespace Pro {
 				thread_count = count;
 			}
 
+			//! Deconstruction involved a 500ms wait for threads
 			~Parallel() { 
 				pool_running.store(false);
 				cv.notify_all(); 
+				// Wait 100ms for all threads to terminate
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			}
 
 			static bool isQueueEmpty(){
@@ -113,7 +116,7 @@ namespace Pro {
 
 				pack->function = [=]() { std::function<T> f(func); f(arguments...); };
 
-				work.push_front(pack);
+				work.push(pack);
 				cv.notify_one();
 			}
 
@@ -139,7 +142,7 @@ namespace Pro {
 							auto f = std::bind(func, object[x], arguments...); 
 							f();
 						};
-						work.push_front(packCopy);
+						work.push(packCopy);
 						cv.notify_all();
 					}
 					return;
@@ -162,7 +165,7 @@ namespace Pro {
 								auto f = std::bind(func, object[x], arguments...);
 								f();
 							}};
-						work.push_front(packCopy);
+						work.push(packCopy);
 						cv.notify_all();
 
 					}
@@ -175,7 +178,7 @@ namespace Pro {
 							f();
 						}
 					};
-					work.push_front(packCopy);
+					work.push(packCopy);
 					cv.notify_all();
 					return;
 				}
@@ -190,7 +193,7 @@ namespace Pro {
 							f();
 						}
 					};
-					work.push_front(packCopy);
+					work.push(packCopy);
 					cv.notify_all();
 				}
 			}

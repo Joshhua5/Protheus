@@ -152,7 +152,7 @@ namespace Pro {
 			/*! Returns a pointer to the internal data with offset
 				Not safe to call delete on
 			*/
-			inline void* data() {
+			inline void* data() const {
 				return m_data;
 			}
 
@@ -167,8 +167,12 @@ namespace Pro {
 				Not safe to call delete on
 			*/
 			template<typename T>
-			inline T* data() {
+			inline T* data() const {
 				return static_cast<T*>(m_data);
+			}
+
+			inline bool isPadded() const {
+				return m_padding != 0;
 			}
 
 			/*! Size of the buffer in bytes excluding offset */

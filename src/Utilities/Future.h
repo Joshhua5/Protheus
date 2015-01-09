@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <thread>
 
 namespace Pro {
 	namespace Util {
@@ -18,10 +19,22 @@ namespace Pro {
 				++finished_count;
 			}
 
-			/*! Waits until the job has been completed*/
+			/*! Waits until the job has been completed */
 			inline void wait() {
 				while (!isFinished()) { std::this_thread::yield(); }
 			}
+
+			inline void reset(unsigned count) {
+				finished_count = 0;
+				worker_count = count;
+			}
+
+			Future& operator=(const Future& rhs) {
+				finished_count = rhs.finished_count.load();
+				worker_count = rhs.worker_count.load();
+				return *this;
+			}
+			 
 		};
 	}
 }

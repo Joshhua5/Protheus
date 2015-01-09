@@ -55,7 +55,7 @@ int main() {
 
 	LARGE_INTEGER tick1, tick2;
 
-	for (unsigned x = 0; x < 10000; ++x) {
+	for (unsigned x = 0; x < 100000; ++x) {
 		QueryPerformanceCounter(&tick1);
 		Parallel::batch(&latency, &finished, &tick2);
 		finished.wait();

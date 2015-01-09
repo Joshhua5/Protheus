@@ -344,7 +344,7 @@ int SDLNet_UDP_SendV(UDPsocket sock, UDPpacket **packets, int npackets)
     {
         /* Simulate packet loss, if desired */
         if (sock->packetloss) {
-            if ((random()%100) <= sock->packetloss) {
+            if ((random() % 100) <= sock->packetloss) {
                 packets[i]->status = packets[i]->len;
                 ++numsent;
                 continue;

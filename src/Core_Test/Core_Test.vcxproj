@@ -96,7 +96,7 @@
     <None Include="shaders\PhongLighting.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SpriteBatcherLoad.cpp" />
+    <ClCompile Include="OpenCLTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

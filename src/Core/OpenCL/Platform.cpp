@@ -18,19 +18,22 @@ Platform::Platform(unsigned device_type){
 	err = clGetPlatformIDs(platform_count, platforms._ptr, NULL);
 
 	// Grab devices attached to platform
-	smart_pointer<cl_device_id> device_ids = nullptr;
 	cl_uint  device_count = 0;
 
 	err = clGetDeviceIDs(platforms[0], device_type, 0, NULL, &device_count);
-	device_ids = new cl_device_id[device_count];
-	err = clGetDeviceIDs(platforms[0], device_type, device_count, device_ids._ptr, NULL);
+	devices = new cl_device_id[device_count];
+	err = clGetDeviceIDs(platforms[0], device_type, device_count, devices, NULL);
 
 	// Create a context for each device 
-	cl_context context = clCreateContext(NULL, device_count, device_ids._ptr, &cl_error_callback, nullptr, NULL);
+	context = clCreateContext(NULL, device_count, devices, &cl_error_callback, nullptr, NULL);
 	 
 	cl_int err_queue;
+
+	// Create Command Queues
+	queues = new cl_command_queue[device_count];
+
 	for (unsigned x = 0; x < device_count; ++x){
-		devices.emplace_back(clCreateCommandQueue(context, device_ids[x], NULL, &err_queue));
+		queues[x] = clCreateCommandQueue(context.getContext(), devices[x], NULL, &err_queue);
 		err = err_queue;
 	}
 
