@@ -38,6 +38,7 @@
     <ClInclude Include="Matrix33.h" />
     <ClInclude Include="Matrix44.h" />
     <ClInclude Include="Member.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="smart_pointer.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2.h" />

@@ -156,7 +156,7 @@ namespace Pro {
 			template<typename... Args>
 			inline void emplace_back(Args&&... args){
 				std::lock_guard<std::mutex> grd(lk);
-				push_back_nl(T(args));
+				push_back_nl(T(args...));
 			}
 
 			/*! Returns the last element added */
@@ -227,7 +227,7 @@ namespace Pro {
 				}
 				m_reserved += indicies.size();
 				m_size -= indicies.size();
-				m_erasing_at = m_size; 
+				m_erasing_at = m_size.load(); 
 			}
 		};
 	}
