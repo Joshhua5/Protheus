@@ -79,11 +79,11 @@ namespace Pro {
 			ArrayList(ArrayList&& rhs) {
 				lk.lock();
 				rhs.lk.lock();
-				m_size = rhs.m_size;
+				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
 				m_buffer = rhs.m_buffer;
 				rhs.m_buffer = nullptr;
-				m_erasing_at = m_size;
+				m_erasing_at = m_size.load();
 				rhs.lk.unlock();
 				lk.unlock();
 			}
