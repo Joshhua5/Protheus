@@ -11,15 +11,15 @@ namespace Pro {
 		*/
 		template<typename T>
 		class ArrayList {
-			std::atomic<unsigned> m_size;
-			std::atomic<unsigned> m_erasing_at;
+			std::atomic<size_t> m_size;
+			std::atomic<size_t> m_erasing_at;
 			/*! Count of how many elements can be fit into the buffer before a resize*/
-			unsigned m_reserved;
+			size_t m_reserved;
 			T* m_buffer;
 
 			mutable std::mutex lk;
 
-			inline void reserve_nl(unsigned size) {
+			inline void reserve_nl(size_t size) {
 				if (size < m_size)
 					return; 
 				T* buffer = new T[m_size + size];
@@ -32,7 +32,7 @@ namespace Pro {
 			/*! Does not lock the structure */
 			inline void push_back_nl(T&& value) {
 				if (m_reserved == 0)
-					reserve_nl(static_cast<unsigned>(m_size * 1.2 + 5)); 
+					reserve_nl(static_cast<size_t>(m_size * 1.2 + 5));
 				--m_reserved;
 				m_buffer[m_size] = std::move(value);
 				// Stops the m_size from being moved
@@ -42,7 +42,7 @@ namespace Pro {
 
 			inline void push_back_nl(const T& value) {
 				if (m_reserved == 0)
-					reserve_nl(static_cast<unsigned>(m_size * 1.2 + 5));
+					reserve_nl(static_cast<size_t>(m_size * 1.2 + 5));
 				--m_reserved;
 				m_buffer[m_size] = value;
 				// Stops the m_size from being moved
@@ -57,7 +57,7 @@ namespace Pro {
 				m_buffer = new T[m_reserved];
 				m_erasing_at = 0;
 			}
-			ArrayList(const unsigned size) {
+			ArrayList(const size_t size) {
 				m_size = 0;
 				m_reserved = size;
 				m_buffer = new T[size + m_reserved];
@@ -69,7 +69,7 @@ namespace Pro {
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
 				m_buffer = new T[m_size + m_reserved];
-				for (unsigned x = 0; x < m_size; ++x)
+				for (size_t x = 0; x < m_size; ++x)
 					m_buffer[x] = rhs.m_buffer[x];
 
 				m_erasing_at = m_size.load();
@@ -94,7 +94,7 @@ namespace Pro {
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
 				m_buffer = new T[m_size + m_reserved];
-				for (unsigned x = 0; x < m_size; ++x)
+				for (size_t x = 0; x < m_size; ++x)
 					m_buffer[x] = rhs.m_buffer[x];
 				m_erasing_at = m_size.load();
 				rhs.lk.unlock();
@@ -126,7 +126,17 @@ namespace Pro {
 			}
 
 			/*! Returns the element at a specified index with bounds checking*/
-			inline T& at(unsigned index) const {
+			inline const T& at(size_t index) const {
+				if (index > m_size) {
+					error.reportErrorNR("Out of bounds exception");
+					return m_buffer[0];
+				}
+				// Wait until the value is finished  
+				std::lock_guard<std::mutex> guard(lk);
+				return m_buffer[index];
+			}
+
+			inline T& at(size_t index) {
 				if (index > m_size) {
 					error.reportErrorNR("Out of bounds exception");
 					return m_buffer[0];
@@ -137,7 +147,12 @@ namespace Pro {
 			}
 
 			/*! Returns the element at a specified index*/
-			inline T& operator[](const unsigned index) const {
+			inline const T& operator[](const size_t index) const {
+				std::lock_guard<std::mutex> guard(lk);
+				return m_buffer[index];
+			}
+
+			inline T& operator[](const size_t index) {
 				std::lock_guard<std::mutex> guard(lk);
 				return m_buffer[index];
 			}
@@ -156,11 +171,11 @@ namespace Pro {
 			template<typename... Args>
 			inline void emplace_back(Args&&... args){
 				std::lock_guard<std::mutex> grd(lk);
-				push_back_nl(T(args...));
+				push_back_nl(T(args...)); 
 			}
 
 			/*! Returns the last element added */
-			inline T& back() const {
+			inline const T& back() const {
 				return m_buffer[m_size - 1];
 			}
 
@@ -169,7 +184,7 @@ namespace Pro {
 				TEST
 			*/
 			template<typename... T>
-			void resize(const unsigned size, T&&... Args) {
+			void resize(const size_t size, T&&... Args) {
 				if (size < m_size)
 					return; 
 				std::lock_guard<std::mutex> grd(lk);
@@ -177,7 +192,7 @@ namespace Pro {
 					push_back_nl(std::move(T(constructor_args))); 
 			}
 
-			void resize(const unsigned size) {
+			void resize(const size_t size) {
 				if (size < m_size)
 					return;
 				std::lock_guard<std::mutex> grd(lk);
@@ -188,7 +203,7 @@ namespace Pro {
 			/*! Reserved data to be written into, appends onto the current array
 				no-op if the size is resize is smaller than the current size.
 			*/
-			inline void reserve(const unsigned size) {
+			inline void reserve(const size_t size) {
 				if (size < m_size)
 					return;
 				std::lock_guard<std::mutex> grd(lk);
@@ -199,16 +214,21 @@ namespace Pro {
 				Hole are present in data if an erase has been performed since the last BufferVector::at()
 				BufferVector::pack() is required if BufferVector::isPacked() is false
 			*/
-			inline T* data() const {
+			inline const T* data() const {
 				std::lock_guard<std::mutex> grd(lk); 
 				return m_buffer; 
+			}
+
+			inline T* data() {
+				std::lock_guard<std::mutex> grd(lk);
+				return m_buffer;
 			}
 
 			/*! Erase multiple elements at the same time
 				Reduces the amount of pakcs that the vector must perform to 1 per batch
 				TEST
 			*/
-			inline void erase(std::initializer_list<unsigned> indicies) {
+			inline void erase(std::initializer_list<size_t> indicies) {
 				if (indicies.size() == 0 && indicies.size() < m_size)
 					return;
 				unsigned current_shift = 0;

@@ -220,6 +220,15 @@ namespace Pro {
 				x *= p.x;
 				y *= p.y;
 			}
+
+			/*! Returns a pointer to the internal structure's data
+			*/
+			const T* data() const {
+				return &x;
+			}
+			T* data() {
+				return &x;
+			}
 		};
 
 	}

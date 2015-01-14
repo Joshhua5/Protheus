@@ -9,19 +9,19 @@
 #include <smart_pointer.h>
 
 namespace Pro{
-	namespace OpenCL{ 
-		 
-		static void CL_CALLBACK cl_error_callback(const char* msg, const void* pvt_info, size_t cb, void* user_data){
-			error.reportError(msg);
-		}
+	namespace OpenCL{  
 
 		class Platform{ 
+			cl_uint device_count;
 			cl_device_id* devices;
 			cl_command_queue* queues;
 			Context context;
 			 
 		public:
 			Platform(unsigned device_type = CL_DEVICE_TYPE_DEFAULT);
+			  
+			/*! Returns nullptr if the index is out of range*/
+			Device getDevice(unsigned index);
 
 			const cl_device_id* getDevices() const{ return devices; }
 			const cl_command_queue* getQueues() const { return queues; }

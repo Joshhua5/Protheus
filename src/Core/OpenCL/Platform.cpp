@@ -4,6 +4,9 @@ using namespace Pro;
 using namespace OpenCL;
 using namespace Util;
 
+static void CL_CALLBACK cl_error_callback(const char* msg, const void* pvt_info, size_t cb, void* user_data) {
+	error.reportError(msg);
+}
 
 Platform::Platform(unsigned device_type){
 	ErrorCheck err(CL_SUCCESS);
@@ -17,8 +20,7 @@ Platform::Platform(unsigned device_type){
 	// Grab the platforms
 	err = clGetPlatformIDs(platform_count, platforms._ptr, NULL);
 
-	// Grab devices attached to platform
-	cl_uint  device_count = 0;
+	// Grab devices attached to platform 
 
 	err = clGetDeviceIDs(platforms[0], device_type, 0, NULL, &device_count);
 	devices = new cl_device_id[device_count];
@@ -40,4 +42,13 @@ Platform::Platform(unsigned device_type){
 	if (err.hadError())
 		error.reportError("Error in Pro::OpenCL::Platform");
 
+}
+
+
+Device Platform::getDevice(unsigned index) {
+	if (index > device_count) {
+		error.reportError("Device index out of range, returning Device: 0");
+		index = 0;
+	}
+	return Device(devices[index], queues[index]);
 }

@@ -174,7 +174,7 @@ namespace Pro {
 			inline unsigned count(const T& value) {
 				T* buffer = data<T>();
 				unsigned count = 0;
-				for (unsigned head = 0; head < (size() / sizeof(T)); ++head, ++buffer)
+				for (size_t head = 0; head < (size() / sizeof(T)); ++head, ++buffer)
 					if (*buffer == value)
 						++count;
 				return count;
@@ -183,10 +183,8 @@ namespace Pro {
 			/*! Returns a pointer with bounds checking
 				Equivilant to (char*)m_data + pos
 			*/
-			inline void* at(const unsigned pos) const {
-				if (pos < m_size)
-					return reinterpret_cast<char*>(m_data) + pos;
-				return nullptr;
+			inline void* at(const unsigned pos) const { 
+				return (pos < m_size) ? reinterpret_cast<char*>(m_data) + pos : nullptr;
 			}
 
 			/*! Returns a pointer

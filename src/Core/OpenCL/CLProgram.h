@@ -17,6 +17,7 @@ namespace Pro {
 			Program(Program&&);
 			Program& operator=(Program&&);
 			Program(const Platform& platform, const Buffer&);
+			/*! Char* must be null terminated */
 			Program(const Platform& platform, const char*);
 
 			cl_program getProgram() const { return program_id; }

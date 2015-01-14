@@ -29,7 +29,7 @@ namespace Pro {
 		// Static so that multiple Error's will write to the same file.
 		fstream log;
 		mutex file_lock;
-		 
+
 		// Declared to be uncopyable and moveable.
 		Error(const Error&) = delete;
 		Error(Error&&) = delete;
@@ -56,11 +56,12 @@ namespace Pro {
 				return 0;
 			log << "FATAL: " << ftlNum << " LINE: " << line << " FUNC " << file << " -- ";
 			log.write(msg.data(), msg.size()) << "\n";
+			log.flush();
 			file_lock.unlock();
 			return ++ftlNum;
 		}
 
-		/*! Writes a error to the log file and returns the index of the error */ 
+		/*! Writes a error to the log file and returns the index of the error */
 		inline unsigned long _reportError(const string& msg, const char* file = "", const unsigned long line = 0) {
 			static unsigned long errNum = 0;
 			file_lock.lock();

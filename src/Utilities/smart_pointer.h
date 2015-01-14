@@ -96,7 +96,7 @@ namespace Pro {
 				return _ptr[index];
 			}
 			
-			bool operator==(void* rhs) {
+			bool operator==(void* rhs) const {
 				return (void*)_ptr == rhs;
 			}
 			/*! Returns the current reference count */

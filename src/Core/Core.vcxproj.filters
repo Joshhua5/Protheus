@@ -201,6 +201,9 @@
     <ClInclude Include="OpenCL\CLProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OpenCL\CLEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Networking\CClientTCPConnection.cpp">

@@ -4,7 +4,8 @@ using namespace Pro;
 using namespace OpenCL;
 
 static void CL_CALLBACK compile_callback(cl_program, void* ptr) {
-	static_cast<Future*>(ptr)->thread_finished(); 
+	if(ptr != nullptr)
+		static_cast<Future*>(ptr)->thread_finished(); 
 }
 
 Program::Program(Program&& rhs) { 
@@ -21,14 +22,21 @@ Program& Program::operator=(Program&& rhs) {
 }
 Program::Program(const Platform& platform, const Buffer& buffer) {
 	const char* ptr = buffer.data<char>();
-	program_id = clCreateProgramWithSource(platform.getContext().getContext(), 1, &ptr, NULL, NULL);
+	cl_int err = CL_SUCCESS;
+	size_t size = buffer.size();
+	program_id = clCreateProgramWithSource(platform.getContext().getContext(), 1, &ptr, &size, &err);
 	finished.reset(1);
-	clBuildProgram(program_id, NULL, platform.getDevices(), NULL, &compile_callback, &finished);
+	if (err != CL_SUCCESS)
+		error.reportError("Unable to CreateProgramWithSource, Error Code: " + err);
+	err = clBuildProgram(program_id, NULL, NULL, NULL, NULL, NULL); // &compile_callback, &finished);
+	if (err != CL_SUCCESS)
+		error.reportError("Unable to clBuildProgram, Error Code: " + err);
 }
 
-Program::Program(const Platform& platform, const char* buf) {
-	program_id = clCreateProgramWithSource(platform.getContext().getContext(), 1, &buf, NULL, NULL);
-	clBuildProgram(program_id, NULL, platform.getDevices(), NULL, &compile_callback, &finished); 
+Program::Program(const Platform& platform, const char* buf) { 
+	cl_int err;
+	program_id = clCreateProgramWithSource(platform.getContext().getContext(), 1, &buf, NULL, &err);
+	clBuildProgram(program_id, NULL, NULL, NULL, &compile_callback, &finished); 
 	finished.reset(1); 
 }
 

@@ -1,3 +1,4 @@
+#pragma once
 #include "extern\cl.h"
 #include <smart_pointer.h>
 
