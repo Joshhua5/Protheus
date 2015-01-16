@@ -3,13 +3,15 @@ Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2014.
 -------------------------------------------------------------------------
 
-Description: 
+Description:
 
 -------------------------------------------------------------------------
 History:
 - 9:01:2015: Waring J.
 *************************************************************************/
 #pragma once
+
+const unsigned DEFAULT_PARALLEL_THREAD_COUNT = 4;
 
 #include <thread>    
 #include <functional>
@@ -20,112 +22,102 @@ History:
 #include "Future.h"
 
 namespace Pro {
-	namespace Util {
+	namespace Util { 
 
-		namespace Parallel_data {
 
-			struct BatchPack {
-				std::atomic<bool> being_processed;
-				Future* finished;
-				std::function<void(void)> function;
-				BatchPack(){}
-				~BatchPack() {}
-
-				inline BatchPack& operator=(const BatchPack& rhs){
-					finished = rhs.finished;
-					// Function doesn't get copied
-					// as it is replaced in each case inside the Parallel Class
-					//function = rhs.function;
-					being_processed = rhs.being_processed.load();
-					return *this;
-				}
-			};
-
-			static std::mutex m;
-			static std::condition_variable cv;
-			static std::atomic<bool> pool_running;
-			static ObjectPool<BatchPack> obj_pool;
-			static Queue<BatchPack*> work(10000);
-			static std::once_flag initialized;
-			static Future default_result;
-			static unsigned thread_count;
-		}
-
-		using namespace Parallel_data;
-
-		/*! Parallel class used to execute a function asynchronously, functions must have a void return and a void* argument
+		/*! Parallel class used to execute a function asynchronously,
+			(Not implemented)
 			Process jobs have higher priority that queue jobs and will take control of all workers until the process is finished
 			and then the queue jobs will start again
 			*/
 		class Parallel {
 
-			static void workerThread() {
+			struct BatchPack {
+				std::atomic<bool> being_processed;
+				Future* finished;
+				std::function<void(void)> function;
+
+				inline BatchPack& operator=(const BatchPack& rhs) {
+					finished = rhs.finished;						// Function doesn't get copied
+					being_processed = rhs.being_processed.load();	// as it is replaced in each case inside the Parallel Class 
+					return *this;									// function = rhs.function;
+				}
+			}; 
+																	   
+																	   
+			std::mutex m;											   
+			std::condition_variable cv;								   
+			ObjectPool<BatchPack> obj_pool;
+			Queue<BatchPack*> work; 
+			std::atomic<bool> pool_running;
+			std::once_flag initialized;
+			Future default_result;
+			std::thread* threads;
+			unsigned thread_count;
+
+			void workerThread() {
 				BatchPack* item;
 				std::unique_lock<std::mutex> lk(m);
-				while (pool_running.load()) {
+				while (pool_running.load())
 					// Get a work item when it's ready 
-					if (work.empty()){ 
+					if (work.empty())
 						cv.wait_for(lk, std::chrono::milliseconds(100));
-					}else{
+					else {
 						item = work.pop();
 						if (item == nullptr)
 							continue;
-
 						item->function();
-
 						// Cleanup work item
-						item->finished->thread_finished(); 
+						item->finished->thread_finished();
 						delete item;
 					} 
-				}
 			}
 
 		public:
-			Parallel(unsigned count = 2) {
-				std::call_once(initialized,
-					[](unsigned count) {
-					pool_running.store(true);
-					for (unsigned x = 0; x < count; ++x)
-						std::thread(&workerThread).detach();
-				}, count);
+			Parallel(unsigned count = DEFAULT_PARALLEL_THREAD_COUNT) {
+				pool_running.store(true);
+				threads = new std::thread[count];
+				for (unsigned x = 0; x < count; ++x)
+					threads[x] = std::thread(&Parallel::workerThread, this);
 				thread_count = count;
 			}
-
-			//! Deconstruction involved a 500ms wait for threads
-			~Parallel() { 
+			 
+			~Parallel()  { 
 				pool_running.store(false);
-				cv.notify_all(); 
-				// Wait 100ms for all threads to terminate
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+				cv.notify_all();
+				for (unsigned x = 0; x < thread_count; ++x)
+					if(threads[x].joinable())
+						threads[x].join();
+				delete[] threads;
 			}
 
-			static bool isQueueEmpty(){
+			bool isQueueEmpty() {
 				return work.empty();
 			}
-  
+
 			template<typename T, typename... Args>
-			static void batch(T* func, Future* finished, Args... arguments){
+			void batch(T* func, Future* finished, Args... arguments) {
 				if (finished == nullptr)
 					finished = &default_result;
 
 				BatchPack* pack = new BatchPack();
-				
+
 				pack->finished = finished;
 				pack->finished->worker_count = 1;
-				pack->finished->finished_count = 0; 
+				pack->finished->finished_count = 0;
 
-				pack->function = [=]() { std::function<T> f(func); f(arguments...); };
+				pack->function = [=]() { std::bind(func, arguments...)(); };
 
 				work.push(pack);
 				cv.notify_one();
 			}
 
 			template<typename T, typename F, typename... Args>
-			static void process(T* object, F func, unsigned size, unsigned offset, Future* finished, Args... arguments) {
+			void process(T* object, F func, unsigned size, unsigned offset, Future* finished, Args... arguments) {
 				if (finished == nullptr)
 					finished = &default_result;
 
-				BatchPack pack; 
+				BatchPack pack;
 				BatchPack* packCopy;
 
 				pack.finished = finished;
@@ -135,12 +127,11 @@ namespace Pro {
 				if (size < thread_count) {
 					pack.finished->worker_count = size;
 					for (unsigned x = 0; x < size; ++x) {
-						BatchPack* packCopy = new BatchPack();
-						*packCopy = pack; 
+						packCopy = new BatchPack();
+						*packCopy = pack;
 
 						packCopy->function = [=]() {
-							auto f = std::bind(func, object[x], arguments...); 
-							f();
+							std::bind(func, &object[x], arguments...)();
 						};
 						work.push(packCopy);
 						cv.notify_all();
@@ -160,11 +151,13 @@ namespace Pro {
 					for (unsigned work_segment = 0; work_segment < thread_count; ++work_segment) {
 						packCopy = new BatchPack();
 						*packCopy = pack;
+						unsigned segment_size = size / thread_count;
 						packCopy->function = [=]() {
-							for (unsigned x = work_segment * (size / thread_count); x < size / thread_count; ++x) { 
-								auto f = std::bind(func, object[x], arguments...);
-								f();
-							}};
+							unsigned _offset = work_segment * segment_size;
+							unsigned end = _offset + segment_size;
+							for (unsigned current = _offset; current < end; ++current)
+								std::bind(func, &object[current], arguments...)();
+						};
 						work.push(packCopy);
 						cv.notify_all();
 
@@ -173,10 +166,8 @@ namespace Pro {
 					packCopy = new BatchPack();
 					*packCopy = pack;
 					packCopy->function = [=]() {
-						for (unsigned x = size; x < displacement; ++x) {
-							auto f = std::bind(func, object[x], arguments...);
-							f();
-						}
+						for (unsigned x = size; x < displacement; ++x)
+							std::bind(func, &object[x], arguments...)();
 					};
 					work.push(packCopy);
 					cv.notify_all();
@@ -187,17 +178,18 @@ namespace Pro {
 				for (unsigned work_segment = 0; work_segment < thread_count; ++work_segment) {
 					packCopy = new BatchPack();
 					*packCopy = pack;
+					unsigned segment_size = size / thread_count;
 					packCopy->function = [=]() {
-						for (unsigned x = work_segment * (size / thread_count); x < size / thread_count; ++x) {
-							auto f = std::bind(func, object[x], arguments...);
-							f();
-						}
+						unsigned _offset = work_segment * segment_size;
+						unsigned end = _offset + segment_size;
+						for (unsigned current = _offset; current < end; ++current)
+							std::bind(func, &object[current], arguments...)();
 					};
 					work.push(packCopy);
 					cv.notify_all();
 				}
 			}
-	
+
 
 		};
 

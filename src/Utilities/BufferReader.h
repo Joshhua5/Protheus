@@ -31,7 +31,7 @@ namespace Pro {
 				m_head = 0;
 				m_buffer = buffer;
 			}
-			BufferReader(smart_pointer<Buffer> pointer) {
+			BufferReader(smart_ptr<Buffer> pointer) {
 				using_smart = true;
 				m_head = 0;
 				m_buffer = pointer;

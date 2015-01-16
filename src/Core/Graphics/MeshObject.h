@@ -43,8 +43,8 @@ namespace Pro {
 
 			FACE_FORMAT face_format = FACE_FORMAT::UNDEFINED;
 
-			smart_pointer<Buffer> temp = nullptr;
-			smart_pointer<BufferWriter> tempWriter = nullptr;
+			smart_ptr<Buffer> temp = nullptr;
+			smart_ptr<BufferWriter> tempWriter = nullptr;
 
 			MeshObject();
 			MeshObject(const string& name, unsigned start, unsigned size);

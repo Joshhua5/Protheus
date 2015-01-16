@@ -32,7 +32,7 @@ void latency(LARGE_INTEGER* tick2) {
 int main() {
 	Future finished;
 	unsigned args = 0;
-	Parallel::batch(&call, &finished, &args);
+	parallel.batch(&call, &finished, &args);
 
 	finished.wait();
 
@@ -41,12 +41,12 @@ int main() {
 	Object* object2 = new Object[2];
 
 	////Parallel::process(array*, func*, size, offset)
-	Parallel::process(object, &Object::add, 41, 0, nullptr);
-	Parallel::process(object1, &Object::add, 40, 0, nullptr);
-	Parallel::process(object2, &Object::add, 2, 0, nullptr);
+	parallel.process(object, &Object::add, 41, 0, nullptr);
+	parallel.process(object1, &Object::add, 40, 0, nullptr);
+	parallel.process(object2, &Object::add, 2, 0, nullptr);
 	// Test the batch latency
 
-	while (!Parallel::isQueueEmpty()) {}
+	while (!parallel.isQueueEmpty()) {}
 
 #ifdef WIN32 || defined ( _WIN32 ) || defined ( _WIN64 ) || defined(__WIN32__)
 	std::vector<double> time;
@@ -57,7 +57,7 @@ int main() {
 
 	for (unsigned x = 0; x < 100000; ++x) {
 		QueryPerformanceCounter(&tick1);
-		Parallel::batch(&latency, &finished, &tick2);
+		parallel.batch(&latency, &finished, &tick2);
 		finished.wait();
 		time.push_back((tick2.QuadPart - tick1.QuadPart) / (double(CPS.QuadPart) / 1000000.0));
 	}

@@ -137,7 +137,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 }
 
 
-smart_pointer<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
+smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	BufferReader reader(buffer);
 	Buffer verticies(buffer->size() / 3);
 	BufferWriter vertex_writer(&verticies);
@@ -291,8 +291,8 @@ void nsa_backdoor() {
 	error.reportFatalNR("illuminati");
 }
 
-smart_pointer<Mesh> MeshLoader::loadModel(Buffer* buffer) {
-	smart_pointer<Mesh> model = nullptr;
+smart_ptr<Mesh> MeshLoader::loadModel(Buffer* buffer) {
+	smart_ptr<Mesh> model = nullptr;
 
 	if (buffer->isEmpty()) {
 		error.reportError("Empty buffer passed to MeshLoader did file load correctly?\0");
@@ -314,6 +314,6 @@ smart_pointer<Mesh> MeshLoader::loadModel(Buffer* buffer) {
 
 	return model;
 }
-smart_pointer<Mesh> MeshLoader::loadModel(Buffer&& buffer) {
+smart_ptr<Mesh> MeshLoader::loadModel(Buffer&& buffer) {
 	return loadModel(&buffer);
 }

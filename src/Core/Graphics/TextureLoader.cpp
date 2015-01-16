@@ -132,7 +132,7 @@ IMAGE_FORMAT TextureLoader::queryFormat(Buffer* buffer) {
 	return IMAGE_FORMAT::UNDEFINED;
 }
 
-smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
+smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 	BufferReader reader(buffer);
 	reader.setPosition(2);
 
@@ -265,8 +265,8 @@ smart_pointer<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 	return new Texture(texture_id, Vector2<unsigned>((unsigned)header.bmp_width, (unsigned)header.bmp_height));
 }
 
-smart_pointer<Texture> TextureLoader::loadTexture(Buffer* buffer) {
-	smart_pointer<Texture> tex;
+smart_ptr<Texture> TextureLoader::loadTexture(Buffer* buffer) {
+	smart_ptr<Texture> tex;
 
 	if (buffer->isEmpty()) {
 		error.reportError("Empty buffer passed to TextureLoader, did file load correctly?\0");
@@ -287,6 +287,6 @@ smart_pointer<Texture> TextureLoader::loadTexture(Buffer* buffer) {
 	return tex;
 }
 
-smart_pointer<Texture> TextureLoader::loadTexture(Buffer&& buffer) {
+smart_ptr<Texture> TextureLoader::loadTexture(Buffer&& buffer) {
 	return loadTexture(&buffer);
 }

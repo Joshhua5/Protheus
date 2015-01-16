@@ -14,7 +14,7 @@ namespace Pro {
 				m_aligned_buffer = buffer;
 				m_head = 0;
 			}
-			AlignedWriter(smart_pointer<AlignedBuffer> pointer) {
+			AlignedWriter(smart_ptr<AlignedBuffer> pointer) {
 				using_smart = true;
 				m_aligned_buffer = pointer;
 				m_head = 0;

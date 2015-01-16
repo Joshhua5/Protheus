@@ -37,9 +37,9 @@ namespace Pro {
 			static IMAGE_FORMAT queryFormat(Buffer*);
 		public:
 
-			static smart_pointer<Texture> loadBMP(Buffer*);
-			static smart_pointer<Texture> loadTexture(Buffer*);
-			static smart_pointer<Texture> loadTexture(Buffer&&);
+			static smart_ptr<Texture> loadBMP(Buffer*);
+			static smart_ptr<Texture> loadTexture(Buffer*);
+			static smart_ptr<Texture> loadTexture(Buffer&&);
 		};
 	}
 }

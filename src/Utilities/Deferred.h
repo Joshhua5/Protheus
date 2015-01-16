@@ -22,11 +22,11 @@ namespace Pro {
 		*/
 		template<typename T>
 		class Deferred {
-			std::vector<smart_pointer<T>> flagged_deleted;
+			std::vector<smart_ptr<T>> flagged_deleted;
 
 		public:
 			/*! Add a instance to be destoyed */
-			void flag(smart_pointer<T>&& rhs) {
+			void flag(smart_ptr<T>&& rhs) {
 				flagged_deleted.push_back(rhs);
 			}
 

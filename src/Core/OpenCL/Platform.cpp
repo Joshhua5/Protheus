@@ -11,14 +11,14 @@ static void CL_CALLBACK cl_error_callback(const char* msg, const void* pvt_info,
 Platform::Platform(unsigned device_type){
 	ErrorCheck err(CL_SUCCESS);
 
-	smart_pointer<cl_platform_id> platforms = nullptr;
+	smart_array<cl_platform_id> platforms = nullptr;
 	cl_uint platform_count = 0;
 
 	// Get count of platforms to correctly allocate the platforms
 	err = clGetPlatformIDs(0, 0, &platform_count);
 	platforms = new cl_platform_id[platform_count];
 	// Grab the platforms
-	err = clGetPlatformIDs(platform_count, platforms._ptr, NULL);
+	err = clGetPlatformIDs(platform_count, platforms.get(), NULL);
 
 	// Grab devices attached to platform 
 
@@ -26,7 +26,7 @@ Platform::Platform(unsigned device_type){
 	devices = new cl_device_id[device_count];
 	err = clGetDeviceIDs(platforms[0], device_type, device_count, devices, NULL);
 
-	// Create a context for each device 
+	// Create a context for each device
 	context = clCreateContext(NULL, device_count, devices, &cl_error_callback, nullptr, NULL);
 	 
 	cl_int err_queue;

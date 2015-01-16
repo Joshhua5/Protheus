@@ -66,9 +66,6 @@
     <ClInclude Include="ProMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="smart_pointer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Deferred.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -100,6 +97,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="smart_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="smart_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <atomic>
 #include <mutex>
 #include "Error.h"
+#include "smart_array.h"
 
 namespace Pro {
 	namespace Util {
@@ -11,20 +12,29 @@ namespace Pro {
 		*/
 		template<typename T>
 		class ArrayList {
-			std::atomic<size_t> m_size;
-			std::atomic<size_t> m_erasing_at;
+			std::atomic<size_t> m_size = 0;
+			std::atomic<size_t> m_erasing_at = 0;
 			/*! Count of how many elements can be fit into the buffer before a resize*/
-			size_t m_reserved;
-			T* m_buffer;
+			size_t m_reserved = 0;
+			smart_array<T> m_buffer = nullptr;
 
 			mutable std::mutex lk;
 
-			inline void reserve_nl(size_t size) {
+			inline void reserve_nl(const size_t size) {
 				if (size < m_size)
 					return; 
-				T* buffer = new T[m_size + size];
-				memcpy(buffer, m_buffer, m_size * sizeof(T));
-				delete[] m_buffer;
+
+				if (m_buffer == nullptr) {
+					m_buffer = new T[size];
+					m_size = 0;
+					m_reserved = size;
+					return;
+				}
+
+				T* buffer = new T[m_size + size]; 
+				for (unsigned x = 0; x < m_size; ++x)
+					// Call object moves for a safe resize
+					buffer[x] = std::move(m_buffer.get()[x]);
 				m_buffer = buffer;
 				m_reserved += size; 
 			}
@@ -53,14 +63,14 @@ namespace Pro {
 		public:
 			ArrayList() {
 				m_size = 0;
-				m_reserved = 5;
-				m_buffer = new T[m_reserved];
+				m_reserved = 0;
+				m_buffer = nullptr;
 				m_erasing_at = 0;
 			}
 			ArrayList(const size_t size) {
 				m_size = 0;
-				m_reserved = size;
-				m_buffer = new T[size + m_reserved];
+				m_reserved = size; 
+				m_buffer = (size == 0) ? nullptr : new T[m_size + m_reserved]; 
 				m_erasing_at = 0;
 			}
 			ArrayList(const ArrayList& rhs) {
@@ -99,8 +109,7 @@ namespace Pro {
 				m_erasing_at = m_size.load();
 				rhs.lk.unlock();
 				lk.unlock();
-				return *this;
-
+				return *this; 
 			}
 
 			ArrayList& operator=(ArrayList&& rhs) {
@@ -117,12 +126,11 @@ namespace Pro {
 			}
 
 			~ArrayList() {
-				if (m_buffer) { 
-					lk.lock();
-					delete[] m_buffer;
+				if (!m_buffer.isNull()) { 
+					lk.lock(); 
 					m_buffer = nullptr; 
 					lk.unlock();
-				}
+				} 
 			}
 
 			/*! Returns the element at a specified index with bounds checking*/
@@ -157,15 +165,31 @@ namespace Pro {
 				return m_buffer[index];
 			}
 
-			inline unsigned size() const {
+			//! Returns the size of used objects
+			inline unsigned count() const {
 				return m_size;
+			}
+
+			//! Returns the size of objects used or not
+			inline unsigned size() const {
+				return m_size + m_reserved;
+			}
+
+			//! Returns the count of objects reserved
+			inline unsigned reserved() const {
+				return m_reserved;
 			}
 			  
 			/*! Adds a element to the end of the buffer */
-			template<typename T>
 			inline void push_back(T&& value) {  
-				std::lock_guard<std::mutex> grd(lk);
-				push_back_nl(value); 
+				std::lock_guard<std::mutex> grd(lk); 
+				push_back_nl(std::move(value)); 
+			}
+
+			/*! Adds a element to the end of the buffer */
+			inline void push_back(const T& value) {
+				std::lock_guard<std::mutex> grd(lk); 
+				push_back_nl(value);
 			}
 
 			template<typename... Args>

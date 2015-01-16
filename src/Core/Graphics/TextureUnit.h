@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ArrayList.h>
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include "Texture.h"
 
 namespace Pro {
@@ -31,8 +31,8 @@ namespace Pro {
 				return bind(texture_unit, &texture);
 			} 
 
-			inline static bool bind(int texture_unit, const smart_pointer<Texture>& texture) {
-				return bind(texture_unit, texture._ptr);
+			inline static bool bind(int texture_unit, const smart_ptr<Texture>& texture) {
+				return bind(texture_unit, texture.get());
 			}
 
 			inline static GLint max_textures(){

@@ -24,7 +24,7 @@ History:
 // INCLUDE FROM INPUT
 #include "..\Input\Keyboard.h"
 #include "..\Input\Mouse.h"
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 
 namespace Pro {
 	namespace Graphics { 

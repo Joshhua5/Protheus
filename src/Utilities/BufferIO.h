@@ -13,7 +13,7 @@ History:
 #pragma once
 #include "Buffer.h" 
 #include "AlignedBuffer.h"
-#include "smart_pointer.h"
+#include "smart_ptr.h"
 
 namespace Pro {
 	namespace Util {
@@ -24,9 +24,9 @@ namespace Pro {
 			unsigned m_head;
 
 			/*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
-			smart_pointer<Buffer> m_buffer;
+			smart_ptr<Buffer> m_buffer;
 			/*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
-			smart_pointer<AlignedBuffer> m_aligned_buffer;
+			smart_ptr<AlignedBuffer> m_aligned_buffer;
 
 			/*! False if a simple pointer is passed */
 			bool using_smart;

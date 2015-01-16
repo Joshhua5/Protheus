@@ -1,3 +1,4 @@
+#pragma once
 /*************************************************************************
 Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2014.
@@ -12,28 +13,31 @@ History:
 *************************************************************************/
 
 #pragma once
- 
+
 namespace Pro {
 	namespace Util {
 		/*! Keeps count of how many times a pointer is references
-			And deleted the pointer when the last reference is removed
+		And deletes the pointer when the last reference is removed,
+		When trying to store objects, use a smart_ptr otherwise deconstructing will fail
 
-			Use Pro::Deferred for controlling when objects should be deleted
+		Use Pro::Deferred for controlling when arrays should be deleted
 		*/
 		template<typename T>
-		class smart_pointer {
+		class smart_array {
 			unsigned *_references;
 		public:
 			T *_ptr;
 
-			smart_pointer() {
+			smart_array() {
 				_ptr = nullptr;
 				_references = nullptr;
 			}
-			~smart_pointer() {
+			~smart_array() {
+				// Delete if a valid array is being stored
 				if (_references != nullptr)
-					if (--*_references == 0) { 
-						delete _ptr;
+					if (--*_references == 0) {
+						// did you use the correct type of smart_*?
+						delete[] _ptr;
 						delete _references;
 
 						_references = nullptr;
@@ -41,24 +45,24 @@ namespace Pro {
 					}
 			}
 
-			smart_pointer(T* ptr) {
+			smart_array(T* ptr) {
 				_ptr = ptr;
 				_references = new unsigned(1);
 			}
 
-			smart_pointer(smart_pointer&& rhs) {
+			smart_array(smart_array&& rhs) {
 				_ptr = rhs._ptr;
 				_references = rhs._references;
 				rhs._ptr = nullptr;
 				rhs._references = nullptr;
 			}
-			smart_pointer(const smart_pointer& rhs) {
+			smart_array(const smart_array& rhs) {
 				_ptr = rhs._ptr;
 				_references = rhs._references;
 				++*_references;
 			}
 
-			smart_pointer& operator=(smart_pointer&& rhs) {
+			smart_array& operator=(smart_array&& rhs) {
 				if (this == &rhs)
 					return *this;
 				_ptr = rhs._ptr;
@@ -68,7 +72,7 @@ namespace Pro {
 				return *this;
 			}
 
-			smart_pointer& operator=(const smart_pointer& rhs) {
+			smart_array& operator=(const smart_array& rhs) {
 				if (this == &rhs)
 					return *this;
 				_ptr = rhs._ptr;
@@ -77,41 +81,58 @@ namespace Pro {
 				return *this;
 			}
 
-			smart_pointer& operator=(T* rhs) {
-				if (_references != nullptr)
-					if (--*_references == 0) {
-						delete _ptr;
-						delete _references;
-					}
+			smart_array& operator=(T* rhs) {
+				// Call deconstructor on old array
+				this->~smart_array();
 				_ptr = rhs;
 				_references = new unsigned(1);
 				return *this;
-			} 
+			}
 
-			inline T* operator ->() const {
+			inline const T* operator ->() const {
 				return _ptr;
 			}
 
-			T& operator[](const unsigned index) const{
+			inline T* operator ->() {
+				return _ptr;
+			}
+
+			T& operator[](const unsigned index) {
 				return _ptr[index];
 			}
-			
-			bool operator==(void* rhs) const {
-				return (void*)_ptr == rhs;
+
+			const T& operator[](const unsigned index) const {
+				return _ptr[index];
 			}
+
+			bool operator==(const void* rhs) const {
+				return (const void*)_ptr == rhs;
+			}
+
 			/*! Returns the current reference count */
 			inline unsigned references() const {
 				return *_references;
 			}
 
-			// removed reference to an object and doesn't delete the instance unless the reference count is 1
-			inline void dereference() {
+			//! Removes reference to an array and returns the array.
+			inline T* dereference() {
 				if (_references != nullptr) {
-					delete _references;
+					// If dereferencing the last instance than delete the reference
+					if (--*_references == 0)
+						delete _references;
+					auto ptr = _ptr;
 					_ptr = nullptr;
-					_references = nullptr;
-					_ptr = nullptr;
+					_references = nullptr; 
+					return _ptr;
 				}
+				return nullptr;
+			}
+
+			inline const T* get() const { return _ptr; }
+			inline T* get() { return _ptr; }
+
+			inline bool isNull() const {
+				return _ptr == nullptr;
 			}
 		};
 	}

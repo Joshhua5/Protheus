@@ -34,7 +34,7 @@ namespace Pro {
 				m_buffer = buffer;
 				m_head = 0;
 			}
-			BufferWriter(smart_pointer<Buffer> pointer) {
+			BufferWriter(smart_ptr<Buffer> pointer) {
 				using_smart = true;
 				being_resized = false;
 				m_reoccurring_resize = 0;

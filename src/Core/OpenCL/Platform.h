@@ -6,7 +6,7 @@
 #include <ArrayList.h>
 #include <Error.h>
 #include <ErrorCheck.h>
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 
 namespace Pro{
 	namespace OpenCL{  
@@ -26,6 +26,7 @@ namespace Pro{
 			const cl_device_id* getDevices() const{ return devices; }
 			const cl_command_queue* getQueues() const { return queues; }
 			const Context& getContext() const { return context; }
+			const cl_context getClContext() const { return context.getContext(); }
 		};
 	}
 }

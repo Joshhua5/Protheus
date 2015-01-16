@@ -18,6 +18,7 @@
     <None Include="shaders\material.glsl" />
     <None Include="shaders\PhongLighting.glsl" />
     <None Include="shaders\Materials.glsl" />
+    <None Include="Kernel\Test.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenCLTest.cpp">

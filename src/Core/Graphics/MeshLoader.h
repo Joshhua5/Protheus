@@ -27,9 +27,9 @@ namespace Pro {
 
 		public:
 
-			static smart_pointer<Mesh> loadOBJ(Buffer*);
-			static smart_pointer<Mesh> loadModel(Buffer*);
-			static smart_pointer<Mesh> loadModel(Buffer&&);
+			static smart_ptr<Mesh> loadOBJ(Buffer*);
+			static smart_ptr<Mesh> loadModel(Buffer*);
+			static smart_ptr<Mesh> loadModel(Buffer&&);
 		};
 	}
 }

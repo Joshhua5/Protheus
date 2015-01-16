@@ -1,6 +1,6 @@
 #pragma once
 #include "extern\cl.h"
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 
 namespace Pro{
 	namespace OpenCL{ 

@@ -18,7 +18,7 @@ namespace Pro {
 				m_head = 0;
 				m_aligned_buffer = buffer;
 			}
-			AlignedReader(smart_pointer<AlignedBuffer> pointer) {
+			AlignedReader(smart_ptr<AlignedBuffer> pointer) {
 				using_smart = true;
 				m_head = 0;
 				m_aligned_buffer = pointer;

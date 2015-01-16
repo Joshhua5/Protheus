@@ -17,7 +17,7 @@ History:
 #include <BufferWriter.h>
 #include <initializer_list>
 #include <Vector4.h> 
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include <ArrayList.h>
 #include "Program.h"
 #include "Sprite.h"
@@ -40,7 +40,7 @@ namespace Pro{
 			static GLint max_textures;
 			std::atomic<unsigned> current_sprite_count = 0;
 
-			ArrayList<smart_pointer<Texture>> textures;
+			ArrayList<smart_ptr<Texture>> textures;
 			ArrayList<unsigned> sprite_count;
 			ArrayList<ArrayList<unsigned>> sprite_indicies;
 			std::stack<unsigned short> free_textures;
@@ -84,9 +84,9 @@ namespace Pro{
 			void batch_update(int texture, unsigned count);
 
 			// if -1, the maxiumum texture bindings has been hit.
-			int attachTexture(smart_pointer<Texture> tex);
+			int attachTexture(smart_ptr<Texture> tex);
 			/*! indicies will be populated with the index of the texture inside the sprite batcher */
-			int attachTexture(ArrayList<int>& indicies, const ArrayList<smart_pointer<Texture>>& texs);
+			int attachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs);
 
 			void removeTexture(int);
 			  

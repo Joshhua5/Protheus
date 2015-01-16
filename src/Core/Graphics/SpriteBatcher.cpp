@@ -238,7 +238,7 @@ void SpriteBatcher::batch_update(int texture, unsigned count){
 	sprite_count.at(texture) += count;
 }
 
-int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
+int SpriteBatcher::attachTexture(smart_ptr<Texture> tex) {
 	if (tex._ptr == nullptr)
 		return -1;
 	++current_texture_count;
@@ -248,7 +248,7 @@ int SpriteBatcher::attachTexture(smart_pointer<Texture> tex) {
 }
 
 
-int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart_pointer<Texture>>& texs) {
+int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs) {
 	unsigned size = texs.size();
 	if (size == 0)
 		return -1; 
