@@ -20,6 +20,8 @@ TEST(Parallel_Test, Batch_Test) {
 	parallel.batch(testFunction, &future, &atom);
 	future.wait();
 
+	while(!parallel.isQueueEmpty()){}
+
 	ASSERT_EQ(atom.load(), BATCH_TEST_COUNT + 1);
 }
 

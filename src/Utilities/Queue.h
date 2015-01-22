@@ -18,46 +18,74 @@ History:
 namespace Pro {
 	namespace Util {
 		/*! Thread Safe Lock Free Queue
+			Queue resizes involves a lock.
+
+			TODO:	Unsafe to push and pop during a resize, must prevent them.
 		*/
+
 		template<typename T>
 		class Queue { 
-			std::atomic<T*> _queue;
-			std::atomic<size_t> _pop_pos;
-			std::atomic<size_t> _push_pos;
-			std::atomic<size_t> _size;
-			std::atomic<size_t> _capacity; 
+			std::atomic<T*> m_queue;
+			std::atomic<size_t> m_pop_pos;
+			std::atomic<size_t> m_push_pos;
+			std::atomic<size_t> m_size;
+			std::atomic<size_t> m_capacity;  
+			std::mutex resize_lock;
+
+
+			inline size_t check_overflow(std::atomic<size_t>* pos) { 
+				if (*pos == m_capacity - 1) {
+					*pos = 0;
+					return *pos;
+				} 
+				return (*pos)++;
+			}
 
 		public:
-			Queue(const size_t size = 64) {
-				_queue = new T[size]; 
-				_capacity = size;
-				_size = 0;
+			Queue(const size_t size = 64) { 
+				m_queue = new T[size];
+				m_capacity = size;
+				m_pop_pos = m_push_pos = m_size = 0;
+			}
+			~Queue() {
+				resize_lock.lock();
+				delete[] m_queue.load();
+				resize_lock.unlock();
 			}
 			
 			//! Resize is not thread safe
 			inline void resize(const size_t size) {
-				if (size <= _size)
+				// TODO If a resize has been performed making it larger than the requested resize then exit after the mutex
+				std::lock_guard<std::mutex> lk(resize_lock);
+				 
+				if (size <= m_size)
 					error.reportError("Array being resized to invalid size (Size is smaller than stored objects)");
-				T* old_queue = _queue.load();
-				_queue.store(new T[size]);
+			 
+				auto old_queue = m_queue.load();
+				auto new_queue = new T[size]; 
 
-				if (_push_pos < _pop_pos) {
-					// Two moves
-					memcpy(_queue.load(), old_queue[_pop_pos], sizeof(T) * (_size - 1) - _pop_pos);
-					memcpy(_queue.load()[(_size - 1) - _pop_pos], old_queue, sizeof(T) * _push_pos.load());
+				const size_t sizem = m_size;  
+
+				if (m_push_pos < m_pop_pos) { 
+					memcpy(new_queue, old_queue + m_pop_pos, sizeof(T) * (sizem - m_pop_pos)); 
+					memcpy(new_queue + (sizem - m_pop_pos), old_queue, sizeof(T) * m_push_pos); 
 				}
 				else
-					memcpy(_queue.load()[_pop_pos.load()], old_queue, sizeof(T) * (_push_pos.load() - _pop_pos.load()));
+					memcpy(new_queue + m_pop_pos, old_queue, sizeof(T) * (m_push_pos - m_pop_pos));
+
+				m_capacity = size;
+				m_queue.store(new_queue);
+				delete[] old_queue; 
 			}
 
 			// Issue if pushing while poping with only one element
 			inline void push(const T& obj) {
-				if (_size == _capacity)
-					return error.reportErrorNR("Unable to add object (object dropped), Queue is full");
-				
-				auto pos = (_push_pos == _capacity - 1) ? _push_pos -= _capacity : _push_pos++;
-				_size++; 
-				_queue.load()[pos] = obj; 
+				if (m_size == m_capacity - 1)
+					resize(m_capacity * 1.2);
+				auto pos = check_overflow(&m_push_pos);
+
+				++m_size; 
+				m_queue.load()[pos] = obj; 
 			}
 
 			inline T pop() {
@@ -67,23 +95,19 @@ namespace Pro {
 					return T();
 				}
 				// Check if at the end and set the position to 0 if true
-				auto pos = (_pop_pos == _capacity - 1) ? _pop_pos -= _capacity : _pop_pos++;
-				_size--;
-
-				// Move object
-				auto ret_obj = std::move(_queue.load()[pos]);
-				// Deconstruct local object 
+				auto pos = check_overflow(&m_pop_pos);
 				
-				return ret_obj; 
+				--m_size; 
+				// Move object  
+				return std::move(m_queue.load()[pos]);
 			}
 
-			inline T& peek() {
-				return _queue.load()[_pop_pos];
-			}
 
-			bool empty() const {
-				return _size.load() == 0;
-			}
+			inline T& peek() { return m_queue.load()[m_pop_pos]; }
+
+			inline bool empty() const { return m_size.load() == 0; }
+
+			inline size_t size() const { return m_size; }
 
 		};
 	}

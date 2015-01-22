@@ -85,6 +85,7 @@ namespace Pro {
 		public:
 			Parallel(unsigned count = DEFAULT_PARALLEL_THREAD_COUNT) {
 				pool_running.store(true);
+				work.resize(500);
 				threads = new std::thread[count];
 				for (unsigned x = 0; x < count; ++x)
 					threads[x] = std::thread(&Parallel::workerThread, this);
