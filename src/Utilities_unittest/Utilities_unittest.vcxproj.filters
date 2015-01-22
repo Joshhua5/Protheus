@@ -38,7 +38,7 @@
     <ClCompile Include="TestArrayList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestParallel.cpp">
+    <ClCompile Include="TestQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
