@@ -66,6 +66,18 @@ TEST(Queue_Test, Resize_Test) {
 		q.push(x);
 	  
 	ASSERT_EQ(q.size(), 102); 
+
+	// Test that the array can be resized to a smaller volume.
+
+	while (q.size() != 10)
+		q.pop();  
+
+	ASSERT_NO_THROW(q.resize(15));
+
+	// Test resizing to a smaller value
+
+	ASSERT_NO_THROW(q.resize(9));
+	ASSERT_EQ(q.capacity(), 15); 
 }
 
 TEST(Queue_Test, Single_Thread_Consistency_Test) {
@@ -77,7 +89,8 @@ TEST(Queue_Test, Single_Thread_Consistency_Test) {
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
 		ASSERT_EQ(x, q.pop());
 }
-//
+ 
+
 //TEST(Queue_Test, Multi_Thread_Push_Pop_Test) {
 //	Queue<unsigned> queue(10000);
 //	std::vector<std::thread> threads; 

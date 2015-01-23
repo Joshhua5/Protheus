@@ -57,14 +57,15 @@ namespace Pro {
 			inline void resize(const size_t size) {
 				// TODO If a resize has been performed making it larger than the requested resize then exit after the mutex
 				std::lock_guard<std::mutex> lk(resize_lock);
-				 
+				  
 				if (size <= m_size)
-					error.reportError("Array being resized to invalid size (Size is smaller than stored objects)");
+					// Either another thread has already resized or the requested size is less than the stored size
+					return;
 			 
 				auto old_queue = m_queue.load();
-				auto new_queue = new T[size]; 
+				auto new_queue = new T[size];
 
-				const size_t sizem = m_size;  
+				const size_t sizem = m_capacity-1;
 
 				if (m_push_pos < m_pop_pos) { 
 					memcpy(new_queue, old_queue + m_pop_pos, sizeof(T) * (sizem - m_pop_pos)); 
@@ -88,6 +89,15 @@ namespace Pro {
 				m_queue.load()[pos] = obj; 
 			}
 
+			inline void push(T&& obj) {
+				if (m_size == m_capacity - 1)
+					resize(static_cast<size_t>(m_capacity * 1.2f));
+				auto pos = check_overflow(&m_push_pos);
+
+				++m_size;
+				m_queue.load()[pos] = std::move(obj);
+			}
+
 			inline T pop() {
 				// Check if empty
 				if (empty()) {
@@ -109,6 +119,7 @@ namespace Pro {
 
 			inline size_t size() const { return m_size; }
 
+			inline size_t capacity() const { return m_capacity; }
 		};
 	}
 }

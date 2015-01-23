@@ -48,3 +48,4 @@ src/Core_Test/Debug/LearnOGL.obj
 *.obj
 *.obj
 src/Utilities_unittest/Debug/TestParallel.obj
+src/Utilities_unittest/Debug/TestParallel.obj
