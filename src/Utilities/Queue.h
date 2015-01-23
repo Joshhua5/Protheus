@@ -81,7 +81,7 @@ namespace Pro {
 			// Issue if pushing while poping with only one element
 			inline void push(const T& obj) {
 				if (m_size == m_capacity - 1)
-					resize(m_capacity * 1.2);
+					resize(static_cast<size_t>(m_capacity * 1.2f));
 				auto pos = check_overflow(&m_push_pos);
 
 				++m_size; 

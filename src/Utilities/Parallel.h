@@ -143,7 +143,7 @@ namespace Pro {
 				if (finished == nullptr)
 					finished = &default_result;
 
-				finished->worker_count = thread_count;
+				finished->worker_count = thread_count + 1;
 				finished->finished_count = 0;
 
 				// if less than thread_count
@@ -164,11 +164,11 @@ namespace Pro {
 				size -= displacement;
 
 				// Set worker count before batching, otherwise future could be set as true if the last condition
-				// isn't executed before the threads finished.
-				if(displacement != 0)
-					++finished->worker_count;
+				// isn't executed before the threads finished. 
 
 				for (unsigned work_segment = 0; work_segment < thread_count; ++work_segment) {
+					// Worker count or stored assuming one thread will be used to fix alignment, correc the value here.
+					// This reduces the amount of conditions by 1
 					const unsigned segment_size = size / thread_count;
 					auto pack = new BatchPack(finished);
 					pack->function = [=]() {
@@ -183,11 +183,12 @@ namespace Pro {
 				if (displacement != 0) {
 					auto pack = new BatchPack(finished);
 					pack->function = [=]() {
-						for (unsigned x = size; x < displacement; ++x)
+						for (unsigned x = size; x < size + displacement; ++x)
 							std::bind(func, &object[x], arguments...)();
 					};
 					work.push(pack);
-				}
+				}else
+					--finished->worker_count;
 				cv.notify_all();
 			}
 

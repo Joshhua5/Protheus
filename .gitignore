@@ -45,3 +45,6 @@ src/Protheus/Debug
 src/Protheus/Release
 Protheus Engine.sdf
 src/Core_Test/Debug/LearnOGL.obj
+*.obj
+*.obj
+src/Utilities_unittest/Debug/TestParallel.obj
