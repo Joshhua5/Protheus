@@ -21,7 +21,7 @@
     <None Include="Kernel\Test.cl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenCLTest.cpp">
+    <ClCompile Include="SpriteBatcherLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

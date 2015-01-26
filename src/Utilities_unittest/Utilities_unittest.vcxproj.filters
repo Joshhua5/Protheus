@@ -41,7 +41,10 @@
     <ClCompile Include="TestQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestParallel.cpp">
+    <ClCompile Include="TestSmartPtr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSmartArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

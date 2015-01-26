@@ -40,9 +40,10 @@ namespace Pro{
 			static GLint max_textures;
 			std::atomic<unsigned> current_sprite_count = 0;
 
-			ArrayList<smart_ptr<Texture>> textures;
-			ArrayList<unsigned> sprite_count;
-			ArrayList<ArrayList<unsigned>> sprite_indicies;
+			std::vector<smart_ptr<Texture>> textures;
+			std::vector<unsigned> sprite_count;
+			// Quick swap 
+			std::vector<std::vector<unsigned>> sprite_indicies;
 			std::stack<unsigned short> free_textures;
 			unsigned current_texture_count = 0;
 

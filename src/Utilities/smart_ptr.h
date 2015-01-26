@@ -110,17 +110,16 @@ namespace Pro {
 
 			/*! Returns the current reference count */
 			inline unsigned references() const {
+				if (_references == nullptr)
+					return 0;
 				return *_references;
 			}
 			 
 			//! Removes reference to an object and returns the object
 			inline void dereference() {
-				if (_references != nullptr) {
-					delete _references;
-					_ptr = nullptr;
-					_references = nullptr;
-					_ptr = nullptr;
-				}
+				this->~smart_ptr<T>();
+				_references = nullptr;
+				_ptr = nullptr; 
 			}
 
 			inline const T* get() const { return _ptr; } 

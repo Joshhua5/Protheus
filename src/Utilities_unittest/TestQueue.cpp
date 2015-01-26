@@ -46,6 +46,7 @@ TEST(Queue_Test, Single_Thread_Push_Pop_Test) {
 	  
 	ASSERT_EQ(0, queue.size());
 	ASSERT_EQ(result, total);
+
 }  
 
 TEST(Queue_Test, Resize_Test) {

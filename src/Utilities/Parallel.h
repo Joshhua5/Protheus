@@ -200,8 +200,6 @@ namespace Pro {
 			void process(F func, void* data, unsigned size, unsigned offset, Future* finished, Args... arguments) {
 
 			}
-		};
-
-		static Parallel parallel;
+		}; 
 	}
 }

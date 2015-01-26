@@ -116,16 +116,9 @@ namespace Pro {
 
 			//! Removes reference to an array and returns the array.
 			inline T* dereference() {
-				if (_references != nullptr) {
-					// If dereferencing the last instance than delete the reference
-					if (--*_references == 0)
-						delete _references;
-					auto ptr = _ptr;
-					_ptr = nullptr;
-					_references = nullptr; 
-					return _ptr;
-				}
-				return nullptr;
+				this->~smart_array<T>();
+				_references = nullptr;
+				_ptr = nullptr;
 			}
 
 			inline const T* get() const { return _ptr; }

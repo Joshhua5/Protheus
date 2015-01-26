@@ -6,7 +6,7 @@
 #include <vector>
 #include "Program.h"
 #include <Buffer.h>
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include <BufferWriter.h>
 #include "VertexArray.h"
 #include "extern\glew.h"

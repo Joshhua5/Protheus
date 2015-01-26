@@ -9,7 +9,7 @@ namespace Pro {
 		using namespace Util;
 		
 		class TextureUnit {
-			static ArrayList<unsigned> bound_textures;
+			static std::vector<unsigned> bound_textures;
 			static GLint max_texture_units;
 		public:
 			TextureUnit() {

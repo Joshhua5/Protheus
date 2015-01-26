@@ -33,68 +33,76 @@ namespace Pro {
 		/*!
 		Convert degrees to radians
 		*/
-		 inline float degToRad(const float deg) {
+		inline float degToRad(const float deg) {
 			return deg * pi / 180;
 		}
 
 		template<typename T>
-		Vector2<T> toVector2(Vector3<T>&& rhs) {
+		inline Vector2<T> toVector2(Vector3<T>&& rhs) {
 			return Vector2<T>(rhs.x, rhs.y);
 		}
 
 		template<typename T>
-		Vector2<T> toVector2(Vector4<T>&& rhs) {
+		inline Vector2<T> toVector2(Vector4<T>&& rhs) {
 			return Vector2<T>(rhs.x, rhs.y);
 		}
 
 		template<typename T>
-		Vector2<T> toVector2(const Vector3<T>& rhs) {
+		inline Vector2<T> toVector2(const Vector3<T>& rhs) {
 			return Vector2<T>(rhs.x, rhs.y);
 		}
 
 		template<typename T>
-		Vector2<T> toVector2(const Vector4<T>& rhs) {
+		inline Vector2<T> toVector2(const Vector4<T>& rhs) {
 			return Vector2<T>(rhs.x, rhs.y);
 		} 
 		 
 		template<typename T>
-		Vector3<T> toVector3(Vector4<T>&& rhs) {
+		inline Vector3<T> toVector3(Vector4<T>&& rhs) {
 			return Vector3<T>(rhs.x, rhs.y, rhs.z);
 		}
 
 		template<typename T>
-		Vector3<T> toVector3(Vector2<T>&& rhs) {
+		inline Vector3<T> toVector3(Vector2<T>&& rhs) {
 			return Vector3<T>(rhs.x, rhs.y, T());
 		}
 
 		template<typename T>
-		Vector3<T> toVector3(const Vector4<T>& rhs) {
+		inline Vector3<T> toVector3(const Vector4<T>& rhs) {
 			return Vector3<T>(rhs.x, rhs.y, rhs.z);
 		}
 
 		template<typename T>
-		Vector3<T> toVector3(const Vector2<T>& rhs) {
+		inline Vector3<T> toVector3(const Vector2<T>& rhs) {
 			return Vector3<T>(rhs.x, rhs.y, T());
 		}
 
 		template<typename T>
-		Vector4<T> toVector4(Vector3<T>&& rhs) {
+		inline Vector4<T> toVector4(Vector3<T>&& rhs) {
 			return Vector4<T>(rhs.x, rhs.y, rhs.z, T());
 		}
 
 		template<typename T>
-		Vector4<T> toVector4(Vector2<T>&& rhs) {
+		inline Vector4<T> toVector4(Vector2<T>&& rhs) {
 			return Vector4<T>(rhs.x, rhs.y, T(), T());
 		}
 	
 		template<typename T>
-		Vector4<T> toVector4(const Vector3<T>& rhs) {
+		inline Vector4<T> toVector4(const Vector3<T>& rhs) {
 			return Vector4<T>(rhs.x, rhs.y, rhs.z, T());
 		}
 
 		template<typename T>
-		Vector4<T> toVector4(const Vector2<T>& rhs) {
+		inline Vector4<T> toVector4(const Vector2<T>& rhs) {
 			return Vector4<T>(rhs.x, rhs.y, T(), T());
 		}
+		 
+		template<typename T>
+		inline T prand(T min, T max){
+			static bool executed = false;
+			if (executed++)
+				srand(time(NULL));
+			return static_cast<T>((rand() % max - min) + min);
+		} 
 	}
 }

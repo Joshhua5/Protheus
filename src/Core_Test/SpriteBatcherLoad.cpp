@@ -61,11 +61,11 @@ int main() {
 	Entity e_ball; 
 	e_ball.dimensions = ball->getDimensions().cast<float>(); 
 
-	ArrayList<Entity> entities (ball_count);
+	ArrayList<Entity> entities;
 
 	for (unsigned x = 0; x < ball_count; ++x) {
-		e_ball.position = Vector2<float>(rand() % window.getWidth(), rand() % window.getHeight());
-		e_ball.velocity = Vector2<float>((((rand() % 5000) + 1) / 1000), (((rand() % 5000) + 1) / 1000));
+		e_ball.position = Vector2<float>(prand<float>(0, window.getWidth()), prand<float>(0, window.getHeight()));
+		e_ball.velocity = Vector2<float>(prand<float>(1, 5), prand<float>(1, 5));
 		entities.push_back(e_ball);
 	}
 
@@ -81,13 +81,21 @@ int main() {
 		wnd.texture_id = ball_id;
 		wnd.spt = &batcher;
 
-		Parallel::process<Entity>(entities.data(), &Entity::update, ball_count, 0, &finished, &wnd);
+		// Parallel isn't working currently
+		//Parallel::process<Entity>(entities.data(), &Entity::update, ball_count, 0, &finished, &wnd);
 		 
-		finished.wait(); 
 
-		for (unsigned x = 0; x < ball_count; ++x)
+		for (unsigned x = 0; x < ball_count; ++x){ 
+
+			if (entities[x].position.x + entities[x].dimensions.x >=  window.getDimensions().x || entities[x].position.x <= 0)
+				entities[x].velocity.x *= -1;
+			if (entities[x].position.y + entities[x].dimensions.y >= window.getDimensions().x || entities[x].position.y <= 0)
+				entities[x].velocity.y *= -1;
+
+			entities[x].position += entities[x].velocity;
 			batcher.push(ball_id, toVector3<float>(entities[x].position), entities[x].dimensions);
-		 
+
+		}
 		batcher.flush();
 		window.endFrame();
 	}

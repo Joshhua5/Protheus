@@ -79,7 +79,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 			 
 				if (liner.contains<char>("//", 2) != -1) {
 					// Vector//Normal  
-					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter._ptr ); 
+					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter.get() ); 
 					object->face_format = FACE_FORMAT::VERTEX_NORMAL; 
 					object->has_normals = true;
 					break;
@@ -87,19 +87,19 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 				switch (line.count<char>('/')) {
 				case 0:
 					// simple vertex 
-					process_linei("f %i %i %i", liner, *object->tempWriter._ptr );
+					process_linei("f %i %i %i", liner, *object->tempWriter.get() );
 					object->face_format = FACE_FORMAT::VERTEX;
 					break;
 				case 3:
 					// vertex/uv   
-					process_linei("f %i/%i %i/%i %i/%i", liner, *object->tempWriter._ptr );
+					process_linei("f %i/%i %i/%i %i/%i", liner, *object->tempWriter.get());
 					object->face_format = FACE_FORMAT::VERTEX_UV;
 					object->has_tex_coord = true;
 					break;
 				case 6:
 					// vertex/uv/normal 
 					// TEST does atoi stop at the /
-					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter._ptr );
+					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter.get());
 					object->face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
 					object->has_tex_coord = object->has_normals = true;
 					break;

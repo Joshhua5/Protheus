@@ -4,7 +4,7 @@
 #include <BufferReader.h>
 #include <BufferWriter.h>
 #include <Vector2.h> 
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include "Texture.h"
 
 namespace Pro {

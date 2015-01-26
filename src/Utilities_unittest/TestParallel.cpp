@@ -6,6 +6,8 @@ using namespace Pro::Util;
 
 #define BATCH_TEST_COUNT 100
 
+Parallel parallel;
+
 void testFunction(std::atomic<unsigned>* ptr) {
 	++*ptr;
 }

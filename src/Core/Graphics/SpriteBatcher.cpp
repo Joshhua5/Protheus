@@ -239,18 +239,18 @@ void SpriteBatcher::batch_update(int texture, unsigned count){
 }
 
 int SpriteBatcher::attachTexture(smart_ptr<Texture> tex) {
-	if (tex._ptr == nullptr)
+	if (tex.isNull())
 		return -1;
 	++current_texture_count;
-	sprite_indicies.push_back(ArrayList<unsigned>());
+	sprite_indicies.push_back(std::vector<unsigned>());
 	textures.push_back(std::move(tex));
-	return textures.size() - 1;
+	return textures.count() - 1;
 }
 
 
 int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs) {
 	unsigned size = texs.size();
-	if (size == 0)
+	if (size < 0)
 		return -1; 
 	indicies.reserve(size);
 
@@ -258,7 +258,7 @@ int SpriteBatcher::attachTexture(ArrayList<int>& indicies, const ArrayList<smart
 		if (texs.at(x) == nullptr)
 			continue;
 		++current_texture_count;
-		sprite_indicies.push_back(ArrayList<unsigned>());
+		sprite_indicies.push_back(std::vector<unsigned>());
 		textures.push_back(texs[x]);
 		indicies.push_back(textures.size() - 1);
 	}
@@ -318,7 +318,7 @@ void SpriteBatcher::reset() {
 	// CONSIDER making a class to allow
 	// resetting of the vector without deallocating the internal array.
 	for (unsigned x = 0; x < current_texture_count % max_textures; ++x) {
-		sprite_indicies.at(x) = ArrayList<unsigned>();
+		sprite_indicies.at(x) = std::vector<unsigned>();
 		sprite_count.at(x) = 0;
 	}
 

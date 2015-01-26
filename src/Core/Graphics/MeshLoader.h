@@ -6,7 +6,7 @@
 #include <BufferWriter.h>
 #include <Vector4.h>
 #include <Vector3.h>
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include <vector>
 #include "extern\glew.h"
 #include "Mesh.h"
