@@ -1,85 +1,77 @@
 #pragma once
 
 #include "gtest\gtest.h"
+#include "TestCls.h"
 #include <smart_ptr.h>
+
 using namespace Pro::Util;
-
-static unsigned destructor_call_count = 0;
-
-class testObj {
-public:
-	unsigned value;
-	testObj(unsigned u) { value = u; }
-	~testObj() { destructor_call_count++; }
-};
-
-void reset() {
-	destructor_call_count = 0;
-}
+  
 
 TEST(Smart_Ptr, Constructor_Deconstructor_Test) {
-	smart_ptr<testObj> x = nullptr;
+	Counter call_count;
+	smart_ptr<TestCls> x = nullptr;
 
-	x = new testObj(2);
+	x = new TestCls(&call_count, 2);
 
-	testObj* ptr = x.get();
+	TestCls* ptr = x.get();
 	x.dereference();
 
 	ASSERT_EQ(x.get(), nullptr);
-	ASSERT_EQ(destructor_call_count, 1);
-	reset();
+	ASSERT_EQ(call_count.destructor, 1);
+	call_count.reset();
 
-	x = new testObj(2);
-	smart_ptr<testObj> y = x;
+	x = new TestCls(&call_count, 2);
+	smart_ptr<TestCls> y = x;
 
 	ASSERT_EQ(y.references(), 2);
-	ASSERT_EQ(destructor_call_count, 0); 
+	ASSERT_EQ(call_count.destructor, 0);
 	x = nullptr; 
-	ASSERT_EQ(destructor_call_count, 0);
+	y = nullptr;
+	ASSERT_EQ(call_count.destructor, 1);
 }
 
 
-void funcTest(smart_ptr<testObj> obj) {
+void funcTest(smart_ptr<TestCls> obj) {
 	obj.get();
 }
 
-void funcTestm(smart_ptr<testObj>&& obj) {
+void funcTestm(smart_ptr<TestCls>&& obj) {
 	obj.get();
 }
 
 TEST(Smart_Ptr, Copy_Test) {
-	reset();
-	testObj* original = new testObj(2);
-	smart_ptr<testObj> x = original;
-	smart_ptr<testObj> y = x;
-	smart_ptr<testObj> z = y;
+	Counter call_count; 
+	TestCls* original = new TestCls(&call_count, 2);
+	smart_ptr<TestCls> x = original;
+	smart_ptr<TestCls> y = x;
+	smart_ptr<TestCls> z = y;
 	funcTest(z);
 
 	ASSERT_EQ(x.references(), 3);
 	x.dereference();
 	y.dereference();
 	ASSERT_EQ(z.get(), original);
-	ASSERT_EQ(z.get()->value, 2);
+	ASSERT_EQ(z.get()->value(), 2);
 	ASSERT_EQ(z.references(), 1);
-	ASSERT_EQ(destructor_call_count, 0);
+	ASSERT_EQ(call_count.destructor, 0);
 	z.dereference();
-	ASSERT_EQ(destructor_call_count, 1);
+	ASSERT_EQ(call_count.destructor, 1);
 }
 
 
 TEST(Smart_Ptr, Move_Test) {
-	reset();
-	testObj* original = new testObj(2);
-	smart_ptr<testObj> x = original;
-	smart_ptr<testObj> y = x;
-	smart_ptr<testObj> z = std::move(y);
+	Counter call_count; 
+	TestCls* original = new TestCls(&call_count, 2);
+	smart_ptr<TestCls> x = original;
+	smart_ptr<TestCls> y = x;
+	smart_ptr<TestCls> z = std::move(y);
 
 	ASSERT_EQ(z.references(), 2);
 	ASSERT_EQ(y.get(), nullptr); 
 	ASSERT_EQ(z.get(), original);
-	ASSERT_EQ(z.get()->value, 2); 
-	ASSERT_EQ(destructor_call_count, 0);
+	ASSERT_EQ(z.get()->value(), 2);
+	ASSERT_EQ(call_count.destructor, 0);
 	z.dereference();
 	x.dereference();
-	ASSERT_EQ(destructor_call_count, 1);
+	ASSERT_EQ(call_count.destructor, 1);
 }

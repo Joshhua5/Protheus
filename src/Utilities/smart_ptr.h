@@ -12,7 +12,7 @@ History:
 *************************************************************************/
 
 #pragma once
- 
+
 namespace Pro {
 	namespace Util {
 		/*! Keeps count of how many times a pointer is references
@@ -22,111 +22,114 @@ namespace Pro {
 			Use Pro::Deferred for controlling when objects should be deleted
 		*/
 		template<typename T>
-		class smart_ptr {
-			unsigned *_references;
-			T *_ptr;
-		public:
+		class smart_ptr { 
+			unsigned *m_references;
+			T *m_ptr;
 
-			smart_ptr() {
-				_ptr = nullptr;
-				_references = nullptr;
-			}
-			~smart_ptr() {
-				// Delete if a valid object is being stored
-				if (_references != nullptr)
-					if (--*_references == 0) {  
+			inline void destroy() {
+				if (m_references != nullptr)
+					if (--*m_references == 0) {
 						// did you use the correct type of smart_*
-						delete _ptr;
-						delete _references;
+						delete m_ptr;
+						delete m_references;
 
-						_references = nullptr;
-						_ptr = nullptr;
+						m_references = nullptr;
+						m_ptr = nullptr;
 					}
 			}
 
+		public:
+
+			smart_ptr() {
+				m_ptr = nullptr;
+				m_references = nullptr;
+			}
+			~smart_ptr() {
+				// Delete if a valid object is being stored
+				destroy();  
+			}
+
 			smart_ptr(T* ptr) {
-				_ptr = ptr;
-				_references = new unsigned(1);
+				m_ptr = ptr;
+				m_references = new unsigned(1);
 			}
 
 			smart_ptr(smart_ptr&& rhs) {
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				rhs._ptr = nullptr;
-				rhs._references = nullptr;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				rhs.m_ptr = nullptr;
+				rhs.m_references = nullptr;
 			}
 			smart_ptr(const smart_ptr& rhs) {
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				++*_references;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				++*m_references;
 			}
 
 			smart_ptr& operator=(smart_ptr&& rhs) {
 				if (this == &rhs)
 					return *this;
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				rhs._ptr = nullptr;
-				rhs._references = nullptr;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				rhs.m_ptr = nullptr;
+				rhs.m_references = nullptr;
 				return *this;
 			}
 
 			smart_ptr& operator=(const smart_ptr& rhs) {
 				if (this == &rhs)
 					return *this;
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				++*_references;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				++*m_references;
 				return *this;
 			}
 
 			smart_ptr& operator=(T* rhs) {
 				// Call deconstructor on old object
-				this->~smart_ptr(); 
-				_ptr = rhs;
-				_references = new unsigned(1);
+				destroy();
+				m_ptr = rhs;
+				m_references = new unsigned(1);
 				return *this;
-			} 
+			}
 
 			inline const T* operator ->() const {
-				return _ptr;
+				return m_ptr;
 			}
 
 			inline T* operator ->() {
-				return _ptr;
+				return m_ptr;
 			}
 
 			T& operator[](const unsigned index) {
-				return _ptr[index];
+				return m_ptr[index];
 			}
 
-			const T& operator[](const unsigned index) const{
-				return _ptr[index];
+			const T& operator[](const unsigned index) const {
+				return m_ptr[index];
 			}
-			
+
 			bool operator==(const void* rhs) const {
-				return (const void*)_ptr == rhs;
+				return (const void*)m_ptr == rhs;
 			}
 
 			/*! Returns the current reference count */
 			inline unsigned references() const {
-				if (_references == nullptr)
+				if (m_references == nullptr)
 					return 0;
-				return *_references;
+				return *m_references;
 			}
-			 
+
 			//! Removes reference to an object and returns the object
 			inline void dereference() {
-				this->~smart_ptr<T>();
-				_references = nullptr;
-				_ptr = nullptr; 
+				destroy();
 			}
 
-			inline const T* get() const { return _ptr; } 
-			inline T* get() { return _ptr; }
+			inline const T* get() const { return m_ptr; }
+			inline T* get() { return m_ptr; }
 
 			bool isNull() const {
-				return _ptr == nullptr;
+				return m_ptr == nullptr;
 			}
 		};
 	}

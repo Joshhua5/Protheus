@@ -24,108 +24,111 @@ namespace Pro {
 		*/
 		template<typename T>
 		class smart_array {
-			unsigned *_references;
-		public:
-			T *_ptr;
+			unsigned *m_references;
+			T *m_ptr;
 
-			smart_array() {
-				_ptr = nullptr;
-				_references = nullptr;
-			}
-			~smart_array() {
+
+			inline void destroy() {
 				// Delete if a valid array is being stored
-				if (_references != nullptr)
-					if (--*_references == 0) {
+				if (m_references != nullptr)
+					if (--*m_references == 0) {
 						// did you use the correct type of smart_*?
-						delete[] _ptr;
-						delete _references;
+						delete[] m_ptr;
+						delete m_references;
 
-						_references = nullptr;
-						_ptr = nullptr;
+						m_references = nullptr;
+						m_ptr = nullptr;
 					}
 			}
 
+		public:
+			smart_array() {
+				m_ptr = nullptr;
+				m_references = nullptr;
+			}
+			~smart_array() {
+				destroy();
+			}
+
 			smart_array(T* ptr) {
-				_ptr = ptr;
-				_references = new unsigned(1);
+				m_ptr = ptr;
+				m_references = new unsigned(1);
 			}
 
 			smart_array(smart_array&& rhs) {
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				rhs._ptr = nullptr;
-				rhs._references = nullptr;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				rhs.m_ptr = nullptr;
+				rhs.m_references = nullptr;
 			}
 			smart_array(const smart_array& rhs) {
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				++*_references;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				++*m_references;
 			}
 
 			smart_array& operator=(smart_array&& rhs) {
 				if (this == &rhs)
 					return *this;
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				rhs._ptr = nullptr;
-				rhs._references = nullptr;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				rhs.m_ptr = nullptr;
+				rhs.m_references = nullptr;
 				return *this;
 			}
 
 			smart_array& operator=(const smart_array& rhs) {
 				if (this == &rhs)
 					return *this;
-				_ptr = rhs._ptr;
-				_references = rhs._references;
-				++*_references;
+				m_ptr = rhs.m_ptr;
+				m_references = rhs.m_references;
+				++*m_references;
 				return *this;
 			}
 
 			smart_array& operator=(T* rhs) {
 				// Call deconstructor on old array
-				this->~smart_array();
-				_ptr = rhs;
-				_references = new unsigned(1);
+				destroy();
+				m_ptr = rhs;
+				m_references = new unsigned(1);
 				return *this;
 			}
 
 			inline const T* operator ->() const {
-				return _ptr;
+				return m_ptr;
 			}
 
 			inline T* operator ->() {
-				return _ptr;
+				return m_ptr;
 			}
 
 			T& operator[](const unsigned index) {
-				return _ptr[index];
+				return m_ptr[index];
 			}
 
 			const T& operator[](const unsigned index) const {
-				return _ptr[index];
+				return m_ptr[index];
 			}
 
 			bool operator==(const void* rhs) const {
-				return (const void*)_ptr == rhs;
+				return (const void*)m_ptr == rhs;
 			}
 
 			/*! Returns the current reference count */
 			inline unsigned references() const {
-				return *_references;
+				return *m_references;
 			}
 
-			//! Removes reference to an array and returns the array.
-			inline T* dereference() {
-				this->~smart_array<T>();
-				_references = nullptr;
-				_ptr = nullptr;
+			//! Removes reference to an array
+			inline void dereference() {
+				destroy();
 			}
 
-			inline const T* get() const { return _ptr; }
-			inline T* get() { return _ptr; }
+			inline const T* get() const { return m_ptr; }
+			inline T* get() { return m_ptr; }
 
 			inline bool isNull() const {
-				return _ptr == nullptr;
+				return m_ptr == nullptr;
 			}
 		};
 	}

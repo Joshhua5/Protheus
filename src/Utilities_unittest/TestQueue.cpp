@@ -14,7 +14,7 @@ const unsigned last = 2014;
 const unsigned THREAD_COUNT = 10;
 
 std::mutex mut;
-std::condition_variable cv;
+std::condition_variable cv; 
 
 void push(Queue<unsigned>* queue, size_t count, size_t offset) {
 	cv.wait(std::unique_lock<std::mutex>(mut));  
@@ -128,11 +128,12 @@ TEST(Queue_Test, Single_Thread_Consistency_Test) {
 //}
 
 TEST(Queue_Test, Object_Push_Pop_Test) {
+	Counter call_count;
 	Queue<TestCls> queue;
 
-	queue.push(TestCls(2));
+	queue.push(TestCls(&call_count, 2));
 
-	queue.push(TestCls(1));
+	queue.push(TestCls(&call_count, 1));
 
 	ASSERT_EQ(queue.pop().value(), 2);
 	ASSERT_EQ(queue.pop().value(), 1);

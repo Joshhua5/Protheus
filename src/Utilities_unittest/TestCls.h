@@ -1,60 +1,69 @@
 #pragma once
 
-static int constructor_call_count = 0;
-static int copy_constructor_call_count = 0;
-static int move_constructor_call_count = 0;
-static int destructor_call_count = 0;
-static int copy_call_count = 0;
-static int move_call_count = 0;
-static int multiplication_assignment = 0;
-
-static void reset_counters()
-{
-	constructor_call_count = 0;
-	copy_constructor_call_count = 0;
-	move_constructor_call_count = 0;
-	destructor_call_count = 0;
-	copy_call_count = 0;
-	move_call_count = 0; 
-	multiplication_assignment = 0;
-}
+struct Counter {
+	int constructor = 0;
+	int copy_constructor  = 0;
+	int move_constructor  = 0;
+	int destructor  = 0;
+	int copy  = 0;
+	int move  = 0;
+	int multiplication_assignment = 0;
+	void reset() {
+		constructor  = 0;
+		copy_constructor  = 0;
+		move_constructor  = 0;
+		destructor  = 0;
+		copy  = 0;
+		move  = 0;
+		multiplication_assignment = 0;
+	}
+}; 
 
 class TestCls {
 private:
 	int *m_value = nullptr;
-public:
+	Counter* call_count;
+public: 
 	TestCls() {
 		m_value = new int(0);
-		++constructor_call_count;
 	}
-	TestCls(int value) {
+	TestCls(Counter* counter) {
+		m_value = new int(0);
+		call_count = counter;
+		++(call_count->constructor);
+	}
+	TestCls(Counter* counter, int value) {
 		m_value = new int(value);
-		++constructor_call_count;
+		call_count = counter;
+		++(call_count->constructor);
 	}
 	TestCls(const TestCls &other) {
 		m_value = new int(*other.m_value);
-		++constructor_call_count;
-		++copy_constructor_call_count;
+		call_count = other.call_count;
+		++(call_count->constructor);
+		++(call_count->copy_constructor);
 	}
 	TestCls(TestCls &&other) {
 		m_value = other.m_value;
+		call_count = other.call_count;
 		other.m_value = nullptr;
-		++constructor_call_count;
-		++move_constructor_call_count;
+		++(call_count->constructor);
+		++(call_count->move_constructor);
 	}
 	~TestCls() {
+		++(call_count->destructor);
 		if (m_value != nullptr) {
 			delete m_value;
 		}
 		// Cleanup pointer
 		m_value = nullptr;
-		++destructor_call_count;
 	}
 	TestCls& operator=(const TestCls &other) {
 		if (this != &other) {
 			*m_value = *other.m_value;
 		}
-		++copy_call_count;
+		call_count = other.call_count;
+		++(call_count->copy);
 		return *this;
 	}
 	TestCls& operator=(TestCls &&other) {
@@ -62,13 +71,14 @@ public:
 			m_value = other.m_value;
 			other.m_value = nullptr;
 		}
-		++move_call_count;
+		call_count = other.call_count;
+		++(call_count->move);
 		return *this;
 	}
 
 	void operator*=(unsigned value) {
 		*m_value *= value;
-		multiplication_assignment++;
+		++(call_count->multiplication_assignment);
 	}
 
 	int value() const {
@@ -76,5 +86,11 @@ public:
 	}
 	bool is_null() const {
 		return m_value == nullptr;
+	}
+
+	/*! call after constructions, used for construction after an array allocation */
+	void attach(Counter* counter) {
+		call_count = counter;
+		call_count->constructor++; 
 	}
 };
