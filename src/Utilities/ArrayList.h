@@ -1,19 +1,14 @@
 #pragma once
-
 #include <initializer_list>
 #include <atomic>
 #include <mutex>
 #include "Error.h"
 #include "smart_array.h"
 
-//#include <vector>
-
 namespace Pro {
 	namespace Util {
 		/*! BufferVector is used to store data in a dynamically expanding buffer
 		*/
-
-		//#define ArrayList std::vector
 
 		template<typename T>
 		class ArrayList {
@@ -23,23 +18,43 @@ namespace Pro {
 			size_t m_reserved = 0;
 			smart_array<T> m_buffer = nullptr;
 
-				mutable std::mutex arraylist_lock;
+			mutable std::mutex arraylist_lock;
+
+			inline void deconstruct() {
+				// Deallocated initialized objects
+				for (unsigned x = 0; x < m_size; ++x)
+					(&m_buffer[x])->~T();
+			}
+
+			inline void deallocate() {
+				operator delete(m_buffer.detach()); 
+			}
 
 			inline void reserve_nl(const size_t size) {
 				if (size < m_size)
 					return;
 
-				if (m_buffer == nullptr) {
-					m_buffer = new T[size];
+				if (m_buffer.isNull()) {
+					m_buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*size));
 					m_size = 0;
 					m_reserved = size;
 					return;
 				}
+				T* buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(size + m_size + m_reserved)));
 
-				T* buffer = new T[m_size + size];
-				for (unsigned x = 0; x < m_size; ++x)
-					// Call object moves for a safe resize
-					buffer[x] = std::move(m_buffer.get()[x]);
+				if (is_move_constructible<T>())
+					for (unsigned x = 0; x < m_size; ++x)
+						// Call object moves for a safe resize 
+						new(&buffer[x]) T(std::move(m_buffer[x]));
+				else if (is_copy_constructible<T>())
+					for (unsigned x = 0; x < m_size; ++x)
+						// Call object copies for a safe resize 
+						new(&buffer[x]) T(m_buffer[x]);
+				else
+					assert("Object T must be move or copy constructible");
+
+				deconstruct();
+				deallocate();
 				m_buffer = buffer;
 				m_reserved += size;
 			}
@@ -49,7 +64,7 @@ namespace Pro {
 				if (m_reserved == 0)
 					reserve_nl(static_cast<size_t>(m_size * 1.2 + 5));
 				--m_reserved;
-				m_buffer[m_size] = std::move(value);
+				new(&m_buffer[m_size]) T(std::move(value));
 				// Stops the m_size from being moved
 				_WriteBarrier();
 				m_erasing_at = ++m_size;
@@ -59,12 +74,22 @@ namespace Pro {
 				if (m_reserved == 0)
 					reserve_nl(static_cast<size_t>(m_size * 1.2 + 5));
 				--m_reserved;
-				m_buffer[m_size] = value;
+				new(&m_buffer[m_size]) T(value);
 				// Stops the m_size from being moved
 				_WriteBarrier();
 				m_erasing_at = ++m_size;
 			}
 
+			template<typename... Args>
+			inline void emplace_back_nl(Args... arguments) {
+				if (m_reserved == 0)
+					reserve_nl(static_cast<size_t>(m_size * 1.2 + 5));
+				--m_reserved;
+				new(&m_buffer[m_size]) T(arguments...0);
+				// Stops the m_size from being moved
+				_WriteBarrier();
+				m_erasing_at = ++m_size;
+			}
 		public:
 			ArrayList() {
 				m_size = 0;
@@ -72,69 +97,83 @@ namespace Pro {
 				m_buffer = nullptr;
 				m_erasing_at = 0;
 			}
-			ArrayList(const size_t size) {
+
+
+			ArrayList(const size_t reserve) {
 				m_size = 0;
-				m_reserved = size;
-				m_buffer = (size == 0) ? nullptr : new T[m_size + m_reserved];
+				m_reserved = reserve;
+				if (reserve == 0)
+					m_buffer = nullptr;
+				else
+					m_buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(m_size + m_reserved)));
+				// Initialize objects
+				//new (m_buffer.get()) T[m_size];
 				m_erasing_at = 0;
 			}
+
+			template<typename... Args>
+			ArrayList(const size_t reserve, Args... arguments) {
+				m_size = 0;
+				m_reserved = reserve;
+				if (reserve == 0)
+					m_buffer = nullptr;
+				else
+					m_buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(m_size + m_reserved)));
+				// Initialize objects
+				//for (size_t x = 0; x < m_size; ++x)
+				//	new (&m_buffer[x]) T(arguments...);
+				m_erasing_at = 0;
+			}
+
 			ArrayList(const ArrayList& rhs) {
-				rhs.arraylist_lock.lock();
-				arraylist_lock.lock();
+				std::unique_lock<std::mutex> rlk(rhs.arraylist_lock);
+				std::unique_lock<std::mutex> lk(arraylist_lock);
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
-				m_buffer = new T[m_size + m_reserved];
+				m_buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(m_size + m_reserved)));
 				for (size_t x = 0; x < m_size; ++x)
-					m_buffer[x] = rhs.m_buffer[x];
+					new(&m_buffer[x]) T(rhs.m_buffer[x]);
 
 				m_erasing_at = m_size.load();
-				rhs.arraylist_lock.unlock();
-				arraylist_lock.unlock();
 			}
 			ArrayList(ArrayList&& rhs) {
-				arraylist_lock.lock();
-				rhs.arraylist_lock.lock();
+				std::unique_lock<std::mutex> rlk(arraylist_lock);
+				std::unique_lock<std::mutex> lk(rhs.arraylist_lock);
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
 				m_buffer = rhs.m_buffer;
 				rhs.m_buffer = nullptr;
 				m_erasing_at = m_size.load();
-				rhs.arraylist_lock.unlock();
-				arraylist_lock.unlock();
 			}
 
 			ArrayList& operator=(const ArrayList& rhs) {
-				arraylist_lock.lock();
-				rhs.arraylist_lock.lock();
+				std::unique_lock<std::mutex>(arraylist_lock);
+				std::unique_lock<std::mutex>(rhs.arraylist_lock);
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
-				m_buffer = new T[m_size + m_reserved];
+				m_buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(m_size + m_reserved)));
 				for (size_t x = 0; x < m_size; ++x)
-					m_buffer[x] = rhs.m_buffer[x];
+					new(m_buffer[x]) T(rhs.m_buffer[x]);
 				m_erasing_at = m_size.load();
-				rhs.arraylist_lock.unlock();
-				arraylist_lock.unlock();
 				return *this;
 			}
 
 			ArrayList& operator=(ArrayList&& rhs) {
-				arraylist_lock.lock();
-				rhs.arraylist_lock.lock();
+				std::unique_lock<std::mutex>(arraylist_lock);
+				std::unique_lock<std::mutex>(rhs.arraylist_lock);
 				m_size = rhs.m_size.load();
 				m_reserved = rhs.m_reserved;
 				m_buffer = rhs.m_buffer;
 				rhs.m_buffer = nullptr;
 				m_erasing_at = m_size.load();
-				rhs.arraylist_lock.unlock();
-				arraylist_lock.unlock();
 				return *this;
 			}
 
 			~ArrayList() {
 				if (!m_buffer.isNull()) {
-					arraylist_lock.lock();
-					m_buffer = nullptr;
-					arraylist_lock.unlock();
+					std::unique_lock<std::mutex> lk(arraylist_lock); 
+					deconstruct();
+					deallocate();
 				}
 			}
 
@@ -200,7 +239,7 @@ namespace Pro {
 			template<typename... Args>
 			inline void emplace_back(Args&&... args) {
 				std::lock_guard<std::mutex> grd(arraylist_lock);
-				push_back_nl(T(args...));
+				emplace_back_nl(args)
 			}
 
 			/*! Returns the last element added */
@@ -226,7 +265,7 @@ namespace Pro {
 					return;
 				std::lock_guard<std::mutex> grd(arraylist_lock);
 				for (unsigned x = 0; x < m_size; ++x)
-					push_back(std::move(T()));
+					push_back_nl(std::move(T()));
 			}
 
 			/*! Reserved data to be written into, appends onto the current array
@@ -277,6 +316,14 @@ namespace Pro {
 				m_reserved += indicies.size();
 				m_size -= indicies.size();
 				m_erasing_at = m_size.load();
+			}
+
+			inline T pop() {
+				std::unique_lock<std::mutex> grd(arraylist_lock);
+				T object = m_buffer[--m_size];
+				// Deallocate block
+				&m_buffer[m_size + 1]->~T();
+				return std::move(object);
 			}
 		};
 	}

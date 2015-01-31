@@ -124,6 +124,17 @@ namespace Pro {
 				destroy();
 			}
 
+			//! Removes the ptr from the smart_array
+			//! possible to leave a memory leak if ptr isn't cleaned
+			inline T* detach() {
+				if (m_references != nullptr)
+					if (--*m_references == 0)
+						delete m_references;
+				T* ret = m_ptr;
+				m_ptr = nullptr;
+				return ret;
+			}
+
 			inline const T* get() const { return m_ptr; }
 			inline T* get() { return m_ptr; }
 

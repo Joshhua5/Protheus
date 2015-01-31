@@ -27,15 +27,15 @@ TEST(TestArrayList, constructor_with_size_test001)
 {
 	Counter call_count;
 	{
-		ArrayList<TestCls> list(3);
-		for (unsigned x = 0; x < 3; ++x)
-			list[x].attach(&call_count);
+		ArrayList<TestCls> list(3, &call_count);
+		ASSERT_EQ(0, list.count());
 		ASSERT_EQ(3, list.size());
+		ASSERT_EQ(3, list.reserved());
 	}
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
 #ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(3, call_count.constructor);
-	ASSERT_EQ(3, call_count.destructor);
+	ASSERT_EQ(0, call_count.constructor);
+	ASSERT_EQ(0, call_count.destructor);
 #endif
 }
 
@@ -43,13 +43,13 @@ TEST(TestArrayList, push_back_test001)
 {
 	Counter call_count;
 	TestCls v1(&call_count, 1);
-	TestCls v2(&call_count, 2);
-	//TestCls v3(3);
+	TestCls v2(&call_count, 2); 
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
 		list.push_back(v1);
 		list.push_back(v2);
+		// two constructor calls here, use emplace for 1
 		list.push_back(TestCls(&call_count, 3));
 		ASSERT_EQ(3, list.count());
 		ASSERT_EQ(1, list[0].value());
@@ -58,10 +58,10 @@ TEST(TestArrayList, push_back_test001)
 	}
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
 #ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(6, call_count.constructor);
-	ASSERT_EQ(2, call_count.copy);
-	ASSERT_EQ(1, call_count.move);
-	ASSERT_EQ(6, call_count.destructor);
+	ASSERT_EQ(4, call_count.constructor);
+	ASSERT_EQ(0, call_count.copy);
+	ASSERT_EQ(0, call_count.move);
+	ASSERT_EQ(4, call_count.destructor);
 #endif
 }
 
@@ -77,7 +77,7 @@ TEST(TestArrayList, push_back_test002)
 	TestCls v6(&call_count, 6);
 	call_count.reset();
 	{
-		ArrayList<TestCls> list;
+		ArrayList<TestCls> list(10);
 		list.push_back(v1);
 		list.push_back(v2);
 		list.push_back(v3);
@@ -94,7 +94,7 @@ TEST(TestArrayList, push_back_test002)
 	}
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
 #ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(6, call_count.copy);
+	ASSERT_EQ(6, call_count.constructor);
 #endif
 }
 
