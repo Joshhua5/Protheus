@@ -135,6 +135,6 @@ TEST(Queue_Test, Object_Push_Pop_Test) {
 
 	queue.push(TestCls(&call_count, 1));
 
-	ASSERT_EQ(queue.pop().value(), 2);
-	ASSERT_EQ(queue.pop().value(), 1);
+	ASSERT_EQ(2, queue.pop().value());
+	ASSERT_EQ(1, queue.pop().value());
 } 
