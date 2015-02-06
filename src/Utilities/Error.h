@@ -58,6 +58,9 @@ namespace Pro {
 			log.write(msg.data(), msg.size()) << "\n";
 			log.flush();
 			file_lock.unlock();
+#if LOG_FATAL_THROW
+			throw msg;
+#endif
 			return ++ftlNum;
 		}
 
@@ -71,6 +74,9 @@ namespace Pro {
 			log.write(msg.data(), msg.size()) << "\n";
 			log.flush();
 			file_lock.unlock();
+#if LOG_ERROR_THROW
+			throw msg;
+#endif
 			return ++errNum;
 		}
 
