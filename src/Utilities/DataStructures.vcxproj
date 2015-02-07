@@ -55,6 +55,7 @@
     <ClInclude Include="Error.h" />
     <ClInclude Include="ErrorCheck.h" />
     <ClInclude Include="Future.h" />
+    <ClInclude Include="half.hpp" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Parallel.h" />

@@ -105,5 +105,8 @@
     <ClInclude Include="smart_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="half.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

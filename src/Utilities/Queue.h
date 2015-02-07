@@ -33,7 +33,6 @@ namespace Pro {
 			std::atomic<size_t> m_capacity;
 			std::mutex resize_lock;
 
-
 			inline size_t check_overflow(std::atomic<size_t>* pos) {
 				if (pos->load() == m_capacity - 1) {
 					pos->store(0);
@@ -44,13 +43,15 @@ namespace Pro {
 
 		public:
 			Queue(const size_t size = 64) {
-				m_queue = new T[size];
+				m_queue = reinterpret_cast<T*>(operator new(sizeof(T) * size));
 				m_capacity = size;
 				m_pop_pos = m_push_pos = m_size = 0;
 			}
 			~Queue() {
 				resize_lock.lock();
-				delete[] m_queue.load();
+				while (!empty())
+					pop();
+				operator delete(m_queue.load());
 				resize_lock.unlock();
 			}
 
@@ -64,7 +65,7 @@ namespace Pro {
 					return;
 
 				auto old_queue = m_queue.load();
-				auto new_queue = new T[size];
+				auto new_queue = reinterpret_cast<T*>(operator new (sizeof(T) * size));
 
 				const size_t sizem = m_capacity - 1;
 
@@ -80,7 +81,7 @@ namespace Pro {
 				m_queue.store(new_queue);
 				m_pop_pos = 0;
 				m_push_pos = m_size.load();
-				delete[] old_queue;
+				operator delete(old_queue);
 			}
 
 			// Issue if pushing while poping with only one element
@@ -90,7 +91,8 @@ namespace Pro {
 				auto pos = check_overflow(&m_push_pos);
 
 				++m_size;
-				m_queue.load()[pos] = obj;
+				new(m_queue.load() + pos) T(obj);
+				//	m_queue.load()[pos] = obj;
 			}
 
 			inline void push(T&& obj) {
@@ -99,25 +101,54 @@ namespace Pro {
 				auto pos = check_overflow(&m_push_pos);
 
 				++m_size;
-				m_queue.load()[pos] = std::move(obj);
+
+				new(reinterpret_cast<T*>(m_queue.load()) + pos) T(std::move(obj));
+				//m_queue.load()[pos] = std::move(obj);
 			}
 
-			inline T pop() {
+			template<typename... Args>
+			inline void emplace(Args... arguments) {
+				if (m_size == m_capacity - 1)
+					resize(static_cast<size_t>(m_capacity * 1.2f));
+				auto pos = check_overflow(&m_push_pos);
+				++m_size;
+
+				new(reinterpret_cast<T*>(m_queue.load()) + pos) T(arguments);
+			}
+
+			inline const T& top() const {
+				if (empty()) {
+					error.reportError("Called Top on a empty queue, undefined returned object.");
+					return m_queue.load()[m_pop_pos];
+				}
+				return m_queue.load()[m_pop_pos];
+			}
+
+			inline T& top() {
+				if (empty()) {
+					error.reportError("Called Top on a empty queue, undefined returned object.");
+					return m_queue.load()[m_pop_pos];
+				}
+				return m_queue.load()[m_pop_pos];
+			}
+
+			inline void pop() {
 				// Check if empty
 				if (empty()) {
-					error.reportError("Popped a empty queue, returned a default object.");
-					return T();
+					error.reportError("Popped a empty queue");
+					return;
 				}
 				// Check if at the end and set the position to 0 if true
 				auto pos = check_overflow(&m_pop_pos);
-
+				(m_queue.load() + pos)->~T();
 				--m_size;
-				// Move object  
-				return std::move(m_queue.load()[pos]);
 			}
 
-
-			inline T& peek() { return m_queue.load()[m_pop_pos]; }
+			inline T top_pop() {
+				T returnObj = top();
+				pop();
+				return returnObj;
+			}
 
 			inline bool empty() const { return m_size.load() == 0; }
 

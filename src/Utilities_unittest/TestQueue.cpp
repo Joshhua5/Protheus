@@ -25,8 +25,10 @@ void push(Queue<unsigned>* queue, size_t count, size_t offset) {
 void pop(Queue<unsigned>* queue, size_t count, size_t offset, std::atomic<unsigned>* result) {
 	cv.wait(std::unique_lock<std::mutex>(mut));
 	unsigned total = 0;
-	for (unsigned x = offset; x < offset + count; ++x)
-		total += queue->pop();
+	for (unsigned x = offset; x < offset + count; ++x) {
+		total += queue->top();
+		queue->pop();
+	}
 }
  
 TEST(Queue_Test, Single_Thread_Push_Pop_Test) {
@@ -42,7 +44,7 @@ TEST(Queue_Test, Single_Thread_Push_Pop_Test) {
 	ASSERT_EQ(TEST_SIZE, queue.size());
 
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
-		total += queue.pop();
+		total += queue.top_pop();
 	  
 	ASSERT_EQ(0, queue.size());
 	ASSERT_EQ(result, total);
@@ -88,7 +90,7 @@ TEST(Queue_Test, Single_Thread_Consistency_Test) {
 		q.push(x);
 
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
-		ASSERT_EQ(x, q.pop());
+		ASSERT_EQ(x, q.top_pop());
 }
  
 
@@ -135,6 +137,6 @@ TEST(Queue_Test, Object_Push_Pop_Test) {
 
 	queue.push(TestCls(&call_count, 1));
 
-	ASSERT_EQ(2, queue.pop().value());
-	ASSERT_EQ(1, queue.pop().value());
+	ASSERT_EQ(2, queue.top_pop().value());
+	ASSERT_EQ(1, queue.top_pop().value());
 } 
