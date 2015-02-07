@@ -28,7 +28,7 @@ TEST(TestArrayList, constructor_with_size_test001)
 	Counter call_count;
 	{
 		ArrayList<TestCls> list(3, &call_count);
-		ASSERT_EQ(3, list.size()); 
+		ASSERT_EQ(3, list.size());
 		ASSERT_EQ(3, list.capacity());
 	}
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
@@ -42,7 +42,7 @@ TEST(TestArrayList, push_back_test001)
 {
 	Counter call_count;
 	TestCls v1(&call_count, 1);
-	TestCls v2(&call_count, 2); 
+	TestCls v2(&call_count, 2);
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
@@ -120,7 +120,7 @@ TEST(TestArrayList, copy_constructor_test001)
 	}
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
 #ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(3, call_count.constructor);  
+	ASSERT_EQ(3, call_count.constructor);
 #endif
 }
 
@@ -147,8 +147,32 @@ TEST(TestArrayList, move_constructor_test001)
 	ASSERT_EQ(call_count.constructor, call_count.destructor);
 #ifdef TEST_CALL_COUNTS
 	// 5 because the list will reserve 5 and the std::move is a simple pointer swap
-	ASSERT_EQ(3, call_count.constructor); 
+	ASSERT_EQ(3, call_count.constructor);
 #endif
 }
 
+
+TEST(TestArrayList, erase_test001) {
+	ArrayList<unsigned> list(10);
+	list.erase({ 2, 4, 5 });
+	ASSERT_EQ(7, list.size());
+}
+
+TEST(TestArrayList, erase_test002) {
+	ArrayList<unsigned> list(10);
+	list.erase({ 5, 4, 2 });
+	ASSERT_EQ(7, list.size());
+}
+
+TEST(TestArrayList, erase_test003) {
+	ArrayList<unsigned> list(10);
+	list.erase({ 2, 20 });
+	ASSERT_EQ(9, list.size());
+}
+
+TEST(TestArrayList, erase_test004) {
+	ArrayList<unsigned> list(10);
+	list.erase({ 200, 2 });
+	ASSERT_EQ(9, list.size());
+}
 

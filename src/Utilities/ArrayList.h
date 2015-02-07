@@ -261,14 +261,16 @@ namespace Pro {
 
 				// Check how many indicies are invalid
 				size_t culled = 0;
-				for (size_t i = 0; i < indicies.size(); ++i)
-					if (*(indicies.begin() + i) > indicies.size())
+				for (size_t i = 0; i < indicies.size(); ++i) {
+					if (*(indicies.begin() + i) > objectCount) {
 						++culled;
-
+					}
+				}
 				// Sort indicies from lowest to highest
 
 				size_t* sorted = new size_t[indicies.size()];
 				size_t shortest = 0;
+				size_t lastIndex = 0;
 				// TODO is this defined behaviour
 				// Set value to the highest possible index
 				shortest -= 1;
@@ -276,15 +278,18 @@ namespace Pro {
 
 				for (size_t y = 0; y < indicies.size(); ++y) {
 					for (auto x = indicies.begin(); x != indicies.end(); ++x)
-						if (*x > last_index && *x < shortest && *x < objectCount)
+						// *x == 0 for the case that lastIndex doesn't detect 0's
+						if ((*x > lastIndex && *x < shortest && *x < objectCount) || *x == 0)
 							shortest = *x;
 					sorted[y] = shortest;
+					lastIndex = shortest;
 					shortest = 0 - 1;
 				}
 
 				// Move data from valid indicies 
 				auto index = sorted;
-				for (; index != &sorted[indicies.size() - 2 - culled]; ++index) {
+				auto end = &sorted[indicies.size() - 1] - culled;
+				for (; index != end; ++index) {
 					(objectArray + *index)->~T();
 					// *i - offset, for the objects that were removed previously will alter the index
 					// *(i + 1) - *i, to copy all objects until the next flagged object. 
@@ -295,8 +300,8 @@ namespace Pro {
 				// TODO test
 				copy(objectArray + offset, objectArray, *index - offset, objectCount - 1 - *index);
 
-				reserved += indicies.size();
-				objectCount -= indicies.size();
+				reserved += (indicies.size() - culled);
+				objectCount -= (indicies.size() - culled);
 			}
 
 			inline bool empty() const {
