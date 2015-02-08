@@ -21,9 +21,10 @@ namespace Pro {
 			Node* _end;
 			std::atomic<int> _edit_position;
 			std::atomic<unsigned> _size;
+			// TODO use the size to determine if empty (check if there's need for a variable)
 			std::atomic<bool> _empty;
 			 
-			inline Node* node_at(unsigned index) const {
+			inline Node* NodeAt(unsigned index) const {
 				if (index > _size)
 					return nullptr;
 				register Node* ptr = _start;
@@ -32,7 +33,7 @@ namespace Pro {
 				return ptr;
 			}
 
-			inline T* remove_last_node_nl(){
+			inline T* RemoveLastNodeNoLock(){
 				_empty.store(true); 
 				auto return_ptr = _start->_ptr;
 				delete _start;
@@ -41,9 +42,9 @@ namespace Pro {
 				return return_ptr;
 			}
 
-			inline T* remove_back_nl(){
+			inline T* RemoveBackNoLock(){
 				if (_size == 1)
-					return remove_last_node_nl();
+					return RemoveLastNodeNoLock();
 				_end = _end->_prev;
 				_size--;
 				auto return_ptr = _end->_next->_ptr;
@@ -52,9 +53,9 @@ namespace Pro {
 				return return_ptr;
 			}
 
-			inline T* remove_front_nl(){
+			inline T* RemoveFrontNoLock(){
 				if (_size == 1)
-					return remove_last_node_nl();
+					return RemoveLastNodeNoLock();
 				_start = _start->_next;
 				--_size;
 				auto return_ptr = _start->_ptr;
@@ -63,20 +64,20 @@ namespace Pro {
 				return return_ptr;
 			}
 
-			inline T* remove_at_nl(unsigned index) {
+			inline T* RemoveAtNoLock(unsigned index) {
 				T* return_ptr;
 
 				switch (_size){
 				case 0:	return nullptr;
-				case 1: return remove_last_node_nl();
+				case 1: return RemoveLastNodeNoLock();
 				}
 
 				if (index == 0) // Start
-					return remove_front_nl();
+					return RemoveFrontNoLock();
 				else if (index == _size) // End
-					return remove_back_nl();
+					return RemoveBackNoLock();
 				else {
-					Node* ptr = node_at(index);
+					Node* ptr = NodeAt(index);
 					// Delete node 
 					_edit_position.store(index);
 					ptr->_next->_prev = ptr->_prev;
@@ -90,7 +91,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
-			void first_node(T* ptr) {
+			void FirstNode(T* ptr) {
 				_edit_position.store(0);
 				_start = _end = new Node();
 				_start->_prev = _start->_next = nullptr;
@@ -100,7 +101,7 @@ namespace Pro {
 				_empty.store(false);
 			}
 
-			inline void _prepend(T* ptr) {
+			inline void Prepend(T* ptr) {
 
 				// Prepend at the start
 				Node* node = new Node();
@@ -114,7 +115,7 @@ namespace Pro {
 				_edit_position.store(_size);
 			}
 
-			inline void _append(T* ptr) {
+			inline void Append(T* ptr) {
 				// Append at the end
 				Node* node = new Node();
 				node->_ptr = ptr;
@@ -133,26 +134,26 @@ namespace Pro {
 				// Grab lock incase anothe thread is currently editing
 				std::lock_guard<std::mutex> lk(edit_lock);
 				while (!empty())
-					remove_at_nl(0);
+					RemoveAtNoLock(0);
 				_size = 0;
 				_start = _end = nullptr;
 			}
 
 			/*! If index is a negative value then the ptr is just appended onto the list
 			*/
-			void insert(T* ptr, unsigned index) {
+			void Insert(T* ptr, unsigned index) {
 				// Check index is valid  
 				std::lock_guard<std::mutex> lk(edit_lock);
 				if (_empty)
-					return first_node(ptr);
+					return FirstNode(ptr);
 				// Insert into
-				Node* old_node = node_at(index);
+				Node* old_node = NodeAt(index);
 				if (old_node == nullptr)
 					return;
 				if (index == 0)
-					return _prepend(ptr);
+					return Prepend(ptr);
 				if (index == _size - 1)
-					return _append(ptr);
+					return Append(ptr);
 
 				Node* new_node = new Node();
 				new_node->_ptr = ptr;
@@ -163,42 +164,42 @@ namespace Pro {
 				_size++;
 			}
 
-			void push_back(T* ptr) {
+			void PushBack(T* ptr) {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				// Check if first element
 				if (_empty.load())
-					return first_node(ptr);
-				_append(ptr);
+					return FirstNode(ptr);
+				Append(ptr);
 			}
 
-			void push_front(T* ptr) {
+			void PushFront(T* ptr) {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				if (_empty.load())
-					return first_node(ptr);
-				_prepend(ptr);
+					return FirstNode(ptr);
+				Prepend(ptr);
 			}
 
 			/*! Returns the pointer that was removed from the array, does not call delete
 				Unsafe to use remove(size() - 1) to remove from back in a multithread environment
 				Use T* pop_back()
 				*/
-			inline T* remove(unsigned index) {
+			inline T* Remove(unsigned index) {
 				std::lock_guard<std::mutex> lk(edit_lock);
-				return remove_at_nl(index);
+				return RemoveAtNoLock(index);
 			}
 
-			inline T* pop_back() {
+			inline T* PopBack() {
 				std::lock_guard<std::mutex> lk(edit_lock);
-				return remove_back_nl();
+				return RemoveBackNoLock();
 			}
 
-			inline T* pop_front() {
+			inline T* PopFront() {
 				std::lock_guard<std::mutex> lk(edit_lock);
-				return remove_front_nl();
+				return RemoveFrontNoLock();
 			}
 
-			inline T* at(unsigned index) const {
-				return node_at(index)->_ptr;
+			inline T* At(unsigned index) const {
+				return NodeAt(index)->_ptr;
 			}
 
 			inline unsigned size() const {

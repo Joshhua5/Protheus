@@ -1,35 +1,48 @@
 #include "LinkedList.h"
+#include "smart_ptr.h"
 
-namespace Pro{
-	namespace Util{
+namespace Pro {
+	namespace Util {
+		/*! ObjectPool keeps track of memory allocated for objects
+			and constructs a new object without allocation when requested. */
 		template<class T>
-		class ObjectPool{
-			LinkedList<T> list;
-			
-		public:  
+		class ObjectPool {
+			LinkedList<T> list_;
+
+		public:
+
+			~ObjectPool() {
+				while (!list_.empty()) 
+					operator delete(list_.PopBack()); 
+			}
 
 			/*! Stores a object as unused for reuse*/
-			void store(T* obj){
-				list.push_back(obj);
-			}
+			void Store(T* obj) {
+				obj->~T();
+				list_.PushBack(obj);
+			} 
+
 			/*! Returns a old object, allocates a new one if the pool is empty */
 			template<typename... Args>
-			T* get(Args&&... args){
-				if (list.empty())
+			smart_ptr<T> Get(Args&&... args) {
+				if (list_.empty())
 					return new T(args...);
-				else{
-					auto obj = list.pop_back();
-					*obj = T(args...);
-					return obj;
+				else {
+					smart_ptr<T>  obj = list_.PopBack();
+					operator new(obj.get()) T(args...);
+					return std::move(obj);
 				}
 			}
 
-			T* get(){
-				if (list.empty())
+			smart_ptr<T> Get() {
+				if (list_.empty())
 					// If getting error here, make sure object has default constructor
 					return new T();
-				else
-					return list.pop_back();
+				else {
+					smart_ptr<T> obj = list_.PopBack();
+					operator new(obj.get()) T();
+					return std::move(obj);
+				}
 			}
 		};
 	}
