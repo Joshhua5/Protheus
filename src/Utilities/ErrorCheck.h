@@ -1,26 +1,28 @@
 namespace Pro{
 	namespace Util{
+		//! Used to check the return values of functions
+		//! and reduce the amount of visible branches in source.
+		template<typename T = unsigned>
 		class ErrorCheck{
-			unsigned char had_error;
-			unsigned success_code;
+			unsigned short had_error_;
+			T success_code_;
 
 		public:
 			ErrorCheck(unsigned success_code){
-				this->success_code = success_code;
+				this->success_code_ = success_code;
 			}
 
-			bool hadError(){
-				return had_error != 0;
+			bool HadError(){
+				return had_error_ != 0;
 			}
 
-			unsigned char error_count(){
-				return had_error;
+			unsigned char ErrorCount(){
+				return had_error_;
 			}
-
-			template<typename T>
+			 
 			ErrorCheck& operator=(const T& code){
-				if (code != success_code)
-					++had_error;
+				if (code != success_code_)
+					++had_error_;
 				return *this;
 			}
 		};

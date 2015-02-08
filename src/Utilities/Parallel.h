@@ -76,7 +76,7 @@ namespace Pro {
 						item->being_processed = true;
 						item->function();
 						// Cleanup work item
-						item->finished->thread_finished();
+						item->finished->ThreadFinished();
 						delete item;
 					}
 			}
@@ -110,8 +110,8 @@ namespace Pro {
 				if (finished == nullptr)
 					finished = &default_result;
 
-				finished->worker_count = 1;
-				finished->finished_count = 0;
+				finished->worker_count_ = 1;
+				finished->finished_count_ = 0;
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, arguments...)(); };
 				work.Push(pack);
@@ -124,8 +124,8 @@ namespace Pro {
 					finished = &default_result;
 				pack->finished = finished;
 
-				finished->worker_count = 1;
-				finished->finished_count = 0;
+				finished->worker_count_ = 1;
+				finished->finished_count_ = 0;
 
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, data, arguments...)(); };
@@ -143,12 +143,12 @@ namespace Pro {
 				if (finished == nullptr)
 					finished = &default_result;
 
-				finished->worker_count = thread_count + 1;
-				finished->finished_count = 0;
+				finished->worker_count_ = thread_count + 1;
+				finished->finished_count_ = 0;
 
 				// if less than thread_count
 				if (size < thread_count) {
-					finished->worker_count = size;
+					finished->worker_count_ = size;
 					for (unsigned x = 0; x < size; ++x) {
 						auto pack = new BatchPack(finished);
 						pack->function = [=]() { std::bind(func, &object[x], arguments...)(); };
@@ -188,7 +188,7 @@ namespace Pro {
 					};
 					work.Push(pack);
 				}else
-					--finished->worker_count;
+					--finished->worker_count_;
 				cv.notify_all();
 			}
 
