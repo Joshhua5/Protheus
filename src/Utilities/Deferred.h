@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <vector>
-#include "smart_pointer.h"
+#include "smart_ptr.h"
 
 namespace Pro {
 	namespace Util {
@@ -22,22 +22,30 @@ namespace Pro {
 		*/
 		template<typename T>
 		class Deferred {
-			std::vector<smart_ptr<T>> flagged_deleted;
+			std::vector<smart_ptr<T>> flagged_deleted_;
 
 		public:
+			
+			~Deferred(){
+				Check();
+				// Give error if deferred was deleted with objects still alive.
+				if (!flagged_deleted_.empty())
+					error.reportErrorNR("Deferred deleted before objects were released.");
+			}
+			
 			/*! Add a instance to be destoyed */
-			void flag(smart_ptr<T>&& rhs) {
-				flagged_deleted.push_back(rhs);
+			void Flag(smart_ptr<T>&& rhs) {
+				flagged_deleted_.push_back(rhs);
 			}
 
 			/*! Check instances that should be destroyed*/
-			void check() {
-				for (size_t i = 0; i < flagged_deleted.size(); ++i)
-					if (flagged_deleted[i].references())
+			void Check() {
+				for (size_t i = 0; i < flagged_deleted_.size(); ++i)
+					if (flagged_deleted_[i].references())
 						// TEST the --i
 						// if I erase, the current index will now contain the next
 						// element 
-						flagged_delete.erase(flagged_deleted.begin() + i--);
+						flagged_delete.erase(flagged_deleted_.begin() + i--);
 			}
 		};
 	}

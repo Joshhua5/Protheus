@@ -17,8 +17,9 @@ History:
 namespace Pro {
 	namespace Util {
 
-		/*! Allow to check if a single bit has been checked */
-		enum struct BIT {
+		//! Allow to check if a single bit has been checked 
+		enum struct Bit {
+			_0 = (int)0x0,
 			_1 = (int)0x1,
 			_2 = (int)0x2,
 			_3 = (int)0x4,
@@ -52,20 +53,19 @@ namespace Pro {
 			_28 = (int)0x8000000,
 			_29 = (int)0x10000000,
 			_30 = (int)0x20000000,
-			_31 = (int)0x40000000,
-			_32 = (int)0x80000000,
+			_31 = (int)0x40000000, 
 		};
 
-		inline BIT operator|(BIT a, BIT b) {
-			return static_cast<BIT>(static_cast<long>(a) | static_cast<long>(b));
+		inline Bit operator|(Bit a, Bit b) {
+			return static_cast<Bit>(static_cast<unsigned>(a) | static_cast<unsigned>(b));
 		}
 
-		inline BIT operator&(BIT a, BIT b) {
-			return static_cast<BIT>(static_cast<long>(a) & static_cast<long>(b));
+		inline Bit operator&(Bit a, Bit b) {
+			return static_cast<Bit>(static_cast<unsigned>(a) & static_cast<unsigned>(b));
 		}
 
 		/*! Check if the bit is set */
-		inline bool checkBit(int value, int bit) {
+		inline bool CheckBit(int value, unsigned bit) {
 			return static_cast<bool>((value >> bit) & 1);
 		}
 	}

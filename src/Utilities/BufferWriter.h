@@ -23,130 +23,130 @@ namespace Pro {
 		class BufferWriter :
 			public BufferIO
 		{
-			unsigned char m_reoccurring_resize;
-			std::atomic<bool> being_resized;
+			unsigned char reoccurring_resize_;
+			std::atomic<bool> being_resized_;
 
 		public:
 			BufferWriter(Buffer* buffer) {
 				using_smart = false;
-				being_resized = false;
-				m_reoccurring_resize = 0;
-				m_buffer = buffer;
-				m_head = 0;
+				being_resized_ = false;
+				reoccurring_resize_ = 0;
+				buffer_ = buffer;
+				head_ = 0;
 			}
 			BufferWriter(smart_ptr<Buffer> pointer) {
 				using_smart = true;
-				being_resized = false;
-				m_reoccurring_resize = 0;
-				m_buffer = pointer;
-				m_head = 0;
+				being_resized_ = false;
+				reoccurring_resize_ = 0;
+				buffer_ = pointer;
+				head_ = 0;
 			}
 			~BufferWriter() {
-				m_head = 0;
+				head_ = 0;
 				if (using_smart)
-					m_buffer = nullptr;
+					buffer_ = nullptr;
 				else
-					m_buffer.dereference();
+					buffer_.dereference();
 			}
 
 			/*!	Writes an array into the buffer
 				Size is in bytes
 			*/
-			inline void write(const void* value, const unsigned size) {
-				if (m_buffer == nullptr)
+			inline void Write(const void* value, const unsigned size) {
+				if (buffer_ == nullptr)
 					return;
-				skip(size);  
-				auto l_head = m_head - size;
+				Skip(size);  
+				auto l_head = head_ - size;
 
 				// Check if the write will overflow
-				if (m_head > m_buffer->size() && !being_resized)
+				if (head_ > buffer_->size() && !being_resized_)
 					// Resizes the buffer exponentially as more resizes are called
-					being_resized = true;
-					m_buffer->resize(static_cast<unsigned>((float)(m_head) * (1.f + (m_reoccurring_resize++ / 10.f))));
-					being_resized = false;
+					being_resized_ = true;
+					buffer_->Resize(static_cast<unsigned>((float)(head_) * (1.f + (reoccurring_resize_++ / 10.f))));
+					being_resized_ = false;
 
-				m_buffer->lk.lock(); 
-				memcpy(m_buffer->at(l_head), value, size);
-				m_buffer->lk.unlock();
+				buffer_->lock(); 
+				memcpy(buffer_->At(l_head), value, size);
+				buffer_->unlock();
 			}
 
-			inline void write_nl(const void* value, const unsigned size) {
-				if (m_buffer == nullptr)
+			inline void WriteNoLock(const void* value, const unsigned size) {
+				if (buffer_ == nullptr)
 					return;
-				skip(size);
-				auto l_head = m_head - size;
+				Skip(size);
+				auto l_head = head_ - size;
 
 				// Check if the write will overflow
-				if (l_head > m_buffer->size() && !being_resized){
+				if (l_head > buffer_->size() && !being_resized_){
 					// Resizes the buffer exponentially as more resizes are called
-					being_resized = true;
-					m_buffer->resize(static_cast<unsigned>((float) (l_head + size) * (1.f + (m_reoccurring_resize++ / 10.f))));
-					being_resized = false;
+					being_resized_ = true;
+					buffer_->Resize(static_cast<unsigned>((float) (l_head + size) * (1.f + (reoccurring_resize_++ / 10.f))));
+					being_resized_ = false;
 				} 
-				memcpy(m_buffer->at(l_head), value, size);
+				memcpy(buffer_->At(l_head), value, size);
 			}
 
 			template<typename T>
-			inline void write(const T& data) {
-				if (being_resized)
-					write(&data, sizeof(T));
+			inline void Write(const T& data) {
+				if (being_resized_)
+					Write(&data, sizeof(T));
 				else
-					write_nl(&data, sizeof(T));
+					WriteNoLock(&data, sizeof(T));
 			}
 			  
 			/*! Writes an object into the buffer */
 			template<typename T>
-			inline void write(const T&& data) {
-				if (being_resized)
-					write(&data, sizeof(T));
+			inline void Write(const T&& data) {
+				if (being_resized_)
+					Write(&data, sizeof(T));
 				else
-					write_nl(&data, sizeof(T));
+					WriteNoLock(&data, sizeof(T));
 			}
 			 
 			/*! Writes the array into the buffer
 				size in bytes
 			*/
 			template<typename T>
-			inline void write_array(const T* data, unsigned size) { 
-				if (being_resized)
-					write(data, size);
+			inline void WriteArray(const T* data, unsigned size) { 
+				if (being_resized_)
+					Write(data, size);
 				else
-					write_nl(data, size);
+					WriteNoLock(data, size);
 			}
 
 			/*! Writes the array into the buffer
 				size in array size
 			*/
 			template<typename T>
-			inline void write_elements(const T* data, unsigned elements) { 
-				if (being_resized)
-					write((void*) data, elements * sizeof(T));
+			inline void WriteElements(const T* data, unsigned elements) { 
+				if (being_resized_)
+					Write((void*) data, elements * sizeof(T));
 				else
-					write_nl((void*) data, elements * sizeof(T));
+					WriteNoLock((void*) data, elements * sizeof(T));
 			}
 
 			template<typename T, size_t size>
-			inline void write_elements(T (&array)[size]) {
-				write(&array, size * sizeof(T));
-				if (being_resized)
-					write(&array, size * sizeof(T));
+			inline void WriteElements(T (&array)[size]) {
+				Write(&array, size * sizeof(T));
+				if (being_resized_)
+					Write(&array, size * sizeof(T));
 				else
-					write_nl(&array, size * sizeof(T));
+					WriteNoLock(&array, size * sizeof(T));
 			} 
 
 			/*! Writes a complex data type from the buffer according to the class definition */
 			template<typename T>
-			inline void serialized_write(const ClassDefinition& def, const T* data) {
+			inline void SerializedWrite(const ClassDefinition& def, const T* data) {
 
-				const auto members = def.getMembers();
+				const auto members = def.members();
 
-				m_buffer->lk.lock();
+				buffer_->lock();
 				// Write the amount of members in the extern class
-				write<unsigned short>(members.size());
+				Write<unsigned short>(members.size());
 
 				// Write each member
 				for each(const auto member in members) {
-					write_array<char>(member.name, 32);
+					WriteArray<char>(member.name, 32);
 
 					// Pointer to the data member we want
 					const auto member_pointer =
@@ -154,11 +154,11 @@ namespace Pro {
 						member.offset;
 
 					// Write the size of the member
-					write<unsigned>(member.size);
+					Write<unsigned>(member.size);
 					// Write the data of the member
-					write(member_pointer, member.size);
+					Write(member_pointer, member.size);
 				} 
-				m_buffer->lk.unlock();
+				buffer_->unlock();
 			}
 		};
 	}

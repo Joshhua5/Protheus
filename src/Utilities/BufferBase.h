@@ -21,13 +21,44 @@ namespace Pro {
 		{
 		protected:
 			/*! Remembers if the buffer was copied to prevent the deconstructor from deleting data which it doesn't own */
-			bool wasCopied;
+			bool was_copied_;
 			/*! Size of the buffer in bytes */
-			unsigned int m_size;
+			size_t size_;
 			/*! Pointer to the data in the heap*/
-			void* m_data;
+			void* data_;
+			// TODO check the move to protected from public
+			std::mutex lock_;
 		public:
-			std::mutex lk;
+
+			inline void lock() {
+				lock_.lock();
+			}
+
+			inline void unlock() {
+				lock_.unlock();
+			}
+
+			inline size_t size() const {
+				return size_;
+			}
+
+			template<typename T>
+			inline T* data() {
+				return reinterpret_cast<T*>(data_);
+			}
+
+			template<typename T>
+			inline const T* data() const {
+				return reinterpret_cast<T*>(data_);
+			}
+
+			inline void* data() {
+				return data_;
+			}
+
+			inline const void* data() const {
+				return data_;
+			}
 		};
 	}
 }

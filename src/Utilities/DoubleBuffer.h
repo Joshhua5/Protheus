@@ -22,54 +22,65 @@ namespace Pro {
 		class DoubleBuffer {
 			// if the set is true then the back buffer is at the front
 			// otherwise the back buffer is
-			T* front;
-			T* back;
+			T* front_;
+			T* back_;
 		public:
 			/*! Will call the default constructor on T */
 			DoubleBuffer() {
-				front = new T();
-				back = new T();
+				front_ = operator new(sizeof(T));
+				back_ =  operator new(sizeof(T));
 			}
-			DoubleBuffer(T& value) {
-				*front = *back = value;
+			DoubleBuffer(T value) {
+				operator new(front_) T(value);
+				operator new(back_) T(value); 
 			}
 			DoubleBuffer(const DoubleBuffer&) {
-				*this->back = *rhs.back;
-				*this->front = *rhs.front;
+				*this->back_ = *rhs.back;
+				*this->front_ = *rhs.front;
 			}
 			DoubleBuffer(DoubleBuffer&&) {
-				this->back = rhs.back;
-				this->front = rhs.front;
+				this->back_ = rhs.back;
+				this->front_ = rhs.front;
 				rhs.back = rhs.front = nullptr;
 			}
 			DoubleBuffer& operator=(const DoubleBuffer& rhs) {
-				*this->back = *rhs.back;
-				*this->front = *rhs.front;
+				*this->back_ = *rhs.back_;
+				*this->front_ = *rhs.front_;
 			}
 			DoubleBuffer& operator=(DoubleBuffer&& rhs) {
-				this->back = rhs.back;
-				this->front = rhs.front;
-				rhs.back = rhs.front = nullptr;
+				this->back_ = rhs.back_;
+				this->front_ = rhs.front_;
+				rhs.back_ = rhs.front_ = nullptr;
 			}
 			~DoubleBuffer() {
-				delete back;
-				delete front;
+				back_->~T();
+				front_->~T();
+				operator delete (back_);
+				operator delete (front_);
 			}
 
 			/*! Returns the front value */
-			T* getCurrentValue() const {
-				return front;
+			const T* front() const {
+				return front_;
 			}
 
 			/*! Returns the back value*/
-			T* getBackValue() const {
-				return back;
+			const T* back() const {
+				return back_;
+			}
+			/*! Returns the front value */
+			 T* front()  {
+				return front_;
+			}
+
+			/*! Returns the back value*/
+			 T* back()  {
+				return back_;
 			}
 
 			/*! Copied the front buffer to the back and clears the old value of the back buffer*/
-			void swap() {
-				memcpy(getBackValue(), getCurrentValue(), sizeof(T));
-				*back = *front;
+			void Swap() {
+				*back_ = *front_;
 			}
 		};
 	}

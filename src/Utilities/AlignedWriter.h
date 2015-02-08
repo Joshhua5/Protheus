@@ -11,41 +11,41 @@ namespace Pro {
 		public:
 			AlignedWriter(AlignedBuffer* buffer) {
 				using_smart = false;
-				m_aligned_buffer = buffer;
-				m_head = 0;
+				aligned_buffer_ = buffer;
+				head_ = 0;
 			}
 			AlignedWriter(smart_ptr<AlignedBuffer> pointer) {
 				using_smart = true;
-				m_aligned_buffer = pointer;
-				m_head = 0;
+				aligned_buffer_ = pointer;
+				head_ = 0;
 			}
 			~AlignedWriter() {
-				m_head = 0;
+				head_ = 0;
 				if (using_smart)
-					m_aligned_buffer = nullptr;
+					aligned_buffer_ = nullptr;
 				else
-					m_aligned_buffer.dereference();
+					aligned_buffer_.dereference();
 			}
 
 			/*! Writes a single value into the Pro::Util::AlignedBuffer and iterates the head*/
 			template<typename T>
-			inline void write(const T& value){
-				*m_aligned_buffer->at(m_head++) = value;
+			inline void Write(const T& value){
+				*aligned_buffer_->At(head_++) = value;
 			}
 
 			/*! Writes a single value into the Pro::Util::AlignedBuffer and iterates the head*/
 			template<typename T>
-			inline void write(const T&& value) {
-				*m_aligned_buffer->at(m_head++) = std::move(value);
+			inline void Write(const T&& value) {
+				*aligned_buffer_->At(head_++) = std::move(value);
 			}
 
 			/*! Writes an array into the Pro::Util::AlignedBuffer.
 				The Array must be at least of size count.
 			*/
 			template<typename T>
-			inline void write_elements(T* elements, unsigned count) {
+			inline void WriteElements(T* elements, unsigned count) {
 				for (unsigned x = 0; x < count; ++x)
-					*m_aligned_buffer->at(m_head++) = elements[x];
+					*aligned_buffer_->At(head_++) = elements[x];
 			}
 		};
 	}

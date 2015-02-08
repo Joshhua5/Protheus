@@ -30,19 +30,26 @@ namespace Pro {
 			public BufferBase
 		{
 		protected:
-			unsigned char m_offset;
+			unsigned char offset_;
 
 			/*! How much data in bytes is added per instance to keep valid alignment */
-			unsigned char m_padding;
+			unsigned char padding_;
 
 			/*! The amount of times a single instance of data crosses over the alignment size
 				EG. an alignment of 2 storing data of size 4 will cross over 2 alignment barriers.
 			*/
-			unsigned char m_alignment_crossover;
+			unsigned char alignment_crossover_;
 
-			/*! Size of the instances being stored in bytes*/
-			unsigned short m_sizeof;
-			unsigned m_alignment;
+			//! Size of the instances being stored in bytes
+			unsigned short sizeof_;
+			unsigned alignment_;
+
+			//! Calculates a offset for a object's index
+			inline unsigned Position(unsigned index) const { 
+				const unsigned offset = index * sizeof_;
+				return (offset + ((offset / alignment_) * (padding_ / alignment_crossover_)));
+			}
+
 		public:
 			/*! Non copyable */
 			AlignedBuffer(const AlignedBuffer&) = delete;
@@ -69,29 +76,29 @@ namespace Pro {
 
 				// Calculate padding and alignment_crossover
 
-				m_alignment = alignment;
-				m_sizeof = sizeOf;
-				m_alignment_crossover = static_cast<unsigned char>(floor(m_sizeof / m_alignment)) + 1;
-				m_padding = (m_alignment * m_alignment_crossover) % m_sizeof;
+				alignment_ = alignment;
+				sizeof_ = sizeOf;
+				alignment_crossover_ = static_cast<unsigned char>(floor(sizeof_ / alignment_)) + 1;
+				padding_ = (alignment_ * alignment_crossover_) % sizeof_;
 
 				// initialize data for alignment
 
-				m_data = new char[size + ((size / m_alignment / m_alignment_crossover) * m_padding) + m_alignment];
-				long i_data = (long)m_data;
-				m_offset = static_cast<unsigned char>(m_alignment - (i_data % m_alignment));
-				m_data = static_cast<char*>(m_data) + m_offset;
+				data_ = operator new(size + ((size / alignment_ / alignment_crossover_) * padding_) + alignment_);
+				long i_data = (long)data_;
+				offset_ = static_cast<unsigned char>(alignment_ - (i_data % alignment_));
+				data_ = static_cast<char*>(data_) + offset_;
 
 				// Copy the data into the new buffer, adding in padding
 				if (data != nullptr) {
-					if (m_padding == 0)
-						memcpy(m_data, data, size);
+					if (padding_ == 0)
+						memcpy(data_, data, size);
 					else {
-						char* m_read = (char*)data;
-						char* m_writer = (char*)m_data;
-						for (unsigned x = 0; x < size / m_sizeof; ++x) {
-							memcpy(m_writer, m_read, m_sizeof);
-							m_writer += m_sizeof + m_padding;
-							m_read += m_sizeof;
+						char* Read = (char*)data;
+						char* writer = (char*)data_;
+						for (unsigned x = 0; x < size / sizeof_; ++x) {
+							memcpy(writer, Read, sizeof_);
+							writer += sizeof_ + padding_;
+							Read += sizeof_;
 						}
 					}
 				}
@@ -99,92 +106,69 @@ namespace Pro {
 
 			~AlignedBuffer() {
 				// recrease the m_data so that delete[] will get the correct pointer
-				m_data = static_cast<char*>(m_data) - m_offset;
-				delete[] m_data;
+				data_ = static_cast<char*>(data_) - offset_;
+				operator delete(data_);
 			}
 
 			AlignedBuffer(AlignedBuffer&& rhs) {
-				m_offset = rhs.m_offset;
-				m_padding = rhs.m_padding;
-				m_alignment_crossover = rhs.m_alignment_crossover;
-				m_alignment = rhs.m_alignment;
-				m_data = rhs.m_data;
-				m_size = rhs.m_size;
-				m_sizeof = rhs.m_sizeof;
+				offset_ = rhs.offset_;
+				padding_ = rhs.padding_;
+				alignment_crossover_ = rhs.alignment_crossover_;
+				alignment_ = rhs.alignment_;
+				data_ = rhs.data_;
+				size_ = rhs.size_;
+				sizeof_ = rhs.sizeof_;
 				// dereference in the move
-				rhs.m_data = nullptr;
+				rhs.data_ = nullptr;
 			}
 
 			inline AlignedBuffer& operator=(AlignedBuffer&& rhs) {
-				m_offset = rhs.m_offset;
-				m_padding = rhs.m_padding;
-				m_alignment_crossover = rhs.m_alignment_crossover;
-				m_alignment = rhs.m_alignment;
-				m_data = rhs.m_data;
-				m_size = rhs.m_size;
-				m_sizeof = rhs.m_sizeof;
+				offset_ = rhs.offset_;
+				padding_ = rhs.padding_;
+				alignment_crossover_ = rhs.alignment_crossover_;
+				alignment_ = rhs.alignment_;
+				data_ = rhs.data_;
+				size_ = rhs.size_;
+				sizeof_ = rhs.sizeof_;
 				// dereference in the move
-				rhs.m_data = nullptr;
+				rhs.data_ = nullptr;
 			}
 
 			/*!
 				Returns the data at a specific alignment boundary
 				equivilant to data()[pos * m_alignment_crossover * m_alignment];
 			*/
-			inline void* atBoundary(unsigned pos) const {
-				return static_cast<char*>(m_data) + (pos * m_alignment_crossover * m_alignment);
+			inline void* AtBoundary(size_t pos) const {
+				return static_cast<char*>(data_) + (pos * alignment_crossover_ * alignment_);
 			}
 
 			/*! Returns the data at the index with bounds checking */
-			inline void* at(unsigned index) const {
-				const unsigned offset = index * m_sizeof;
-				const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
+			inline void* At(size_t index) const { 
+				const unsigned position = Position(index);
 				if (index >= position)
 					return nullptr;
-				return static_cast<char*>(m_data) + position;
+				return static_cast<char*>(data_) + position;
 			};
 
 			/*! Returns the defined alignement for the data */
 			inline unsigned alignment() const {
-				return m_alignment;
-			}
-
-			/*! Returns a pointer to the internal data with offset
-				Not safe to call delete on
-			*/
-			inline void* data() const {
-				return m_data;
-			}
+				return alignment_;
+			} 
 
 			/*! Returns the size of internal data being stored
 				Value is used to calculate alignment
 			*/
 			inline unsigned sizeOf() const {
-				return m_sizeof;
+				return sizeof_;
 			}
-
-			/*! Returns a pointer to the internal data with offset and casts the pointer to type T
-				Not safe to call delete on
-			*/
-			template<typename T>
-			inline T* data() const {
-				return static_cast<T*>(m_data);
-			}
-
-			inline bool isPadded() const {
-				return m_padding != 0;
-			}
-
-			/*! Size of the buffer in bytes excluding offset */
-			inline unsigned size() const {
-				return m_size;
-			}
+			  
+			inline bool IsPadded() const {
+				return padding_ != 0;
+			} 
 
 			/*! Returns the data at the index */
-			inline void* operator[](unsigned index) {
-				const unsigned offset = index * m_sizeof;
-				const unsigned position = (offset + ((offset / m_alignment) * (m_padding / m_alignment_crossover)));
-				return static_cast<char*>(m_data) + position;
+			inline void* operator[](unsigned index) { 
+				return static_cast<char*>(data_) + Position(index);
 			}
 		};
 	}

@@ -67,10 +67,10 @@ namespace Pro {
 				std::unique_lock<std::mutex> lk(m);
 				while (pool_running.load())
 					// Get a work item when it's ready 
-					if (work.empty())
+					if (work.Empty())
 						cv.wait_for(lk, std::chrono::milliseconds(100));
 					else {
-						item = work.pop();
+						item = work.TopPop();
 						if (item == nullptr || item->being_processed == true)
 							continue;
 						item->being_processed = true;
@@ -85,7 +85,7 @@ namespace Pro {
 		public:
 			Parallel(unsigned count = DEFAULT_PARALLEL_THREAD_COUNT) {
 				pool_running.store(true);
-				work.resize(500);
+				work.Resize(500);
 				threads = new std::thread[count];
 				for (unsigned x = 0; x < count; ++x)
 					threads[x] = std::thread(&Parallel::workerThread, this);
@@ -102,7 +102,7 @@ namespace Pro {
 			}
 
 			bool isQueueEmpty() {
-				return work.empty();
+				return work.Empty();
 			}
 
 			template<typename T, typename... Args>
@@ -114,7 +114,7 @@ namespace Pro {
 				finished->finished_count = 0;
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, arguments...)(); };
-				work.push(pack);
+				work.Push(pack);
 				cv.notify_one();
 			}
 
@@ -129,7 +129,7 @@ namespace Pro {
 
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, data, arguments...)(); };
-				work.push(pack);
+				work.Push(pack);
 
 				cv.notify_one(); 
 			}
@@ -152,7 +152,7 @@ namespace Pro {
 					for (unsigned x = 0; x < size; ++x) {
 						auto pack = new BatchPack(finished);
 						pack->function = [=]() { std::bind(func, &object[x], arguments...)(); };
-						work.push(pack);
+						work.Push(pack);
 					}
 					cv.notify_all();
 					return;
@@ -177,7 +177,7 @@ namespace Pro {
 						for (unsigned current = _offset; current < end; ++current)
 							std::bind(func, &object[current], arguments...)();
 					};
-					work.push(pack);
+					work.Push(pack);
 				}
 				// Batch the remaining objects which were removed to allow for correct division
 				if (displacement != 0) {
@@ -186,7 +186,7 @@ namespace Pro {
 						for (unsigned x = size; x < size + displacement; ++x)
 							std::bind(func, &object[x], arguments...)();
 					};
-					work.push(pack);
+					work.Push(pack);
 				}else
 					--finished->worker_count;
 				cv.notify_all();

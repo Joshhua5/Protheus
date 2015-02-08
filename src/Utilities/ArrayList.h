@@ -7,30 +7,30 @@
 
 namespace Pro {
 	namespace Util {
-		/*! BufferVector is used to store data in a dynamically expanding buffer
+		/*! BufferVector is used to store Data in a dynamically expanding buffer
 		*/
 
 		template<typename T>
 		class ArrayList {
 			//! Count of objects being stored
-			size_t objectCount = 0;
+			size_t object_count_ = 0;
 			//! Size of headroom before more memory must be allocated
-			size_t reserved = 0;
+			size_t reserved_ = 0;
 			//! Pointer to the first object
-			T* objectArray = nullptr;
+			T* object_array_ = nullptr;
 
-			inline void copy(T* buffer, const size_t size) {
+			inline void Copy(T* buffer, const size_t size) {
 				if (is_move_constructible<T>())
 					for (size_t x = 0; x < size; ++x)
-						new(buffer + x) T(std::move(objectArray[x]));
+						new(buffer + x) T(std::move(object_array_[x]));
 				else if (is_copy_constructible<T>())
 					for (size_t x = 0; x < size; ++x)
-						new(buffer + x) T(objectArray[x]);
+						new(buffer + x) T(object_array_[x]);
 				else
 					assert("Object T must be move or copy constructible");
 			}
 
-			inline void copy(T* source, T* destination, const size_t offset, const size_t size) {
+			inline void Copy(T* source, T* destination, const size_t offset, const size_t size) {
 				if (is_move_constructible<T>())
 					for (size_t i = offset; i < offset + size; ++i)
 						new(destination + i) T(std::move(source[i]));
@@ -41,16 +41,16 @@ namespace Pro {
 					assert("Object T must be move or copy constructible");
 			}
 
-			inline void destroy() {
+			inline void Destroy() {
 				// Deallocated initialized objects
-				for (unsigned x = 0; x < objectCount; ++x)
-					(objectArray + x)->~T();
+				for (unsigned x = 0; x < object_count_; ++x)
+					(object_array_ + x)->~T();
 
-				operator delete(objectArray);
-				objectArray = nullptr;
+				operator delete(object_array_);
+				object_array_ = nullptr;
 			}
 
-			inline T* initialize(const size_t objectCount, const size_t size) {
+			inline T* Initialize(const size_t objectCount, const size_t size) {
 				if (size == 0)
 					return nullptr;
 
@@ -65,195 +65,203 @@ namespace Pro {
 			ArrayList() : ArrayList(0) {}
 
 			ArrayList(const size_t size) {
-				objectCount = size;
-				reserved = 0;
-				objectArray = initialize(size, capacity());
+				object_count_ = size;
+				reserved_ = 0;
+				object_array_ = Initialize(size, capacity());
 			}
 
 			template<typename... Args>
 			ArrayList(const size_t size, Args... arguments) {
-				objectCount = size;
-				reserved = 0;
-				objectArray = initialize(0, capacity());
-				if (objectArray != nullptr)
-					for (size_t x = 0; x < objectCount; ++x)
-						new (objectArray + x) T(arguments...);
+				object_count_ = size;
+				reserved_ = 0;
+				object_array_ = Initialize(0, capacity());
+				if (object_array_ != nullptr)
+					for (size_t x = 0; x < object_count_; ++x)
+						new (object_array_ + x) T(arguments...);
 			}
 
 			ArrayList(const ArrayList& rhs) {
-				objectCount = rhs.objectCount;
-				reserved = rhs.reserved;
-				objectArray = initialize(0, capacity());
-				if (objectArray != nullptr)
-					for (size_t x = 0; x < objectCount; ++x)
-						new(objectArray + x) T(rhs.objectArray[x]);
+				object_count_ = rhs.object_count_;
+				reserved_ = rhs.reserved_;
+				object_array_ = Initialize(0, capacity());
+				if (object_array_ != nullptr)
+					for (size_t x = 0; x < object_count_; ++x)
+						new(object_array_ + x) T(rhs.object_array_[x]);
 			}
 
 			ArrayList(ArrayList&& rhs) {
-				objectCount = rhs.objectCount;
-				reserved = rhs.reserved;
-				objectArray = rhs.objectArray;
-				rhs.objectArray = nullptr;
+				object_count_ = rhs.object_count_;
+				reserved_ = rhs.reserved_;
+				object_array_ = rhs.object_array_;
+				rhs.object_array_ = nullptr;
 			}
 
 			ArrayList& operator=(const ArrayList& rhs) {
 				if (rhs == *this)
 					return;
-				objectCount = rhs.objectCount.load();
-				reserved = rhs.reserved;
-				objectArray = initialize(0, capacity());
-				for (size_t x = 0; x < objectCount; ++x)
-					new(objectArray + x) T(rhs.objectArray[x]);
+				object_count_ = rhs.object_count_.load();
+				reserved_ = rhs.reserved_;
+				object_array_ = Initialize(0, capacity());
+				for (size_t x = 0; x < object_count_; ++x)
+					new(object_array_ + x) T(rhs.object_array_[x]);
 				return *this;
 			}
 
 			ArrayList& operator=(ArrayList&& rhs) {
 				if (rhs == *this)
 					return;
-				objectCount = rhs.objectCount.load();
-				reserved = rhs.reserved;
-				objectArray = rhs.objectArray;
-				rhs.objectArray = nullptr;
+				object_count_ = rhs.object_count_.load();
+				reserved_ = rhs.reserved_;
+				object_array_ = rhs.object_array_;
+				rhs.object_array_ = nullptr;
 				return *this;
 			}
 
 			~ArrayList() {
-				if (objectArray != nullptr)
-					destroy();
+				if (object_array_ != nullptr)
+					Destroy();
 			}
 
 			/*! Returns the element at a specified index with bounds checking*/
-			inline const T& at(size_t index) const {
-				if (index > objectCount || objectArray == nullptr) {
+			inline const T& At(size_t index) const {
+				if (index > object_count_ || object_array_ == nullptr) {
 					error.reportErrorNR("Out of bounds exception");
-					return objectArray[0];
+					return object_array_[0];
 				}
-				return objectArray[index];
+				return object_array_[index];
 			}
 
-			inline T& at(size_t index) {
-				if (index > objectCount || objectArray == nullptr) {
+			inline T& At(size_t index) {
+				if (index > object_count_ || object_array_ == nullptr) {
 					error.reportErrorNR("Out of bounds exception");
-					return objectArray[0];
+					return object_array_[0];
 				}
-				return objectArray[index];
+				return object_array_[index];
 			}
 
 			/*! Returns the element at a specified index*/
 			inline const T& operator[](const size_t index) const {
-				return objectArray[index];
+				return object_array_[index];
 			}
 
 			inline T& operator[](const size_t index) {
-				return objectArray[index];
+				return object_array_[index];
 			}
 
 			//! Returns the size of objects used
 			inline unsigned size() const {
-				return objectCount;
+				return object_count_;
 			}
 
 			//! Returns the capacity of the ArrayList
 			inline unsigned capacity() const {
-				return objectCount + reserved;
+				return object_count_ + reserved_;
 			}
 
 			/*! Adds a element to the end of the buffer */
-			inline void push_back(T&& value) {
-				if (reserved-- == 0)
-					resize(static_cast<size_t>(objectCount * 1.2 + 5));
-				new(&objectArray[objectCount++]) T(std::move(value));
+			inline void PushBack(T&& value) {
+				if (reserved_-- == 0)
+					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
+				new(&object_array_[object_count_++]) T(std::move(value));
 
 			}
 
 			/*! Adds a element to the end of the buffer */
-			inline void push_back(const T& value) {
-				if (reserved-- == 0)
-					resize(static_cast<size_t>(objectCount * 1.2 + 5));
-				new(&objectArray[objectCount++]) T(value);
+			inline void PushBack(const T& value) {
+				if (reserved_-- == 0)
+					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
+				new(&object_array_[object_count_++]) T(value);
 
 			}
 
 			template<typename... Args>
-			inline void emplace_back(Args&&... args) {
-				if (reserved-- == 0)
-					resize(static_cast<size_t>(objectCount * 1.2 + 5));
-				new(&objectArray[objectCount++]) T(args...);
+			inline void EmplaceBack(Args&&... args) {
+				if (reserved_-- == 0)
+					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
+				new(&object_array_[object_count_++]) T(args...);
 			}
 
 			/*! Returns the last element added */
-			inline const T& back() const {
-				return objectArray[objectCount - 1];
+			inline const T& Back() const {
+				return object_array_[object_count_ - 1];
 			}
 
-			inline T& back() {
-				return objectArray[objectCount - 1];
+			inline T& Back() {
+				return object_array_[object_count_ - 1];
 			}
 
-			inline const T& front() const {
-				return objectArray[0];
+			inline const T& Front() const {
+				return object_array_[0];
 			}
 
-			inline T& front() {
-				return objectArray[0];
+			inline T& Front() {
+				return object_array_[0];
 			}
-
+			 
+			inline T Pop() {
+				T object(object_array_[--object_count_]);
+				// Decontruct object
+				(object_array_ + object_count_ + 1)->~T();
+				return object;
+			}
+		
 			//! Changes the size of the ArrayList and initialized objects
-			template<typename... Args>
-			void resize(const size_t size, Args... arguments) {
-				T* buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(size)));
-				size_t iterator_size = (size < objectCount) ? size : objectCount;
 
-				if (objectArray == nullptr) {
-					objectArray = buffer;
-					objectCount = 0;
-					reserved = size;
+			template<typename... Args>
+			void Resize(const size_t size, Args... arguments) {
+				T* buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(size)));
+				size_t iterator_size = (size < object_count_) ? size : object_count_;
+
+				if (object_array_ == nullptr) {
+					object_array_ = buffer;
+					object_count_ = 0;
+					reserved_ = size;
 					return;
 				}
 
-				copy(buffer, iterator_size);
+				Copy(buffer, iterator_size);
 
 				for (size_t x = iterator_size; x < size; ++x)
 					new(buffer + x) T(arguments...);
 
-				destroy();
-				objectArray = buffer;
-				reserved = 0;
-				objectCount = size;
+				Destroy();
+				object_array_ = buffer;
+				reserved_ = 0;
+				object_count_ = size;
 			}
 
 			//! Increased the capacity of the ArrayList without initializing objects
-			void reserve(const size_t size) {
-				if (size < objectCount + reserved)
+			void Reserve(const size_t size) {
+				if (size < object_count_ + reserved_)
 					return;
 
-				T* buffer = initialize(0, size);
+				T* buffer = Initialize(0, size);
 
-				copy(buffer, objectCount);
+				Copy(buffer, object_count_);
 
-				destroy();
-				objectArray = buffer;
-				reserved = size - objectCount;
+				Destroy();
+				object_array_ = buffer;
+				reserved_ = size - object_count_;
 			}
 
 			/*! Returns a pointer to the internal Buffer
-				Hole are present in data if an erase has been performed since the last BufferVector::at()
+				Hole are present in Data if an erase has been performed since the last BufferVector::at()
 				BufferVector::pack() is required if BufferVector::isPacked() is false
 			*/
-			inline const T* data() const {
-				return objectArray;
+			inline const T* Data() const {
+				return object_array_;
 			}
 
-			inline T* data() {
-				return objectArray.get();
+			inline T* Data() {
+				return object_array_.get();
 			}
 
 			/*! Erase multiple elements at the same time
 				Reduces the amount of pakcs that the vector must perform to 1 per batch
 				TEST
 			*/
-			inline void erase(std::initializer_list<size_t> indicies) {
-				if (indicies.size() == 0 && indicies.size() < objectCount)
+			inline void Erase(std::initializer_list<size_t> indicies) {
+				if (indicies.size() == 0 && indicies.size() < object_count_)
 					return;
 
 				// Offset due to objects already removed
@@ -262,7 +270,7 @@ namespace Pro {
 				// Check how many indicies are invalid
 				size_t culled = 0;
 				for (size_t i = 0; i < indicies.size(); ++i) {
-					if (*(indicies.begin() + i) > objectCount) {
+					if (*(indicies.begin() + i) > object_count_) {
 						++culled;
 					}
 				}
@@ -279,45 +287,39 @@ namespace Pro {
 				for (size_t y = 0; y < indicies.size(); ++y) {
 					for (auto x = indicies.begin(); x != indicies.end(); ++x)
 						// *x == 0 for the case that lastIndex doesn't detect 0's
-						if ((*x > lastIndex && *x < shortest && *x < objectCount) || *x == 0)
+						if ((*x > lastIndex && *x < shortest && *x < object_count_) || *x == 0)
 							shortest = *x;
 					sorted[y] = shortest;
 					lastIndex = shortest;
 					shortest = 0 - 1;
 				}
 
-				// Move data from valid indicies 
+				// Move Data from valid indicies 
 				auto index = sorted;
 				auto end = &sorted[indicies.size() - 1] - culled;
 				for (; index != end; ++index) {
-					(objectArray + *index)->~T();
+					(object_array_ + *index)->~T();
 					// *i - offset, for the objects that were removed previously will alter the index
 					// *(i + 1) - *i, to copy all objects until the next flagged object. 
-					copy(objectArray + offset, objectArray, *index - offset, *(index + 1) - *index);
+					Copy(object_array_ + offset, object_array_, *index - offset, *(index + 1) - *index);
 				}
 				// Last case
-				(objectArray + *index)->~T();
+				(object_array_ + *index)->~T();
 				// TODO test
-				copy(objectArray + offset, objectArray, *index - offset, objectCount - 1 - *index);
+				Copy(object_array_ + offset, object_array_, *index - offset, object_count_ - 1 - *index);
 
-				reserved += (indicies.size() - culled);
-				objectCount -= (indicies.size() - culled);
+				reserved_ += (indicies.size() - culled);
+				object_count_ -= (indicies.size() - culled);
 			}
 
-			inline bool empty() const {
-				return objectCount == 0;
+			inline bool Empty() const {
+				return object_count_ == 0;
 			}
 
-			inline void shrink_to_fit() {
-				resize(objectCount);
+			inline void ShrinkToFit() {
+				Resize(object_count_);
 			}
 
-			inline T pop() {
-				T object(objectArray[--objectCount]);
-				// Decontruct object
-				(objectArray + objectCount + 1)->~T();
-				return object;
-			}
-		};
+			};
 	}
 }

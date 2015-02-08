@@ -15,46 +15,46 @@ namespace Pro {
 
 			AlignedReader(AlignedBuffer* buffer) {
 				using_smart = false;
-				m_head = 0;
-				m_aligned_buffer = buffer;
+				head_ = 0;
+				aligned_buffer_ = buffer;
 			}
 			AlignedReader(smart_ptr<AlignedBuffer> pointer) {
 				using_smart = true;
-				m_head = 0;
-				m_aligned_buffer = pointer;
+				head_ = 0;
+				aligned_buffer_ = pointer;
 			}
 			AlignedReader(AlignedReader&& buffer) {
-				m_aligned_buffer = buffer.m_aligned_buffer;
-				m_head = buffer.m_head;
-				buffer.m_aligned_buffer = nullptr;
+				aligned_buffer_ = buffer.aligned_buffer_;
+				head_ = buffer.head_;
+				buffer.aligned_buffer_ = nullptr;
 			}
 			~AlignedReader() {
-				m_head = 0;
+				head_ = 0;
 				if (using_smart)
-					m_aligned_buffer = nullptr;
+					aligned_buffer_ = nullptr;
 				else
-					m_aligned_buffer.dereference();
+					aligned_buffer_.dereference();
 			}
 
 			/*! Returns a pointer to the internal structure which is currently being read
 				Does not skip over data
 			*/
-			inline void* read_raw() const {
-				return m_aligned_buffer->at(m_head);
+			inline void* ReadRaw() const {
+				return aligned_buffer_->At(head_);
 			}
 
 			/*! Reads the an array of elements and copies the data while preserving the alignment */
-			inline AlignedBuffer read(const unsigned elements) {
-				AlignedBuffer out(elements * m_aligned_buffer->sizeOf(),
-					m_aligned_buffer->sizeOf(), m_aligned_buffer->at(m_head));
-				skip(elements);
+			inline AlignedBuffer Read(const unsigned elements) {
+				AlignedBuffer out(elements * aligned_buffer_->sizeOf(),
+					aligned_buffer_->sizeOf(), aligned_buffer_->At(head_));
+				Skip(elements);
 				return out;
 			}
 
 			/*! Reads one element and returns the value */
 			template<typename T>
-			inline T read() {
-				return *m_aligned_buffer->at(m_head++);
+			inline T Read() {
+				return *aligned_buffer_->At(head_++);
 			}
 
 			/*! Reads all values in one alignment
@@ -64,17 +64,17 @@ namespace Pro {
 				In this case readAlignment() will return an array of 8 floats
 			*/
 			template<typename T>
-			inline T* readAlignment() {
-				T* out = static_cast<T*>(m_aligned_buffer->at(m_head));
-				skip(
-					floor(m_aligned_buffer->alignment() / m_aligned_buffer->sizeOf()) +
-					m_aligned_buffer->m_alignment_crossover);
+			inline T* ReadAlignment() {
+				T* out = static_cast<T*>(aligned_buffer_->At(head_));
+				Skip(
+					floor(aligned_buffer_->alignment() / aligned_buffer_->sizeOf()) +
+					aligned_buffer_->alignment_crossover_);
 				return out;
 			}
 
 			/*! False if the m_head is at the end of the reader*/
-			inline bool hasNext() const {
-				return m_aligned_buffer->size() > m_head;
+			inline bool HasNext() const {
+				return aligned_buffer_->size() > head_;
 			} 
 		};
 	}

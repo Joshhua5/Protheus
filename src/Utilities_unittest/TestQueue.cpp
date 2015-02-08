@@ -19,15 +19,15 @@ std::condition_variable cv;
 void push(Queue<unsigned>* queue, size_t count, size_t offset) {
 	cv.wait(std::unique_lock<std::mutex>(mut));  
 	for (unsigned x = offset; x < offset + count; ++x)
-		queue->push(x);
+		queue->Push(x);
 }
  
 void pop(Queue<unsigned>* queue, size_t count, size_t offset, std::atomic<unsigned>* result) {
 	cv.wait(std::unique_lock<std::mutex>(mut));
 	unsigned total = 0;
 	for (unsigned x = offset; x < offset + count; ++x) {
-		total += queue->top();
-		queue->pop();
+		total += queue->Top();
+		queue->Pop();
 	}
 }
  
@@ -38,13 +38,13 @@ TEST(Queue_Test, Single_Thread_Push_Pop_Test) {
 	
 	for (unsigned x = 0; x < TEST_SIZE; ++x) {
 		result += x;
-		queue.push(x);
+		queue.Push(x);
 	}
 	  
 	ASSERT_EQ(TEST_SIZE, queue.size());
 
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
-		total += queue.top_pop();
+		total += queue.TopPop();
 	  
 	ASSERT_EQ(0, queue.size());
 	ASSERT_EQ(result, total);
@@ -56,30 +56,30 @@ TEST(Queue_Test, Resize_Test) {
 	  
 	// Value push is after pop
 	for (unsigned x = 0; x < 32; ++x)
-		q.push(x);
+		q.Push(x);
 
-	q.resize(96);
+	q.Resize(96);
 
 	for (unsigned x = 0; x < 16; ++x)
-		q.pop();
+		q.Pop();
 
 	// Value push has overlapped once
 
 	for (unsigned x = 0; x < 86; ++x)
-		q.push(x);
+		q.Push(x);
 	  
 	ASSERT_EQ(q.size(), 102); 
 
 	// Test that the array can be resized to a smaller volume.
 
 	while (q.size() != 10)
-		q.pop();  
+		q.Pop();  
 
-	ASSERT_NO_THROW(q.resize(15));
+	ASSERT_NO_THROW(q.Resize(15));
 
 	// Test resizing to a smaller value
 
-	ASSERT_NO_THROW(q.resize(9));
+	ASSERT_NO_THROW(q.Resize(9));
 	ASSERT_EQ(q.capacity(), 15); 
 }
 
@@ -87,10 +87,10 @@ TEST(Queue_Test, Single_Thread_Consistency_Test) {
 	Queue<unsigned> q;
 
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
-		q.push(x);
+		q.Push(x);
 
 	for (unsigned x = 0; x < TEST_SIZE; ++x)
-		ASSERT_EQ(x, q.top_pop());
+		ASSERT_EQ(x, q.TopPop());
 }
  
 
@@ -133,10 +133,10 @@ TEST(Queue_Test, Object_Push_Pop_Test) {
 	Counter call_count;
 	Queue<TestCls> queue;
 
-	queue.push(TestCls(&call_count, 2));
+	queue.Push(TestCls(&call_count, 2));
 
-	queue.push(TestCls(&call_count, 1));
+	queue.Push(TestCls(&call_count, 1));
 
-	ASSERT_EQ(2, queue.top_pop().value());
-	ASSERT_EQ(1, queue.top_pop().value());
+	ASSERT_EQ(2, queue.TopPop().value());
+	ASSERT_EQ(1, queue.TopPop().value());
 } 

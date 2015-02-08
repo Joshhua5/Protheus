@@ -32,8 +32,13 @@ namespace Pro {
 					base_pointer = class_pointer;
 				}
 
+				~ClassDefinition() {
+					if (base_pointer != nullptr)
+						delete base_pointer;
+				}
+
 				/*! Adds a member to the ClassDefinition */
-				void addMember(const string& memberName, const void* member_pointer, const size_t member_size) {
+				void AddMember(const string& memberName, const void* member_pointer, const size_t member_size) {
 					auto m = Member();
 
 					m.name = memberName;
@@ -44,13 +49,13 @@ namespace Pro {
 				}
 
 				/*! Returns a vector of all members */
-				const vector<Member>& getMembers() const {
+				const vector<Member>& members() const {
 					return members;
 				}
 
 
 				/*! Returns the sizeof all members */
-				const unsigned getSizeOf() const {
+				const unsigned SizeOf() const {
 					unsigned sizeTotal = 0;
 					for each(const auto m in members)
 						sizeTotal += m.size;
@@ -59,14 +64,19 @@ namespace Pro {
 
 				/*! Returns the internal base pointer.
 					Used for offsets. */
-				const void* getBase() const {
+				const void* base() const {
+					return base_pointer;
+				}
+
+				void* base() {
 					return base_pointer;
 				}
 
 				/*! Call onces finished adding members,
 					Deletes the base pointer*/
-				void finish() {
+				void Finish() {
 					delete base_pointer;
+					base_pointer = nullptr;
 				}
 			};
 		}

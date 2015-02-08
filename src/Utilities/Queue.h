@@ -26,15 +26,15 @@ namespace Pro {
 
 		template<typename T>
 		class Queue {
-			std::atomic<T*> m_queue;
-			std::atomic<size_t> m_pop_pos;
-			std::atomic<size_t> m_push_pos;
-			std::atomic<size_t> m_size;
-			std::atomic<size_t> m_capacity;
-			std::mutex resize_lock;
+			std::atomic<T*> queue_;
+			std::atomic<size_t> pop_position_;
+			std::atomic<size_t> push_position_;
+			std::atomic<size_t> size_;
+			std::atomic<size_t> capacity_;
+			std::mutex resize_lock_;
 
-			inline size_t check_overflow(std::atomic<size_t>* pos) {
-				if (pos->load() == m_capacity - 1) {
+			inline size_t CheckOverflow(std::atomic<size_t>* pos) {
+				if (pos->load() == capacity_ - 1) {
 					pos->store(0);
 					return pos->load();
 				}
@@ -43,118 +43,118 @@ namespace Pro {
 
 		public:
 			Queue(const size_t size = 64) {
-				m_queue = reinterpret_cast<T*>(operator new(sizeof(T) * size));
-				m_capacity = size;
-				m_pop_pos = m_push_pos = m_size = 0;
+				queue_ = reinterpret_cast<T*>(operator new(sizeof(T) * size));
+				capacity_ = size;
+				pop_position_ = push_position_ = size_ = 0;
 			}
 			~Queue() {
-				resize_lock.lock();
-				while (!empty())
-					pop();
-				operator delete(m_queue.load());
-				resize_lock.unlock();
+				resize_lock_.lock();
+				while (!Empty())
+					Pop();
+				operator delete(queue_.load());
+				resize_lock_.unlock();
 			}
 
 			//! Resize is not thread safe
-			inline void resize(const size_t size) {
+			inline void Resize(const size_t size) {
 				// TODO If a resize has been performed making it larger than the requested resize then exit after the mutex
-				std::lock_guard<std::mutex> lk(resize_lock);
+				std::lock_guard<std::mutex> lk(resize_lock_);
 
-				if (size <= m_size)
+				if (size <= size_)
 					// Either another thread has already resized or the requested size is less than the stored size
 					return;
 
-				auto old_queue = m_queue.load();
+				auto old_queue = queue_.load();
 				auto new_queue = reinterpret_cast<T*>(operator new (sizeof(T) * size));
 
-				const size_t sizem = m_capacity - 1;
+				const size_t sizem = capacity_ - 1;
 
 				// Problem with the pop and push positions
-				if (m_push_pos < m_pop_pos) {
-					memcpy(new_queue, old_queue + m_pop_pos, sizeof(T) * (sizem - m_pop_pos));
-					memcpy(new_queue + (sizem - m_pop_pos), old_queue, sizeof(T) * m_push_pos);
+				if (push_position_ < pop_position_) {
+					memcpy(new_queue, old_queue + pop_position_, sizeof(T) * (sizem - pop_position_));
+					memcpy(new_queue + (sizem - pop_position_), old_queue, sizeof(T) * push_position_);
 				}
 				else
-					memcpy(new_queue + m_pop_pos, old_queue, sizeof(T) * (m_push_pos - m_pop_pos));
+					memcpy(new_queue + pop_position_, old_queue, sizeof(T) * (push_position_ - pop_position_));
 
-				m_capacity = size;
-				m_queue.store(new_queue);
-				m_pop_pos = 0;
-				m_push_pos = m_size.load();
+				capacity_ = size;
+				queue_.store(new_queue);
+				pop_position_ = 0;
+				push_position_ = size_.load();
 				operator delete(old_queue);
 			}
 
 			// Issue if pushing while poping with only one element
-			inline void push(const T& obj) {
-				if (m_size == m_capacity - 1)
-					resize(static_cast<size_t>(m_capacity * 1.2f));
-				auto pos = check_overflow(&m_push_pos);
+			inline void Push(const T& obj) {
+				if (size_ == capacity_ - 1)
+					Resize(static_cast<size_t>(capacity_ * 1.2f));
+				auto pos = CheckOverflow(&push_position_);
 
-				++m_size;
-				new(m_queue.load() + pos) T(obj);
-				//	m_queue.load()[pos] = obj;
+				++size_;
+				new(queue_.load() + pos) T(obj);
+				//	queue_.load()[pos] = obj;
 			}
 
-			inline void push(T&& obj) {
-				if (m_size == m_capacity - 1)
-					resize(static_cast<size_t>(m_capacity * 1.2f));
-				auto pos = check_overflow(&m_push_pos);
+			inline void Push(T&& obj) {
+				if (size_ == capacity_ - 1)
+					Resize(static_cast<size_t>(capacity_ * 1.2f));
+				auto pos = CheckOverflow(&push_position_);
 
-				++m_size;
+				++size_;
 
-				new(reinterpret_cast<T*>(m_queue.load()) + pos) T(std::move(obj));
-				//m_queue.load()[pos] = std::move(obj);
+				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj));
+				//queue_.load()[pos] = std::move(obj);
 			}
 
 			template<typename... Args>
-			inline void emplace(Args... arguments) {
-				if (m_size == m_capacity - 1)
-					resize(static_cast<size_t>(m_capacity * 1.2f));
-				auto pos = check_overflow(&m_push_pos);
-				++m_size;
+			inline void Emplace(Args... arguments) {
+				if (size_ == capacity_ - 1)
+					Resize(static_cast<size_t>(capacity_ * 1.2f));
+				auto pos = CheckOverflow(&push_position_);
+				++size_;
 
-				new(reinterpret_cast<T*>(m_queue.load()) + pos) T(arguments);
+				new(reinterpret_cast<T*>(queue_.load()) + pos) T(arguments);
 			}
 
-			inline const T& top() const {
-				if (empty()) {
+			inline const T& Top() const {
+				if (Empty()) {
 					error.reportError("Called Top on a empty queue, undefined returned object.");
-					return m_queue.load()[m_pop_pos];
+					return queue_.load()[pop_position_];
 				}
-				return m_queue.load()[m_pop_pos];
+				return queue_.load()[pop_position_];
 			}
 
-			inline T& top() {
-				if (empty()) {
+			inline T& Top() {
+				if (Empty()) {
 					error.reportError("Called Top on a empty queue, undefined returned object.");
-					return m_queue.load()[m_pop_pos];
+					return queue_.load()[pop_position_];
 				}
-				return m_queue.load()[m_pop_pos];
+				return queue_.load()[pop_position_];
 			}
 
-			inline void pop() {
+			inline void Pop() {
 				// Check if empty
-				if (empty()) {
+				if (Empty()) {
 					error.reportError("Popped a empty queue");
 					return;
 				}
 				// Check if at the end and set the position to 0 if true
-				auto pos = check_overflow(&m_pop_pos);
-				(m_queue.load() + pos)->~T();
-				--m_size;
+				auto pos = CheckOverflow(&pop_position_);
+				(queue_.load() + pos)->~T();
+				--size_;
 			}
 
-			inline T top_pop() {
-				T returnObj = top();
-				pop();
+			inline T TopPop() {
+				T returnObj = Top();
+				Pop();
 				return returnObj;
 			}
 
-			inline bool empty() const { return m_size.load() == 0; }
+			inline bool Empty() const { return size_.load() == 0; }
 
-			inline size_t size() const { return m_size; }
+			inline size_t size() const { return size_; }
 
-			inline size_t capacity() const { return m_capacity; }
+			inline size_t capacity() const { return capacity_; }
 		};
 	}
 }

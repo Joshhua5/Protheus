@@ -25,153 +25,137 @@ namespace Pro {
 		public:
 			/*! If copy is false then the original pointer can't be deleted without breaking the Cbuffer */
 			Buffer(const Buffer& b, bool copy = true) {
-				const_cast<Buffer*>(&b)->lk.lock();
-				init(b.data(), b.size(), copy);
-				const_cast<Buffer*>(&b)->lk.unlock();
+				const_cast<Buffer*>(&b)->lock_.lock();
+				Init(b.data(), b.size(), copy);
+				const_cast<Buffer*>(&b)->lock_.unlock();
 			}
 			Buffer(void* _data, const unsigned _size, const bool copy = true) {
 				if (_size == 0) {
-					m_data = nullptr;
-					m_size = 0;
+					data_ = nullptr;
+					size_ = 0;
 					return;
 				}
 
 				if (copy) {
-					m_data = new char[_size];
-					memcpy(m_data, _data, _size);
+					data_ = new char[_size];
+					memcpy(data_, _data, _size);
 				}
 				else
-					m_data = _data;
+					data_ = _data;
 
-				wasCopied = copy;
-				m_size = _size;
+				was_copied_ = copy;
+				size_ = _size;
 			}
 			Buffer(const unsigned _size)
 			{
 				if (_size == 0)
-					m_data = nullptr;
+					data_ = nullptr;
 				else
-					m_data = new char[_size];
-				wasCopied = false;
-				m_size = _size;
+					data_ = new char[_size];
+				was_copied_ = false;
+				size_ = _size;
 			}
 			Buffer()
 			{
-				wasCopied = false;
-				m_size = 0;
-				m_data = nullptr;
+				was_copied_ = false;
+				size_ = 0;
+				data_ = nullptr;
 			}
 			Buffer(Buffer&& b) {
-				m_data = b.data();
-				m_size = b.size();
-				wasCopied = b.wasCopied;
-				b.dereference();
+				data_ = b.data();
+				size_ = b.size();
+				was_copied_ = b.was_copied_;
+				b.Dereference();
 			}
 
 			~Buffer()
 			{
-				lk.lock();
-				if (wasCopied && m_size != 0)
-					delete[] m_data;
-				m_data = nullptr;
-				lk.unlock();
+				lock_.lock();
+				if (was_copied_ && size_ != 0)
+					delete[] data_;
+				data_ = nullptr;
+				lock_.unlock();
 			}
 
 			inline Buffer&  operator=(Buffer&& b) {
 				if (this == &b)
 					return *this;
-				lk.lock();
-				m_data = b.data();
-				m_size = b.size();
-				wasCopied = b.wasCopied;
-				b.dereference();
-				lk.unlock();
+				lock_.lock();
+				data_ = b.data();
+				size_ = b.size();
+				was_copied_ = b.was_copied_;
+				b.Dereference();
+				lock_.unlock();
 				return *this;
 			}
 			inline Buffer&  operator=(const Buffer& b) { 
 				if (this == &b)
 					return *this;
 
-				this->init(b.data<void>(), b.size(), true);
+				this->Init(b.data<void>(), b.size(), true);
 				return *this;
 			}
 
 			/*! Initializes the buffer with existing data
 				Deleted existing data is already initialized.
 			*/
-			inline void  init(const void* _data, const unsigned _size, const bool copy) {
-				lk.lock();
+			inline void  Init(const void* _data, const unsigned _size, const bool copy) {
+				lock_.lock();
 				// Check if data has been initialized
-				if (wasCopied && m_data != nullptr)
-					delete[] m_data;
+				if (was_copied_ && data_ != nullptr)
+					delete[] data_;
 
 				if (copy) {
-					m_data = new char[_size];
-					memcpy(m_data, _data, _size);
+					data_ = new char[_size];
+					memcpy(data_, _data, _size);
 				}
 				else
-					m_data = const_cast<void*>(_data);
+					data_ = const_cast<void*>(_data);
 
-				wasCopied = copy;
-				m_size = _size;
-				lk.unlock();
+				was_copied_ = copy;
+				size_ = _size;
+				lock_.unlock();
 			}
 
-			inline void  init(const unsigned _size) {
-				init(new char[_size], _size, false);
+			inline void  Init(const unsigned _size) {
+				Init(new char[_size], _size, false);
 			}
 
 			/*! Removed the internal reference to the heap
 				Will cause memory leak if pointer hasn't been copied else were.
 			*/
-			inline void  dereference() {
-				m_data = nullptr;
-				m_size = 0;
+			inline void Dereference() {
+				data_ = nullptr;
+				size_ = 0;
 			}
-
-			/*! Returns a pointer to the data casted to type T */
-			template<typename T>
-			inline T* data() const {
-				return static_cast<T*>(m_data);
-			}
-
-			/*! Returns a pointer to the data */
-			inline void* data() const {
-				return m_data;
-			}
-
-			/*! Returns the size of data on the heap in bytes */
-			inline unsigned  size() const {
-				return m_size;
-			}
-
+			 
 			/*! Returns true if size is equal to 0 */
-			inline bool isEmpty() const {
-				return (m_size == 0) ? true : false;
+			inline bool Empty() const {
+				return (size_ == 0) ? true : false;
 			}
 
 			/*! Resizes the buffer to the new defined size and copies accross data
 				If resized to be smaller, data is silently lost */
-			inline void resize(const unsigned size) {
-				lk.lock();
-				const auto old_data = m_data;
-				m_data = new char[size];
+			inline void Resize(const unsigned size) {
+				lock_.lock();
+				const auto old_data = data_;
+				data_ = new char[size];
 
-				if (m_size > size)
+				if (size_ > size)
 					// Reducing
-					memcpy(m_data, old_data, size);
+					memcpy(data_, old_data, size);
 				else
 					// Increasing
-					memcpy(m_data, old_data, m_size);
+					memcpy(data_, old_data, size_);
 
-				m_size = size;
+				size_ = size;
 				delete[] old_data;
-				lk.unlock();
-			}
-			template<typename T>
+				lock_.unlock();
+			} 
 
 			/*! Counts how many times a value occures in the buffer */
-			inline unsigned count(const T& value) {
+			template<typename T>
+			inline unsigned Count(const T& value) {
 				T* buffer = data<T>();
 				unsigned count = 0;
 				for (size_t head = 0; head < (size() / sizeof(T)); ++head, ++buffer)
@@ -183,15 +167,15 @@ namespace Pro {
 			/*! Returns a pointer with bounds checking
 				Equivilant to (char*)m_data + pos
 			*/
-			inline void* at(const unsigned pos) const { 
-				return (pos < m_size) ? reinterpret_cast<char*>(m_data) + pos : nullptr;
+			inline void* At(const unsigned pos) const { 
+				return (pos < size_) ? reinterpret_cast<char*>(data_) + pos : nullptr;
 			}
 
 			/*! Returns a pointer
 				Equivilant to (char*)m_data + pos
 			*/
 			inline void* operator[](const unsigned pos) const {
-				return reinterpret_cast<char*>(m_data) + pos;
+				return reinterpret_cast<char*>(data_) + pos;
 			}
 		};
 	}

@@ -46,10 +46,10 @@ TEST(TestArrayList, push_back_test001)
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
-		list.push_back(v1);
-		list.push_back(v2);
-		// two constructor calls here, use emplace for 1
-		list.push_back(TestCls(&call_count, 3));
+		list.PushBack(v1);
+		list.PushBack(v2);
+		// twP constructor calls here, use emplace for 1
+		list.PushBack(TestCls(&call_count, 3));
 		ASSERT_EQ(3, list.size());
 		ASSERT_EQ(1, list[0].value());
 		ASSERT_EQ(2, list[1].value());
@@ -77,13 +77,13 @@ TEST(TestArrayList, push_back_test002)
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
-		list.reserve(6);
-		list.push_back(v1);
-		list.push_back(v2);
-		list.push_back(v3);
-		list.push_back(v4);
-		list.push_back(v5);
-		list.push_back(v6);
+		list.Reserve(6);
+		list.PushBack(v1);
+		list.PushBack(v2);
+		list.PushBack(v3);
+		list.PushBack(v4);
+		list.PushBack(v5);
+		list.PushBack(v6);
 		ASSERT_EQ(6, list.size());
 		ASSERT_EQ(1, list[0].value());
 		ASSERT_EQ(2, list[1].value());
@@ -106,9 +106,9 @@ TEST(TestArrayList, copy_constructor_test001)
 	TestCls v3(&call_count, 3);
 
 	ArrayList<TestCls> list;
-	list.push_back(v1);
-	list.push_back(v2);
-	list.push_back(v3);
+	list.PushBack(v1);
+	list.PushBack(v2);
+	list.PushBack(v3);
 
 	call_count.reset();
 	{
@@ -134,9 +134,9 @@ TEST(TestArrayList, move_constructor_test001)
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
-		list.push_back(v1);
-		list.push_back(v2);
-		list.push_back(v3);
+		list.PushBack(v1);
+		list.PushBack(v2);
+		list.PushBack(v3);
 
 		ArrayList<TestCls> list2(std::move(list));
 		ASSERT_EQ(3, list2.size());
@@ -154,25 +154,25 @@ TEST(TestArrayList, move_constructor_test001)
 
 TEST(TestArrayList, erase_test001) {
 	ArrayList<unsigned> list(10);
-	list.erase({ 2, 4, 5 });
+	list.Erase({ 2, 4, 5 });
 	ASSERT_EQ(7, list.size());
 }
 
 TEST(TestArrayList, erase_test002) {
 	ArrayList<unsigned> list(10);
-	list.erase({ 5, 4, 2 });
+	list.Erase({ 5, 4, 2 });
 	ASSERT_EQ(7, list.size());
 }
 
 TEST(TestArrayList, erase_test003) {
 	ArrayList<unsigned> list(10);
-	list.erase({ 2, 20 });
+	list.Erase({ 2, 20 });
 	ASSERT_EQ(9, list.size());
 }
 
 TEST(TestArrayList, erase_test004) {
 	ArrayList<unsigned> list(10);
-	list.erase({ 200, 2 });
+	list.Erase({ 200, 2 });
 	ASSERT_EQ(9, list.size());
 }
 
