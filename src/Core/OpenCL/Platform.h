@@ -4,7 +4,7 @@
 #include "Context.h"
 #include "Device.h"
 #include <ArrayList.h>
-#include <Error.h>
+#include <Log.h>
 #include <ErrorCheck.h>
 #include <smart_ptr.h>
 

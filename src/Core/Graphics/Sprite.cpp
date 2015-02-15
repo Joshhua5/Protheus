@@ -6,36 +6,36 @@ using namespace Graphics;
 Sprite::Sprite(Texture* tex){
 	if (tex == nullptr)
 		return;
-	m_texture = tex;
-	dimensions = m_texture->getDimensions();
-	center.x = dimensions.x / 2;
-	center.y = dimensions.y / 2;
+	texture_ = tex;
+	dimensions_ = texture_->dimensions();
+	center_.x = dimensions_.x / 2;
+	center_.y = dimensions_.y / 2;
 }
 
 Sprite::~Sprite(){ 
-	m_texture = nullptr;
+	texture_ = nullptr;
 }
 
-Texture* Sprite::getTexture(){
-	return m_texture;
+Texture* Sprite::texture(){
+	return texture_;
 }
 
-Vector2<float>& Sprite::getCenter(){
-	return center;
+Vector2<float>& Sprite::center(){
+	return center_;
 } 
 
-Vector3<float>& Sprite::getPosition() {
-	return position;
+Vector3<float>& Sprite::position() {
+	return position_;
 }
 
-Vector2<float>& Sprite::getDimensions() {
-	return dimensions;
+Vector2<float>& Sprite::dimensions() {
+	return dimensions_;
 }
 
-void Sprite::setPosition(const Vector3<float>& pos) {
-	position = pos;
+void Sprite::position(const Vector3<float>& pos) {
+	position_ = pos;
 }
 
-void Sprite::setDimensions(const Vector2<float>& dim) {
-	dimensions = dim;
+void Sprite::dimensions(const Vector2<float>& dim) {
+	dimensions_ = dim;
 }

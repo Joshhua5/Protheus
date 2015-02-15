@@ -27,7 +27,7 @@ void TCPConnection::messenger(){
 
 			if (SDLNet_TCP_Send(socket, buffOut.data(), buffOut.size()) < (int) buffOut.size()){
 				// Connection is closed or error occured 
-				error.reportError("Messenger Failed: \n" + string(SDLNet_GetError()));
+				log.Report<LogCode::ERROR>("Messenger Failed: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
 				connected.store(false);
 				SDLNet_FreeSocketSet(set);
 				return;

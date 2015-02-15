@@ -12,12 +12,10 @@ namespace Pro {
 		class Program {
 			GLuint program_id;
 			bool has_error = false;
-			std::unordered_map<std::string, GLint> locations;
-			//std::mutex lock; 
+			std::unordered_map<std::string, GLint> locations; 
 
-			GLint getUniformLocation(GLuint program_id, const string& uniform_name);
-
-			// non copyable
+			GLint getUniformLocation(GLuint program_id, const std::string& uniform_name);
+ 
 			Program(const Program&) = delete;
 			Program& operator=(const Program&) = delete;
 		public:
@@ -28,32 +26,32 @@ namespace Pro {
 			Program(Program&&);
 			Program& operator=(Program&&);
 
-			void attachShader(const Shader& shader);
+			void AttachShader(const Shader& shader);
 
-			void init();
+			void Init();
 
 			void link();
 
-			bool hasError() const;
+			bool HasError() const;
 
 			// Binds the program and stores the previously 
 			// program in use
-			void preservedUse();
-			void use();
+			void PreservedUse();
+			void Use();
 			// returns the used program to the original value
 			// which was set at the previous preservedUse call
-			void preservedDisuse();
+			void PreservedDisuse();
 
 
-			GLuint getID() const;
+			GLuint id() const;
 
 			// If the stride is equal to 0 then the function call is silently returned and no state is changed
-			void setUniform(const string& uniform_name, const Vector3<float>& value);
-			void setUniform(const string& uniform_name, const Vector2<float>& value);
-			void setUniform(const string& uniform_name, GLint value);
-			void setUniform(const string& uniform_name, const Matrix44<float>& value);
-			void setUniform(const string& uniform_name, const GLint* value, unsigned size);
-			void setUniform(const string& uniform_name, float* value, unsigned count);
+			void SetUniform(const std::string& uniform_name, const Vector3<float>& value);
+			void SetUniform(const std::string& uniform_name, const Vector2<float>& value);
+			void SetUniform(const std::string& uniform_name, GLint value);
+			void SetUniform(const std::string& uniform_name, const Matrix44<float>& value);
+			void SetUniform(const std::string& uniform_name, const GLint* value, unsigned size);
+			void SetUniform(const std::string& uniform_name, float* value, unsigned count);
 
 			// If the stride is equal to 0 then the function call is silently returned and no state is changed
 

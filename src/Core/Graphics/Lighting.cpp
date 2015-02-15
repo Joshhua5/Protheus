@@ -4,39 +4,39 @@ using namespace Pro;
 using namespace Util;
 using namespace Graphics;
 
-void Lighting::bindLights(Program& program) {  
-	Buffer points(light_points.size() * sizeof(float) * 8);
+void Lighting::BindLights(Program& program) {  
+	Buffer points(light_points_.size() * sizeof(float) * 8);
 	BufferWriter writer(&points);
 
-	for (auto& light : light_points) {
-		writer.write_elements<float>(&light.position.x, 3);
-		writer.write_elements<float>(&light.color.x, 3);
-		writer.write<float>(light.attenuation);
-		writer.write<float>(light.intensity);
+	for (auto& light : light_points_) {
+		writer.WriteElements<float>(&light.position.x, 3);
+		writer.WriteElements<float>(&light.color.x, 3);
+		writer.Write<float>(light.attenuation_);
+		writer.Write<float>(light.intensity_);
 	}  
 
-	for (auto& light : light_directional) {
-		writer.write_elements<float>(&light.position.x, 3);
-		writer.write_elements<float>(&light.color.x, 3); 
-		writer.write_elements<float>(&light.direction.x, 3);
-		writer.write<float>(light.attenuation);
-		writer.write<float>(light.intensity);
+	for (auto& light : light_directional_) {
+		writer.WriteElements<float>(&light.position.x, 3);
+		writer.WriteElements<float>(&light.color.x, 3); 
+		writer.WriteElements<float>(&light.direction_.x, 3);
+		writer.Write<float>(light.attenuation_);
+		writer.Write<float>(light.intensity_);
 	}
 
-	program.setUniform("light_ambient", ambientColor); 
-	program.setUniform("light_point_count", light_points.size());
-	program.setUniform("light_points", points.data<float>(), light_points.size() * 8);
-	program.setUniform("light_directional_count", light_directional.size());
-	program.setUniform("light_directional",
-		points.data<float>() + (light_points.size() * 8), light_directional.size() * 11); 
+	program.SetUniform("light_ambient", ambient_color_); 
+	program.SetUniform("light_point_count", light_points_.size());
+	program.SetUniform("light_points", points.data<float>(), light_points_.size() * 8);
+	program.SetUniform("light_directional_count", light_directional_.size());
+	program.SetUniform("light_directional",
+		points.data<float>() + (light_points_.size() * 8), light_directional_.size() * 11); 
 }
 
-LightPoint& Lighting::attachLight(const LightPoint& point) {
-	light_points.push_back(point);
-	return light_points.back();
+LightPoint& Lighting::AttachLight(const LightPoint& point) {
+	light_points_.push_back(point);
+	return light_points_.back();
 }
 
 
-void Lighting::setAmbient(const Vector3<float>& ambient) {
-	ambientColor = ambient;
+void Lighting::SetAmbient(const Vector3<float>& ambient) {
+	ambient_color_ = ambient;
 }

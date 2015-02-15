@@ -30,30 +30,30 @@ Mesh::~Mesh() {
 	glDeleteBuffers(1, &verticies);
 }
 
-void Mesh::attachObject(MeshObject&& model) {
+void Mesh::AttachObject(MeshObject&& model) {
 	objects.push_back(model);
 }
 
-MeshObject* Mesh::getObject(const string& object_name) {
+MeshObject* Mesh::GetObject(const string& object_name) {
 	for (unsigned x = 0; x < objects.size(); ++x)
 		if (objects[x].name == object_name)
 			return &objects[x];
-	error.reportErrorNR("Unable to find mesh object" + object_name);
+	log.Report<LogCode::ERROR>("Unable to find mesh object" + object_name, __FUNCTION__, __LINE__);
 	return nullptr;
 }
 
 
-vector<MeshObject>& Mesh::getObjects() {
+vector<MeshObject>& Mesh::GetObjects() {
 	return objects;
 }
 
 
-void Mesh::bind() const {
+void Mesh::Bind() const {
 	glBindBuffer(GL_ARRAY_BUFFER, verticies);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements);
 }
 
-void Mesh::unbind() const {
+void Mesh::Unbind() const {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

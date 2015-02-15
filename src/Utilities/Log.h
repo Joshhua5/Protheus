@@ -4,9 +4,7 @@
 #include <thread>
 #include <mutex>
 #include "Queue.h" 
-
-/*! Injects function name and source line into error message */
-#define report(code, msg) Report<code>(msg, __FUNCTION__, __LINE__) 
+ 
 /*************************************************************************
 Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2014.
@@ -21,14 +19,14 @@ History:
 *************************************************************************/
 
 namespace Pro {
-	enum struct ErrorCode {
+	enum struct LogCode {
 		MESSAGE,
 		FATAL,
 		ERROR
 	};
-	class Error {
+	class Log {
 		struct MessagePack {
-			ErrorCode code;
+			LogCode code;
 			int id;
 			int line;
 			const char* function;
@@ -38,9 +36,9 @@ namespace Pro {
 		// Static so that multiple Error's will write to the same file.
 		std::thread worker_;
 		std::atomic<bool> running_;
-		Util::Queue<MessagePack> messages_;
+		Pro::Util::Queue<MessagePack> messages_;
 
-		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running) {
+		static void worker_thread(Pro::Util::Queue<MessagePack>* messages, std::atomic<bool>* running) {
 			std::fstream log;
 			if (!log.is_open())
 				log.open("log.xml", std::ios::out | std::ios::binary | std::ios::trunc);
@@ -58,13 +56,13 @@ namespace Pro {
 					log.write(strCache.data(), strCache.size());
 
 					switch (top.code) {
-					case ErrorCode::ERROR:
+					case LogCode::ERROR:
 						log.write("<severity> error </severity>\n", 30);
 						break;
-					case ErrorCode::FATAL:
+					case LogCode::FATAL:
 						log.write("<severity> fatal </severity>\n", 30);
 						break;
-					case ErrorCode::MESSAGE:
+					case LogCode::MESSAGE:
 						log.write("<severity> message </severity>\n", 32);
 						break;
 					}
@@ -92,37 +90,40 @@ namespace Pro {
 		}
 
 		// Declared to be uncopyable and moveable.
-		Error(const Error&) = delete;
-		Error(Error&&) = delete;
-		Error& operator=(Error&&) = delete;
-		Error& operator=(const Error&) = delete;
+		Log(const Log&) = delete;
+		Log(Log&&) = delete;
+		Log& operator=(Log&&) = delete;
+		Log& operator=(const Log&) = delete;
 	public:
-		Error() {
+		Log() {
 			running_.store(true);
 			messages_.Resize(1000);
 			worker_ = std::thread(&worker_thread, &messages_, &running_);
 		}
-		~Error() {
+		~Log() {
 			running_.store(false);
 			worker_.join();
 		}
 
-		template<ErrorCode E>
-		inline unsigned long Report(const string& msg,
+		template<LogCode E>
+		inline unsigned long Report(const std::string& msg,
 			const char* file,
 			const unsigned long line) {
 			static size_t num = 0;
 
 			MessagePack pack;
-			pack.code = T;
-			pack.id = ftlNum;
+			pack.code = E;
+			pack.id = num++;
 			pack.line = line;
 			pack.function = file;
 			pack.message = msg;
 			messages_.Push(std::move(pack)); 
+
+
+			return num;
 		}
 	};
 
-	static Error error;
+	static Log log;
 }
 

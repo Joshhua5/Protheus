@@ -19,28 +19,27 @@ History:
 
 namespace Pro{
 	namespace Util{
-		using namespace std;
 
 		class FileSystem
-		{
-			string rootDir;
+		{ 
+			std::string rootDir_;
 		public:
-			FileSystem(const string& root = "");
+			FileSystem(const std::string& root = "");
 			~FileSystem();
 
 			FileSystem& operator=(const FileSystem& rhs) {
-				rootDir = string(rhs.rootDir);
+				rootDir_ = std::string(rhs.rootDir_);
 				return *this;
 			}
 
 			/*  Opens a file relative to the root directory */
-			IO::CFile* openFile(const string& path);
+			IO::CFile* OpenFile(const std::string& path);
 			/*  Sets the root directory */
-			void setRootDir(const string& dir);
+			void rootDir(const std::string& dir);
 			/*  Returns a reference to the root directory */
-			string& getRootDir();
+			std::string& rootDir();
 
-			Buffer getFile(const string& path);
+			Buffer GetFile(const std::string& path);
 		};
 	}
 }

@@ -9,8 +9,8 @@ namespace Pro {
 			cl_mem buffer_id;
 		public:
 			/*! Aligned buffer must have no padding */
-			CLBuffer(const Context&, const Util::AlignedBuffer&, unsigned buf_flag = CL_MEM_READ_WRITE);
-			CLBuffer(const Context&, const Util::Buffer&, unsigned buf_flag = CL_MEM_READ_WRITE);
+			CLBuffer(const Context&, Util::AlignedBuffer&, unsigned buf_flag = CL_MEM_READ_WRITE);
+			CLBuffer(const Context&, Util::Buffer&, unsigned buf_flag = CL_MEM_READ_WRITE);
 			CLBuffer(const Context&, size_t size, unsigned buf_flag = CL_MEM_READ_WRITE);
 			 
 			CLBuffer(const CLBuffer&) = delete;
@@ -19,7 +19,7 @@ namespace Pro {
 			CLBuffer(CLBuffer&&);
 			CLBuffer& operator=(CLBuffer&&);
 
-			cl_mem getID() const { return buffer_id; }
+			cl_mem id() const { return buffer_id; }
 		};
 	}
 }

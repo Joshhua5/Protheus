@@ -25,7 +25,7 @@ namespace Pro {
 			class ClassDefinition
 			{
 				void* base_pointer;
-				vector<Member> members;
+				vector<Member> members_;
 			public:
 				/*! Must be called with ClassDefinition(new T)*/
 				ClassDefinition(void* class_pointer) {
@@ -45,19 +45,19 @@ namespace Pro {
 					m.offset = static_cast<unsigned>((char*)member_pointer - (char*)base_pointer);
 					m.size = static_cast<unsigned>(member_size);
 
-					members.push_back(move(m));
+					members_.push_back(move(m));
 				}
 
 				/*! Returns a vector of all members */
 				const vector<Member>& members() const {
-					return members;
+					return members_;
 				}
 
 
 				/*! Returns the sizeof all members */
 				const unsigned SizeOf() const {
 					unsigned sizeTotal = 0;
-					for each(const auto m in members)
+					for each(const auto m in members_)
 						sizeTotal += m.size;
 					return sizeTotal;
 				}

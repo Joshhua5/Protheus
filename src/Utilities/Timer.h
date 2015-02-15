@@ -19,48 +19,47 @@ History:
 
 namespace Pro {
 	namespace Util {
-		using namespace std;
 		/*! Timer class will keep track of ticks and time
 			Resolution of of nanoseconds
 		*/
+		template<class T>
 		class Timer
-		{
-		private:
-			unsigned long long startTick;
-			unsigned long long lastTick;
-			unsigned long long currentTick;
-			unsigned long long high_resolution_clock_period;
+		{ 
+			unsigned long long start_tick_;
+			unsigned long long last_tick_;
+			unsigned long long current_tick_;
+			unsigned long long high_resolution_clock_period_;
 		public:
 			Timer() {
-				currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				current_tick_ = std::chrono::duration_cast<T>(
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-				tick();
-				high_resolution_clock_period = std::chrono::high_resolution_clock::period::den;
+				Tick();
+				high_resolution_clock_period_ = std::chrono::high_resolution_clock::period::den;
 			}
 
 			/*! Get time since last tick*/
-			unsigned long long getTickDelta() const {
-				return currentTick - lastTick;
+			unsigned long long GetTickDelta() const {
+				return current_tick_ - last_tick_;
 			}
 
 			/*! Count how many ticks occur per second, value is extrapolated */
-			double getTicksPerSec() const {
-				// We reduce the accuracy of the timer by 1NS to prevent division by 0
-				return (double)1E9 / ((currentTick - lastTick) + 1);
+			//TODO values are incorrect for anything other than nanoseconds
+
+			double GetTicksPerSec() const {
+				return (current_tick_ - last_tick_) ? 1E9 : 1E9 / (current_tick_ - last_tick_);
 			}
 
 			/*! Update the timer with a new tick*/
-			unsigned long long tick() {
-				lastTick = currentTick;
-				return currentTick = std::chrono::duration_cast<std::chrono::nanoseconds>(
+			unsigned long long Tick() {
+				last_tick_ = current_tick_;
+				return current_tick_ = std::chrono::duration_cast<T>(
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
 
 			static unsigned long long getTime() {
-				return std::chrono::duration_cast<std::chrono::nanoseconds>(
+				return std::chrono::duration_cast<T>(
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
-
 		};
 	}
 }

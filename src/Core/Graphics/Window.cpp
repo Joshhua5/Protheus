@@ -10,7 +10,7 @@ void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
 
 void glfw_error_callback(int error_code, const char* desctiption) {
-	error.reportFatal(desctiption);
+	Pro::log.Report<LogCode::FATAL>(desctiption, "Window CALLBACK (Line is error code)", error_code);
 }
 
 void Window::window_constructor(const WindowDefinition& def) {
@@ -46,19 +46,20 @@ void Window::window_constructor(const WindowDefinition& def) {
 	if (def.ogl_core_profile)
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	dimension = { def.width, def.height };
-	window = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
+	dimension_ = { def.width, def.height };
+	window_ = glfwCreateWindow(def.width, def.height, def.title.data(), NULL, NULL);
 	
-	setCurrent();
+	SetCurrent();
 
 	if (init == false) {
 		glewInit();
 		init = true;
 	}
 
-	if (window == nullptr)
-		return error.reportFatalNR("Unable to create window");
-
+	if (window_ == nullptr) {
+	Pro::log.Report<LogCode::FATAL>("Unable to create window", __FUNCTION__, __LINE__);
+	return;
+	}
 	// Initialize the texture unit class
 	TextureUnit();
 
@@ -67,14 +68,14 @@ void Window::window_constructor(const WindowDefinition& def) {
 	glEnable(GL_BLEND);
  	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
 
-	glfwSetWindowUserPointer(window, new InputPointers);
+	glfwSetWindowUserPointer(window_, new InputPointers);
 
-	keyboard.attachWindow(window);
-	mouse.attachWindow(window); 
+	keyboard_.AttachWindow(window_);
+	mouse_.AttachWindow(window_); 
 
 	GLuint err = glGetError();
 	if (err != GL_NO_ERROR)
-		error.reportError("Unable to create window, " + std::string((char*)glewGetErrorString(err)));
+		log.Report<LogCode::FATAL>("Unable to create window, " + std::string((char*)glewGetErrorString(err)), __FUNCTION__, __LINE__);
 	 
 }
 
@@ -95,71 +96,79 @@ Window::Window(const string& title, const Vector2<int> dimensions){
 }
 
 Window::~Window(){
-	delete glfwGetWindowUserPointer(window);
-	if (window != nullptr)
-		glfwDestroyWindow(window);
+	delete glfwGetWindowUserPointer(window_);
+	if (window_ != nullptr)
+		glfwDestroyWindow(window_);
 }
 
-Keyboard& Window::getKeyboard() {
-	return keyboard;
+Keyboard& Window::keyboard() {
+	return keyboard_;
 }
 
-Mouse& Window::getMouse() {
-	return mouse;
+Mouse& Window::mouse() {
+	return mouse_;
 }
 
-GLFWwindow* Window::getWindow() const {
-	return window;
+GLFWwindow* Window::GetWindow() const {
+	return window_;
 }
 
-void Window::resize(const Vector2<int>& size) {
-	glfwSetWindowSize(window, size.x, size.y);
+void Window::Resize(const Vector2<int>& size) {
+	glfwSetWindowSize(window_, size.x, size.y);
 }
 
-void Window::rename(const string& title){
-	glfwSetWindowTitle(window, title.data());
+void Window::Rename(const string& title){
+	glfwSetWindowTitle(window_, title.data());
 }
 
-bool Window::isFocused() const {  
-	return glfwGetWindowAttrib(window, GLFW_FOCUSED) != 0 ? true : false;
+bool Window::IsFocused() const {  
+	return glfwGetWindowAttrib(window_, GLFW_FOCUSED) != 0 ? true : false;
 }
 
-void Window::setCurrent() {
-	glfwMakeContextCurrent(window);
+void Window::SetCurrent() {
+	glfwMakeContextCurrent(window_);
 }
 
-bool Window::isExitRequested() const {
-	return glfwWindowShouldClose(window) != 0;
+bool Window::IsExitRequested() const {
+	return glfwWindowShouldClose(window_) != 0;
 }
  
-unsigned Window::getWidth() const {
-	return dimension.x;
+unsigned Window::width() const {
+	return dimension_.x;
 }
-unsigned Window::getHeight() const {
-	return dimension.y;
+unsigned Window::height() const {
+	return dimension_.y;
 } 
 
-Vector2<unsigned> Window::getDimensions() const {
-	return dimension;
+Vector2<unsigned> Window::dimensions() const {
+	return dimension_;
 }
 
-void Window::startFrame() {
+void Window::StartFrame() {
 	glClear(GL_COLOR_BUFFER_BIT |
 		GL_DEPTH_BUFFER_BIT |
 		GL_STENCIL_BUFFER_BIT);
 	glfwPollEvents();
 }
 
-void Window::endFrame() {
-	glfwSwapBuffers(window);
+void Window::EndFrame() {
+	glfwSwapBuffers(window_);
 }
 
 
-float Window::getAspect() const {
-	return  (float)dimension.x / (float)dimension.y ;
+float Window::aspect() const {
+	return  (float)dimension_.x / (float)dimension_.y ;
 }
 
 void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
-	error.reportFatal(string(message​, length​)); 
+	Pro::log.Report<LogCode::FATAL>(string(message​, length​), __FUNCTION__, __LINE__); 
+}
+
+
+const Mouse& Window::mouse() const {
+	return mouse_;
+}
+const Keyboard& Window::keyboard() const {
+	return keyboard_;
 }

@@ -33,27 +33,27 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 
 	BufferReader reader(buffer);
 
-	string chunkID = reader.read_string(4);
-	unsigned chunkSize = reader.read<unsigned>();
-	string format = reader.read_string(4);
-	string subChunk1ID = reader.read_string(4);
-	unsigned subChunk1Size = reader.read<unsigned>();
-	short AudioFormat = reader.read<short>();
-	short numChannels = reader.read<short>();
-	unsigned sampleRate = reader.read<unsigned>();
-	unsigned byteRate = reader.read<unsigned>();
-	short blockAlign = reader.read<short>();
-	short bitsPerSample = reader.read<short>();
+	string chunkID = reader.ReadString(4);
+	unsigned chunkSize = reader.Read<unsigned>();
+	string format = reader.ReadString(4);
+	string subChunk1ID = reader.ReadString(4);
+	unsigned subChunk1Size = reader.Read<unsigned>();
+	short AudioFormat = reader.Read<short>();
+	short numChannels = reader.Read<short>();
+	unsigned sampleRate = reader.Read<unsigned>();
+	unsigned byteRate = reader.Read<unsigned>();
+	short blockAlign = reader.Read<short>();
+	short bitsPerSample = reader.Read<short>();
 
-	string subChunk2ID = reader.read_string(4);
-	unsigned subChunk2Size = reader.read<unsigned>();
+	string subChunk2ID = reader.ReadString(4);
+	unsigned subChunk2Size = reader.Read<unsigned>();
 
 	// Check file
 
 	 
 	 
 	if (chunkID != "RIFF" && format == "WAVE" && subChunk2ID == "data" && subChunk1ID == "fmt ") {
-		error.reportErrorNR("Incorrect WAV format: " + chunkID + " fmt:" + format + " sc1:" + subChunk1ID + " sc2:" + subChunk2ID);
+		log.Report<LogCode::ERROR>("Incorrect WAV format: " + chunkID + " fmt:" + format + " sc1:" + subChunk1ID + " sc2:" + subChunk2ID, __FUNCTION__, __LINE__);
 		return nullptr;
 	} 
 
@@ -70,12 +70,12 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 	// Check for a supported format
 
 	if (!(numChannels == 1 || numChannels == 2)){
-		error.reportError("Unsupported WAV format: Invalid number of channels");
+		log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid number of channels", __FUNCTION__, __LINE__);
 		delete out;
 		return nullptr;
 	}
 	if (!(bitsPerSample == 8 || bitsPerSample == 16)){
-		error.reportError("Unsupported WAV format: Invalid bits per sample");
+		log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid bits per sample", __FUNCTION__, __LINE__);
 		delete out;
 		return nullptr;
 	}
@@ -90,13 +90,13 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 
 	switch (bitsPerSample){
 	case 8: 
-		out->stream.init(sizeof(char) * numChannels * sample_count);
-		writer.write_elements<char>(reader.read_array<char>(sample_count * numChannels), sample_count * numChannels);
+		out->stream.Init(sizeof(char) * numChannels * sample_count);
+		writer.WriteElements<char>(reader.ReadArray<char>(sample_count * numChannels), sample_count * numChannels);
 		out->format = (numChannels == 2) ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;
 		break;
 	case 16:  
-		out->stream.init(sizeof(short) * numChannels * sample_count);
-		writer.write_elements<short>(reader.read_array<short>(sample_count * numChannels), sample_count * numChannels);
+		out->stream.Init(sizeof(short) * numChannels * sample_count);
+		writer.WriteElements<short>(reader.ReadArray<short>(sample_count * numChannels), sample_count * numChannels);
 		out->format = (numChannels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
 		break;
 	}

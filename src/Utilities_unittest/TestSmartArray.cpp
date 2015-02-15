@@ -17,7 +17,7 @@ TEST(Smart_Array, Constructor_Deconstructor_Test) {
 		x[i].attach(&call_count);
 
 	TestCls* ptr = x.get();
-	x.dereference();
+	x.Dereference();
 
 	ASSERT_EQ(x.get(), nullptr);
 	ASSERT_EQ(call_count.destructor, 20);
@@ -53,13 +53,13 @@ TEST(Smart_Array, Copy_Test) {
 	funcTest(z);
 
 	ASSERT_EQ(x.references(), 3);
-	x.dereference();
-	y.dereference();
+	x.Dereference();
+	y.Dereference();
 	ASSERT_EQ(z.get(), original);
 	ASSERT_EQ(z.get()->value(), 0);
 	ASSERT_EQ(z.references(), 1);
 	ASSERT_EQ(call_count.destructor, 0);
-	z.dereference();
+	z.Dereference();
 	ASSERT_EQ(call_count.destructor, 20);
 }
 
@@ -78,7 +78,7 @@ TEST(Smart_Array, Move_Test) {
 	ASSERT_EQ(z.get(), original);
 	ASSERT_EQ(z.get()->value(), 0);
 	ASSERT_EQ(call_count.destructor, 0);
-	z.dereference();
-	x.dereference();
+	z.Dereference();
+	x.Dereference();
 	ASSERT_EQ(call_count.destructor, 20);
 }

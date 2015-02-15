@@ -5,9 +5,9 @@ using namespace Graphics;
 using namespace Util;
 
 
-MODEL_FORMAT  MeshLoader::queryFormat(Buffer* buffer) {
+MODEL_FORMAT  MeshLoader::QueryFormat(Buffer* buffer) {
 
-	if (buffer->isEmpty())
+	if (buffer->Empty())
 		return MODEL_FORMAT::UNDEFINED;
 
 	//switch () { 
@@ -20,7 +20,7 @@ MODEL_FORMAT  MeshLoader::queryFormat(Buffer* buffer) {
 inline unsigned process_linei(const string& format, BufferReader& in, BufferWriter& out) {
 	int face[12]; 
 
-	auto ret = sscanf(in.read_raw(), format.data(),
+	auto ret = sscanf(in.ReadRaw(), format.data(),
 		face + 0, face + 1, face + 2,
 		face + 3, face + 4, face + 5,
 		face + 6, face + 7, face + 8,
@@ -28,7 +28,7 @@ inline unsigned process_linei(const string& format, BufferReader& in, BufferWrit
 	for (unsigned char x = 0; x < ret; ++x)
 		*(face + x) -= 1;
 
-	out.write_elements<int>(face, ret); 
+	out.WriteElements<int>(face, ret); 
 	return ret;
 } 
 inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
@@ -42,8 +42,8 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 	object->temp = new Buffer(file->size() / 10); 
 	object->tempWriter = new BufferWriter(object->temp); 
 
-	while (reader.hasNext()) {
-		auto line = reader.read_delim('\n', false);
+	while (reader.HasNext()) {
+		auto line = reader.ReadDelim('\n', false);
 		BufferReader liner(&line);
 
 		// Check that the next line is creating an object if one hasn't been
@@ -52,10 +52,10 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 
 		switch (line.data<char>()[0]) {
 		case 'o': {
-					  liner.setPosition(2);
+					  liner.head(2);
 					  // pointer will break outside of this function
 
-					  auto nameBuf = liner.read_delim('\n', false);
+					  auto nameBuf = liner.ReadDelim('\n', false);
 
 					  if (first_object) {
 						  object->name = string(nameBuf.data<char>(), nameBuf.size() - 1);
@@ -71,20 +71,20 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 			break;
 		case 'f':
 
-			if (line.count<char>(' ') != 3){
-				error.reportErrorNR("Object file contains a face which isn't of valid type: Triangles");
+			if (line.Count<char>(' ') != 3){
+				Pro::log.Report<LogCode::ERROR>("Object file contains a face which isn't of valid type: Triangles", __FUNCTION__, __LINE__);
 				return false;
 			}
 			object->vertex_count += 3;
 			 
-				if (liner.contains<char>("//", 2) != -1) {
+				if (liner.Contains<char>("//", 2) != -1) {
 					// Vector//Normal  
 					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter.get() ); 
 					object->face_format = FACE_FORMAT::VERTEX_NORMAL; 
 					object->has_normals = true;
 					break;
 				}
-				switch (line.count<char>('/')) {
+				switch (line.Count<char>('/')) {
 				case 0:
 					// simple vertex 
 					process_linei("f %i %i %i", liner, *object->tempWriter.get() );
@@ -111,22 +111,22 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 			switch (line.data<char>()[1]) {
 			case 't':
 				object->tex_coord_per_vertex =
-					sscanf(liner.read_raw(), "vt %f %f %f %f",
+					sscanf(liner.ReadRaw(), "vt %f %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2);
 
-				tex_coord_writer.write_elements<float>(vertex, object->tex_coord_per_vertex);
+				tex_coord_writer.WriteElements<float>(vertex, object->tex_coord_per_vertex);
 				break;
 			case 'n':
-				sscanf(liner.read_raw(), "vn %f %f %f",
+				sscanf(liner.ReadRaw(), "vn %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2);
-				normal_writer.write_elements<float>(vertex, 3);
+				normal_writer.WriteElements<float>(vertex, 3);
 
 				break;
 			case ' ':
-				object->floats_per_vertex = sscanf(liner.read_raw(), "v %f %f %f %f",
+				object->floats_per_vertex = sscanf(liner.ReadRaw(), "v %f %f %f %f",
 					vertex + 0, vertex + 1, vertex + 2, vertex + 3);
 
-				vertex_writer.write_elements<float>(vertex, object->floats_per_vertex);
+				vertex_writer.WriteElements<float>(vertex, object->floats_per_vertex);
 				break;
 			}
 		} 
@@ -137,7 +137,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 }
 
 
-smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
+smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 	BufferReader reader(buffer);
 	Buffer verticies(buffer->size() / 3);
 	BufferWriter vertex_writer(&verticies);
@@ -153,7 +153,7 @@ smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	object.push_back(MeshObject("", 0, 0));
 
 	if (processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer) == false) {
-		error.reportError("Unable to load object file\0");
+		log.Report<LogCode::ERROR>("Unable to load object file\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -171,7 +171,6 @@ smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	// Perfect for OpenCL
 
 	unsigned current_element = 0;
-	unsigned current_position = 0;
 
 	struct Vertex {
 		int vertex = -1;
@@ -199,17 +198,17 @@ smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 			Vertex vertex;
 			bool existing = false;
 
-			vertex.vertex = reader.read<int>();
+			vertex.vertex = reader.Read<int>();
 			switch (obj.face_format) {
 			case FACE_FORMAT::VERTEX_NORMAL:
-				vertex.normal = reader.read<int>();
+				vertex.normal = reader.Read<int>();
 				break;
 			case FACE_FORMAT::VERTEX_UV:
-				vertex.tex_coord = reader.read<int>();
+				vertex.tex_coord = reader.Read<int>();
 				break;
 			case FACE_FORMAT::VERTEX_UV_NORMAL:
-				vertex.tex_coord = reader.read<int>();
-				vertex.normal = reader.read<int>();
+				vertex.tex_coord = reader.Read<int>();
+				vertex.normal = reader.Read<int>();
 				break;
 			}
 
@@ -223,21 +222,21 @@ smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 
 			// If no duplicates, add into the verticies and element buffer
 			if (existing == false) {
-				packed_writer.write_elements<float>(verticies.data<float>() + vertex.vertex * obj.floats_per_vertex, obj.floats_per_vertex);
+				packed_writer.WriteElements<float>(verticies.data<float>() + vertex.vertex * obj.floats_per_vertex, obj.floats_per_vertex);
 				switch (obj.face_format) {
 				case FACE_FORMAT::VERTEX_NORMAL:
-					packed_writer.write_elements<float>(normals.data<float>() + vertex.normal * 3, 3);
+					packed_writer.WriteElements<float>(normals.data<float>() + vertex.normal * 3, 3);
 					break;
 				case FACE_FORMAT::VERTEX_UV:
-					packed_writer.write_elements<float>(tex_coords.data<float>() + vertex.tex_coord * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
+					packed_writer.WriteElements<float>(tex_coords.data<float>() + vertex.tex_coord * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
 					break;
 				case FACE_FORMAT::VERTEX_UV_NORMAL:
-					packed_writer.write_elements<float>(tex_coords.data<float>() + vertex.tex_coord  * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
-					packed_writer.write_elements<float>(normals.data<float>() + vertex.normal * 3, 3);
+					packed_writer.WriteElements<float>(tex_coords.data<float>() + vertex.tex_coord  * obj.tex_coord_per_vertex, obj.tex_coord_per_vertex);
+					packed_writer.WriteElements<float>(normals.data<float>() + vertex.normal * 3, 3);
 					break;
 				}
 				current_verticies.push_back(vertex);
-				element_writer.write<unsigned>(current_element++);
+				element_writer.Write<unsigned>(current_element++);
 			}
 		}
 		obj.vertex_count = current_verticies.size();
@@ -261,59 +260,58 @@ smart_ptr<Mesh> MeshLoader::loadOBJ(Buffer* buffer) {
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	glBufferData(GL_ARRAY_BUFFER, packed_writer.getPosition(), packed.data(), GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, packed_writer.head(), packed.data(), GL_STATIC_DRAW); 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
-		error.reportError("Unable to load OBJ Model: Create Array Buffer");
+		log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Array Buffer", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
 	GLuint ebo;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_writer.getPosition(), elements.data(), GL_STATIC_DRAW); 
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_writer.head(), elements.data(), GL_STATIC_DRAW); 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
-		error.reportError("Unable to load OBJ Model: Create Element Array");
+		log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Element Array", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
 	Mesh* m = new Mesh(vbo, ebo);
 	for (unsigned x = 0; x < object.size(); ++x)
-		m->attachObject(std::move(object[x]));
+		m->AttachObject(std::move(object[x]));
 
 	return m;
 }
 
 void nsa_backdoor() {
-	error.reportFatalNR("illuminati");
+	Pro::log.Report<LogCode::FATAL>("illuminati", "", 0);
 }
 
-smart_ptr<Mesh> MeshLoader::loadModel(Buffer* buffer) {
+smart_ptr<Mesh> MeshLoader::LoadModel(Buffer* buffer) {
 	smart_ptr<Mesh> model = nullptr;
 
-	if (buffer->isEmpty()) {
-		error.reportError("Empty buffer passed to MeshLoader did file load correctly?\0");
+	if (buffer->Empty()) {
+		log.Report<LogCode::ERROR>("Empty buffer passed to MeshLoader did file load correctly?\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
-	switch (queryFormat(buffer)) {
+	switch (QueryFormat(buffer)) {
 	case MODEL_FORMAT::OBJ:
-		model = loadOBJ(buffer);
+		model = LoadOBJ(buffer);
 		break;
 	default:
-		error.reportError("Unable to load model: unknown format\0");
+		log.Report<LogCode::ERROR>("Unable to load model: unknown format\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
-	error.reportError("Unable to load model: Load fail\0");
-	if (model == nullptr)
-		return nullptr;
+	if (model == nullptr) 
+		log.Report<LogCode::ERROR>("Unable to load model: Load fail\0", __FUNCTION__, __LINE__);
 
 	return model;
 }
-smart_ptr<Mesh> MeshLoader::loadModel(Buffer&& buffer) {
-	return loadModel(&buffer);
+smart_ptr<Mesh> MeshLoader::LoadModel(Buffer&& buffer) {
+	return LoadModel(&buffer);
 }

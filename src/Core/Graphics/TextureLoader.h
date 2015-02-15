@@ -34,12 +34,12 @@ namespace Pro {
 		};
 
 		class TextureLoader {
-			static IMAGE_FORMAT queryFormat(Buffer*);
+			static IMAGE_FORMAT QueryFormat(Buffer*);
 		public:
 
-			static smart_ptr<Texture> loadBMP(Buffer*);
-			static smart_ptr<Texture> loadTexture(Buffer*);
-			static smart_ptr<Texture> loadTexture(Buffer&&);
+			static smart_ptr<Texture> LoadBMP(Buffer*);
+			static smart_ptr<Texture> LoadTexture(Buffer*);
+			static smart_ptr<Texture> LoadTexture(Buffer&&);
 		};
 	}
 }

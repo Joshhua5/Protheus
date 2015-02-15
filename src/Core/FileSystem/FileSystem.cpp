@@ -2,30 +2,31 @@
 
 using namespace Pro;
 using namespace Util;
+using namespace std;
 
 FileSystem::FileSystem(const string& root)
 {
-	rootDir = root;
+	rootDir_ = root;
 }
 
 FileSystem::~FileSystem()
 {
 }
 
-IO::CFile* FileSystem::openFile(const std::string& file){
-	return new IO::CFile(rootDir + file);
+IO::CFile* FileSystem::OpenFile(const std::string& file){
+	return new IO::CFile(rootDir_ + file);
 }
-void FileSystem::setRootDir(const std::string& dir){
-	rootDir = dir;
+void FileSystem::rootDir(const std::string& dir){
+	rootDir_ = dir;
 }
-std::string& FileSystem::getRootDir(){
-	return rootDir;
+std::string& FileSystem::rootDir(){
+	return rootDir_;
 }
 
 
-Buffer FileSystem::getFile(const string& path) {
-	auto file = openFile(path);
-	auto buffer = file->read();
+Buffer FileSystem::GetFile(const string& path) {
+	auto file = OpenFile(path);
+	auto buffer = file->Read();
 	delete file;
 	return buffer;
 }

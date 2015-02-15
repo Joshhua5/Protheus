@@ -5,70 +5,70 @@ using namespace Graphics;
 using namespace Math;
 
 Projection::Projection(float near, float far, float fov, float aspect) {
-	m_near = near;
-	m_far = far;
-	m_fov = fov;
-	m_aspect = aspect;
-	m_has_calculated = false;
+	near_ = near;
+	far_ = far;
+	fov_ = fov;
+	aspect_ = aspect;
+	has_calculated_ = false;
 
-	m_matrix = Matrix44<float>(0.0f);
+	matrix_ = Matrix44<float>(0.0f);
 }
 
-void Projection::setNear(float value) {
-	if (m_near == value)
+void Projection::SetNear(float value) {
+	if (near_ == value)
 		return;
-	m_near = value;
-	m_has_calculated = false;
+	near_ = value;
+	has_calculated_ = false;
 }
 
-void Projection::setFar(float value) {
-	if (m_far == value)
+void Projection::SetFar(float value) {
+	if (far_ == value)
 		return;
-	m_far = value;
-	m_has_calculated = false;
+	far_ = value;
+	has_calculated_ = false;
 }
 
-void Projection::setAspect(float value) {
-	if (m_aspect == value)
+void Projection::SetAspect(float value) {
+	if (aspect_ == value)
 		return;
-	m_aspect = value;
-	m_has_calculated = false;
+	aspect_ = value;
+	has_calculated_ = false;
 }
 
-void Projection::setFOV(float value) {
-	if (m_fov == value)
+void Projection::SetFOV(float value) {
+	if (fov_ == value)
 		return;
-	m_fov = value;
-	m_has_calculated = false;
+	fov_ = value;
+	has_calculated_ = false;
 }
 
 
-const Matrix44<float>& Projection::getOrtho() {
-	if (m_has_calculated && is_ortho == 0)
-		return m_matrix;
+const Matrix44<float>& Projection::GetOrtho() {
+	if (has_calculated_ && is_ortho_ == 0)
+		return matrix_;
 
-	return m_matrix;
+	return matrix_;
 }
 
-const Matrix44<float>& Projection::getPerspective(){
-	if (m_has_calculated && is_ortho == 1)
-		return m_matrix;
+const Matrix44<float>& Projection::GetPerspective(){
+	if (has_calculated_ && is_ortho_ == 1)
+		return matrix_;
 	 
 	// convert degree's to radians
-	float fov = Math::degToRad(m_fov); 
+	float fov = Math::DegToRad(fov_); 
 	float w, h, Q;
 
-	w = static_cast<float>(1.0f / tan(fov * 0.5)) / m_aspect;
+	w = static_cast<float>(1.0f / tan(fov * 0.5)) / aspect_;
 	h = static_cast<float>(1.0f / tan(fov * 0.5));
-	Q = m_far - (m_far - m_near);
+	Q = far_ - (far_ - near_);
 
-	m_matrix._m[0][0] = w;
-	m_matrix._m[1][1] = h;
-	m_matrix._m[2][2] = Q;
-	m_matrix._m[3][2] = -Q * m_near;
-	m_matrix._m[2][3] = 1;
+	matrix_.matrix_[0][0] = w;
+	matrix_.matrix_[1][1] = h;
+	matrix_.matrix_[2][2] = Q;
+	matrix_.matrix_[3][2] = -Q * near_;
+	matrix_.matrix_[2][3] = 1;
 
-	m_has_calculated = true;
-	is_ortho = 1;
-	return m_matrix;
+	has_calculated_ = true;
+	is_ortho_ = 1;
+	return matrix_;
 }

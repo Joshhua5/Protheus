@@ -6,58 +6,58 @@ using namespace Graphics;
 static unsigned active_vertex_array = 0;
 
 VertexArray::VertexArray() {
-	glGenVertexArrays(1, &m_vao);
+	glGenVertexArrays(1, &vao_);
 }
 
 VertexArray::~VertexArray() {
-	glDeleteVertexArrays(1, &m_vao);
+	glDeleteVertexArrays(1, &vao_);
 }
 
 VertexArray::VertexArray(VertexArray&& rhs) {
-	m_vao = rhs.m_vao;
-	rhs.m_vao = 0;
+	vao_ = rhs.vao_;
+	rhs.vao_ = 0;
 }
 
 VertexArray& VertexArray::operator=(VertexArray&& rhs) {
-	m_vao = rhs.m_vao;
-	rhs.m_vao = 0;
+	vao_ = rhs.vao_;
+	rhs.vao_ = 0;
 	return *this;
 }
  
 void VertexArray::setVertexAttribute(const Program& program, const string& attrib_name,
-	GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset) {
-	preservedBind();
-	GLint location = glGetAttribLocation(program.getID(), attrib_name.data());
+	GLint size, GLenum type, GLboolean normalized, GLsizei Stride, const unsigned offset) {
+	PreservedBind();
+	GLint location = glGetAttribLocation(program.id(), attrib_name.data());
 	if (location == -1)
-		error.reportErrorNR("Unable to locate shader attribute: " + attrib_name);
+		log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + attrib_name, __FUNCTION__, __LINE__);
 	if (size == 0)
 		return;
 	glEnableVertexAttribArray(location);
-	glVertexAttribPointer(location, size, type, normalized, stride, (void*)offset);
-	preservedUnbind();
+	glVertexAttribPointer(location, size, type, normalized, Stride, (void*)offset);
+	PreservedUnbind();
 }
 
-void VertexArray::bind() { 
-	if (active_vertex_array == m_vao)
+void VertexArray::Bind() { 
+	if (active_vertex_array == vao_)
 		return;
-	active_vertex_array = m_vao;
-	glBindVertexArray(m_vao);
+	active_vertex_array = vao_;
+	glBindVertexArray(vao_);
 }
 
-void VertexArray::unbind() { 
+void VertexArray::Unbind() { 
 	active_vertex_array = 0;
 	glBindVertexArray(0);
 } 
 
-void VertexArray::preservedBind() {
-	if (preserved_vao == m_vao)
+void VertexArray::PreservedBind() {
+	if (preserved_vao_ == vao_)
 		return;
-	preserved_vao = active_vertex_array; 
-	glBindVertexArray(m_vao);
+	preserved_vao_ = active_vertex_array; 
+	glBindVertexArray(vao_);
 }
 
-void VertexArray::preservedUnbind() {
-	if (preserved_vao == m_vao)
+void VertexArray::PreservedUnbind() {
+	if (preserved_vao_ == vao_)
 		return;
-	glBindVertexArray(preserved_vao);
+	glBindVertexArray(preserved_vao_);
 }

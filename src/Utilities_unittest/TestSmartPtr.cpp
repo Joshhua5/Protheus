@@ -14,7 +14,7 @@ TEST(Smart_Ptr, Constructor_Deconstructor_Test) {
 	x = new TestCls(&call_count, 2);
 
 	TestCls* ptr = x.get();
-	x.dereference();
+	x.Dereference();
 
 	ASSERT_EQ(x.get(), nullptr);
 	ASSERT_EQ(call_count.destructor, 1);
@@ -48,13 +48,13 @@ TEST(Smart_Ptr, Copy_Test) {
 	funcTest(z);
 
 	ASSERT_EQ(x.references(), 3);
-	x.dereference();
-	y.dereference();
+	x.Dereference();
+	y.Dereference();
 	ASSERT_EQ(z.get(), original);
 	ASSERT_EQ(z.get()->value(), 2);
 	ASSERT_EQ(z.references(), 1);
 	ASSERT_EQ(call_count.destructor, 0);
-	z.dereference();
+	z.Dereference();
 	ASSERT_EQ(call_count.destructor, 1);
 }
 
@@ -71,7 +71,7 @@ TEST(Smart_Ptr, Move_Test) {
 	ASSERT_EQ(z.get(), original);
 	ASSERT_EQ(z.get()->value(), 2);
 	ASSERT_EQ(call_count.destructor, 0);
-	z.dereference();
-	x.dereference();
+	z.Dereference();
+	x.Dereference();
 	ASSERT_EQ(call_count.destructor, 1);
 }

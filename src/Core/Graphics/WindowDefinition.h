@@ -6,7 +6,7 @@ namespace Pro {
 		struct WindowDefinition {
 			unsigned width = 800, height = 600;
 			unsigned char gl_major = 4, gl_minor = 2;
-			string title = "Protheus Engine";
+			std::string title = "Protheus Engine";
 			bool resizable = true;
 			bool visible = true;
 			bool decorated = true;

@@ -31,11 +31,11 @@ namespace Pro{
 			queue<Buffer> inputStack;
 			queue<Buffer> outputStack;
 			atomic<bool> connected;
-			connection_id id;
+			connection_id id_;
 		public:
-			CConnection(const connection_id _id) { id = _id; } 
+			CConnection(const connection_id _id) { id_ = _id; } 
 
-			connection_id getID() { return id; }
+			connection_id id() { return id_; }
 
 			// returns the amount of bytes recieved
 			Buffer recv();

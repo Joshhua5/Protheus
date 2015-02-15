@@ -4,14 +4,14 @@ using namespace Pro;
 using namespace OpenCL;
 
 
-OpenCL::CLBuffer::CLBuffer(const Context& context, const Util::AlignedBuffer& buf, unsigned flag) {
-	if (buf.isPadded())
-		error.reportErrorNR("Unable to create buffer, Alignedbuffer is padded (Check the Alignment and object size)");
+OpenCL::CLBuffer::CLBuffer(const Context& context, Util::AlignedBuffer& buf, unsigned flag) {
+	if (buf.IsPadded())
+		log.Report<LogCode::ERROR>("Unable to create buffer, Alignedbuffer is padded (Check the Alignment and object size)", __FUNCTION__, __LINE__);
 	else
 		buffer_id = clCreateBuffer(context.getContext(), flag, buf.size(), buf.data(), NULL);
 }
 				  
-OpenCL::CLBuffer::CLBuffer(const Context& context, const Util::Buffer& buf, unsigned flag) {
+OpenCL::CLBuffer::CLBuffer(const Context& context, Util::Buffer& buf, unsigned flag) {
 	buffer_id = clCreateBuffer(context.getContext(), flag, buf.size(), buf.data(), NULL);
 }
 				 

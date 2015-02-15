@@ -91,10 +91,33 @@ namespace Pro {
 				return x == rhs.x && y == rhs.y && z == rhs.z;
 			}
 
-			bool equals(T _x, T _y, T _z) const {
+			inline void Move(T _x, T _y, T _z) {
+				x += _x;
+				y += _y;
+				z += _z;
+			}
+
+			inline bool Equals(T _x, T _y, T _z) const {
 				return x == _x && y == _y && z == _z;
 			}
 
+			template<typename X>
+			Vector3<X> Cast() const {
+				return Vector3<X>(
+					static_cast<X>(x),
+					static_cast<X>(y),
+					static_cast<X>(z));
+			}
+
+			inline T Length() const {
+				sqrt((x * x) + (y * y) + (z * z));
+			} 
+
+			inline Vector3 Normalize() const {
+				Vector3 out(*this);
+				out /= out.Length();
+				return out;
+			}
 
 			Vector3&& operator+(const Vector3& rhs) {
 				Vector3<T> out;

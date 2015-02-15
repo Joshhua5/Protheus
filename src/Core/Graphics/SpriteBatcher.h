@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <stack>
-#include <Error.h> 
+#include <Log.h> 
 #include <BufferWriter.h>
 #include <initializer_list>
 #include <Vector4.h> 
@@ -40,10 +40,10 @@ namespace Pro{
 			static GLint max_textures;
 			std::atomic<unsigned> current_sprite_count = 0;
 
-			std::vector<smart_ptr<Texture>> textures;
-			std::vector<unsigned> sprite_count;
+			Util::ArrayList<smart_ptr<Texture>> textures;
+			Util::ArrayList<unsigned> sprite_count;
 			// Quick swap 
-			std::vector<std::vector<unsigned>> sprite_indicies;
+			Util::ArrayList<Util::ArrayList<unsigned>> sprite_indicies;
 			std::stack<unsigned short> free_textures;
 			unsigned current_texture_count = 0;
 
@@ -69,38 +69,37 @@ namespace Pro{
 			~SpriteBatcher();
 			 
 			// Performance benifit to grouping textures together in push calls
-			void push(int texture_id,
+			void Push(int texture_id,
 				Vector3<float> position,
 				Vector2<float> dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
 
 
-			void batch_push(int texture,
+			void BatchPush(int texture,
 				Vector3<float> position,
 				Vector2<float> dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
 
-			void batch_update(int texture, unsigned count);
+			void BatchUpdate(int texture, unsigned count);
 
 			// if -1, the maxiumum texture bindings has been hit.
-			int attachTexture(smart_ptr<Texture> tex);
+			int AttachTexture(smart_ptr<Texture> tex);
 			/*! indicies will be populated with the index of the texture inside the sprite batcher */
-			int attachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs);
+			int AttachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs);
 
-			void removeTexture(int);
+			void RemoveTexture(int);
 			  
-			void flush(); 
+			void Flush(); 
+			 
+			void Alpha(const Vector3<float>& color);
+			void SetCameraDimensions(const Vector2<float>& position);
+			void SetCameraPosition(const Vector3<float>& position);
 
-
-			void alpha(const Vector3<float>& color);
-			void setCameraDimensions(const Vector2<float>& position);
-			void setCameraPosition(const Vector3<float>& position);
-
-			void render();
+			void Render();
 			
-			void reset();
+			void Reset();
 		};
 	}
 }

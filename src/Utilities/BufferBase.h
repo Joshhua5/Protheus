@@ -13,7 +13,7 @@ History:
 
 #include <memory> 
 #include <mutex>
-#include "Error.h" 
+#include "Log.h" 
 
 namespace Pro {
 	namespace Util {

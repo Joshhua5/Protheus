@@ -17,11 +17,9 @@ History:
 
 namespace Pro {
 	namespace Util {
-		namespace Serializer {
-			using namespace std;
-
+		namespace Serializer { 
 			/*! Defines a variable inside of a class, used in ClassDefinitions */
-			struct Member {
+			struct Member { 
 				union {
 					/*! The offset from the base pointer*/
 					unsigned offset;
@@ -31,7 +29,7 @@ namespace Pro {
 				/*! Size of a member's data */
 				unsigned size;
 				/*! Name of the memeber */
-				string name;
+				std::string name;
 			};
 		}
 	}

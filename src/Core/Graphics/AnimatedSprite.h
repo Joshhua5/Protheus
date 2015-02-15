@@ -20,13 +20,13 @@ namespace Pro{
 		class AnimatedSprite
 		{
 		private:
-			std::vector<Sprite> frames;
-			unsigned frame_count;
+			std::vector<Sprite> frames_;
+			unsigned frame_count_;
 		public:
 			AnimatedSprite();
 			~AnimatedSprite(); 
 
-			Sprite& getFrame(unsigned index);
+			Sprite& GetFrame(unsigned index);
 
 			// Get the sprites to load from a file
 			// or a spritesheet instead of

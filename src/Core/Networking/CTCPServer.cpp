@@ -41,7 +41,7 @@ bool TCPServer::startListening(IPaddress serverAddress, const unsigned maxSocket
 	connections.reserve(maxSockets);
 
 	if (!set){
-		error.reportError("Unable to start server: \n" + string(SDLNet_GetError()));
+		log.Report<LogCode::ERROR>("Unable to start server: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
 		return false;
 	}
 	listening.store(true);
@@ -86,7 +86,7 @@ ServerTCPConnection* TCPServer::getPendingConnection(){
 ServerTCPConnection* TCPServer::getConnection(const connection_id _id){
 	register unsigned count = 0;
 	for each(const auto con in connections) 
-		if (con->getID() == _id)
+		if (con->id() == _id)
 			return con;
 
 	return nullptr;

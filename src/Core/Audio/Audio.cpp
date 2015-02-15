@@ -8,15 +8,15 @@ using namespace Util;
 CAudio::CAudio() { 
 	device = alcOpenDevice(nullptr);
 	if (device == nullptr)
-		error.reportErrorNR("Unable to create context");
+		log.Report<LogCode::ERROR>("Unable to create context", __FUNCTION__, __LINE__);
 
 	context = alcCreateContext(device, nullptr);
 	if (context == nullptr)
-		error.reportErrorNR("OpenAL Context Creation Error Code:" + alcGetError(device));
+		log.Report<LogCode::ERROR>("OpenAL Context Creation Error Code:" + alcGetError(device), __FUNCTION__, __LINE__);
 
 	ALenum error_code;
 	if ((error_code = alcGetError(device)) != ALC_NO_ERROR) {
-		error.reportError("Unable to start OpenAL" + getErrorString(error_code));
+		log.Report<LogCode::ERROR>("Unable to start OpenAL" + getErrorString(error_code), __FUNCTION__, __LINE__);
 		return;
 	} 
 
@@ -38,7 +38,7 @@ CAudioSource CAudio::createSource(const CAudioBuffer& buffer) {
 
 	ALenum error_code;
 	if ((error_code = alcGetError(device)) != ALC_NO_ERROR) {
-		error.reportError("Unable to create source: " + getErrorString(error_code));
+		log.Report<LogCode::ERROR>("Unable to create source: " + getErrorString(error_code), __FUNCTION__, __LINE__);
 		source.id = 0;
 		return source;
 	}
@@ -51,7 +51,7 @@ CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, Buffer* file) {
 	alGenBuffers(1, &buffer.id);
 	// Load an audio file here
 	if (file->size() == 0) {
-		error.reportErrorNR("Empty buffer (CAudio::loadAudio)\0");
+		log.Report<LogCode::ERROR>("Empty buffer (CAudio::loadAudio)\0", __FUNCTION__, __LINE__);
 		alDeleteBuffers(1, &buffer.id);
 		return 0;
 	}
@@ -65,7 +65,7 @@ CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, Buffer* file) {
 	}
 
 	if (track == nullptr) {
-		error.reportErrorNR("Unable to load audio file \0");
+		log.Report<LogCode::ERROR>("Unable to load audio file \0", __FUNCTION__, __LINE__);
 		return 0;
 	}
 
@@ -77,7 +77,7 @@ CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, Buffer* file) {
 
 	ALenum error_code = alGetError();
 	if (error_code != AL_NO_ERROR) {
-		error.reportError("Unable to load audio file: " + getErrorString(error_code));
+		log.Report<LogCode::ERROR>("Unable to load audio file: " + getErrorString(error_code), __FUNCTION__, __LINE__);
 		delete track; 
 		return 0;
 	}
@@ -86,14 +86,14 @@ CAudioBuffer CAudio::loadAudio(AUDIO_FORMAT format, Buffer* file) {
 	return std::move(buffer);
 }
 
-string CAudio::getErrorString(ALenum num) {
+std::string CAudio::getErrorString(ALenum num) {
 	switch (num) {
-	case AL_NO_ERROR: return string("There is no current error.");
-	case AL_INVALID_NAME: return string("Invalid name parameter.");
-	case AL_INVALID_ENUM: return string("Invalid parameter.");
-	case AL_INVALID_VALUE: return string("Invalid enum parameter value");
-	case AL_INVALID_OPERATION: return string("Illegal call.");
-	case AL_OUT_OF_MEMORY: return string("Unable to allocate memory.");
-	default: return string("Unknown Error");
+	case AL_NO_ERROR: return std::string("There is no current error.");
+	case AL_INVALID_NAME: return  std::string("Invalid name parameter.");
+	case AL_INVALID_ENUM: return  std::string("Invalid parameter.");
+	case AL_INVALID_VALUE: return  std::string("Invalid enum parameter value");
+	case AL_INVALID_OPERATION: return  std::string("Illegal call.");
+	case AL_OUT_OF_MEMORY: return  std::string("Unable to allocate memory.");
+	default: return std::string("Unknown Error");
 	} 
 }

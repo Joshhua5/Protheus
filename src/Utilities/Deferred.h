@@ -30,7 +30,7 @@ namespace Pro {
 				Check();
 				// Give error if deferred was deleted with objects still alive.
 				if (!flagged_deleted_.empty())
-					error.reportErrorNR("Deferred deleted before objects were released.");
+					log.reportErrorNR("Deferred deleted before objects were released.");
 			}
 			
 			/*! Add a instance to be destoyed */

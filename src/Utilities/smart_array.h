@@ -28,12 +28,13 @@ namespace Pro {
 			T *ptr_;
 
 
-			inline void Destroy() {
+			inline void Destroy(const bool clean = true) {
 				// Delete if a valid array is being stored
 				if (references_ != nullptr)
 					if (--*references_ == 0) {
 						// did you use the correct type of smart_*?
-						delete[] ptr_;
+						if(clean)
+							delete[] ptr_;
 						delete references_;
 
 						references_ = nullptr;
@@ -51,8 +52,11 @@ namespace Pro {
 			}
 
 			smart_array(T* ptr) {
+				if (ptr_ == nullptr)
+					references_ = nullptr;
+				else
+					references_ = new unsigned(1); 
 				ptr_ = ptr;
-				references_ = new unsigned(1);
 			}
 
 			smart_array(smart_array&& rhs) {
@@ -88,9 +92,13 @@ namespace Pro {
 
 			smart_array& operator=(T* rhs) {
 				// Call deconstructor on old array
+				
 				Destroy();
 				ptr_ = rhs;
-				references_ = new unsigned(1);
+				if (rhs == nullptr)
+					references_ = nullptr;
+				else
+					references_ = new unsigned(1);
 				return *this;
 			}
 
@@ -120,14 +128,14 @@ namespace Pro {
 			}
 
 			//! Removes reference to an array
-			inline void Dereference() {
-				Destroy();
+			inline void Dereference(const bool clean = true) {
+				Destroy(clean);
 			}
 			  
 			inline const T* get() const { return ptr_; }
 			inline T* get() { return ptr_; }
 
-			inline boolIsNull() const {
+			inline bool IsNull() const {
 				return ptr_ == nullptr;
 			}
 		};

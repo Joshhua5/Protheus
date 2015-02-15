@@ -24,7 +24,7 @@ namespace Pro{
 		class TCPServer 
 		{ 
 			TCPsocket serverSock; 
-			connection_id id;
+			connection_id id_;
 			 
 			SDLNet_SocketSet set;
 			atomic<bool> listening;
@@ -39,8 +39,8 @@ namespace Pro{
 			TCPServer(const connection_id); 
 			~TCPServer();
 
-			connection_id getID() {
-				return id;
+			connection_id id() {
+				return id_;
 			}
 
 			// Initialize the server

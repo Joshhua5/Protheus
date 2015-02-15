@@ -20,7 +20,7 @@ Shader::Shader(const Buffer& shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		error.reportError("Unable to load shader: " + string(error_log.data<char>()));
+		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
  
@@ -40,7 +40,7 @@ Shader::Shader(Buffer&& shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		error.reportError("Unable to load shader: " + string(error_log.data<char>()));
+		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
 
@@ -49,7 +49,7 @@ Shader::Shader() {
 	m_shader_type = GL_INVALID_ENUM;
 }
 
-Shader::Shader(string shader, GLenum shader_type) {
+Shader::Shader(const std::string& shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);
 
 	GLint size = shader.length();
@@ -66,7 +66,7 @@ Shader::Shader(string shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		error.reportError("Unable to load shader: " + string(error_log.data<char>()));
+		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
 
@@ -76,11 +76,11 @@ Shader::~Shader()
 }
 
 
-GLuint Shader::getShader() const {
+GLuint Shader::GetShader() const {
 	return m_shader_id;
 }
 
-bool Shader::init(const Buffer& shader, GLenum shader_type) {
+bool Shader::Init(const Buffer& shader, GLenum shader_type) {
 	m_shader_id = glCreateShader(shader_type);
 
 	GLint size = shader.size();
@@ -94,13 +94,13 @@ bool Shader::init(const Buffer& shader, GLenum shader_type) {
 
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &size);
 	if (size == GL_FALSE) {
-		error.reportError("Unable to load shader: " + m_shader_id);
+		log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
 		return false;
 	}
 
 	return true;
 }
-bool Shader::init(const string& shader, GLenum shader_type) {
+bool Shader::Init(const std::string& shader, GLenum shader_type) {
 	if (m_shader_id != 0)
 		return false;
 	m_shader_id = glCreateShader(shader_type);
@@ -117,7 +117,7 @@ bool Shader::init(const string& shader, GLenum shader_type) {
 	GLint glError = 0;
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &glError);
 	if (glError == GL_FALSE) {
-		error.reportError("Unable to load shader: " + m_shader_id);
+		log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
 		return false;
 	}
 

@@ -54,18 +54,18 @@ namespace Pro {
 			MeshObject& operator=(const MeshObject&);
 			~MeshObject();
 
-			bool     hasTexCoord() const;
-			bool     hasNormals() const;
-			GLuint   vertexSize() const;
-			GLuint   normalSize() const;
-			GLuint   texCoordSize() const;
+			bool     HasTexCoord() const;
+			bool     HasNormals() const;
+			GLuint   VertexSize() const;
+			GLuint   NormalSize() const;
+			GLuint   TexCoordSize() const;
 
-			GLsizei  stride() const;
-			GLuint   normalOffset() const;
-			GLuint   vertexOffset() const;
+			GLsizei  Stride() const;
+			GLuint   NormalOffset() const;
+			GLuint   VertexOffset() const;
 
-			GLuint   texCoordOffset() const;
-			GLenum   getMode() const;
+			GLuint   TexCoordOffset() const;
+			GLenum   GetMode() const;
 		};
 	}
 }

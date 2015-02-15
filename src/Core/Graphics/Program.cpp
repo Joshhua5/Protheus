@@ -4,6 +4,7 @@ using namespace Pro;
 using namespace Graphics;
 using namespace Util;
 using namespace Math;
+using namespace std;
 
 static int active_program_id = 0;
 static int preserved_id = 0;
@@ -31,37 +32,37 @@ Program& Program::operator=(Program&& rhs) {
 	return *this;
 }
 
-void Program::attachShader(const Shader& shader) {
-	if (glIsShader(shader.getShader()))
-		glAttachShader(program_id, shader.getShader());
+void Program::AttachShader(const Shader& shader) {
+	if (glIsShader(shader.GetShader()))
+		glAttachShader(program_id, shader.GetShader());
 	else
 		has_error = true;
 }
 
 
-void Program::init() {
+void Program::Init() {
 	if (program_id == 0)
 		program_id = glCreateProgram();
 }
 
-GLuint Program::getID() const{
+GLuint Program::id() const{
 	return program_id;
 }
 
-void Program::use() {
+void Program::Use() {
 	if (active_program_id == program_id)
 		return;
 	active_program_id = program_id;
 	glUseProgram(program_id);
 }
 
-void Program::preservedUse() {
+void Program::PreservedUse() {
 	preserved_id = active_program_id;
 	if (program_id != active_program_id)
 		glUseProgram(program_id);
 }
 
-void Program::preservedDisuse() {
+void Program::PreservedDisuse() {
 	if (program_id != active_program_id)
 		glUseProgram(preserved_id);
 }
@@ -75,23 +76,23 @@ void Program::link() {
 		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &size);
 		Buffer err(size);
 		glGetProgramInfoLog(program_id, err.size(), nullptr, err.data<char>());
-		error.reportErrorNR(err.data<char>());
+		log.Report<LogCode::ERROR>(err.data<char>(), __FUNCTION__, __LINE__);
 		has_error = true;
 	}
 }
 
-bool Program::hasError() const {
+bool Program::HasError() const {
 	return has_error;
 }
 
-inline GLint Program::getUniformLocation(GLuint program_id, const string& uniform_name) { 
+inline GLint Program::getUniformLocation(GLuint program_id, const std::string& uniform_name) { 
 	GLint location = 0;
 	// Check if the location is already stored
 	auto iterator = locations.find(uniform_name);
 	if (iterator == locations.end()) {
 		location = glGetUniformLocation(program_id, uniform_name.data());
 		if (location == -1) {
-			error.reportErrorNR("Unable to locate shader attribute: " + uniform_name);
+			log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + uniform_name, __FUNCTION__, __LINE__);
 			return -1;
 		}
 		locations.insert({ uniform_name, location });
@@ -102,57 +103,57 @@ inline GLint Program::getUniformLocation(GLuint program_id, const string& unifor
 }
  
 
-void Program::setUniform(const string& uniform_name, const Vector3<float>& value) {
+void Program::SetUniform(const string& uniform_name, const Vector3<float>& value) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
-	preservedUse();
+	PreservedUse();
 	glUniform3f(location, value.x, value.y, value.z);
-	preservedDisuse();
+	PreservedDisuse();
 }
 
-void Program::setUniform(const string& uniform_name, const Vector2<float>& value) {
+void Program::SetUniform(const string& uniform_name, const Vector2<float>& value) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
-	preservedUse();
+	PreservedUse();
 	glUniform2f(location, value.x, value.y);
-	preservedDisuse();
+	PreservedDisuse();
 }
 
-void Program::setUniform(const string& uniform_name, GLint value) {
+void Program::SetUniform(const string& uniform_name, GLint value) {
 	auto location = getUniformLocation(program_id, uniform_name.data());
 	if (location == -1)
 		return;
-	preservedUse();
+	PreservedUse();
 	glUniform1i(location, value);
-	preservedDisuse();
+	PreservedDisuse();
 }
 
-void Program::setUniform(const string& uniform_name, const GLint* value, unsigned size) {
+void Program::SetUniform(const string& uniform_name, const GLint* value, unsigned size) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
-	preservedUse();
+	PreservedUse();
 	glUniform1iv(location, size, value);
-	preservedDisuse();
+	PreservedDisuse();
 }
 
-void Program::setUniform(const string& uniform_name, const Matrix44<float>& value) {
+void Program::SetUniform(const string& uniform_name, const Matrix44<float>& value) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
-	preservedUse();
-	glUniformMatrix4fv(location, 1, GL_FALSE, (const float*)value._m);
-	preservedDisuse();
+	PreservedUse();
+	glUniformMatrix4fv(location, 1, GL_FALSE, value.data());
+	PreservedDisuse();
 }
 
-void Program::setUniform(const string& uniform_name, float* value, unsigned count) {
+void Program::SetUniform(const string& uniform_name, float* value, unsigned count) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
-	preservedUse();
+	PreservedUse();
 	glUniform1fv(location, count, value);
-	preservedDisuse();
+	PreservedDisuse();
 }
 

@@ -62,31 +62,31 @@ MeshObject& MeshObject::operator=(const MeshObject& rhs) {
 	return *this;
 }
 
-bool MeshObject::hasTexCoord() const {
+bool MeshObject::HasTexCoord() const {
 	return has_tex_coord ? 1 : 0;
 }
 
-bool MeshObject::hasNormals() const {
+bool MeshObject::HasNormals() const {
 	return has_normals ? 1 : 0;
 }
 
-GLuint   MeshObject::vertexSize() const {
+GLuint   MeshObject::VertexSize() const {
 	return  floats_per_vertex;
 }
 
-GLuint   MeshObject::normalSize() const {
+GLuint   MeshObject::NormalSize() const {
 	if (!has_normals)
 		return 0;
 	return  3;
 }
 
-GLuint   MeshObject::texCoordSize() const {
+GLuint   MeshObject::TexCoordSize() const {
 	if (!has_tex_coord)
 		return 0;
 	return  tex_coord_per_vertex;
 }
 
-GLsizei  MeshObject::stride() const {
+GLsizei  MeshObject::Stride() const {
 	if (has_normals && has_tex_coord)
 		return tex_coord_per_vertex * sizeof(GLfloat) + floats_per_vertex * sizeof(GLfloat) + sizeof(GLfloat) * 3;
 	else if (has_normals)
@@ -96,7 +96,7 @@ GLsizei  MeshObject::stride() const {
 	return floats_per_vertex * sizeof(GLfloat);
 }
 
-GLuint   MeshObject::normalOffset() const {
+GLuint   MeshObject::NormalOffset() const {
 	if (!has_normals)
 		return 0;
 	if (has_tex_coord)
@@ -104,15 +104,15 @@ GLuint   MeshObject::normalOffset() const {
 	return floats_per_vertex * sizeof(GLfloat);
 }
 
-GLuint   MeshObject::vertexOffset() const {
+GLuint   MeshObject::VertexOffset() const {
 	return 0;
 }
 
-GLuint   MeshObject::texCoordOffset() const {
+GLuint   MeshObject::TexCoordOffset() const {
 	if (!has_tex_coord)
 		return 0;
 	return floats_per_vertex * sizeof(GLfloat);
 }
-GLenum   MeshObject::getMode() const {
+GLenum   MeshObject::GetMode() const {
 	return GL_TRIANGLES;
 }

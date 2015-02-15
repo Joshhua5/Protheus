@@ -22,15 +22,16 @@ namespace Pro {
 			Use Pro::Deferred for controlling when objects should be deleted
 		*/
 		template<typename T>
-		class smart_ptr { 
+		class smart_ptr {
 			unsigned *references_;
 			T *ptr_;
 
-			inline void Destroy() {
+			inline void Destroy(const bool clean = true) {
 				if (references_ != nullptr)
 					if (--*references_ == 0) {
 						// did you use the correct type of smart_*
-						delete ptr_;
+						if(clean)
+							delete ptr_;
 						delete references_;
 
 						references_ = nullptr;
@@ -46,12 +47,15 @@ namespace Pro {
 			}
 			~smart_ptr() {
 				// Delete if a valid object is being stored
-				Destroy();  
+				Destroy();
 			}
 
 			smart_ptr(T* ptr) {
+				if (ptr_ == nullptr)
+					references_ = nullptr;
+				else
+					references_ = new unsigned(1);
 				ptr_ = ptr;
-				references_ = new unsigned(1);
 			}
 
 			smart_ptr(smart_ptr&& rhs) {
@@ -89,7 +93,10 @@ namespace Pro {
 				// Call deconstructor on old object
 				Destroy();
 				ptr_ = rhs;
-				references_ = new unsigned(1);
+				if (ptr_ == nullptr)
+					references_ = nullptr;
+				else
+					references_ = new unsigned(1);
 				return *this;
 			}
 
@@ -120,10 +127,11 @@ namespace Pro {
 				return *references_;
 			}
 
-			//! Removes reference to an object and returns the object
-			inline void Dereference() {
-				Destroy();
-			}
+			//! Removes reference to an object and the object unless 
+			//! Clean is set to false
+			inline void Dereference(bool clean = true) {
+				Destroy(clean);
+			} 
 
 			inline const T* get() const { return ptr_; }
 			inline T* get() { return ptr_; }

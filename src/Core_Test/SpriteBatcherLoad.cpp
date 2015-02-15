@@ -8,7 +8,7 @@
 #include <DoubleBuffer.h>
 #include <iostream>
 
-unsigned const ball_count = 1E2;
+unsigned const ball_count = static_cast<unsigned>(1E2);
 
 using namespace Pro;
 using namespace Graphics;
@@ -45,39 +45,38 @@ int main() {
 
 	FileSystem textures("textures/");
 
-	Timer timer;
-	srand(timer.tick());
-	Keyboard keyboard = window.getKeyboard();
+	Timer<std::chrono::nanoseconds> timer;  
+	Keyboard keyboard = window.keyboard();
 
-	SpriteBatcher batcher(window.getDimensions().cast<float>());
+	SpriteBatcher batcher(window.dimensions().Cast<float>());
 
 	// Load Textures
 	 
-	auto ball = TextureLoader::loadTexture(textures.getFile("Ball.bmp")); 
-	auto ball_id = batcher.attachTexture(ball); 
+	auto ball = TextureLoader::LoadTexture(textures.GetFile("Ball.bmp")); 
+	auto ball_id = batcher.AttachTexture(ball); 
 	  
 	// Initialize Entities
 	 
 	Entity e_ball; 
-	e_ball.dimensions = ball->getDimensions().cast<float>(); 
+	e_ball.dimensions = ball->dimensions().Cast<float>(); 
 
 	ArrayList<Entity> entities;
 
 	for (unsigned x = 0; x < ball_count; ++x) {
-		e_ball.position = Vector2<float>(prand<float>(0, window.getWidth()), prand<float>(0, window.getHeight()));
-		e_ball.velocity = Vector2<float>(prand<float>(1, 5), prand<float>(1, 5));
-		entities.push_back(e_ball);
+		e_ball.position = Vector2<float>(Rand<float>(0, window.width()), Rand<float>(0, window.height()));
+		e_ball.velocity = Vector2<float>(Rand<float>(1, 5), Rand<float>(1, 5));
+		entities.PushBack(e_ball);
 	}
 
-	batcher.alpha(Vector3<float>(1.f, 1.f, 1.f));
+	batcher.Alpha(Vector3<float>(1.f, 1.f, 1.f));
 
 	// Game Loop
-	while (!window.isExitRequested()) {
-		window.startFrame(); 
+	while (!window.IsExitRequested()) {
+		window.StartFrame(); 
 
 		Future finished; 
 		args wnd;
-		wnd.window = window.getDimensions().cast<float>();
+		wnd.window = window.dimensions().Cast<float>();
 		wnd.texture_id = ball_id;
 		wnd.spt = &batcher;
 
@@ -87,16 +86,16 @@ int main() {
 
 		for (unsigned x = 0; x < ball_count; ++x){ 
 
-			if (entities[x].position.x + entities[x].dimensions.x >=  window.getDimensions().x || entities[x].position.x <= 0)
+			if (entities[x].position.x + entities[x].dimensions.x >=  window.dimensions().x || entities[x].position.x <= 0)
 				entities[x].velocity.x *= -1;
-			if (entities[x].position.y + entities[x].dimensions.y >= window.getDimensions().x || entities[x].position.y <= 0)
+			if (entities[x].position.y + entities[x].dimensions.y >= window.dimensions().x || entities[x].position.y <= 0)
 				entities[x].velocity.y *= -1;
 
 			entities[x].position += entities[x].velocity;
-			batcher.push(ball_id, toVector3<float>(entities[x].position), entities[x].dimensions);
+			batcher.Push(ball_id, ToVector3<float>(entities[x].position), entities[x].dimensions);
 
 		}
-		batcher.flush();
-		window.endFrame();
+		batcher.Flush();
+		window.EndFrame();
 	}
 }

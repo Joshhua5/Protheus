@@ -97,6 +97,7 @@ namespace Pro {
 			return Vector4<T>(rhs.x, rhs.y, T(), T());
 		}
 		 
+		//! Min and Max to a maximum of 2 decimal points
 		template<typename T>
 		inline T Rand(T min, T max){
 			static bool executed = false;
@@ -104,7 +105,11 @@ namespace Pro {
 				srand(time(NULL));
 				executed = true;
 			}
-			return static_cast<T>((rand() % max - min) + min);
+
+			min *= 100;
+			max *= 100;
+			 
+			return static_cast<T>(((rand() % static_cast<long long>(max - min)) + min) / 100);
 		} 
 	}
 }

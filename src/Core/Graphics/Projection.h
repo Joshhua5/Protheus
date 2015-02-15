@@ -8,24 +8,24 @@ namespace Pro {
 		using namespace Math;
 
 		class Projection {
-			Matrix44<float> m_matrix;
+			Matrix44<float> matrix_;
 
-			bool m_has_calculated = false;
+			bool has_calculated_ = false;
 			// -1 if unset, 0 if ortho, 1 if perspective
-			char is_ortho = -1;
-			float m_near;
-			float m_far;
-			float m_fov;
-			float m_aspect;
+			char is_ortho_ = -1;
+			float near_;
+			float far_;
+			float fov_;
+			float aspect_;
 		public:
 			Projection(float near, float far, float fov, float aspect);
-			void setNear(float);
-			void setFar(float);
-			void setAspect(float);
-			void setFOV(float);
+			void SetNear(float);
+			void SetFar(float);
+			void SetAspect(float);
+			void SetFOV(float);
 
-			const Matrix44<float>& getPerspective();
-			const Matrix44<float>& getOrtho();
+			const Matrix44<float>& GetPerspective();
+			const Matrix44<float>& GetOrtho();
 		};
 	}
 }

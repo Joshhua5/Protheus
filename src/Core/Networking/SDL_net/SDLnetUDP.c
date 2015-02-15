@@ -223,7 +223,7 @@ void SDLNet_UDP_SetPacketLoss(UDPsocket sock, int percent)
           but there isn't a portable reentrant random
           number generator with good randomness.
     */
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
 
     if (percent < 0) {
         percent = 0;

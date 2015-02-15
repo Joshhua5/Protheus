@@ -25,24 +25,24 @@ namespace Pro{
 		class Sprite 
 		{
 		private:  
-			Vector2<float> center;
+			Vector2<float> center_;
 
-			Vector2<float> dimensions;
-			Vector3<float> position;
+			Vector2<float> dimensions_;
+			Vector3<float> position_;
 
-			Texture* m_texture = nullptr;
+			Texture* texture_ = nullptr;
 		public: 
 			Sprite(Texture*); 
 			~Sprite();
 
-			Texture* getTexture();
-			Vector2<float>& getCenter();
+			Texture* texture();
+			Vector2<float>& center();
 
-			Vector3<float>& getPosition();
-			Vector2<float>& getDimensions();
+			Vector3<float>& position();
+			Vector2<float>& dimensions();
 
-			void setPosition(const Vector3<float>&);
-			void setDimensions(const Vector2<float>&);
+			void position(const Vector3<float>&);
+			void dimensions(const Vector2<float>&);
 
 		};
 	}

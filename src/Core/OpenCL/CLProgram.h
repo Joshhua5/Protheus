@@ -22,7 +22,7 @@ namespace Pro {
 
 			cl_program getProgram() const { return program_id; }
 
-			Kernel getKernel(const string& kernel_name);
+			Kernel getKernel(const std::string& kernel_name);
 		};
 	}
 }

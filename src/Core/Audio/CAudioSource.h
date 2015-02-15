@@ -37,7 +37,7 @@ namespace Pro{
 				alSourcePlay(id);
 			}
 
-			void setPosition(const Vector3<float>& v){ alSource3f(id, AL_POSITION, v.x, v.y, v.z); }
+			void position(const Vector3<float>& v){ alSource3f(id, AL_POSITION, v.x, v.y, v.z); }
 			void setOrientation(const Vector3<float>& v){ alSource3f(id, AL_ORIENTATION, v.x, v.y, v.z); }
 			void setVelocity(const Vector3<float>& v) { alSource3f(id, AL_VELOCITY, v.x, v.y, v.z); }
 		};

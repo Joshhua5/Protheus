@@ -51,7 +51,7 @@ namespace Pro {
 			}
 
 			// z and w are width and height in that order.
-			bool contains(const Vector2<T>& v) const {
+			inline bool Contains(const Vector2<T>& v) const {
 				return
 					v.x > x &&
 					x + z > v.x &&
@@ -59,7 +59,7 @@ namespace Pro {
 					x + y > v.y;
 			}
 
-			bool overlaps(const Vector4&) const {
+			inline bool Overlaps(const Vector4&) const {
 				if ((x >= v.x && x + w <= v.x + v.x) &
 					((y + w <= v.y && y >= v.y) |
 					(y + w > v.y && y + w < v.y + v.y)))
@@ -71,6 +71,37 @@ namespace Pro {
 					return true;
 				return false;
 			}
+
+			inline void Move(T _x, T _y, T _z, T _w) {
+				x += _x;
+				y += _y;
+				z += _z;
+				w += _w;
+			}
+
+			inline bool Equals(T _x, T _y, T _z, T _w) {
+				return x == _x && y == _y && z == _z && w == _w;
+			}
+
+			template<typename X>
+			Vector4<X> Cast() const {
+				return Vector4<X>(
+					static_cast<X>(x),
+					static_cast<X>(y),
+					static_cast<X>(z),
+					static_cast<X>(w));
+			}
+
+			inline T Length() const {
+				return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+			}
+
+			inline Vector4 Normalize() const {
+				Vector4 out(*this);
+				out /= out.Length();
+				return out;
+			}
+
 
 			Vector4 operator+(Vector4&) {
 				Vector4 o(*this);

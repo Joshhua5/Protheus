@@ -19,7 +19,7 @@ History:
 
 namespace Pro {
 	namespace Util {
-		/*! Class to add on reading functionality to a Bufferand AlignedBuffer(Planned) */
+		/*! Class to add on reading functionality to a Buffer and AlignedBuffer(Planned) */
 		class BufferReader :
 			public BufferIO
 		{
@@ -43,10 +43,8 @@ namespace Pro {
 			}
 			~BufferReader() {
 				head_ = 0;
-				if (using_smart)
-					buffer_ = nullptr;
-				else
-					buffer_.dereference();
+				// Don't clean if original value wasn't a smart_ptr
+				buffer_.Dereference(using_smart);
 			}
 
 			/*! Returns a pointer to the internal buffer
@@ -69,7 +67,7 @@ namespace Pro {
 					return Buffer(0);
 				Buffer out(ReadRaw(), size, copy);
 				Skip(size);
-				return move(out);
+				return std::move(out);
 			}
 
 			/*! Reads through the buffer until the next deliminator is found.
@@ -81,18 +79,18 @@ namespace Pro {
 			}
 
 			//! Reads until a null terminator is found '\0'
-			string ReadString() {
-				return string(ReadDelim('\0').data<char>());
+			std::string ReadString() {
+				return  std::string(ReadDelim('\0').data<char>());
 			}
 
 			/*! Reads the size and appends a null terminator*/
-			string ReadString(const unsigned size) {
+			std::string ReadString(const unsigned size) {
 				char* arr = ReadArray<char>(size + 1);
 				Skip(-1);
 				arr[size] = '\0';
-				string out(arr);
+				std::string out(arr);
 				delete[] arr;
-				return move(out);
+				return  std::move(out);
 			}
 
 			/*! False if @m_head is at the end of the buffer. */
@@ -105,13 +103,13 @@ namespace Pro {
 				Returns -1 if a match can't be found
 			*/
 			template<typename T>
-			int Contains(const T* data, unsigned size = 1) const {
+			int Contains(const T* _data, unsigned size = 1) const {
 				// Create a local copy 
-				T* buffer = buffer_->data<T>();
+				auto buffer = buffer_->data<T>();
 				// Scan over the buffer for the combination
 				for (unsigned head = head_; head < buffer_->size() - size; ++head) {
 					// Check that position for the combination
-					for (unsigned x = 0; *(buffer + head + x) == *(data + x); ++x)
+					for (unsigned x = 0; *(buffer + head + x) == *(_data + x); ++x)
 						if (x == size - 1)
 							return head - head_;
 				}
@@ -121,21 +119,21 @@ namespace Pro {
 			/*!
 				Reads the next T in the buffer
 				If copy is false then the Bufferpoints at the internal buffer.
-			*/ 
+			*/
 			template<typename T>
 			inline T Read(bool copy = true) {
-				return *static_cast<T*>(Read(sizeof(T), copy).Data());
+				return *static_cast<T*>(Read(sizeof(T), copy).data());
 			}
 
 			/*!
 				Reads the an array of T in the buffer
 				If copy is false then the Bufferpoints at the internal buffer.
-			*/ 
+			*/
 			template<typename T>
 			inline T* ReadArray(const unsigned size, bool copy = true) {
 				auto buffer = Read(sizeof(T) * size, copy);
-				auto out = buffer.Data();
-				buffer.dereference();
+				auto out = buffer.data();
+				buffer.Dereference();
 				return static_cast<T*>(out);
 			}
 
@@ -166,11 +164,11 @@ namespace Pro {
 				const auto member_count = Read<unsigned short>();
 
 				// Check if there's a missmatch of extern classDefinitons
-				if (member_count != def.members().size()) {
+				if (member_count != def.members_.size()) {
 					string err = "";
-					for each(const auto members in def.members())
-						err += members.name + "\n";
-					error.reportError("Missmatch of extern class definition" + err);
+					for (const auto members_ : def.members_())
+						err += members_name + "\n";
+					log.reportError("Missmatch of extern class definition" + err);
 					return;
 				}
 
@@ -189,7 +187,7 @@ namespace Pro {
 				// check for a match between the definition
 				// and what's been loaded
 				// upon a match, load the data into the object
-				for each(const auto& member in def.members())
+				for each(const auto& member in def.members_)
 					for each(const auto& loaded_member in loaded_members) {
 						if (member.name != loaded_member.name)
 							continue;

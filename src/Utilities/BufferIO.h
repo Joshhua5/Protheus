@@ -41,7 +41,7 @@ namespace Pro {
 
 
 			//! Sets the position of the @m_head to 0
-			void reset() {
+			void Reset() {
 				head(0);
 			}
 

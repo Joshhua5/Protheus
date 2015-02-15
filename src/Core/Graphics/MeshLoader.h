@@ -23,13 +23,13 @@ namespace Pro {
 
 		class MeshLoader {
 
-			static MODEL_FORMAT queryFormat(Buffer*);
+			static MODEL_FORMAT QueryFormat(Buffer*);
 
 		public:
 
-			static smart_ptr<Mesh> loadOBJ(Buffer*);
-			static smart_ptr<Mesh> loadModel(Buffer*);
-			static smart_ptr<Mesh> loadModel(Buffer&&);
+			static smart_ptr<Mesh> LoadOBJ(Buffer*);
+			static smart_ptr<Mesh> LoadModel(Buffer*);
+			static smart_ptr<Mesh> LoadModel(Buffer&&);
 		};
 	}
 }

@@ -18,22 +18,22 @@ namespace Pro {
 		struct LightPoint {
 			Vector3<float> position;
 			Vector3<float> color;
-			float attenuation, intensity;
+			float attenuation_, intensity_;
 		};
 
 		struct LightDirectional : public LightPoint {
-			Vector3<float> direction;
+			Vector3<float> direction_;
 		};
 
 		class Lighting {
-			std::vector<LightPoint> light_points;
-			std::vector<LightDirectional> light_directional;
+			std::vector<LightPoint> light_points_;
+			std::vector<LightDirectional> light_directional_;
 
-			Vector3<float> ambientColor;
+			Vector3<float> ambient_color_;
 		public:
-			void bindLights(Program& program);
-			LightPoint&  attachLight(const LightPoint&);
-			void setAmbient(const Vector3<float>& ambient);
+			void BindLights(Program& program);
+			LightPoint&  AttachLight(const LightPoint&);
+			void SetAmbient(const Vector3<float>& ambient);
 
 		};
 	}

@@ -9,9 +9,7 @@ Description:
 History:
 - 9:01:2015: Waring J.
 *************************************************************************/
-#pragma once
-
-const unsigned DEFAULT_PARALLEL_THREAD_COUNT = 4;
+#pragma once 
 
 #include <thread>    
 #include <functional>
@@ -52,25 +50,24 @@ namespace Pro {
 			};
 
 
-			std::mutex m;
-			std::condition_variable cv;
-			ObjectPool<BatchPack> obj_pool;
-			Queue<BatchPack*> work;
-			std::atomic<bool> pool_running;
-			std::once_flag initialized;
-			Future default_result;
-			std::thread* threads;
+			std::mutex work_lock_;
+			std::condition_variable new_work_; 
+			Queue<BatchPack*> work_;
+			std::atomic<bool> pool_running_;
+			std::once_flag initialized_;
+			Future default_result_;
+			std::thread* workers_;
 			unsigned thread_count;
 
 			void workerThread() {
 				BatchPack* item;
-				std::unique_lock<std::mutex> lk(m);
-				while (pool_running.load())
+				std::unique_lock<std::mutex> lk(work_lock_);
+				while (pool_running_.load())
 					// Get a work item when it's ready 
-					if (work.Empty())
-						cv.wait_for(lk, std::chrono::milliseconds(100));
+					if (work_.Empty())
+						new_work_.wait_for(lk, std::chrono::milliseconds(100));
 					else {
-						item = work.TopPop();
+						item = work_.TopPop();
 						if (item == nullptr || item->being_processed == true)
 							continue;
 						item->being_processed = true;
@@ -80,48 +77,49 @@ namespace Pro {
 						delete item;
 					}
 			}
-
-
+			  
 		public:
-			Parallel(unsigned count = DEFAULT_PARALLEL_THREAD_COUNT) {
-				pool_running.store(true);
-				work.Resize(500);
-				threads = new std::thread[count];
-				for (unsigned x = 0; x < count; ++x)
-					threads[x] = std::thread(&Parallel::workerThread, this);
-				thread_count = count;
+			Parallel(unsigned pool_size) {
+				pool_running_.store(true);
+				work_.Resize(500);
+				workers_ = reinterpret_cast<std::thread*>(operator new(sizeof(std::thread) * pool_size)); 
+				for (unsigned x = 0; x < pool_size; ++x) 
+					new(&workers_[x]) std::thread(&Parallel::workerThread, this); 
+				thread_count = pool_size;
 			}
 
 			~Parallel() {
-				pool_running.store(false);
-				cv.notify_all();
-				for (unsigned x = 0; x < thread_count; ++x)
-					if (threads[x].joinable())
-						threads[x].join();
-				delete[] threads;
+				pool_running_.store(false);
+				new_work_.notify_all();
+				for (unsigned x = 0; x < thread_count; ++x) {
+					if (workers_[x].joinable())
+						workers_[x].join();
+					workers_[x].~thread();
+				}
+				operator delete(workers_);
 			}
 
-			bool isQueueEmpty() {
-				return work.Empty();
+			bool IsQueueEmpty() {
+				return work_.Empty();
 			}
 
 			template<typename T, typename... Args>
-			void batch(T* func, Future* finished, Args... arguments) {
+			void Batch(T* func, Future* finished, Args... arguments) {
 				if (finished == nullptr)
-					finished = &default_result;
+					finished = &default_result_;
 
 				finished->worker_count_ = 1;
 				finished->finished_count_ = 0;
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, arguments...)(); };
-				work.Push(pack);
-				cv.notify_one();
+				work_.Push(pack);
+				new_work_.notify_one();
 			}
 
 			template<typename T, typename... Args>
-			void batch(Future* finished, void* data, Args... arguments) {
+			void Batch(T* func, Future* finished, void* data, Args... arguments) {
 				if (finished == nullptr)
-					finished = &default_result;
+					finished = &default_result_;
 				pack->finished = finished;
 
 				finished->worker_count_ = 1;
@@ -129,9 +127,9 @@ namespace Pro {
 
 				auto pack = new BatchPack(finished);
 				pack->function = [=]() { std::bind(func, data, arguments...)(); };
-				work.Push(pack);
+				work_.Push(pack);
 
-				cv.notify_one(); 
+				new_work_.notify_one(); 
 			}
 
 			/*!	Process objects and calls object methods
@@ -139,9 +137,9 @@ namespace Pro {
 				If future is nullptr then no finished event is set.
 			*/
 			template<typename T, typename F, typename... Args>
-			void process(T* object, F func, unsigned size, unsigned offset, Future* finished, Args... arguments) {
+			void Process(T* object, F func, unsigned size, unsigned offset, Future* finished, Args... arguments) {
 				if (finished == nullptr)
-					finished = &default_result;
+					finished = &default_result_;
 
 				finished->worker_count_ = thread_count + 1;
 				finished->finished_count_ = 0;
@@ -152,9 +150,9 @@ namespace Pro {
 					for (unsigned x = 0; x < size; ++x) {
 						auto pack = new BatchPack(finished);
 						pack->function = [=]() { std::bind(func, &object[x], arguments...)(); };
-						work.Push(pack);
+						work_.Push(pack);
 					}
-					cv.notify_all();
+					new_work_.notify_all();
 					return;
 				}
 
@@ -177,7 +175,7 @@ namespace Pro {
 						for (unsigned current = _offset; current < end; ++current)
 							std::bind(func, &object[current], arguments...)();
 					};
-					work.Push(pack);
+					work_.Push(pack);
 				}
 				// Batch the remaining objects which were removed to allow for correct division
 				if (displacement != 0) {
@@ -186,10 +184,10 @@ namespace Pro {
 						for (unsigned x = size; x < size + displacement; ++x)
 							std::bind(func, &object[x], arguments...)();
 					};
-					work.Push(pack);
+					work_.Push(pack);
 				}else
 					--finished->worker_count_;
-				cv.notify_all();
+				new_work_.notify_all();
 			}
 
 			/*! Process for data without member functions,
@@ -197,7 +195,7 @@ namespace Pro {
 				If future is nullptr then no finished event is set.
 			*/
 			template<typename F, typename... Args>
-			void process(F func, void* data, unsigned size, unsigned offset, Future* finished, Args... arguments) {
+			void Process(F func, void* data, unsigned size, unsigned offset, Future* finished, Args... arguments) {
 
 			}
 		}; 

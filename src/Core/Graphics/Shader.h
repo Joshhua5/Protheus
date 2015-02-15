@@ -1,6 +1,6 @@
 #pragma once 
 #include <Buffer.h>
-#include <Error.h>
+#include <Log.h>
 #include "extern\glew.h"
 
 namespace Pro {
@@ -18,12 +18,12 @@ namespace Pro {
 			Shader();
 			Shader(const Buffer& shader, GLenum shader_type);
 			Shader(Buffer&& shader, GLenum shader_type);
-			Shader(string shader, GLenum shader_type);
+			Shader(const std::string& shader, GLenum shader_type);
 			~Shader();
 
-			bool init(const Buffer& shader, GLenum shader_type);
-			bool init(const string& shader, GLenum shader_type);
-			GLuint getShader() const;
+			bool Init(const Buffer& shader, GLenum shader_type);
+			bool Init(const std::string& shader, GLenum shader_type);
+			GLuint GetShader() const;
 		};
 	}
 }

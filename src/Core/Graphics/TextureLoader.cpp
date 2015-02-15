@@ -58,70 +58,70 @@ inline void decodeBitmapHeader(BMPHeader& header, BufferReader& reader) {
 	switch (header.header_size) {
 	case 52: // BITMAPv2INFOHEADER 
 	case 56: // BITMAPv3INFOHEADER
-		header.bmp_width = reader.read<unsigned long>();
-		header.bmp_height = reader.read<unsigned long>();
-		header.color_planes = reader.read<unsigned short>();
-		header.bit_depth = reader.read<unsigned short>();
-		header.compression_method = reader.read<unsigned>();
-		header.bmp_image_size = reader.read<unsigned>();
-		header.pixel_per_meter_hor = reader.read<long>();
-		header.pixel_per_meter_ver = reader.read<long>();
-		header.color_palette_count = reader.read<unsigned>();
-		header.important_colors = reader.read<unsigned>();
-		header.r_bitmask = reader.read<unsigned>();
-		header.g_bitmask = reader.read<unsigned>();
-		header.b_bitmask = reader.read<unsigned>();
+		header.bmp_width = reader.Read<unsigned long>();
+		header.bmp_height = reader.Read<unsigned long>();
+		header.color_planes = reader.Read<unsigned short>();
+		header.bit_depth = reader.Read<unsigned short>();
+		header.compression_method = reader.Read<unsigned>();
+		header.bmp_image_size = reader.Read<unsigned>();
+		header.pixel_per_meter_hor = reader.Read<long>();
+		header.pixel_per_meter_ver = reader.Read<long>();
+		header.color_palette_count = reader.Read<unsigned>();
+		header.important_colors = reader.Read<unsigned>();
+		header.r_bitmask = reader.Read<unsigned>();
+		header.g_bitmask = reader.Read<unsigned>();
+		header.b_bitmask = reader.Read<unsigned>();
 		if (header.header_size == 56)
-			header.a_bitmask = reader.read<unsigned>();
+			header.a_bitmask = reader.Read<unsigned>();
 		break;
 	case 64: // OS22XBITMAPHEADER 
 		break;
 	default:
 		if (header.header_size == 12) {
-			header.bmp_width = reader.read<unsigned short>();
-			header.bmp_height = reader.read<unsigned short>();
-			header.color_planes = reader.read<unsigned short>();
-			header.bit_depth = reader.read<unsigned short>();
+			header.bmp_width = reader.Read<unsigned short>();
+			header.bmp_height = reader.Read<unsigned short>();
+			header.color_planes = reader.Read<unsigned short>();
+			header.bit_depth = reader.Read<unsigned short>();
 		}
 		// BITMAPINFOHEADER
 		if (header.header_size == 40 || header.header_size == 108 || header.header_size == 124) {
-			header.bmp_width = reader.read<int>();
-			header.bmp_height = reader.read<int>();
-			header.color_planes = reader.read<unsigned short>();
-			header.bit_depth = reader.read<unsigned short>();
-			header.compression_method = reader.read<unsigned>();
-			header.bmp_image_size = reader.read<unsigned>();
-			header.pixel_per_meter_hor = reader.read<int>();
-			header.pixel_per_meter_ver = reader.read<int>();
-			header.color_palette_count = reader.read<unsigned>();
-			header.important_colors = reader.read<unsigned>();
+			header.bmp_width = reader.Read<int>();
+			header.bmp_height = reader.Read<int>();
+			header.color_planes = reader.Read<unsigned short>();
+			header.bit_depth = reader.Read<unsigned short>();
+			header.compression_method = reader.Read<unsigned>();
+			header.bmp_image_size = reader.Read<unsigned>();
+			header.pixel_per_meter_hor = reader.Read<int>();
+			header.pixel_per_meter_ver = reader.Read<int>();
+			header.color_palette_count = reader.Read<unsigned>();
+			header.important_colors = reader.Read<unsigned>();
 		}
 		// BITMAPV4HEADER   
 		if (header.header_size == 108 || header.header_size == 124) {
-			header.r_bitmask = reader.read<unsigned>();
-			header.g_bitmask = reader.read<unsigned>();
-			header.b_bitmask = reader.read<unsigned>();
-			header.a_bitmask = reader.read<unsigned>();
-			header.color_space_type = reader.read<unsigned>();
+			header.r_bitmask = reader.Read<unsigned>();
+			header.g_bitmask = reader.Read<unsigned>();
+			header.b_bitmask = reader.Read<unsigned>();
+			header.a_bitmask = reader.Read<unsigned>();
+			header.color_space_type = reader.Read<unsigned>();
 		}
 		// BITMAPV5HEADER  
 		if (header.header_size == 124) {
-			header.bV5Intent = reader.read<unsigned>();
-			header.bV5ProfileData = reader.read<unsigned>();
-			header.bV5ProfileSize = reader.read<unsigned>();
+			header.bV5Intent = reader.Read<unsigned>();
+			header.bV5ProfileData = reader.Read<unsigned>();
+			header.bV5ProfileSize = reader.Read<unsigned>();
 		}
 	}
 }
 
 
-IMAGE_FORMAT TextureLoader::queryFormat(Buffer* buffer) {
+IMAGE_FORMAT TextureLoader::QueryFormat(Buffer* buffer) {
 	// check for BMP
 	BufferReader reader(buffer);
 
-	if (buffer->isEmpty())
+	if (buffer->Empty())
 		return IMAGE_FORMAT::UNDEFINED;
 
-	string sample(reader.read_array<char>(4), 4);
+	string sample(reader.ReadArray<char>(4), 4);
 
 	if (sample.substr(0, 2) == "BM")
 		return IMAGE_FORMAT::BMP;;
@@ -132,18 +132,18 @@ IMAGE_FORMAT TextureLoader::queryFormat(Buffer* buffer) {
 	return IMAGE_FORMAT::UNDEFINED;
 }
 
-smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
+smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 	BufferReader reader(buffer);
-	reader.setPosition(2);
+	reader.head(2);
 
 	// Header
-	unsigned short bmp_file_size = reader.read<unsigned>();
-	reader.skip(4);
-	unsigned short bmp_offset = reader.read<unsigned>();
+	unsigned short bmp_file_size = reader.Read<unsigned>();
+	reader.Skip(4);
+	unsigned short bmp_offset = reader.Read<unsigned>();
 
 	// load header core 
 	BMPHeader header;
-	header.header_size = reader.read<unsigned>();
+	header.header_size = reader.Read<unsigned>();
 
 	decodeBitmapHeader(header, reader);
 
@@ -151,7 +151,7 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 
 	if (!(header.header_size == 12 || header.header_size == 40 || header.header_size == 108 ||
 		header.header_size == 124 || header.header_size == 52 || header.header_size == 56)) {
-		error.reportError("Unsupported BMP header");
+		log.Report<LogCode::ERROR>("Unsupported BMP header", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -161,18 +161,18 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 		ColorDefinition def;
 		switch (header.bit_depth) {
 		case 24:
-			def.r = reader.read<char>();
-			def.g = reader.read<char>();
-			def.b = reader.read<char>();
+			def.r = reader.Read<char>();
+			def.g = reader.Read<char>();
+			def.b = reader.Read<char>();
 			break;
 		case 32:
-			def.r = reader.read<char>();
-			def.g = reader.read<char>();
-			def.b = reader.read<char>();
-			def.a = reader.read<char>();
+			def.r = reader.Read<char>();
+			def.g = reader.Read<char>();
+			def.b = reader.Read<char>();
+			def.a = reader.Read<char>();
 			break;
 		default:
-			error.reportError("BMP format not supported: supported bit_depths: 24, 32");
+			log.Report<LogCode::ERROR>("BMP format not supported: supported bit_depths: 24, 32", __FUNCTION__, __LINE__);
 			return nullptr;
 		}
 		colorTable.push_back(
@@ -187,7 +187,7 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 
 	Buffer texture_data(header.bmp_height * header.bmp_width * sizeof(GLuint));
 	BufferWriter writer(&texture_data);
-	reader.setPosition(bmp_offset);
+	reader.head(bmp_offset);
 
 	if (header.color_palette_count == 0) {
 		ColorDefinition def;
@@ -195,24 +195,24 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 		case 24:
 			for (unsigned long h_pos = header.bmp_height; h_pos > 0; --h_pos) {
 				for (unsigned long w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
-					def.b = reader.read<char>();
-					def.g = reader.read<char>();
-					def.r = reader.read<char>();
+					def.b = reader.Read<char>();
+					def.g = reader.Read<char>();
+					def.r = reader.Read<char>();
 					def.a = 0;
-					writer.write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
+					writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
 				}
 				// padding to a multiple of 4 bytes 
-				reader.skip(header.bmp_width % 4);
+				reader.head(header.bmp_width % 4);
 			}
 			break;
 		case 32:
 			for (unsigned h_pos = 0; h_pos < header.bmp_height; ++h_pos)
 				for (unsigned w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
-					def.r = reader.read<char>();
-					def.g = reader.read<char>();
-					def.b = reader.read<char>();
-					def.a = reader.read<char>();
-					writer.write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
+					def.r = reader.Read<char>();
+					def.g = reader.Read<char>();
+					def.b = reader.Read<char>();
+					def.a = reader.Read<char>();
+					writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
 					break;
 				}
 			break;
@@ -221,12 +221,12 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 	else
 		switch (header.bit_depth) {
 		case 24:
-			writer.write<GLuint>(colorTable.at(reader.read_bits(24)));
-			reader.skip(3);
+			writer.Write<GLuint>(colorTable.at(reader.ReadBits(24)));
+			reader.Skip(3);
 			break;
 		case 32:
-			writer.write<GLuint>(colorTable.at(reader.read<unsigned>()));
-			writer.write<Texture>(Texture(1, { 1, 1 }));
+			writer.Write<GLuint>(colorTable.at(reader.Read<unsigned>()));
+			writer.Write<Texture>(Texture(1, { 1, 1 }));
 			break;
 		}
 
@@ -258,35 +258,35 @@ smart_ptr<Texture> TextureLoader::loadBMP(Buffer* buffer) {
 
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR) {
-		error.reportErrorNR(string((char*)glewGetErrorString(err)) + ": Unable to load texture");
+		log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to load texture", __FUNCTION__, __LINE__);
 		glDeleteTextures(1, &texture_id);
 	}
 
 	return new Texture(texture_id, Vector2<unsigned>((unsigned)header.bmp_width, (unsigned)header.bmp_height));
 }
 
-smart_ptr<Texture> TextureLoader::loadTexture(Buffer* buffer) {
+smart_ptr<Texture> TextureLoader::LoadTexture(Buffer* buffer) {
 	smart_ptr<Texture> tex;
 
-	if (buffer->isEmpty()) {
-		error.reportError("Empty buffer passed to TextureLoader, did file load correctly?\0");
+	if (buffer->Empty()) {
+		log.Report<LogCode::ERROR>("Empty buffer passed to TextureLoader, did file load correctly?\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
-	switch (queryFormat(buffer)) {
+	switch (QueryFormat(buffer)) {
 	case IMAGE_FORMAT::BMP:
-		tex = loadBMP(buffer);
+		tex = LoadBMP(buffer);
 		break;
 	default:
-		error.reportError("Unknown image format");
+		log.Report<LogCode::ERROR>("Unknown image format", __FUNCTION__, __LINE__);
 		return nullptr;
 		break;
 	}
-	tex->setBorder(GL_REPEAT);
-	tex->setFilter(GL_LINEAR);
+	tex->SetBorder(GL_REPEAT);
+	tex->SetFilter(GL_LINEAR);
 	return tex;
 }
 
-smart_ptr<Texture> TextureLoader::loadTexture(Buffer&& buffer) {
-	return loadTexture(&buffer);
+smart_ptr<Texture> TextureLoader::LoadTexture(Buffer&& buffer) {
+	return LoadTexture(&buffer);
 }

@@ -100,27 +100,34 @@ namespace Pro {
 				y = _y;
 			}
 
-			inline bool contains(float p) const {
+			//! Checks if p is between the x and y value
+			inline bool Contains(float p) const {
 				return ((x > p && y < p) || (x < p && y > p));
 			}
 
-			inline void move(T _x, T _y) {
+			inline void Move(T _x, T _y) {
 				x += _x;
 				y += _y;
 			}
 
+			inline bool Equals(T _x, T _y, T _z) {
+				return x == _x && y == _y && z == _z;
+			}
+
 			template<typename X>
-			Vector2<X> cast() const {
-				return Vector2<X>(static_cast<X>(x), static_cast<X>(y));
+			Vector2<X> Cast() const {
+				return Vector2<X>(
+					static_cast<X>(x),
+					static_cast<X>(y));
 			} 
 
-			inline float length() const {
+			inline T Length() const {
 					return sqrtf((x * x) + (y * y));
 			}
 
-			inline Vector2 normalize() const {
+			inline Vector2 Normalize() const {
 				Vector2 out(*this);
-				out /= out.length();
+				out /= out.Length();
 				return out;
 			}
 
@@ -129,14 +136,7 @@ namespace Pro {
 				y = p;
 				return *this;
 			}
-
-			//Vector2& operator=(const Vector2<unsigned>& rhs){
-			//	x = static_cast<T>(rhs.x);
-			//	y = static_cast<T>(rhs.y);
-			//	return *this;
-
-			//}
-
+			 
 			inline bool operator==(const Vector2& p) {
 				return x == p.x && y == p.y;
 			}

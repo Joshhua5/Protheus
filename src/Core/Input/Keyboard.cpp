@@ -8,25 +8,25 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
 		->keyboard->push({ (KEY)mods, (KEY)key });
 } 
 
-void Keyboard::attachWindow(GLFWwindow* window) {
+void Keyboard::AttachWindow(GLFWwindow* window) {
 	glfwSetKeyCallback(window, &keyboard_callback);
-	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))->keyboard = &keyboard_key;
-	this->window = window;
+	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))->keyboard = &keyboard_key_;
+	this->window_ = window;
 }
 
 
 bool Keyboard::hasKey() {
-	return !keyboard_key.empty();
+	return !keyboard_key_.empty();
 }
 
-std::pair<KEY, KEY> Keyboard::poolKey() {
+std::pair<KEY, KEY> Keyboard::PollKey() {
 	if (!hasKey())
 		return { KEY::KEY_UNKNOWN, KEY::KEY_UNKNOWN };
-	std::pair<KEY, KEY> k = std::move(keyboard_key.front());
-	keyboard_key.pop();
+	std::pair<KEY, KEY> k = std::move(keyboard_key_.front());
+	keyboard_key_.pop();
 	return k;
 }
 
-KEY_PRESSED Keyboard::isKeyDown(KEY key) {
-	return (KEY_PRESSED)glfwGetKey(window, (int)key);
+KEY_PRESSED Keyboard::IsKeyDown(KEY key) {
+	return (KEY_PRESSED)glfwGetKey(window_, (int)key);
 }

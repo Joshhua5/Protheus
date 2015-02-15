@@ -2,7 +2,7 @@
  
 #include <string>
 #include <atomic>
-#include <Error.h>
+#include <Log.h>
 #include "openal\alc.h"
 #include "CAudioSource.h"
 #include "CAudioBuffer.h"
@@ -22,9 +22,9 @@ namespace Pro{
 			ALCdevice* device;
 			ALCcontext* context;
 
-			static atomic<short> duplicateCount;
+			static  std::atomic<short> duplicateCount;
 
-			string getErrorString(ALenum);
+			std::string getErrorString(ALenum);
 			  
 		public:
 			CAudio();
@@ -38,4 +38,4 @@ namespace Pro{
 			CAudioSource createSource(const CAudioBuffer& buffer);
 		}; 
 	}
-}
+}  

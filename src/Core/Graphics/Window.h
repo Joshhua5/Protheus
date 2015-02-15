@@ -14,7 +14,7 @@ History:
 
 #include <string> 
 #include <Vector2.h>
-#include <Error.h> 
+#include <Log.h> 
 #include "TextureUnit.h"
 #include "extern\glew.h"
 #include "extern\glfw3.h"
@@ -34,11 +34,11 @@ namespace Pro {
 
 		class Window
 		{
-			GLFWwindow* window;
-			string windowTitle;
-			Vector2<unsigned> dimension;
-			Keyboard keyboard;
-			Mouse mouse;
+			GLFWwindow* window_;
+			string window_title_;
+			Vector2<unsigned> dimension_;
+			Keyboard keyboard_;
+			Mouse mouse_;
 			 
 			void window_constructor(const WindowDefinition& def); 
 
@@ -47,23 +47,27 @@ namespace Pro {
 			Window(const string& title, const Vector2<int> dimensions);
 			~Window();
 
-			void rename(const string& title);
-			void resize(const Vector2<int>& size);
-			bool isFocused() const;
-			GLFWwindow* getWindow() const;
-			void setCurrent();
-			bool isExitRequested() const;
+			void Rename(const string& title);
+			void Resize(const Vector2<int>& size);
+			bool IsFocused() const;
+			GLFWwindow* GetWindow() const;
+			void SetCurrent();
+			bool IsExitRequested() const;
 
-			void startFrame();
-			void endFrame();
+			void StartFrame();
+			void EndFrame();
 
-			unsigned getWidth() const;
-			unsigned getHeight() const;
-			Vector2<unsigned> getDimensions() const;
+			unsigned width() const;
+			unsigned height() const;
+			Vector2<unsigned> dimensions() const;
 
-			Keyboard& getKeyboard();
-			Mouse& getMouse();
-			float getAspect() const;
+			Keyboard& keyboard();
+			Mouse& mouse();
+
+			const Mouse& mouse() const;
+			const Keyboard& keyboard() const;
+
+			float aspect() const;
 		};
 	}
 }

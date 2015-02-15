@@ -2,7 +2,7 @@
 #include <initializer_list>
 #include <atomic>
 #include <mutex>
-#include "Error.h"
+#include "Log.h"
 #include "smart_array.h"
 
 namespace Pro {
@@ -20,10 +20,10 @@ namespace Pro {
 			T* object_array_ = nullptr;
 
 			inline void Copy(T* buffer, const size_t size) {
-				if (is_move_constructible<T>())
+				if (std::is_move_constructible<T>::value)
 					for (size_t x = 0; x < size; ++x)
 						new(buffer + x) T(std::move(object_array_[x]));
-				else if (is_copy_constructible<T>())
+				else if (std::is_copy_constructible<T>::value)
 					for (size_t x = 0; x < size; ++x)
 						new(buffer + x) T(object_array_[x]);
 				else
@@ -31,10 +31,10 @@ namespace Pro {
 			}
 
 			inline void Copy(T* source, T* destination, const size_t offset, const size_t size) {
-				if (is_move_constructible<T>())
+				if (std::is_move_constructible<T>::value)
 					for (size_t i = offset; i < offset + size; ++i)
 						new(destination + i) T(std::move(source[i]));
-				else if (is_copy_constructible<T>())
+				else if (std::is_copy_constructible<T>::value)
 					for (size_t i = offset; i < offset + size; ++i)
 						new(destination + i) T(source[i]);
 				else
@@ -57,8 +57,32 @@ namespace Pro {
 				T* buffer =
 					reinterpret_cast<T*>(operator new(sizeof(T) * size));
 				for (size_t i = 0; i < objectCount; ++i)
-					new(buffer + i) T();
+					 new(buffer + i) T();
 				return buffer;
+			}
+
+			template<bool initialize_all, typename... Args> 
+			inline void Resize(const size_t size, Args... arguments) { 
+				T* buffer = reinterpret_cast<T*>(operator new(sizeof(T)*(size)));
+				size_t iterator_size = (size < object_count_) ? size : object_count_;
+
+				if (object_array_ == nullptr) {
+					object_array_ = buffer;
+					object_count_ = 0;
+					reserved_ = size;
+					return;
+				}
+
+				Copy(buffer, iterator_size);
+
+				if(initialize_all)
+					for (size_t x = iterator_size; x < size; ++x)
+						new(buffer + x) T(arguments...);
+
+				Destroy();
+				object_array_ = buffer;
+				reserved_ = 0;
+				object_count_ = size;
 			}
 
 		public:
@@ -97,8 +121,8 @@ namespace Pro {
 			}
 
 			ArrayList& operator=(const ArrayList& rhs) {
-				if (rhs == *this)
-					return;
+				if (rhs.Data() == this->Data())
+					return *this;
 				object_count_ = rhs.object_count_.load();
 				reserved_ = rhs.reserved_;
 				object_array_ = Initialize(0, capacity());
@@ -108,9 +132,9 @@ namespace Pro {
 			}
 
 			ArrayList& operator=(ArrayList&& rhs) {
-				if (rhs == *this)
-					return;
-				object_count_ = rhs.object_count_.load();
+				if (rhs.Data() == this->Data())
+					return *this;
+				object_count_ = rhs.object_count_;
 				reserved_ = rhs.reserved_;
 				object_array_ = rhs.object_array_;
 				rhs.object_array_ = nullptr;
@@ -125,7 +149,7 @@ namespace Pro {
 			/*! Returns the element at a specified index with bounds checking*/
 			inline const T& At(size_t index) const {
 				if (index > object_count_ || object_array_ == nullptr) {
-					error.reportErrorNR("Out of bounds exception");
+					log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
 					return object_array_[0];
 				}
 				return object_array_[index];
@@ -133,7 +157,7 @@ namespace Pro {
 
 			inline T& At(size_t index) {
 				if (index > object_count_ || object_array_ == nullptr) {
-					error.reportErrorNR("Out of bounds exception");
+					log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
 					return object_array_[0];
 				}
 				return object_array_[index];
@@ -160,25 +184,28 @@ namespace Pro {
 
 			/*! Adds a element to the end of the buffer */
 			inline void PushBack(T&& value) {
-				if (reserved_-- == 0)
-					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
+				if (reserved_ <= 1)
+					Reserve(static_cast<size_t>(object_count_ * 1.2 + 5));
+				--reserved_;
 				new(&object_array_[object_count_++]) T(std::move(value));
 
 			}
 
 			/*! Adds a element to the end of the buffer */
 			inline void PushBack(const T& value) {
-				if (reserved_-- == 0)
-					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
+				if (reserved_ <= 1 )
+					Reserve(static_cast<size_t>(object_count_ * 1.2 + 5));
+				--reserved_;
 				new(&object_array_[object_count_++]) T(value);
 
 			}
 
 			template<typename... Args>
 			inline void EmplaceBack(Args&&... args) {
-				if (reserved_-- == 0)
-					Resize(static_cast<size_t>(object_count_ * 1.2 + 5));
-				new(&object_array_[object_count_++]) T(args...);
+				if (reserved_ <= 1)
+					Reserve(static_cast<size_t>(object_count_ * 1.2 + 5));
+				--reserved_;
+				operator new(&object_array_[object_count_++]) T(args...);
 			}
 
 			/*! Returns the last element added */
@@ -197,51 +224,24 @@ namespace Pro {
 			inline T& Front() {
 				return object_array_[0];
 			}
-			 
+
 			inline T Pop() {
 				T object(object_array_[--object_count_]);
 				// Decontruct object
 				(object_array_ + object_count_ + 1)->~T();
 				return object;
 			}
-		
+
 			//! Changes the size of the ArrayList and initialized objects
 
 			template<typename... Args>
 			void Resize(const size_t size, Args... arguments) {
-				T* buffer = reinterpret_cast<T*>(::operator new(sizeof(T)*(size)));
-				size_t iterator_size = (size < object_count_) ? size : object_count_;
-
-				if (object_array_ == nullptr) {
-					object_array_ = buffer;
-					object_count_ = 0;
-					reserved_ = size;
-					return;
-				}
-
-				Copy(buffer, iterator_size);
-
-				for (size_t x = iterator_size; x < size; ++x)
-					new(buffer + x) T(arguments...);
-
-				Destroy();
-				object_array_ = buffer;
-				reserved_ = 0;
-				object_count_ = size;
+				Resize<true>(size, arguments...);
 			}
 
 			//! Increased the capacity of the ArrayList without initializing objects
-			void Reserve(const size_t size) {
-				if (size < object_count_ + reserved_)
-					return;
-
-				T* buffer = Initialize(0, size);
-
-				Copy(buffer, object_count_);
-
-				Destroy();
-				object_array_ = buffer;
-				reserved_ = size - object_count_;
+			void Reserve(const size_t size) { 
+				Resize<false>(size);
 			}
 
 			/*! Returns a pointer to the internal Buffer
@@ -253,7 +253,7 @@ namespace Pro {
 			}
 
 			inline T* Data() {
-				return object_array_.get();
+				return object_array_;
 			}
 
 			/*! Erase multiple elements at the same time
@@ -265,7 +265,7 @@ namespace Pro {
 					return;
 
 				// Offset due to objects already removed
-				size_t offset = 0; 
+				size_t offset = 0;
 
 				// Check how many indicies are invalid
 				size_t culled = 0;
@@ -320,6 +320,6 @@ namespace Pro {
 				Resize(object_count_);
 			}
 
-			};
+		};
 	}
 }

@@ -159,9 +159,6 @@
     <ClInclude Include="Networking\SDL_net\SDLnetsys.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\TextureUnit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OpenCL\Context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenCL\CLEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextureUnit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -308,9 +308,6 @@
     <ClCompile Include="Networking\SDL_net\SDLnetTCP.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\TextureUnit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OpenCL\Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -324,6 +321,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenCL\CLProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureUnit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

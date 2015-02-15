@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <atomic>
-#include "Error.h"
+#include "Log.h"
 #include <iostream>
 
 namespace Pro {
@@ -118,7 +118,7 @@ namespace Pro {
 
 			inline const T& Top() const {
 				if (Empty()) {
-					error.reportError("Called Top on a empty queue, undefined returned object.");
+					log.reportError("Called Top on a empty queue, undefined returned object.");
 					return queue_.load()[pop_position_];
 				}
 				return queue_.load()[pop_position_];
@@ -126,7 +126,7 @@ namespace Pro {
 
 			inline T& Top() {
 				if (Empty()) {
-					error.reportError("Called Top on a empty queue, undefined returned object.");
+					log.Report<LogCode::ERROR>("Called Top on a empty queue, undefined returned object.", __FUNCTION__, __LINE__);
 					return queue_.load()[pop_position_];
 				}
 				return queue_.load()[pop_position_];
@@ -135,7 +135,7 @@ namespace Pro {
 			inline void Pop() {
 				// Check if empty
 				if (Empty()) {
-					error.reportError("Popped a empty queue");
+					log.Report<LogCode::ERROR>("Popped a empty queue", __FUNCTION__, __LINE__);
 					return;
 				}
 				// Check if at the end and set the position to 0 if true

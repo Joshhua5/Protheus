@@ -7,13 +7,13 @@ AnimatedSprite::AnimatedSprite(){}
 AnimatedSprite::~AnimatedSprite(){}
 
 void AnimatedSprite::addFrame(Sprite&& sprite){
-	frames.push_back(sprite);
+	frames_.push_back(sprite);
 }
 
 unsigned AnimatedSprite::getFrameCount() const{
-	return frames.size();
+	return frames_.size();
 }
 
-Sprite& AnimatedSprite::getFrame(unsigned index){
-	return frames.at(index);
+Sprite& AnimatedSprite::GetFrame(unsigned index){
+	return frames_.at(index);
 } 

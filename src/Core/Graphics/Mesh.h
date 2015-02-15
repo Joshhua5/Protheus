@@ -27,15 +27,15 @@ namespace Pro {
 			Mesh& operator=(Mesh&&);
 			~Mesh();
 
-			void attachObject(MeshObject&&);
+			void AttachObject(MeshObject&&);
 
-			MeshObject* getObject(const string& object_name);
-			vector<MeshObject>& getObjects();
+			MeshObject* GetObject(const string& object_name);
+			vector<MeshObject>& GetObjects();
 
-			GLenum getMode() const;
+			GLenum GetMode() const;
 
-			void bind() const;
-			void unbind() const;
+			void Bind() const;
+			void Unbind() const;
 		};
 	}
 }

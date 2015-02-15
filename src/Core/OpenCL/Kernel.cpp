@@ -27,7 +27,7 @@ bool Kernel::setArgument(unsigned index, size_t size, const void* value) {
 }
 
 bool Kernel::setArgument(unsigned index, const CLBuffer& memory) { 
-	return clSetKernelArg(kernel_id, index, sizeof(cl_mem), memory.getID()) == CL_SUCCESS;
+	return clSetKernelArg(kernel_id, index, sizeof(cl_mem), memory.id()) == CL_SUCCESS;
 }
 
 bool Kernel::execute(const Device& device,
@@ -44,7 +44,7 @@ bool Kernel::execute(const Device& device,
 
 	if (wait_list != nullptr) {
 		wait_size = wait_list->size();
-		_wait_list = wait_list->data();
+		_wait_list = wait_list->Data();
 	}  
 	return clEnqueueNDRangeKernel(device.getQueue(), kernel_id, work_dim, g_work_offset, g_work_size, l_work_size, wait_size, _wait_list, event) == CL_SUCCESS;
 }

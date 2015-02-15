@@ -13,7 +13,7 @@ CFile::CFile(const std::string& filePath)
 		fstream::out);
 
 	if (file.is_open() == false)
-		error.reportError("Unable to open file: " + filePath);
+		log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
 }
 
 CFile::~CFile()
@@ -21,64 +21,64 @@ CFile::~CFile()
 	file.close();
 }
 
-void CFile::open(const std::string& filePath){
+void CFile::Open(const std::string& filePath){
 	m_file_path = filePath;
 	file.open(filePath,
 		fstream::binary |
 		fstream::in |
 		fstream::out);
 	if (file.is_open() == false)
-		error.reportError("Unable to open file: " + filePath);
+		log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
 }
 
-bool CFile::isEndOfFile(){
+bool CFile::IsEndOfFile(){
 	if (!file.is_open())
 		return true;
 	return file.eof();
 }
 
-void CFile::setReadPosition(unsigned int pos){
+void CFile::SetReadPosition(unsigned int pos){
 	if (!file.is_open())
 		return;
 	file.seekg(pos);
 }
-unsigned int CFile::getReadPosition(){
+unsigned int CFile::GetReadPosition(){
 	if (!file.is_open())
 		return 0;
 	return static_cast<unsigned int>(file.tellg());
 }
-void CFile::setWritePosition(unsigned int pos){
+void CFile::SetWritePosition(unsigned int pos){
 	if (!file.is_open())
 		return;
 	file.seekp(pos);
 }
-unsigned int CFile::getWritePosition(){
+unsigned int CFile::GetWritePosition(){
 	if (!file.is_open())
 		return 0;
 	return static_cast<unsigned int>(file.tellp());
 }
 
-void CFile::write(Buffer& buf){
+void CFile::Write(Buffer& buf){
 	if (!file.is_open())
 		return;
 	file.write(buf.data<const char>(), buf.size());
 } 
 
-void CFile::write(const std::string& str){
+void CFile::Write(const std::string& str){
 	if (!file.is_open())
 		return;
 	file.write(str.data(), str.length());
 } 
 
-Buffer CFile::read(){
+Buffer CFile::Read(){
 	if (!file.is_open())
 		return Buffer(0);
-	Buffer buf(this->getSize());
+	Buffer buf(this->FileSize());
 	file.read(buf.data<char>(), buf.size());
 	return buf;
 }
 
-Buffer CFile::read(unsigned size){
+Buffer CFile::Read(unsigned size){
 	if (!file.is_open())
 		Buffer(0);
 	Buffer buf(size);
@@ -86,44 +86,44 @@ Buffer CFile::read(unsigned size){
 	return buf;
 } 
 
-std::string CFile::readToken(const char delim){
+std::string CFile::ReadToken(const char delim){
 	string s;
 	getline(file, s, delim);
 	return s;
 }
 
-std::string CFile::readLine(){
+std::string CFile::ReadLine(){
 	string s;
 	getline(file, s, '\n');
 	return s;
 }
 
-std::string CFile::readString(){
+std::string CFile::ReadString(){
 	string s;
 	getline(file, s, '\0');
 	return s;
 }
 
-void CFile::close(){
+void CFile::Close(){
 	file.close();
 }
 
-bool CFile::isOpen(){
+bool CFile::IsOpen(){
 	return file.is_open();
 }
 
-unsigned int CFile::getSize(){
-	if (!isOpen())
+unsigned int CFile::FileSize(){
+	if (!IsOpen())
 		return 0;
 	
-	const auto current_position = getReadPosition();
+	const auto current_position = GetReadPosition();
 	file.seekg(0, std::ios::end);
-	auto ending_position = getReadPosition();
-	setReadPosition(current_position);
+	auto ending_position = GetReadPosition();
+	SetReadPosition(current_position);
 	return ending_position;
 }
 
-EFile CFile::peekError(){
+EFile CFile::PeekError(){
 	switch (file.rdstate()){
 	case ifstream::goodbit:
 		return flag;
@@ -141,8 +141,8 @@ EFile CFile::peekError(){
 	return flag;
 }
 
-EFile CFile::getError(){
-	EFile f = peekError();
+EFile CFile::GetError(){
+	EFile f = PeekError();
 	flag = EFile::NO_FILE_ERROR;
 	return f;
 }

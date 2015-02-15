@@ -2,7 +2,7 @@
 #include <Vector3.h>
 #include <Vector2.h>
 #include <Matrix44.h>
-#include <Error.h>
+#include <Log.h>
 #include <string>
 
 #include "Program.h"
@@ -12,8 +12,8 @@ namespace Pro {
 	namespace Graphics {
 		using namespace std;
 		class VertexArray {
-			GLuint m_vao;
-			GLuint preserved_vao;
+			GLuint vao_;
+			GLuint preserved_vao_;
 
 			VertexArray(const VertexArray&) = delete;
 			VertexArray& operator=(const VertexArray&) = delete;
@@ -27,13 +27,13 @@ namespace Pro {
 			// Internally calls Program::setVertexAttribute with the same arguments
 			// Optimisation is to have the vao bound before to prevent a preservedBind
 			void setVertexAttribute(const Program& program, const string& attrib_name,
-				GLint size, GLenum type, GLboolean normalized, GLsizei stride, const unsigned offset);
+				GLint size, GLenum type, GLboolean normalized, GLsizei Stride, const unsigned offset);
 
-			void bind();
-			void unbind();
+			void Bind();
+			void Unbind();
 
-			void preservedBind();
-			void preservedUnbind();
+			void PreservedBind();
+			void PreservedUnbind();
 		};
 	}
 }

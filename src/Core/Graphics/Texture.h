@@ -8,13 +8,12 @@ namespace Pro {
 		using namespace Math;
 		class Texture
 		{
-			GLuint texture_id;
-			Vector2<unsigned> dimensions;
-
-			// prevent copying of a texture
+			GLuint texture_id_;
+			Vector2<unsigned> dimensions_;
+			 
 			// leave undefined
-			Texture(const Texture&);
-			Texture& operator=(const Texture&);
+			Texture(const Texture&) = delete;
+			Texture& operator=(const Texture&) = delete;
 		public:
 			Texture(const GLuint texture_id, const Vector2<unsigned>& dim);
 			~Texture();
@@ -22,13 +21,13 @@ namespace Pro {
 			Texture(Texture&&);
 			Texture& operator=(Texture&&);
 
-			const GLuint getTextureID() const;
-			Vector2<unsigned>& getDimensions();
+			const GLuint textureID() const;
+			Vector2<unsigned>& dimensions();
 
-			void setFilter(GLenum type);
-			void setBorder(GLenum type);
-			void bind() const;
-			void unbind() const;
+			void SetFilter(GLenum type);
+			void SetBorder(GLenum type);
+			void Bind() const;
+			void Unbind() const;
 		};
 	}
 }

@@ -52,7 +52,7 @@
     <ClInclude Include="ClassDefinition.h" />
     <ClInclude Include="Deferred.h" />
     <ClInclude Include="DoubleBuffer.h" />
-    <ClInclude Include="Error.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="ErrorCheck.h" />
     <ClInclude Include="Future.h" />
     <ClInclude Include="half.hpp" />

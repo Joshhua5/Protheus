@@ -10,16 +10,16 @@
 namespace Pro {
 	namespace Input {
 		class Keyboard {
-			std::queue<std::pair<KEY, KEY>> keyboard_key;
-			GLFWwindow* window;
+			std::queue<std::pair<KEY, KEY>> keyboard_key_;
+			GLFWwindow* window_;
 		public:
 			bool hasKey();
 			// returns <modifier, key>
-			std::pair<KEY, KEY> poolKey();
-			KEY_PRESSED isKeyDown(KEY);
+			std::pair<KEY, KEY> PollKey();
+			KEY_PRESSED IsKeyDown(KEY);
 
 			// depreciated
-			void attachWindow(GLFWwindow*);
+			void AttachWindow(GLFWwindow*);
 		};
 	}
 }
