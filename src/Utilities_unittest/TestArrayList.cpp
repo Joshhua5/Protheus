@@ -3,9 +3,7 @@
 #include "gtest/gtest.h"
 #include "TestCls.h"
 #include "ArrayList.h"
-
-#define TEST_CALL_COUNTS
-
+  
 template <typename T>
 using ArrayList = Pro::Util::ArrayList<T>;
 
@@ -16,11 +14,9 @@ TEST(TestArrayList, default_constructor_test001)
 	{
 		ArrayList<TestCls> list;
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
 	ASSERT_EQ(0, call_count.constructor);
-	ASSERT_EQ(0, call_count.destructor);
-#endif
+	ASSERT_EQ(0, call_count.destructor); 
 }
 
 TEST(TestArrayList, constructor_with_size_test001)
@@ -31,11 +27,9 @@ TEST(TestArrayList, constructor_with_size_test001)
 		ASSERT_EQ(3, list.size());
 		ASSERT_EQ(3, list.capacity());
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
 	ASSERT_EQ(3, call_count.constructor);
-	ASSERT_EQ(3, call_count.destructor);
-#endif
+	ASSERT_EQ(3, call_count.destructor); 
 }
 
 TEST(TestArrayList, push_back_test001)
@@ -55,13 +49,11 @@ TEST(TestArrayList, push_back_test001)
 		ASSERT_EQ(2, list[1].value());
 		ASSERT_EQ(3, list[2].value());
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
 	ASSERT_EQ(4, call_count.constructor);
 	ASSERT_EQ(0, call_count.copy);
 	ASSERT_EQ(0, call_count.move);
-	ASSERT_EQ(4, call_count.destructor);
-#endif
+	ASSERT_EQ(4, call_count.destructor); 
 }
 
 // Try to add objects more than reserve 
@@ -92,10 +84,8 @@ TEST(TestArrayList, push_back_test002)
 		ASSERT_EQ(5, list[4].value());
 		ASSERT_EQ(6, list[5].value());
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(6, call_count.constructor);
-#endif
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
+	ASSERT_EQ(6, call_count.constructor); 
 }
 
 TEST(TestArrayList, copy_constructor_test001)
@@ -118,10 +108,8 @@ TEST(TestArrayList, copy_constructor_test001)
 		ASSERT_EQ(2, list2[1].value());
 		ASSERT_EQ(3, list2[2].value());
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
-	ASSERT_EQ(3, call_count.constructor);
-#endif
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
+	ASSERT_EQ(3, call_count.constructor); 
 }
 
 TEST(TestArrayList, move_constructor_test001)
@@ -144,11 +132,9 @@ TEST(TestArrayList, move_constructor_test001)
 		ASSERT_EQ(2, list2[1].value());
 		ASSERT_EQ(3, list2[2].value());
 	}
-	ASSERT_EQ(call_count.constructor, call_count.destructor);
-#ifdef TEST_CALL_COUNTS
+	ASSERT_EQ(call_count.constructor, call_count.destructor); 
 	// 5 because the list will reserve 5 and the std::move is a simple pointer swap
-	ASSERT_EQ(3, call_count.constructor);
-#endif
+	ASSERT_EQ(3, call_count.constructor); 
 }
 
 
@@ -176,3 +162,19 @@ TEST(TestArrayList, erase_test004) {
 	ASSERT_EQ(9, list.size());
 }
 
+TEST(TestArrayList, resize_test001){
+	ArrayList<unsigned> list(10);
+	list.Resize(20);
+	list.Resize(30);
+	list.Resize(10);
+	ASSERT_EQ(10, list.size());
+	ASSERT_EQ(10, list.capacity());
+}
+
+TEST(TestArrayList, reserve_test001){
+	ArrayList<unsigned> list;
+	list.Reserve(20);
+	list.Reserve(30);
+	ASSERT_EQ(30, list.capacity());
+	ASSERT_EQ(0, list.size()); 
+}

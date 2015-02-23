@@ -21,32 +21,33 @@ namespace Pro {
 
 			inline void Copy(T* buffer, const size_t size) {
 				if (std::is_move_constructible<T>::value)
-					for (size_t x = 0; x < size; ++x)
-						new(buffer + x) T(std::move(object_array_[x]));
+				for (size_t x = 0; x < size; ++x)
+					new(buffer + x) T(std::move(object_array_[x]));
 				else if (std::is_copy_constructible<T>::value)
-					for (size_t x = 0; x < size; ++x)
-						new(buffer + x) T(object_array_[x]);
+				for (size_t x = 0; x < size; ++x)
+					new(buffer + x) T(object_array_[x]);
 				else
 					assert("Object T must be move or copy constructible");
 			}
 
 			inline void Copy(T* source, T* destination, const size_t offset, const size_t size) {
 				if (std::is_move_constructible<T>::value)
-					for (size_t i = offset; i < offset + size; ++i)
-						new(destination + i) T(std::move(source[i]));
+				for (size_t i = offset; i < offset + size; ++i)
+					new(destination + i) T(std::move(source[i]));
 				else if (std::is_copy_constructible<T>::value)
-					for (size_t i = offset; i < offset + size; ++i)
-						new(destination + i) T(source[i]);
+				for (size_t i = offset; i < offset + size; ++i)
+					new(destination + i) T(source[i]);
 				else
 					assert("Object T must be move or copy constructible");
 			}
 
 			inline void Destroy() {
 				// Deallocated initialized objects
-				for (unsigned x = 0; x < object_count_; ++x)
+				for (size_t x = 0; x < object_count_; ++x)
 					(object_array_ + x)->~T();
 
 				operator delete(object_array_);
+				object_count_ = 0;
 				object_array_ = nullptr;
 			}
 
@@ -55,15 +56,16 @@ namespace Pro {
 					return nullptr;
 
 				T* buffer =
-					reinterpret_cast<T*>(operator new(sizeof(T) * size));
+					reinterpret_cast<T*>(operator new(sizeof(T)* size));
 				for (size_t i = 0; i < objectCount; ++i)
-					 new(buffer + i) T();
+					new(buffer + i) T();
 				return buffer;
 			}
 
-			template<bool initialize_all, typename... Args> 
-			inline void Resize(const size_t size, Args... arguments) { 
-				T* buffer = reinterpret_cast<T*>(operator new(sizeof(T)*(size)));
+			template<bool initialize_all, typename... Args>
+			inline void Resize(const size_t size, Args... arguments) {
+				T* buffer = Initialize(0, size);
+				// If true then size is being reduced
 				size_t iterator_size = (size < object_count_) ? size : object_count_;
 
 				if (object_array_ == nullptr) {
@@ -73,16 +75,19 @@ namespace Pro {
 					return;
 				}
 
+
 				Copy(buffer, iterator_size);
 
-				if(initialize_all)
-					for (size_t x = iterator_size; x < size; ++x)
-						new(buffer + x) T(arguments...);
+				if (initialize_all)
+				for (size_t x = iterator_size; x < size; ++x)
+					new(buffer + x) T(arguments...);
 
 				Destroy();
 				object_array_ = buffer;
-				reserved_ = 0;
-				object_count_ = size;
+				reserved_ = initialize_all ? 0 : size - object_count_; 
+
+				// iterator_size is equal to the object count
+				object_count_ = iterator_size;
 			}
 
 		public:
@@ -100,8 +105,8 @@ namespace Pro {
 				reserved_ = 0;
 				object_array_ = Initialize(0, capacity());
 				if (object_array_ != nullptr)
-					for (size_t x = 0; x < object_count_; ++x)
-						new (object_array_ + x) T(arguments...);
+				for (size_t x = 0; x < object_count_; ++x)
+					new (object_array_ + x) T(arguments...);
 			}
 
 			ArrayList(const ArrayList& rhs) {
@@ -109,8 +114,8 @@ namespace Pro {
 				reserved_ = rhs.reserved_;
 				object_array_ = Initialize(0, capacity());
 				if (object_array_ != nullptr)
-					for (size_t x = 0; x < object_count_; ++x)
-						new(object_array_ + x) T(rhs.object_array_[x]);
+				for (size_t x = 0; x < object_count_; ++x)
+					new(object_array_ + x) T(rhs.object_array_[x]);
 			}
 
 			ArrayList(ArrayList&& rhs) {
@@ -193,7 +198,7 @@ namespace Pro {
 
 			/*! Adds a element to the end of the buffer */
 			inline void PushBack(const T& value) {
-				if (reserved_ <= 1 )
+				if (reserved_ <= 1)
 					Reserve(static_cast<size_t>(object_count_ * 1.2 + 5));
 				--reserved_;
 				new(&object_array_[object_count_++]) T(value);
@@ -240,14 +245,14 @@ namespace Pro {
 			}
 
 			//! Increased the capacity of the ArrayList without initializing objects
-			void Reserve(const size_t size) { 
+			void Reserve(const size_t size) {
 				Resize<false>(size);
 			}
 
 			/*! Returns a pointer to the internal Buffer
 				Hole are present in Data if an erase has been performed since the last BufferVector::at()
 				BufferVector::pack() is required if BufferVector::isPacked() is false
-			*/
+				*/
 			inline const T* Data() const {
 				return object_array_;
 			}
@@ -259,7 +264,7 @@ namespace Pro {
 			/*! Erase multiple elements at the same time
 				Reduces the amount of pakcs that the vector must perform to 1 per batch
 				TEST
-			*/
+				*/
 			inline void Erase(std::initializer_list<size_t> indicies) {
 				if (indicies.size() == 0 && indicies.size() < object_count_)
 					return;
@@ -287,8 +292,8 @@ namespace Pro {
 				for (size_t y = 0; y < indicies.size(); ++y) {
 					for (auto x = indicies.begin(); x != indicies.end(); ++x)
 						// *x == 0 for the case that lastIndex doesn't detect 0's
-						if ((*x > lastIndex && *x < shortest && *x < object_count_) || *x == 0)
-							shortest = *x;
+					if ((*x > lastIndex && *x < shortest && *x < object_count_) || *x == 0)
+						shortest = *x;
 					sorted[y] = shortest;
 					lastIndex = shortest;
 					shortest = 0 - 1;

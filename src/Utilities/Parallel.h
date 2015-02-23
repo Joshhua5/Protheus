@@ -55,8 +55,7 @@ namespace Pro {
 			Queue<BatchPack*> work_;
 			std::atomic<bool> pool_running_;
 			std::once_flag initialized_;
-			Future default_result_;
-			std::thread* workers_;
+			Future default_result_; 
 			unsigned thread_count;
 
 			void workerThread() {
@@ -81,22 +80,16 @@ namespace Pro {
 		public:
 			Parallel(unsigned pool_size) {
 				pool_running_.store(true);
-				work_.Resize(500);
-				workers_ = reinterpret_cast<std::thread*>(operator new(sizeof(std::thread) * pool_size)); 
+				work_.Resize(500); 
 				for (unsigned x = 0; x < pool_size; ++x) 
-					new(&workers_[x]) std::thread(&Parallel::workerThread, this); 
+					std::thread(&Parallel::workerThread, this).detach(); 
 				thread_count = pool_size;
 			}
 
 			~Parallel() {
+				// Set flag for threads to close
 				pool_running_.store(false);
 				new_work_.notify_all();
-				for (unsigned x = 0; x < thread_count; ++x) {
-					if (workers_[x].joinable())
-						workers_[x].join();
-					workers_[x].~thread();
-				}
-				operator delete(workers_);
 			}
 
 			bool IsQueueEmpty() {
