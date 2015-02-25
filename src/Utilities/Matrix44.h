@@ -40,7 +40,7 @@ namespace Pro {
 				if (values.size() == 16)
 					memcpy(matrix_, values.begin(), sizeof(T) * 16);
 				else
-					log.reportErrorNR("Incorrect intitalizer_list passed to Matrix44 constructor.\0");
+					global_log.ReportErrorNR("Incorrect intitalizer_list passed to Matrix44 constructor.\0");
 			}
 			Matrix44(const Matrix44& value) {
 				memcpy(matrix_, value.matrix_, sizeof(T) * 16);
@@ -197,7 +197,7 @@ namespace Pro {
 				det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
 
 				if (det <= FLT_EPSILON && det >= -FLT_EPSILON) {
-					log.Report<LogCode::ERROR>("Unable to get invert of Matrix44, identity matrix returned instead.\0", __FUNCTION__, __LINE__);
+					global_log.Report<LogCode::ERROR>("Unable to get invert of Matrix44, identity matrix returned instead.\0", __FUNCTION__, __LINE__);
 					return Matrix44(IDENTITY_MATRIX);
 				}
 

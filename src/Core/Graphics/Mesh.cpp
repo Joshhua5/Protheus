@@ -38,7 +38,7 @@ MeshObject* Mesh::GetObject(const string& object_name) {
 	for (unsigned x = 0; x < objects.size(); ++x)
 		if (objects[x].name == object_name)
 			return &objects[x];
-	log.Report<LogCode::ERROR>("Unable to find mesh object" + object_name, __FUNCTION__, __LINE__);
+	global_log.Report<LogCode::ERROR>("Unable to find mesh object" + object_name, __FUNCTION__, __LINE__);
 	return nullptr;
 }
 

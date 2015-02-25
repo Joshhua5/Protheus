@@ -13,7 +13,7 @@ CFile::CFile(const std::string& filePath)
 		fstream::out);
 
 	if (file.is_open() == false)
-		log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
 }
 
 CFile::~CFile()
@@ -28,7 +28,7 @@ void CFile::Open(const std::string& filePath){
 		fstream::in |
 		fstream::out);
 	if (file.is_open() == false)
-		log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to open file: " + filePath, __FUNCTION__, __LINE__);
 }
 
 bool CFile::IsEndOfFile(){

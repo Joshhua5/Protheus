@@ -157,7 +157,7 @@ namespace Pro {
 			/*! Returns the element at a specified index with bounds checking*/
 			inline const T& At(size_t index) const {
 				if (index > object_count_ || object_array_ == nullptr) {
-					log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
+					global_log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
 					return object_array_[0];
 				}
 				return object_array_[index];
@@ -165,7 +165,7 @@ namespace Pro {
 
 			inline T& At(size_t index) {
 				if (index > object_count_ || object_array_ == nullptr) {
-					log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
+					global_log.Report<LogCode::ERROR>("Out of bounds exception", __FUNCTION__, __LINE__);
 					return object_array_[0];
 				}
 				return object_array_[index];

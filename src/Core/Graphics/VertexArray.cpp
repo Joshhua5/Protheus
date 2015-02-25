@@ -29,7 +29,7 @@ void VertexArray::setVertexAttribute(const Program& program, const string& attri
 	PreservedBind();
 	GLint location = glGetAttribLocation(program.id(), attrib_name.data());
 	if (location == -1)
-		log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + attrib_name, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + attrib_name, __FUNCTION__, __LINE__);
 	if (size == 0)
 		return;
 	glEnableVertexAttribArray(location);

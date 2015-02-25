@@ -34,47 +34,50 @@ namespace Pro {
 		};
 
 		std::atomic<bool> running_;
-		Util::Queue<MessagePack> messages_;
+		std::atomic<bool> has_terminated_;
+		static Util::Queue<MessagePack> messages_;
 
-		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running) {
+		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running, std::atomic<bool>* terminated) {
+			*terminated = false;
 			std::fstream log;
 			if (!log.is_open())
 				log.open("log.xml", std::ios::out | std::ios::binary | std::ios::trunc);
 
-			log.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n", 40);
-			log.write("<Log>\n", 7);
+			log.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n", 40);
+			log.write("<Log>\r\n", 7);
 
-			while (running->load()) {
+			// Don't close until all messages have been written
+			while (running->load() || !messages->Empty()) {
 				while (!messages->Empty()) {
 					MessagePack& top = messages->Top();
 					std::string strCache;
-					log.write("<entry>\n", 9);
+					log.write("<entry>\r\n", 9);
 
-					strCache = "<id>" + std::to_string(top.id) + "</id>\n";
+					strCache = "<id>" + std::to_string(top.id) + "</id>\r\n";
 					log.write(strCache.data(), strCache.size());
 
 					switch (top.code) {
 					case LogCode::ERROR:
-						log.write("<severity> error </severity>\n", 30);
+						log.write("<severity> error </severity>\r\n", 30);
 						break;
 					case LogCode::FATAL:
-						log.write("<severity> fatal </severity>\n", 30);
+						log.write("<severity> fatal </severity>\r\n", 30);
 						break;
 					case LogCode::MESSAGE:
-						log.write("<severity> message </severity>\n", 32);
+						log.write("<severity> message </severity>\r\n", 32);
 						break;
 					}
 
-					strCache = "<line>" + std::to_string(top.line) + "</line>\n";
+					strCache = "<line>" + std::to_string(top.line) + "</line>\r\n";
 					log.write(strCache.data(), strCache.size());
 					 
-					strCache = "<function>" + std::string(top.function) + "</function>\n";
+					strCache = "<function>" + std::string(top.function) + "</function>\r\n";
 					log.write(strCache.data(), strCache.size());
 					  
-					strCache = "<message>" + top.message + "</message>\n";
+					strCache = "<message>" + top.message + "</message>\r\n";
 					log.write(strCache.data(), strCache.size());
 
-					log.write("</entry>\n", 10);
+					log.write("</entry>\r\n", 10);
 
 					messages->Pop();
 
@@ -82,9 +85,10 @@ namespace Pro {
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			}
 
-			log.write("</Log>\n", 8);
+			log.write("</Log>\r\n", 8);
 			log.flush();
 			log.close();
+			*terminated = true;
 		}
 
 		// Declared to be uncopyable and moveable.
@@ -94,9 +98,14 @@ namespace Pro {
 		Log& operator=(const Log&) = delete;
 	public:
 		Log() {
-			running_.store(true);
-			messages_.Resize(1000);
-			std::thread(&worker_thread, &messages_, &running_).detach();
+			static bool initialized = false;
+			if (initialized == false) {
+				initialized = true;
+				running_.store(true);
+				messages_.Resize(1000);
+				std::thread(&worker_thread, &messages_, &running_, &has_terminated_).detach();
+				
+			}
 		}
 		~Log() {
 			running_.store(false);
@@ -119,8 +128,19 @@ namespace Pro {
 
 			return num;
 		}
+
+		// TODO Needs System Control
+		// Allows control of when to close the log
+		// Required currently as there's no way to ensure that all threads terminate correctly
+		inline void Close() {
+			running_.store(false); 
+			while (has_terminated_ == false) {
+				// Wait until thread has closed nicely
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+		}
 	};
 
-	static Log log;
+	static Log global_log;
 }
 

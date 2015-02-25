@@ -138,7 +138,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 
 		GLenum err = glGetError();
 		if (err != GL_NO_ERROR) {
-			log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to initialize sprite_batcher", __FUNCTION__, __LINE__);
+			global_log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to initialize sprite_batcher", __FUNCTION__, __LINE__);
 			first_init = true;
 			glDeleteBuffers(1, &vertex_buffer_id);
 			glDeleteBuffers(1, &element_buffer_id);
@@ -209,34 +209,34 @@ void SpriteBatcher::Push(int texture,
 	details.rotation = rotate; */
 }
 
-void SpriteBatcher::BatchPush(int texture,
-	Vector3<float> position,
-	Vector2<float> dimensions,
-	const  float scale,
-	const  float rotate) {
-	if (texture < 0)
-		return;
-
-	dimensions *= scale;
-
-	float values[9] = { position.x, position.y, position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
-
-	writer->WriteElements(values, 9); 
-
-	current_sprite_count++;
-	sprite_indicies.At(texture).PushBack(current_sprite_count);
-
-	// Figure out how to apply rotation and a sprite
-	/*details.sprite = _s;
-	details.rotation = rotate; */
-}
-
-void SpriteBatcher::BatchUpdate(int texture, unsigned count){
-	if (texture < 0)
-		return;
-	//current_sprite_count += count;
-	sprite_count.At(texture) += count;
-}
+//void SpriteBatcher::BatchPush(int texture,
+//	Vector3<float> position,
+//	Vector2<float> dimensions,
+//	const  float scale,
+//	const  float rotate) {
+//	if (texture < 0)
+//		return;
+//
+//	dimensions *= scale;
+//
+//	float values[9] = { position.x, position.y, position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
+//
+//	writer->WriteElements(values, 9); 
+//
+//	current_sprite_count++;
+//	sprite_indicies.At(texture).PushBack(current_sprite_count);
+//
+//	// Figure out how to apply rotation and a sprite
+//	/*details.sprite = _s;
+//	details.rotation = rotate; */
+//}
+//
+//void SpriteBatcher::BatchUpdate(int texture, unsigned count){
+//	if (texture < 0)
+//		return;
+//	//current_sprite_count += count;
+//	sprite_count.At(texture) += count;
+//}
 
 int SpriteBatcher::AttachTexture(smart_ptr<Texture> tex) {
 	if (tex.IsNull())
@@ -306,7 +306,7 @@ void SpriteBatcher::Render() {
 
 	GLuint err = glGetError();
 	if (err != GL_NO_ERROR)
-		log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to render the spritebatcher\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to render the spritebatcher\0", __FUNCTION__, __LINE__);
 }
 
 

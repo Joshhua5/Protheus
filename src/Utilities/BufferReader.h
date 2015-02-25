@@ -168,7 +168,7 @@ namespace Pro {
 					string err = "";
 					for (const auto members_ : def.members_())
 						err += members_name + "\n";
-					log.reportError("Missmatch of extern class definition" + err);
+					global_log.ReportError("Missmatch of extern class definition" + err);
 					return;
 				}
 

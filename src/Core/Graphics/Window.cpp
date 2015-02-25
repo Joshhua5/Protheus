@@ -10,7 +10,7 @@ void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
 
 void glfw_error_callback(int error_code, const char* desctiption) {
-	Pro::log.Report<LogCode::FATAL>(desctiption, "Window CALLBACK (Line is error code)", error_code);
+	Pro::global_log.Report<LogCode::FATAL>(desctiption, "Window CALLBACK (Line is error code)", error_code);
 }
 
 void Window::window_constructor(const WindowDefinition& def) {
@@ -57,7 +57,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 	}
 
 	if (window_ == nullptr) {
-	Pro::log.Report<LogCode::FATAL>("Unable to create window", __FUNCTION__, __LINE__);
+	Pro::global_log.Report<LogCode::FATAL>("Unable to create window", __FUNCTION__, __LINE__);
 	return;
 	}
 	// Initialize the texture unit class
@@ -75,7 +75,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 
 	GLuint err = glGetError();
 	if (err != GL_NO_ERROR)
-		log.Report<LogCode::FATAL>("Unable to create window, " + std::string((char*)glewGetErrorString(err)), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::FATAL>("Unable to create window, " + std::string((char*)glewGetErrorString(err)), __FUNCTION__, __LINE__);
 	 
 }
 
@@ -162,7 +162,7 @@ float Window::aspect() const {
 
 void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
-	Pro::log.Report<LogCode::FATAL>(string(message​, length​), __FUNCTION__, __LINE__); 
+	Pro::global_log.Report<LogCode::FATAL>(string(message​, length​), __FUNCTION__, __LINE__); 
 }
 
 

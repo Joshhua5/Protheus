@@ -6,7 +6,7 @@ using namespace OpenCL;
 
 OpenCL::CLBuffer::CLBuffer(const Context& context, Util::AlignedBuffer& buf, unsigned flag) {
 	if (buf.IsPadded())
-		log.Report<LogCode::ERROR>("Unable to create buffer, Alignedbuffer is padded (Check the Alignment and object size)", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to create buffer, Alignedbuffer is padded (Check the Alignment and object size)", __FUNCTION__, __LINE__);
 	else
 		buffer_id = clCreateBuffer(context.getContext(), flag, buf.size(), buf.data(), NULL);
 }

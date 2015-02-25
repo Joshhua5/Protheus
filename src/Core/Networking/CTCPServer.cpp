@@ -41,7 +41,7 @@ bool TCPServer::startListening(IPaddress serverAddress, const unsigned maxSocket
 	connections.reserve(maxSockets);
 
 	if (!set){
-		log.Report<LogCode::ERROR>("Unable to start server: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to start server: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
 		return false;
 	}
 	listening.store(true);

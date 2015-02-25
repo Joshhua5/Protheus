@@ -76,7 +76,7 @@ void Program::link() {
 		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &size);
 		Buffer err(size);
 		glGetProgramInfoLog(program_id, err.size(), nullptr, err.data<char>());
-		log.Report<LogCode::ERROR>(err.data<char>(), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>(err.data<char>(), __FUNCTION__, __LINE__);
 		has_error = true;
 	}
 }
@@ -92,7 +92,7 @@ inline GLint Program::getUniformLocation(GLuint program_id, const std::string& u
 	if (iterator == locations.end()) {
 		location = glGetUniformLocation(program_id, uniform_name.data());
 		if (location == -1) {
-			log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + uniform_name, __FUNCTION__, __LINE__);
+			global_log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + uniform_name, __FUNCTION__, __LINE__);
 			return -1;
 		}
 		locations.insert({ uniform_name, location });

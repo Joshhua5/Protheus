@@ -6,7 +6,7 @@ using namespace Networking;
 Network::Network()
 {
 	if (SDLNet_Init() < 0)
-		Pro::log.Report<LogCode::ERROR>("Network Constructor Failure" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
+		Pro::global_log.Report<LogCode::ERROR>("Network Constructor Failure" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
 }
 
 Network::~Network(){
@@ -25,7 +25,7 @@ TCPServer* Network::startServer(const unsigned short port, const unsigned max_co
 	IPaddress add;
 	// Check the address for open socket to connect to
 	if (SDLNet_ResolveHost(&add, NULL, port)){
-		log.Report<LogCode::ERROR>("Unable to start server: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to start server: \n" + string(SDLNet_GetError()), __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 	// start trying to connect to the server 
@@ -49,7 +49,7 @@ ClientTCPConnection*  Network::connectToServer(const std::string &IP, const unsi
 	IPaddress address;
 	// Check the address for open socket to connect to
 	if (SDLNet_ResolveHost(&address, IP.c_str(), port)){
-		log.Report<LogCode::ERROR>("Unable to start client: \n" + string(SDLNet_GetError()),  __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to start client: \n" + string(SDLNet_GetError()),  __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 	// start trying to connect to the server

@@ -9,7 +9,6 @@
 
 namespace Pro {
 	namespace Graphics {
-		using namespace Util;
 		enum struct IMAGE_FORMAT {
 			PNG,
 			BMP,
@@ -34,12 +33,12 @@ namespace Pro {
 		};
 
 		class TextureLoader {
-			static IMAGE_FORMAT QueryFormat(Buffer*);
+			static IMAGE_FORMAT QueryFormat(Util::Buffer*);
 		public:
 
-			static smart_ptr<Texture> LoadBMP(Buffer*);
-			static smart_ptr<Texture> LoadTexture(Buffer*);
-			static smart_ptr<Texture> LoadTexture(Buffer&&);
+			static Util::smart_ptr<Texture> LoadBMP(Util::Buffer*);
+			static Util::smart_ptr<Texture> LoadTexture(Util::Buffer*);
+			static Util::smart_ptr<Texture> LoadTexture(Util::Buffer&&);
 		};
 	}
 }

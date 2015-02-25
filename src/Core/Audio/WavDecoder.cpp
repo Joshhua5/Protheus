@@ -53,7 +53,7 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 	 
 	 
 	if (chunkID != "RIFF" && format == "WAVE" && subChunk2ID == "data" && subChunk1ID == "fmt ") {
-		log.Report<LogCode::ERROR>("Incorrect WAV format: " + chunkID + " fmt:" + format + " sc1:" + subChunk1ID + " sc2:" + subChunk2ID, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Incorrect WAV format: " + chunkID + " fmt:" + format + " sc1:" + subChunk1ID + " sc2:" + subChunk2ID, __FUNCTION__, __LINE__);
 		return nullptr;
 	} 
 
@@ -70,12 +70,12 @@ CAudioData* CWavDecoder::load(Buffer* buffer){
 	// Check for a supported format
 
 	if (!(numChannels == 1 || numChannels == 2)){
-		log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid number of channels", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid number of channels", __FUNCTION__, __LINE__);
 		delete out;
 		return nullptr;
 	}
 	if (!(bitsPerSample == 8 || bitsPerSample == 16)){
-		log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid bits per sample", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unsupported WAV format: Invalid bits per sample", __FUNCTION__, __LINE__);
 		delete out;
 		return nullptr;
 	}

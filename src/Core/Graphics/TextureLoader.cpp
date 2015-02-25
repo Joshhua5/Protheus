@@ -1,6 +1,7 @@
 #include "TextureLoader.h"
 
 using namespace Pro;
+using namespace Util;
 using namespace Graphics;
 using namespace Math;
 
@@ -151,7 +152,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 
 	if (!(header.header_size == 12 || header.header_size == 40 || header.header_size == 108 ||
 		header.header_size == 124 || header.header_size == 52 || header.header_size == 56)) {
-		log.Report<LogCode::ERROR>("Unsupported BMP header", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unsupported BMP header", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -172,7 +173,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 			def.a = reader.Read<char>();
 			break;
 		default:
-			log.Report<LogCode::ERROR>("BMP format not supported: supported bit_depths: 24, 32", __FUNCTION__, __LINE__);
+			global_log.Report<LogCode::ERROR>("BMP format not supported: supported bit_depths: 24, 32", __FUNCTION__, __LINE__);
 			return nullptr;
 		}
 		colorTable.push_back(
@@ -258,7 +259,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR) {
-		log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to load texture", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to load texture", __FUNCTION__, __LINE__);
 		glDeleteTextures(1, &texture_id);
 	}
 
@@ -269,7 +270,7 @@ smart_ptr<Texture> TextureLoader::LoadTexture(Buffer* buffer) {
 	smart_ptr<Texture> tex;
 
 	if (buffer->Empty()) {
-		log.Report<LogCode::ERROR>("Empty buffer passed to TextureLoader, did file load correctly?\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Empty buffer passed to TextureLoader, did file load correctly?\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -278,7 +279,7 @@ smart_ptr<Texture> TextureLoader::LoadTexture(Buffer* buffer) {
 		tex = LoadBMP(buffer);
 		break;
 	default:
-		log.Report<LogCode::ERROR>("Unknown image format", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unknown image format", __FUNCTION__, __LINE__);
 		return nullptr;
 		break;
 	}

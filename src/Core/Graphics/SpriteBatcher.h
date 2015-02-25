@@ -75,14 +75,14 @@ namespace Pro{
 				const  float scale = 1,
 				const  float rotate = 0);
 
-
-			void BatchPush(int texture,
-				Vector3<float> position,
-				Vector2<float> dimensions,
-				const  float scale = 1,
-				const  float rotate = 0);
-
-			void BatchUpdate(int texture, unsigned count);
+			
+			//void BatchPush(int texture,
+			//	Vector3<float> position,
+			//	Vector2<float> dimensions,
+			//	const  float scale = 1,
+			//	const  float rotate = 0);
+			
+			//void BatchUpdate(int texture, unsigned count);
 
 			// if -1, the maxiumum texture bindings has been hit.
 			int AttachTexture(smart_ptr<Texture> tex);

@@ -20,7 +20,7 @@ Shader::Shader(const Buffer& shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
  
@@ -40,7 +40,7 @@ Shader::Shader(Buffer&& shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
 
@@ -66,7 +66,7 @@ Shader::Shader(const std::string& shader, GLenum shader_type) {
 	if (size == GL_FALSE) {
 		Buffer error_log(512);
 		glGetShaderInfoLog(m_shader_id, 512, NULL, error_log.data<GLchar>());
-		log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load shader: " + std::string(error_log.data<char>()), __FUNCTION__, __LINE__);
 	}
 }
 
@@ -94,7 +94,7 @@ bool Shader::Init(const Buffer& shader, GLenum shader_type) {
 
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &size);
 	if (size == GL_FALSE) {
-		log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
 		return false;
 	}
 
@@ -117,7 +117,7 @@ bool Shader::Init(const std::string& shader, GLenum shader_type) {
 	GLint glError = 0;
 	glGetShaderiv(m_shader_id, GL_COMPILE_STATUS, &glError);
 	if (glError == GL_FALSE) {
-		log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load shader: " + m_shader_id, __FUNCTION__, __LINE__);
 		return false;
 	}
 

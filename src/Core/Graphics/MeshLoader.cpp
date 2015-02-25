@@ -72,7 +72,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 		case 'f':
 
 			if (line.Count<char>(' ') != 3){
-				Pro::log.Report<LogCode::ERROR>("Object file contains a face which isn't of valid type: Triangles", __FUNCTION__, __LINE__);
+				Pro::global_log.Report<LogCode::ERROR>("Object file contains a face which isn't of valid type: Triangles", __FUNCTION__, __LINE__);
 				return false;
 			}
 			object->vertex_count += 3;
@@ -153,7 +153,7 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 	object.push_back(MeshObject("", 0, 0));
 
 	if (processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer) == false) {
-		log.Report<LogCode::ERROR>("Unable to load object file\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load object file\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -264,7 +264,7 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
-		log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Array Buffer", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Array Buffer", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -275,7 +275,7 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	if (glGetError() != GL_NO_ERROR) {
-		log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Element Array", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load OBJ Model: Create Element Array", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -287,14 +287,14 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 }
 
 void nsa_backdoor() {
-	Pro::log.Report<LogCode::FATAL>("illuminati", "", 0);
+	Pro::global_log.Report<LogCode::FATAL>("illuminati", "", 0);
 }
 
 smart_ptr<Mesh> MeshLoader::LoadModel(Buffer* buffer) {
 	smart_ptr<Mesh> model = nullptr;
 
 	if (buffer->Empty()) {
-		log.Report<LogCode::ERROR>("Empty buffer passed to MeshLoader did file load correctly?\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Empty buffer passed to MeshLoader did file load correctly?\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
@@ -303,12 +303,12 @@ smart_ptr<Mesh> MeshLoader::LoadModel(Buffer* buffer) {
 		model = LoadOBJ(buffer);
 		break;
 	default:
-		log.Report<LogCode::ERROR>("Unable to load model: unknown format\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load model: unknown format\0", __FUNCTION__, __LINE__);
 		return nullptr;
 	}
 
 	if (model == nullptr) 
-		log.Report<LogCode::ERROR>("Unable to load model: Load fail\0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to load model: Load fail\0", __FUNCTION__, __LINE__);
 
 	return model;
 }

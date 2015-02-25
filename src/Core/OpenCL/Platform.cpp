@@ -5,7 +5,7 @@ using namespace OpenCL;
 using namespace Util;
 
 static void CL_CALLBACK cl_error_callback(const char* msg, const void* pvt_info, size_t cb, void* user_data) {
-	Pro::log.Report<LogCode::ERROR>(msg, __FUNCTION__, __LINE__);
+	Pro::global_log.Report<LogCode::ERROR>(msg, __FUNCTION__, __LINE__);
 }
 
 Platform::Platform(unsigned device_type){ 
@@ -40,14 +40,14 @@ Platform::Platform(unsigned device_type){
 	}
 
 	if (err.HadError())
-		log.Report<LogCode::ERROR>("Error in Pro::OpenCL::Platform", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Error in Pro::OpenCL::Platform", __FUNCTION__, __LINE__);
 
 }
 
 
 Device Platform::getDevice(unsigned index) {
 	if (index > device_count) {
-		log.Report<LogCode::ERROR>("Device index out of range, returning Device: 0", __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Device index out of range, returning Device: 0", __FUNCTION__, __LINE__);
 		index = 0;
 	}
 	return Device(devices[index], queues[index]);

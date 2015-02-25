@@ -27,10 +27,10 @@ Program::Program(const Platform& platform, const Buffer& buffer) {
 	program_id = clCreateProgramWithSource(platform.getContext().getContext(), 1, &ptr, &size, &err);
 	finished.Reset(1);
 	if (err != CL_SUCCESS)
-		log.Report<LogCode::ERROR>("Unable to CreateProgramWithSource, Error Code: " + err, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to CreateProgramWithSource, Error Code: " + err, __FUNCTION__, __LINE__);
 	err = clBuildProgram(program_id, NULL, NULL, NULL, NULL, NULL); // &compile_callback, &finished);
 	if (err != CL_SUCCESS)
-		log.Report<LogCode::ERROR>("Unable to clBuildProgram, Error Code: " + err, __FUNCTION__, __LINE__);
+		global_log.Report<LogCode::ERROR>("Unable to clBuildProgram, Error Code: " + err, __FUNCTION__, __LINE__);
 }
 
 Program::Program(const Platform& platform, const char* buf) { 

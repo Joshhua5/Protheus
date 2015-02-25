@@ -30,7 +30,7 @@ namespace Pro {
 				if (values.size() == 9)
 					memcpy(matrix_, values.begin(), sizeof(T) * 9);
 				else
-					log.reportErrorNR("Incorrect intitalizer_list passed to Matrix33 constructor.\0");
+					global_log.ReportErrorNR("Incorrect intitalizer_list passed to Matrix33 constructor.\0");
 			}
 
 			Matrix33(float values[9]) {
