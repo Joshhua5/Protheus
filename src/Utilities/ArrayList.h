@@ -82,12 +82,15 @@ namespace Pro {
 				for (size_t x = iterator_size; x < size; ++x)
 					new(buffer + x) T(arguments...);
 
+				// Destroy will set object_count_ to 0
 				Destroy();
 				object_array_ = buffer;
-				reserved_ = initialize_all ? 0 : size - object_count_; 
 
 				// iterator_size is equal to the object count
 				object_count_ = iterator_size;
+
+				reserved_ = initialize_all ? 0 : size - object_count_; 
+
 			}
 
 		public:
@@ -245,6 +248,7 @@ namespace Pro {
 			}
 
 			//! Increased the capacity of the ArrayList without initializing objects
+			//! Resized will automatically occure when there's one space left.
 			void Reserve(const size_t size) {
 				Resize<false>(size);
 			}

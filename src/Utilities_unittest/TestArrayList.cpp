@@ -69,7 +69,7 @@ TEST(TestArrayList, push_back_test002)
 	call_count.reset();
 	{
 		ArrayList<TestCls> list;
-		list.Reserve(6);
+		list.Reserve(7);
 		list.PushBack(v1);
 		list.PushBack(v2);
 		list.PushBack(v3);

@@ -1,9 +1,9 @@
 #pragma once
+#include "Queue.h" 
 #include <string>
 #include <fstream> 
 #include <thread>
 #include <mutex>
-#include "Queue.h" 
  
 /*************************************************************************
 Protheus Source File.
@@ -33,12 +33,10 @@ namespace Pro {
 			std::string message;
 		};
 
-		// Static so that multiple Error's will write to the same file.
-		std::thread worker_;
 		std::atomic<bool> running_;
-		Pro::Util::Queue<MessagePack> messages_;
+		Util::Queue<MessagePack> messages_;
 
-		static void worker_thread(Pro::Util::Queue<MessagePack>* messages, std::atomic<bool>* running) {
+		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running) {
 			std::fstream log;
 			if (!log.is_open())
 				log.open("log.xml", std::ios::out | std::ios::binary | std::ios::trunc);
@@ -98,11 +96,10 @@ namespace Pro {
 		Log() {
 			running_.store(true);
 			messages_.Resize(1000);
-			worker_ = std::thread(&worker_thread, &messages_, &running_);
+			std::thread(&worker_thread, &messages_, &running_).detach();
 		}
 		~Log() {
 			running_.store(false);
-			worker_.join();
 		}
 
 		template<LogCode E>

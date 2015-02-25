@@ -51,11 +51,11 @@ namespace Pro {
 			}
 
 			smart_ptr(T* ptr) {
+				ptr_ = ptr;
 				if (ptr_ == nullptr)
 					references_ = nullptr;
 				else
 					references_ = new unsigned(1);
-				ptr_ = ptr;
 			}
 
 			smart_ptr(smart_ptr&& rhs) {

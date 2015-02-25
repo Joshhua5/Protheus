@@ -45,8 +45,8 @@ void funcTest(smart_array<TestCls> obj) {
 TEST(Smart_Array, Copy_Test) {
 	Counter call_count; 
 	TestCls* original = new TestCls[20];
-	for (unsigned x = 0; x < 20; ++x)
-		original[x].attach(&call_count);
+	for (unsigned i = 0; i < 20; ++i)
+		original[i].attach(&call_count);
 	smart_array<TestCls> x = original;
 	smart_array<TestCls> y = x;
 	smart_array<TestCls> z = y;

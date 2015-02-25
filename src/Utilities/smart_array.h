@@ -52,11 +52,11 @@ namespace Pro {
 			}
 
 			smart_array(T* ptr) {
+				ptr_ = ptr;
 				if (ptr_ == nullptr)
 					references_ = nullptr;
 				else
 					references_ = new unsigned(1); 
-				ptr_ = ptr;
 			}
 
 			smart_array(smart_array&& rhs) {

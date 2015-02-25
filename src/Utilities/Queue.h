@@ -6,6 +6,9 @@ Copyright (C), Protheus Studios, 2013-2014.
 Description:
 A extern class to provide writing functions to a buffer
 
+Note: 
+	Does not produce log data due to a dependency.
+	Log writes have been replaces with throws enables with the NDEBUG flag
 -------------------------------------------------------------------------
 History:
 - 9:01:2015: Waring J.
@@ -13,9 +16,8 @@ History:
 #pragma once
 
 #include <atomic>
-#include "Log.h"
-#include <iostream>
-
+#include <mutex> 
+ 
 namespace Pro {
 	namespace Util {
 		/*! Thread Safe Lock Free Queue
@@ -118,7 +120,9 @@ namespace Pro {
 
 			inline const T& Top() const {
 				if (Empty()) {
-					log.reportError("Called Top on a empty queue, undefined returned object.");
+#if NDEBUG
+					throw "Called Top on a empty queue, undefined returned object."; 
+#endif
 					return queue_.load()[pop_position_];
 				}
 				return queue_.load()[pop_position_];
@@ -126,7 +130,9 @@ namespace Pro {
 
 			inline T& Top() {
 				if (Empty()) {
-					log.Report<LogCode::ERROR>("Called Top on a empty queue, undefined returned object.", __FUNCTION__, __LINE__);
+#if NDEBUG
+					throw "Called Top on a empty queue, undefined returned object.";
+#endif
 					return queue_.load()[pop_position_];
 				}
 				return queue_.load()[pop_position_];
@@ -134,8 +140,10 @@ namespace Pro {
 
 			inline void Pop() {
 				// Check if empty
-				if (Empty()) {
-					log.Report<LogCode::ERROR>("Popped a empty queue", __FUNCTION__, __LINE__);
+				if (Empty()) { 
+#if NDEBUG
+					throw "Popped a empty queue.";
+#endif 
 					return;
 				}
 				// Check if at the end and set the position to 0 if true
