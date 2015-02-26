@@ -31,8 +31,7 @@ namespace Pro {
 			TODO:
 			Add wait events to control the order of job execution
 			*/
-		class Parallel {
-
+		class Parallel { 
 			struct BatchPack {
 				std::atomic<bool> being_processed;
 				Future* finished;
@@ -80,9 +79,9 @@ namespace Pro {
 		public:
 			Parallel(unsigned pool_size) {
 				pool_running_.store(true);
-				work_.Resize(500); 
-				for (unsigned x = 0; x < pool_size; ++x) 
-					std::thread(&Parallel::workerThread, this).detach(); 
+				work_.Resize(500);
+				for (unsigned x = 0; x < pool_size; ++x)
+					std::thread(&Parallel::workerThread, this).detach();
 				thread_count = pool_size;
 			}
 
@@ -92,7 +91,7 @@ namespace Pro {
 				new_work_.notify_all();
 			}
 
-			bool IsQueueEmpty() {
+			inline bool IsQueueEmpty() {
 				return work_.Empty();
 			}
 

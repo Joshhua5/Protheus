@@ -4,7 +4,7 @@
 #include <fstream> 
 #include <thread>
 #include <mutex>
- 
+
 /*************************************************************************
 Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2014.
@@ -35,7 +35,15 @@ namespace Pro {
 
 		std::atomic<bool> running_;
 		std::atomic<bool> has_terminated_;
-		static Util::Queue<MessagePack> messages_;
+		Util::Queue<MessagePack> messages_;
+
+		static inline void remove_all(const char ch, std::string& in){
+			auto position = in.find_first_of(ch, 0);
+			while (position != std::string::npos){
+				in.erase(position, 1);
+				position = in.find_first_of(ch, position - 1);
+			}
+		}
 
 		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running, std::atomic<bool>* terminated) {
 			*terminated = false;
@@ -50,7 +58,9 @@ namespace Pro {
 			while (running->load() || !messages->Empty()) {
 				while (!messages->Empty()) {
 					MessagePack& top = messages->Top();
+					// Check that the Message is valid
 					std::string strCache;
+					strCache.reserve(40);
 					log.write("<entry>\r\n", 9);
 
 					strCache = "<id>" + std::to_string(top.id) + "</id>\r\n";
@@ -71,9 +81,17 @@ namespace Pro {
 					strCache = "<line>" + std::to_string(top.line) + "</line>\r\n";
 					log.write(strCache.data(), strCache.size());
 					 
-					strCache = "<function>" + std::string(top.function) + "</function>\r\n";
+					// Perform a nullptr check on function
+					strCache = "<function>" + ((top.function != nullptr) ? std::string(top.function) : "Invalid") +"</function>\r\n"; 
 					log.write(strCache.data(), strCache.size());
-					  
+
+					// top.message can contain data which will break the XML format
+					// Search for either < or > to remove
+					//for (auto position = top.message.find_first_of('<', 0); position != std::string::npos; position = top.message.find_first_of('<', 0));
+					
+					remove_all('>', top.message);
+					remove_all('<', top.message);
+
 					strCache = "<message>" + top.message + "</message>\r\n";
 					log.write(strCache.data(), strCache.size());
 
@@ -97,15 +115,11 @@ namespace Pro {
 		Log& operator=(Log&&) = delete;
 		Log& operator=(const Log&) = delete;
 	public:
-		Log() {
-			static bool initialized = false;
-			if (initialized == false) {
-				initialized = true;
-				running_.store(true);
-				messages_.Resize(1000);
-				std::thread(&worker_thread, &messages_, &running_, &has_terminated_).detach();
-				
-			}
+		Log() { 
+			running_.store(true);
+			messages_.Resize(1000);
+			std::thread(&worker_thread, &messages_, &running_, &has_terminated_).detach();
+
 		}
 		~Log() {
 			running_.store(false);
@@ -123,7 +137,7 @@ namespace Pro {
 			pack.line = line;
 			pack.function = file;
 			pack.message = msg;
-			messages_.Push(std::move(pack)); 
+			messages_.Push(std::move(pack));
 
 
 			return num;
@@ -133,7 +147,7 @@ namespace Pro {
 		// Allows control of when to close the log
 		// Required currently as there's no way to ensure that all threads terminate correctly
 		inline void Close() {
-			running_.store(false); 
+			running_.store(false);
 			while (has_terminated_ == false) {
 				// Wait until thread has closed nicely
 				std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -141,6 +155,6 @@ namespace Pro {
 		}
 	};
 
-	static Log global_log;
+	extern Log global_log;
 }
 

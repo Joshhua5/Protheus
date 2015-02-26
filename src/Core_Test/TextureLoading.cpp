@@ -18,7 +18,7 @@ using namespace Audio;
 int main(int argc, char* args []) {
 	auto window = Graphics::Window("Window", Vector2<int>(128, 128));
 
-	FileSystem fileIO;
+	FileSystem fileIO("textures/");
 
 	auto file = fileIO.GetFile("text.bmp"); 
 	auto tex = Graphics::TextureLoader::LoadTexture(&file);

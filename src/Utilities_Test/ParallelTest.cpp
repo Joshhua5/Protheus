@@ -9,6 +9,8 @@
 using namespace Pro;
 using namespace Util;
 
+Parallel parallel;
+
 struct Object {
 	mutable float x, y;
 	Object() {
