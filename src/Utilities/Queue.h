@@ -38,7 +38,7 @@ namespace Pro {
 			inline size_t CheckOverflow(std::atomic<size_t>* pos) {
 				if (pos->load() == capacity_ - 1) {
 					pos->store(0);
-					return pos->load();
+					return 0;
 				}
 				return (*pos)++;
 			}
@@ -93,8 +93,7 @@ namespace Pro {
 				auto pos = CheckOverflow(&push_position_);
 
 				++size_;
-				new(queue_.load() + pos) T(obj);
-				//	queue_.load()[pos] = obj;
+				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj)); 
 			}
 
 			inline void Push(T&& obj) {
@@ -104,8 +103,7 @@ namespace Pro {
 
 				++size_;
 
-				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj));
-				//queue_.load()[pos] = std::move(obj);
+				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj)); 
 			}
 
 			template<typename... Args>
@@ -129,6 +127,10 @@ namespace Pro {
 			}
 
 			inline T& Top() {
+				// TODO just to test
+				if (pop_position_ == 999){
+					global_log.Report<LogCode::MESSAGE>("DEBUG", nullptr, 0);
+				}
 				if (Empty()) {
 #if NDEBUG
 					throw "Called Top on a empty queue, undefined returned object.";
