@@ -10,8 +10,10 @@ const unsigned count = 2000;
 
 void creator(Queue<unsigned>* q, std::atomic<bool>* flag){
 	while (flag->load());
-	for (unsigned i = 0; i < count; ++i)
+	for (unsigned i = 0; i < count; ++i){
+		while (q->size() == q->capacity() - 10);
 		q->Push(i);
+	}
 }
 
 void consumor(Queue<unsigned>* q, std::atomic<bool>* flag){
@@ -19,7 +21,7 @@ void consumor(Queue<unsigned>* q, std::atomic<bool>* flag){
 	for (unsigned i = 0; i < count; ++i){
 		while (q->Empty());
 		if (q->Top() != i)
-			global_log.Report<LogCode::MESSAGE>("FAIL", nullptr, i);
+			global_log.Report<LogCode::MESSAGE>(std::to_string(q->Top()) + " expected " , nullptr, i); 
 		q->Pop();
 	}
 }
@@ -33,6 +35,7 @@ int main() {
 
 	go.store(false);
 
-	std::this_thread::sleep_for(std::chrono::seconds(30));
+	std::this_thread::sleep_for(std::chrono::seconds(20));
+	global_log.Close();
 	return 0;
 }

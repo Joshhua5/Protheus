@@ -5,6 +5,7 @@ Copyright (C), Protheus Studios, 2013-2014.
 
 Description:
 A extern class to provide writing functions to a buffer
+Not safe for 2 simultaneous producers or 2 simultaneous consumors 
 
 Note: 
 	Does not produce log data due to a dependency.
@@ -36,7 +37,17 @@ namespace Pro {
 			std::mutex resize_lock_;
 
 			inline size_t CheckOverflow(std::atomic<size_t>* pos) {
-				if (pos->load() == capacity_ - 1) {
+				// if position is at the capacity then overflow
+				if (pos->load() == capacity_) {
+					pos->store(0);
+					return 0;
+				}
+				return *pos;
+			}
+
+			inline size_t CheckOverflowWithIncrement(std::atomic<size_t>* pos) {
+				// if position is at the capacity then overflow
+				if (pos->load() == capacity_) {
 					pos->store(0);
 					return 0;
 				}
@@ -90,72 +101,58 @@ namespace Pro {
 			inline void Push(const T& obj) {
 				if (size_ == capacity_ - 1)
 					Resize(static_cast<size_t>(capacity_ * 1.2f));
-				auto pos = CheckOverflow(&push_position_);
+				auto pos = CheckOverflowWithIncrement(&push_position_);
 
-				++size_;
 				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj)); 
+				++size_;
 			}
 
 			inline void Push(T&& obj) {
 				if (size_ == capacity_ - 1)
 					Resize(static_cast<size_t>(capacity_ * 1.2f));
-				auto pos = CheckOverflow(&push_position_);
-
-				++size_;
+				auto pos = CheckOverflowWithIncrement(&push_position_);
 
 				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj)); 
+				++size_; 
 			}
 
 			template<typename... Args>
 			inline void Emplace(Args... arguments) {
 				if (size_ == capacity_ - 1)
 					Resize(static_cast<size_t>(capacity_ * 1.2f));
-				auto pos = CheckOverflow(&push_position_);
-				++size_;
-
+				auto pos = CheckOverflowWithIncrement(&push_position_); 
 				new(reinterpret_cast<T*>(queue_.load()) + pos) T(arguments);
+				++size_;
 			}
+			 
 
-			inline const T& Top() const {
-				if (Empty()) {
-#if NDEBUG
-					throw "Called Top on a empty queue, undefined returned object."; 
-#endif
-					return queue_.load()[pop_position_];
-				}
-				return queue_.load()[pop_position_];
-			}
-
-			inline T& Top() {
-				// TODO just to test
-				if (pop_position_ == 999){
-					global_log.Report<LogCode::MESSAGE>("DEBUG", nullptr, 0);
-				}
+			inline T& Top() {  
 				if (Empty()) {
 #if NDEBUG
 					throw "Called Top on a empty queue, undefined returned object.";
-#endif
-					return queue_.load()[pop_position_];
-				}
-				return queue_.load()[pop_position_];
-			}
-
-			inline void Pop() {
-				// Check if empty
-				if (Empty()) { 
-#if NDEBUG
-					throw "Popped a empty queue.";
 #endif 
-					return;
 				}
-				// Check if at the end and set the position to 0 if true
-				auto pos = CheckOverflow(&pop_position_);
-				(queue_.load() + pos)->~T();
+				auto pos = CheckOverflow(&pop_position_); 
+				return queue_.load()[pos]; 
+			}
+			 
+			inline void Pop() { 
+				// Get the next object
+				auto pos = pop_position_.load();
+				if (pos == capacity_) {
+					pop_position_.store(1);
+					pos = 0;
+				}
+				else
+					pop_position_++;
+				// Deconstruct object
+				(queue_.load() + pos)->~T(); 
+				// Top doesn't increment, so do that here 
 				--size_;
 			}
 
 			inline T TopPop() {
-				T returnObj = Top();
+				T returnObj(Top());
 				Pop();
 				return returnObj;
 			}
