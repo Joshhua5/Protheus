@@ -48,7 +48,8 @@ namespace Pro {
 			inline size_t CheckOverflowWithIncrement(std::atomic<size_t>* pos) {
 				// if position is at the capacity then overflow
 				if (pos->load() == capacity_) {
-					pos->store(0);
+					// 1 To account for the increment
+					pos->store(1);
 					return 0;
 				}
 				return (*pos)++;

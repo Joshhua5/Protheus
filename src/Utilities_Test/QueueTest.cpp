@@ -6,7 +6,7 @@
 using namespace Pro;
 using namespace Util;
 
-const unsigned count = 2000;
+const unsigned count = 100000;
 
 void creator(Queue<unsigned>* q, std::atomic<bool>* flag){
 	while (flag->load());
@@ -27,7 +27,7 @@ void consumor(Queue<unsigned>* q, std::atomic<bool>* flag){
 }
 
 int main() {
-	Queue<unsigned> q(1000);
+	Queue<unsigned> q(64);
 	std::atomic<bool> go = true;
 
 	std::thread(&creator, &q, &go).detach();
@@ -35,7 +35,7 @@ int main() {
 
 	go.store(false);
 
-	std::this_thread::sleep_for(std::chrono::seconds(20));
+	std::this_thread::sleep_for(std::chrono::seconds(60));
 	global_log.Close();
 	return 0;
 }

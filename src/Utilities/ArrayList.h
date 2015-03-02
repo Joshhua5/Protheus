@@ -72,6 +72,9 @@ namespace Pro {
 					object_array_ = buffer;
 					object_count_ = 0;
 					reserved_ = size;
+					if (initialize_all)
+					for (size_t x = iterator_size; x < size; ++x)
+						new(buffer + x) T(arguments...);
 					return;
 				}
 
@@ -89,7 +92,7 @@ namespace Pro {
 				// iterator_size is equal to the object count
 				object_count_ = iterator_size;
 
-				reserved_ = initialize_all ? 0 : size - object_count_; 
+				reserved_ = initialize_all ? 0 : size - object_count_;
 
 			}
 
