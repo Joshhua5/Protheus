@@ -131,7 +131,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		vao.setVertexAttribute(batch_program, "tex_coord", 4, GL_FLOAT, GL_FALSE,
 			stride_size, 5 * sizeof(GLfloat));
 
-		sprite_count.Resize(max_sprites);
+		sprite_count.Resize(max_sprites, 0);
 
 		vao.PreservedUnbind();
 		first_init = false;

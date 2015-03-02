@@ -72,7 +72,7 @@ namespace Pro {
 				auto l_head = head_ - size;
 
 				// Check if the write will overflow
-				if (l_head > buffer_->size() && !being_resized_) {
+				if (l_head > buffer_->size() - size && !being_resized_) {
 					// Resizes the buffer exponentially as more resizes are called
 					being_resized_ = true;
 					buffer_->Resize(static_cast<unsigned>((float)(l_head + size) * (1.f + (reoccurring_resize_++ / 10.f))));
