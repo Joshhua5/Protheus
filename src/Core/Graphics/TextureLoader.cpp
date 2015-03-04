@@ -194,7 +194,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 		ColorDefinition def;
 		switch (header.bit_depth) {
 		case 24:
-			for (unsigned long h_pos = header.bmp_height; h_pos > 0; --h_pos) {
+			for (unsigned long h_pos = 0; h_pos < header.bmp_height; ++h_pos) {
 				for (unsigned long w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
 					def.b = reader.Read<char>();
 					def.g = reader.Read<char>();
@@ -203,7 +203,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 					writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
 				}
 				// padding to a multiple of 4 bytes 
-				reader.head(header.bmp_width % 4);
+				reader.Skip(header.bmp_width % 4);
 			}
 			break;
 		case 32:
