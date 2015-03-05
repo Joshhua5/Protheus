@@ -6,7 +6,7 @@ using namespace Graphics;
 static bool init = false;
 
 
-void APIENTRY debug_callback(GLenum source​, GLenum type​, GLuint id​,
+void APIENTRY ogl_debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​);
 
 void glfw_error_callback(int error_code, const char* desctiption) {
@@ -66,7 +66,7 @@ void Window::window_constructor(const WindowDefinition& def) {
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
- 	glDebugMessageCallback((GLDEBUGPROC)&debug_callback, nullptr);
+ 	glDebugMessageCallback((GLDEBUGPROC)&ogl_debug_callback, nullptr);
 
 	glfwSetWindowUserPointer(window_, new InputPointers);
 
@@ -160,7 +160,7 @@ float Window::aspect() const {
 	return  (float)dimension_.x / (float)dimension_.y ;
 }
 
-void __stdcall debug_callback(GLenum source​, GLenum type​, GLuint id​,
+void __stdcall ogl_debug_callback(GLenum source​, GLenum type​, GLuint id​,
 	GLenum severity​, GLsizei length​, const GLchar* message​, void* userParam​) {
 	Pro::global_log.Report<LogCode::FATAL>(string(message​, length​), __FUNCTION__, __LINE__); 
 }
