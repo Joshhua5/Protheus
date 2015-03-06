@@ -17,10 +17,7 @@ MeshObject::MeshObject() {
 	vertex_per_face = 0;
 	floats_per_vertex = 0; 
 	vertex_count = 0;
-	face_format = FACE_FORMAT::UNDEFINED;
-
-	temp = nullptr;
-	tempWriter = nullptr;
+	face_format = FACE_FORMAT::UNDEFINED; 
 }
 
 MeshObject::~MeshObject() {
@@ -44,9 +41,7 @@ inline void copy(MeshObject* ptr, const MeshObject& rhs){
 
 MeshObject& MeshObject::operator=(MeshObject&& rhs) {
 	name = std::move(rhs.name);
-	copy(this, rhs);
-	rhs.temp = nullptr;
-	rhs.tempWriter = nullptr;
+	copy(this, rhs); 
 	return *this;
 }
 MeshObject::MeshObject(const MeshObject& rhs) {
@@ -55,10 +50,7 @@ MeshObject::MeshObject(const MeshObject& rhs) {
 MeshObject& MeshObject::operator=(const MeshObject& rhs) {
 	name = rhs.name; 
 
-	copy(this, rhs); 
-
-	temp = rhs.temp;
-	tempWriter = rhs.tempWriter;
+	copy(this, rhs);  
 	return *this;
 }
 

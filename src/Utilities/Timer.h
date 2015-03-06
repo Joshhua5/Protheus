@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2014.
+Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
@@ -22,7 +22,7 @@ namespace Pro {
 		/*! Timer class will keep track of ticks and time
 			Resolution of of nanoseconds
 		*/
-		template<class T>
+		template<std::chrono T = std::chrono::nanoseconds>
 		class Timer
 		{ 
 			unsigned long long start_tick_;

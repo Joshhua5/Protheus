@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2014.
+Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <stack>
-#include <Log.h> 
+#include <Log.h>
 #include <BufferWriter.h>
 #include <initializer_list>
 #include <Vector4.h> 
@@ -22,7 +22,7 @@ History:
 #include "Program.h"
 #include "Sprite.h"
 #include "VertexArray.h"
-#include "Shader.h" 
+#include "Shader.h"
 #include "TextureUnit.h"
 #include "Transformation.h"
  
@@ -68,37 +68,38 @@ namespace Pro{
 			SpriteBatcher(const Vector2<float>& window_dimensions = { 100, 100 });
 			~SpriteBatcher();
 			 
-			// Performance benifit to grouping textures together in push calls
+			//! Pushs the sprite into the batcher and prepared to be drawn at the next SpriteBatcher::Render() call.
+			//! Performance benifit to grouping textures together in push calls
 			void Push(int texture_id,
 				Vector3<float> position,
 				Vector2<float> dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
-
-			
-			//void BatchPush(int texture,
-			//	Vector3<float> position,
-			//	Vector2<float> dimensions,
-			//	const  float scale = 1,
-			//	const  float rotate = 0);
-			
-			//void BatchUpdate(int texture, unsigned count);
-
-			// if -1, the maxiumum texture bindings has been hit.
+  
+			//! Attaches a texture to the SpriteBatcher
+			//! the value returned is refered to as the texture_id in other functions
+			//! if -1, the maxiumum texture bindings has been hit.
 			int AttachTexture(smart_ptr<Texture> tex);
-			/*! indicies will be populated with the index of the texture inside the sprite batcher */
-			int AttachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs);
+			 
+			//! Attaches textures to the SpriteBatcher in the order of @textures, the ids are appended onto @indicies in the same order 
+			//! Returns the count of textures added.
+			int AttachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& textures);
 
+			//! Unbinds a texture to the SpriteBatcher
 			void RemoveTexture(int);
-			  
+			 
+			//! Renders() and then Resets() the SpriteBatcher
 			void Flush(); 
 			 
+			//! Set's the alpha colour, if a texel matches @color then the pixel will be discarded. 
 			void Alpha(const Vector3<float>& color);
-			void SetCameraDimensions(const Vector2<float>& position);
+			void SetCameraDimensions(const Vector2<float>& dimension);
 			void SetCameraPosition(const Vector3<float>& position);
 
+			//! Renders the current Sprites
 			void Render();
 			
+			//! Clears all Sprites from the SpriteBatcher
 			void Reset();
 		};
 	}

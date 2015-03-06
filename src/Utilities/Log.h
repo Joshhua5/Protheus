@@ -7,7 +7,7 @@
 
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2014.
+Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
@@ -23,6 +23,7 @@ namespace Pro {
 		MESSAGE,
 		FATAL,
 		ERROR,
+		WARNING,
 		PERFORMANCE
 	};
 	class Log {

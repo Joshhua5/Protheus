@@ -30,7 +30,7 @@ namespace Pro {
 
 			void Init();
 
-			void link();
+			void Link();
 
 			bool HasError() const;
 

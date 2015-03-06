@@ -8,7 +8,7 @@
 #include <thread>
 #include <Graphics\Lighting.h>
 #include <Graphics\TextureLoader.h>
-#include <smart_pointer.h>
+#include <smart_ptr.h>
 #include <Buffer.h>
 #include <BufferWriter.h>
 #include <Vector2.h>
@@ -25,19 +25,19 @@ int main() {
 	FileSystem fs;
    
 	this_thread::sleep_for(std::chrono::seconds(1));
- 	auto cube = MeshLoader::loadOBJ(&fs.getFile("scene/monkey.obj"));
+ 	auto cube = MeshLoader::LoadOBJ(&fs.GetFile("scene/monkey.obj"));
   
 	Transformation camera;
-	Projection projection(0.01f, 1000.0f, 45, window.getAspect());
+	Projection projection(0.01f, 1000.0f, 45, window.aspect());
 	Transformation model;
 	Transformation light_t; 
 	   
-	camera.setPosition({0 , 0 , .7f});
+	camera.position({0 , 0 , .7f});
 
 	GLenum err;
 	// TEST 
 	// cbuffer is deleted after being passed as rvalue
-	auto tex = TextureLoader::loadTexture(fs.getFile("textures/box.bmp"));
+	auto tex = TextureLoader::LoadTexture(fs.GetFile("textures/box.bmp"));
 
 	if (tex == nullptr || cube == nullptr) {
 		return 1;
@@ -46,31 +46,31 @@ int main() {
 	GLuint dwvbo = 0; 
 	GLuint sampler = 0; 
 
-	cube->bind(); 
+	cube->Bind(); 
 
-	Shader vert(fs.getFile("shaders/shader.vert"), GL_VERTEX_SHADER);
-	Shader frag(fs.getFile("shaders/shader.frag"), GL_FRAGMENT_SHADER);
+	Shader vert(fs.GetFile("shaders/shader.vert"), GL_VERTEX_SHADER);
+	Shader frag(fs.GetFile("shaders/shader.frag"), GL_FRAGMENT_SHADER);
 	if ((err = glGetError()) != GL_NO_ERROR)
 		return err;
 	Program program;
-	program.attachShader(vert);
-	program.attachShader(frag);
-	program.link();
-	program.use();
+	program.AttachShader(vert);
+	program.AttachShader(frag);
+	program.Link();
+	program.Use();
 
 	VertexArray vao;
-	vao.bind(); 
+	vao.Bind(); 
 	 
-	vao.setVertexAttribute(program, "in_normal", cube->getObjects().at(0).normalSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).normalOffset());
-	vao.setVertexAttribute(program, "position", cube->getObjects().at(0).vertexSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).vertexOffset());
-	vao.setVertexAttribute(program, "in_tex", cube->getObjects().at(0).texCoordSize(), GL_FLOAT, GL_FALSE, cube->getObjects().at(0).stride(), cube->getObjects().at(0).texCoordOffset());
+	vao.setVertexAttribute(program, "in_normal", cube->GetObjects().at(0).NormalSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).NormalOffset());
+	vao.setVertexAttribute(program, "position", cube->GetObjects().at(0).VertexSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).VertexOffset());
+	vao.setVertexAttribute(program, "in_tex", cube->GetObjects().at(0).TexCoordSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).TexCoordOffset());
  
-	vao.unbind(); 
+	vao.Unbind(); 
 
-	program.setUniform("world_pos", Vector3<float>(0, 0, 0));
-	program.setUniform("camera_pos", camera.getPosition());
+	program.SetUniform("world_pos", Vector3<float>(0, 0, 0));
+	program.SetUniform("camera_pos", camera.position());
  
-	TextureUnit::bind(0, tex);
+	TextureUnit::Bind(0, tex);
 	  
 	LightPoint point;
 	point.position = { 2, 0, 0 };
@@ -78,50 +78,58 @@ int main() {
 	point.intensity = 0.4f;
 	point.attenuation = 10;
 
-	light_t.setPosition(Vector3<float>(2, 1, 0));
+	light_t.position(Vector3<float>(2, 1, 0));
 
 	Lighting lights;
 
-	LightPoint& light = lights.attachLight(point);
+	LightPoint& light = lights.AttachLight(point);
 
-	lights.setAmbient(Vector3<float>(1.0f, 1.0f, 1.0f));
+	lights.SetAmbient(Vector3<float>(1.0f, 1.0f, 1.0f));
 
 	float pos = 0;
 	Vector3<float> rotation(0);
 
 	while (true) {
-		window.startFrame(); 
-		vao.bind();
+		window.StartFrame(); 
+		vao.Bind();
 		//camera.rotate({ 0, 0, 0.01f }); 
 
 		//window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
-		light_t.setPosition(light.position);  
-		model.setScale({ 0.1f, 0.1f, 0.1f });
-		model.setPosition({ 0, -0.5f, 0 });
+		light_t.position(light.position);  
+		model.scale({ 0.1f, 0.1f, 0.1f });
+		model.position({ 0, -0.5f, 0 });
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
-		program.setUniform("model", model.getMatrix());
-		program.setUniform("view", camera.getMatrix()); 
-		program.setUniform("projection", projection.getPerspective());
-		lights.bindLights(program);
-		program.setUniform("normal_matrix", model.getNormalMatrix());
-		cube->bind();
+		program.SetUniform("model", model.getMatrix());
+		program.SetUniform("view", camera.getMatrix()); 
+		program.SetUniform("projection", projection.GetPerspective());
+		lights.BindLights(program);
+		program.SetUniform("normal_matrix", model.getNormalMatrix());
+		cube->Bind();
 		 
 
-		for (const auto& obj : cube->getObjects()){
-			program.setUniform("has_normal", obj.hasNormals());
-			program.setUniform("has_tex_coord", obj.hasTexCoord());
-			glDrawElements(obj.getMode(), obj.size, GL_UNSIGNED_INT, obj.p_start); 
+		for (const auto& obj : cube->GetObjects()){
+			program.SetUniform("has_normal", obj.HasNormals());
+			program.SetUniform("has_tex_coord", obj.HasTexCoord());
+			glDrawElements(obj.GetMode(), obj.size, GL_UNSIGNED_INT, obj.p_start); 
 		}
 
-		vao.unbind();
+		vao.Unbind();
 
-		if (window.getKeyboard().isKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
+		if (window.keyboard().IsKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
 			rotation.x += 0.1f;
-		if (window.getKeyboard().isKeyDown(KEY::KEY_D) != KEY_PRESSED::RELEASED)
+		if (window.keyboard().IsKeyDown(KEY::KEY_D) != KEY_PRESSED::RELEASED)
 			rotation.y += 0.1f;
+		if (window.keyboard().IsKeyDown(KEY::KEY_S) != KEY_PRESSED::RELEASED)
+			rotation.x -= 0.1f;
+		if (window.keyboard().IsKeyDown(KEY::KEY_A) != KEY_PRESSED::RELEASED)
+			rotation.y -= 0.1f;
+		if (window.keyboard().IsKeyDown(KEY::KEY_Q) != KEY_PRESSED::RELEASED)
+			rotation.z += 0.1f;
+		if (window.keyboard().IsKeyDown(KEY::KEY_E) != KEY_PRESSED::RELEASED)
+			rotation.z -= 0.1f;
 		  
-		model.setRotation(rotation);
+		model.rotation(rotation);
 		 
-		window.endFrame();
+		window.EndFrame();
 	}
 }

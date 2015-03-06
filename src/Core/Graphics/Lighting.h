@@ -18,7 +18,7 @@ namespace Pro {
 		struct LightPoint {
 			Vector3<float> position;
 			Vector3<float> color;
-			float attenuation_, intensity_;
+			float attenuation, intensity;
 		};
 
 		struct LightDirectional : public LightPoint {

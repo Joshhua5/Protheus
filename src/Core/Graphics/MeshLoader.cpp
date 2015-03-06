@@ -31,14 +31,14 @@ inline unsigned process_linei(const string& format, BufferReader& in, BufferWrit
 	out.WriteElements<int>(face, ret); 
 	return ret;
 } 
-inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
+inline bool processOBJ(std::vector<MeshObjectTemp>& objects, Buffer* file, BufferWriter& vertex_writer, BufferWriter& normal_writer, BufferWriter& tex_coord_writer) {
 	BufferReader reader(file);
 
 	float vertex[4];
 	bool first_object = true;
 	memset(vertex, 0, sizeof(float) * 4);
 
-	MeshObject* object = &objects.back();
+	MeshObjectTemp* object = &objects.back();
 	object->temp = new Buffer(file->size() / 10); 
 	object->tempWriter = new BufferWriter(object->temp); 
 
@@ -62,7 +62,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 						  first_object = false;
 					  }
 					  else
-						  objects.push_back(std::move(MeshObject(string(nameBuf.data<char>(), nameBuf.size() - 1), 0, 0)));
+						  objects.push_back(std::move(MeshObjectTemp(string(nameBuf.data<char>(), nameBuf.size() - 1), 0, 0)));
 
 					  object = &objects.back();
 					  object->temp = new Buffer(file->size() / 10);
@@ -79,7 +79,7 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 			 
 				if (liner.Contains<char>("//", 2) != -1) {
 					// Vector//Normal  
-					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter.get() ); 
+					process_linei("f %i//%i %i//%i %i//%i", liner, *object->tempWriter); 
 					object->face_format = FACE_FORMAT::VERTEX_NORMAL; 
 					object->has_normals = true;
 					break;
@@ -87,19 +87,19 @@ inline bool processOBJ(std::vector<MeshObject>& objects, Buffer* file, BufferWri
 				switch (line.Count<char>('/')) {
 				case 0:
 					// simple vertex 
-					process_linei("f %i %i %i", liner, *object->tempWriter.get() );
+					process_linei("f %i %i %i", liner, *object->tempWriter);
 					object->face_format = FACE_FORMAT::VERTEX;
 					break;
 				case 3:
 					// vertex/uv   
-					process_linei("f %i/%i %i/%i %i/%i", liner, *object->tempWriter.get());
+					process_linei("f %i/%i %i/%i %i/%i", liner, *object->tempWriter);
 					object->face_format = FACE_FORMAT::VERTEX_UV;
 					object->has_tex_coord = true;
 					break;
 				case 6:
 					// vertex/uv/normal 
 					// TEST does atoi stop at the /
-					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter.get());
+					process_linei("f %i/%i/%i %i/%i/%i %i/%i/%i", liner, *object->tempWriter);
 					object->face_format = FACE_FORMAT::VERTEX_UV_NORMAL;
 					object->has_tex_coord = object->has_normals = true;
 					break;
@@ -148,9 +148,9 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 
 	// code below uses a pointer, 
 	// kept pointer so I didn't have to edit
-	std::vector<MeshObject> object;
+	std::vector<MeshObjectTemp> object;
 
-	object.push_back(MeshObject("", 0, 0));
+	object.push_back(MeshObjectTemp("", 0, 0));
 
 	if (processOBJ(object, buffer, vertex_writer, normal_writer, tex_coord_writer) == false) {
 		global_log.Report<LogCode::ERROR>("Unable to load object file\0", __FUNCTION__, __LINE__);
@@ -242,16 +242,19 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 		obj.vertex_count = current_verticies.size();
 	}
 
-	object[0].temp = nullptr;
-	object[0].tempWriter = nullptr; 
+	// Special case for the first object's start
+	// Also clean up the temp files
+	delete object[0].temp;
+	delete object[0].tempWriter;
 	object[0].size = object[0].vertex_count;
 
+	// Update the start and size of each object
 	for (unsigned x = 1; x < object.size(); x++) {
 		object[x].start = object[x - 1].vertex_count;
 		object[x].size = object[x].vertex_count - object[x - 1].vertex_count;
 
-		object[x].temp = nullptr;
-		object[x].tempWriter = nullptr;
+		delete object[x].temp;
+		delete object[x].tempWriter;
 	}
 
 	// Create VBO in OpenGL
@@ -279,9 +282,10 @@ smart_ptr<Mesh> MeshLoader::LoadOBJ(Buffer* buffer) {
 		return nullptr;
 	}
 
+	// TODO Check the UML of Mesh and MeshObject to see what's duplicated
 	Mesh* m = new Mesh(vbo, ebo);
 	for (unsigned x = 0; x < object.size(); ++x)
-		m->AttachObject(std::move(object[x]));
+		m->AttachObject(std::move(object[x]).Export());
 
 	return m;
 }

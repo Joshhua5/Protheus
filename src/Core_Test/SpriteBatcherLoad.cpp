@@ -8,7 +8,7 @@
 #include <DoubleBuffer.h>
 #include <iostream>
 
-unsigned const ball_count = static_cast<unsigned>(1E4);
+unsigned const ball_count = static_cast<unsigned>(5E4);
 
 using namespace Pro;
 using namespace Graphics;

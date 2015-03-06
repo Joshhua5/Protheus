@@ -67,7 +67,7 @@ void Program::PreservedDisuse() {
 		glUseProgram(preserved_id);
 }
 
-void Program::link() {
+void Program::Link() {
 	glLinkProgram(program_id);
 	GLint error_id;
 	glGetProgramiv(program_id, GL_LINK_STATUS, &error_id);

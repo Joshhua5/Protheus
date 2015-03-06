@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2014.
+Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
@@ -58,20 +58,32 @@ namespace Pro {
 					references_ = new unsigned(1);
 			}
 
-			smart_ptr(smart_ptr&& rhs) {
+			smart_ptr(smart_ptr&& rhs) { 
+				if (rhs.IsNull()){
+					// Check for a null ptr
+					references_ = nullptr;
+					ptr_ = nullptr;
+					return;
+				}
 				ptr_ = rhs.ptr_;
 				references_ = rhs.references_;
 				rhs.ptr_ = nullptr;
 				rhs.references_ = nullptr;
 			}
 			smart_ptr(const smart_ptr& rhs) {
+				if (rhs.IsNull()){
+					// Check for a null ptr
+					references_ = nullptr;
+					ptr_ = nullptr; 
+					return;
+				}
 				ptr_ = rhs.ptr_;
 				references_ = rhs.references_;
 				++*references_;
 			}
 
 			smart_ptr& operator=(smart_ptr&& rhs) {
-				if (this == &rhs)
+				if (this == &rhs || rhs.IsNull())
 					return *this;
 				ptr_ = rhs.ptr_;
 				references_ = rhs.references_;
@@ -81,7 +93,7 @@ namespace Pro {
 			}
 
 			smart_ptr& operator=(const smart_ptr& rhs) {
-				if (this == &rhs)
+				if (this == &rhs || rhs.IsNull())
 					return *this;
 				ptr_ = rhs.ptr_;
 				references_ = rhs.references_;

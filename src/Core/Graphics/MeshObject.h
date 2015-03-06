@@ -43,8 +43,6 @@ namespace Pro {
 
 			FACE_FORMAT face_format = FACE_FORMAT::UNDEFINED;
 
-			smart_ptr<Buffer> temp = nullptr;
-			smart_ptr<BufferWriter> tempWriter = nullptr;
 
 			MeshObject();
 			MeshObject(const string& name, unsigned start, unsigned size);
@@ -66,6 +64,19 @@ namespace Pro {
 
 			GLuint   TexCoordOffset() const;
 			GLenum   GetMode() const;
+		};
+
+		//! A Mesh Object with temporary pointers, only used during Mesh Loading
+		struct MeshObjectTemp : public MeshObject{
+			MeshObjectTemp(const string& name, unsigned start, unsigned size) : MeshObject(name, start, size){}
+
+			Buffer* temp = nullptr;
+			BufferWriter* tempWriter = nullptr;
+
+			//! Creates a MeshObject out the MeshObjectTemp
+			MeshObject Export() const{
+				return MeshObject(static_cast<MeshObject>(std::move(*this)));
+			}
 		};
 	}
 }

@@ -11,16 +11,16 @@ void Lighting::BindLights(Program& program) {
 	for (auto& light : light_points_) {
 		writer.WriteElements<float>(&light.position.x, 3);
 		writer.WriteElements<float>(&light.color.x, 3);
-		writer.Write<float>(light.attenuation_);
-		writer.Write<float>(light.intensity_);
+		writer.Write<float>(light.attenuation);
+		writer.Write<float>(light.intensity);
 	}  
 
 	for (auto& light : light_directional_) {
 		writer.WriteElements<float>(&light.position.x, 3);
 		writer.WriteElements<float>(&light.color.x, 3); 
 		writer.WriteElements<float>(&light.direction_.x, 3);
-		writer.Write<float>(light.attenuation_);
-		writer.Write<float>(light.intensity_);
+		writer.Write<float>(light.attenuation);
+		writer.Write<float>(light.intensity);
 	}
 
 	program.SetUniform("light_ambient", ambient_color_); 

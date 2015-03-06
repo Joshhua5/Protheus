@@ -98,7 +98,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		batch_program.AttachShader(vertex_shader);
 		batch_program.AttachShader(fragment_shader);
 		batch_program.AttachShader(geometry_shader);
-		batch_program.link();
+		batch_program.Link();
 
 		batch_program.SetUniform("camera_window",
 			Vector3<float>(window_dimensions.x / 2, window_dimensions.y / 2, 1.f));
@@ -255,8 +255,12 @@ int SpriteBatcher::AttachTexture(ArrayList<int>& indicies, const ArrayList<smart
 	indicies.Reserve(size);
 
 	for (unsigned x = 0; x < size; ++x) {
-		if (texs.At(x) == nullptr)
+		if (texs.At(x) == nullptr){
+#ifdef PRO_DEBUG
+			global_log.Report<LogCode::WARNING>("Null texture passed, did the texture load correctly? ", __FUNCTION__, __LINE__);
+#endif
 			continue;
+		}
 		++current_texture_count;
 		sprite_indicies.PushBack(Util::ArrayList<unsigned>());
 		textures.PushBack(texs[x]);

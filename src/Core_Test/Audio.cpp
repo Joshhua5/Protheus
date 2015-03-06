@@ -16,7 +16,7 @@ using namespace Math;
 int main(int argc, char* args []) { 
 	FileSystem fileIO;
 	 
-	auto audiof = fileIO.getFile("test.wav");
+	auto audiof = fileIO.GetFile("test.wav");
 
 	CAudio audio;
 	CAudioListener listener;  
@@ -33,7 +33,7 @@ int main(int argc, char* args []) {
 		pos.x -= 4;
 		if (pos.x == -100)
 			pos.x = 100;
-		source.setPosition(pos); 
+		source.position(pos); 
 		source.play();
 	} 
 }

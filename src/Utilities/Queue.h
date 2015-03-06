@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2014.
+Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
@@ -77,7 +77,7 @@ namespace Pro {
 			}
 			~Queue() {
 				// Lock to make sure nothing is resizing
-				std::lock_quard<std::mutex> lk(resize_lock_); 
+				std::lock_guard<std::mutex> lk(resize_lock_); 
 				while (!Empty())
 					Pop();
 				operator delete(queue_.load()); 

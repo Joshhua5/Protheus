@@ -5,48 +5,50 @@
 #include <FileSystem\FileSystem.h>
 
 using namespace Pro;
+using namespace Graphics;
+using namespace Util;
 
 int main() {
 	Graphics::Window window("scene", { 800, 600 });
 	
 	Util::FileSystem fs; 
-	fs.setRootDir("");
+	fs.rootDir("");
 
-	auto scene = MeshLoader::loadOBJ(&fs.getFile("scene/scene.obj"));
-	auto tex = TextureLoader::loadTexture(&fs.getFile("scene/Wall.bmp"));
+	auto scene = MeshLoader::LoadOBJ(&fs.GetFile("scene/scene.obj"));
+	auto tex = TextureLoader::LoadTexture(&fs.GetFile("scene/Wall.bmp"));
 
-	Shader vert(fs.getFile("shaders/shader.vert"), GL_VERTEX_SHADER);
-	Shader frag(fs.getFile("shaders/shader.frag"), GL_FRAGMENT_SHADER);
+	Shader vert(fs.GetFile("shaders/shader.vert"), GL_VERTEX_SHADER);
+	Shader frag(fs.GetFile("shaders/shader.frag"), GL_FRAGMENT_SHADER);
 
 	GLuint err = 0;
 	if ((err = glGetError()) != GL_NO_ERROR)
 		return err;
 	Program program;
 
-	program.attachShader(vert);
-	program.attachShader(frag);
-	program.link();
-	program.use();
+	program.AttachShader(vert);
+	program.AttachShader(frag);
+	program.Link();
+	program.Use();
 
 	// Get a good error if this hasn't been bound.
-	scene->bind();
+	scene->Bind();
 
 	VertexArray vao;
-	vao.bind();
+	vao.Bind();
 
-	vao.setVertexAttribute(program, "in_normal", scene->normalSize(), GL_FLOAT, GL_FALSE, scene->stride(), scene->normalOffset());
-	vao.setVertexAttribute(program, "position", scene->vertexSize(), GL_FLOAT, GL_FALSE, scene->stride(), scene->vertexOffset());
-	vao.setVertexAttribute(program, "in_tex", scene->texCoordSize(), GL_FLOAT, GL_FALSE, scene->stride(), scene->texCoordOffset());
+	vao.setVertexAttribute(program, "in_normal", scene->NormalSize(), GL_FLOAT, GL_FALSE, scene->Stride(), scene->NormalOffset());
+	vao.setVertexAttribute(program, "position", scene->VertexSize(), GL_FLOAT, GL_FALSE, scene->Stride(), scene->VertexOffset());
+	vao.setVertexAttribute(program, "in_tex", scene->TexCoordSize(), GL_FLOAT, GL_FALSE, scene->Stride(), scene->TexCoordOffset());
 
-	vao.unbind();
+	vao.Unbind();
 
-	program.setUniform("has_normal", scene->hasNormals());
-	program.setUniform("has_tex_coord", scene->hasTexCoord());
-	program.setUniform("world_pos", Vector3<float>(.5, 0, 0));
+	program.SetUniform("has_normal", scene->HasNormals());
+	program.SetUniform("has_tex_coord", scene->HasTexCoord());
+	program.SetUniform("world_pos", Vector3<float>(.5, 0, 0));
 
 	
 	glActiveTexture(GL_TEXTURE0);
-	tex->bind();
+	tex->Bind();
 
 	LightPoint point;
 	point.position = { 2, 0, 0 };
