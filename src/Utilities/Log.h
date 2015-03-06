@@ -22,7 +22,8 @@ namespace Pro {
 	enum struct LogCode {
 		MESSAGE,
 		FATAL,
-		ERROR
+		ERROR,
+		PERFORMANCE
 	};
 	class Log {
 		struct MessagePack {
