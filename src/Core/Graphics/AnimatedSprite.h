@@ -24,17 +24,17 @@ namespace Pro{
 			unsigned frame_count_;
 		public:
 			AnimatedSprite();
-			~AnimatedSprite(); 
+			~AnimatedSprite();
 
-			Sprite& GetFrame(unsigned index);
+			Sprite& GetFrame(const unsigned index);
 
 			// Get the sprites to load from a file
 			// or a spritesheet instead of
 			// passing preloaded sprites
 			// unless passed as r value
 			void addFrame(Sprite&&);
-			 
-			unsigned getFrameCount() const; 
+
+			unsigned getFrameCount() const;
 		};
 	}
 }

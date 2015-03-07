@@ -82,7 +82,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 
 	if (max_sprites >= 100000)
 		max_sprites = 100000;
-	 
+
 	verticies = new Buffer(max_sprites * 5 * sizeof(GLfloat));
 	writer = new BufferWriter(verticies);
 
@@ -90,7 +90,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 	if (first_init) {
 		batch_program.Init();
 		// Breakpoint to make sure only run once
-		 
+
 		vertex_shader.Init(source_vertex_shader, GL_VERTEX_SHADER);
 		fragment_shader.Init(source_fragment_shader, GL_FRAGMENT_SHADER);
 		geometry_shader.Init(source_geomerty_shader, GL_GEOMETRY_SHADER);
@@ -113,7 +113,7 @@ SpriteBatcher::SpriteBatcher(const Vector2<float>& window_dimensions) {
 		const unsigned stride_size = sizeof(GLfloat) * 9;
 
 		vao.PreservedBind();
-		  
+
 		glGenBuffers(1, &vertex_buffer_id);
 		glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
 		glBufferData(GL_ARRAY_BUFFER, verticies->size(), verticies->data(), GL_STREAM_DRAW);
@@ -199,10 +199,10 @@ void SpriteBatcher::Push(int texture,
 
 	float values[9] = { position.x , position.y , position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
 
-	writer->WriteElements(values, 9);  
+	writer->WriteElements(values, 9);
 
-	sprite_indicies.At(texture).PushBack(current_sprite_count++); 
-	++sprite_count.At(texture);   
+	sprite_indicies.At(texture).PushBack(current_sprite_count++);
+	++sprite_count.At(texture);
 
 	// Figure out how to apply rotation and a sprite
 	/*details.sprite = _s;
@@ -221,7 +221,7 @@ void SpriteBatcher::Push(int texture,
 //
 //	float values[9] = { position.x, position.y, position.z, dimensions.x, dimensions.y, 0, 0, 1, 1 };
 //
-//	writer->WriteElements(values, 9); 
+//	writer->WriteElements(values, 9);
 //
 //	current_sprite_count++;
 //	sprite_indicies.At(texture).PushBack(current_sprite_count);
@@ -251,7 +251,7 @@ int SpriteBatcher::AttachTexture(smart_ptr<Texture> tex) {
 int SpriteBatcher::AttachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& texs) {
 	unsigned size = texs.size();
 	if (size < 0)
-		return -1; 
+		return -1;
 	indicies.Reserve(size);
 
 	for (unsigned x = 0; x < size; ++x) {
@@ -297,7 +297,7 @@ void SpriteBatcher::Render() {
 			continue;
 
 		TextureUnit::Bind(0, textures.At(x));
-		  
+
 		// Copy in new element data
 		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sprite_indicies.At(x).size() * sizeof(GLint), sprite_indicies.At(x).Data());
 
@@ -313,6 +313,9 @@ void SpriteBatcher::Render() {
 		global_log.Report<LogCode::ERROR>(string((char*)glewGetErrorString(err)) + ": Unable to render the spritebatcher\0", __FUNCTION__, __LINE__);
 }
 
+void SpriteBatcher::SwapTexture(const unsigned texture_id, smart_ptr<Texture> new_texture){
+    textures.At(texture_id) = new_texture;
+}
 
 void SpriteBatcher::Alpha(const Vector3<float>& color) {
 	batch_program.SetUniform("alpha", color);
