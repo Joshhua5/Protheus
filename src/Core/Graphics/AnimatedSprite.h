@@ -13,26 +13,21 @@ History:
 #pragma once
 
 #include <vector>
-#include "..\graphics\Sprite.h"
+#include <smart_ptr.h>
+#include "Texture.h"
 
 namespace Pro{
 	namespace Graphics{
 		class AnimatedSprite
 		{
 		private:
-			std::vector<Sprite> frames_;
+			std::vector<Util::smart_ptr<Texture>> frames_;
 			unsigned frame_count_;
-		public:
-			AnimatedSprite();
-			~AnimatedSprite();
+		public: 
 
-			Sprite& GetFrame(const unsigned index);
-
-			// Get the sprites to load from a file
-			// or a spritesheet instead of
-			// passing preloaded sprites
-			// unless passed as r value
-			void addFrame(Sprite&&);
+			Util::smart_ptr<Texture> GetFrame(const unsigned index);
+			 
+			void addFrame(Util::smart_ptr<Texture> texture);
 
 			unsigned getFrameCount() const;
 		};

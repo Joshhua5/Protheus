@@ -2,11 +2,9 @@
 
 using namespace Pro;
 using namespace Graphics;
+using namespace Util; 
 
-AnimatedSprite::AnimatedSprite(){}
-AnimatedSprite::~AnimatedSprite(){}
-
-void AnimatedSprite::addFrame(Sprite&& sprite){
+void AnimatedSprite::addFrame(smart_ptr<Texture> sprite){
 	frames_.push_back(sprite);
 }
 
@@ -14,6 +12,6 @@ unsigned AnimatedSprite::getFrameCount() const{
 	return frames_.size();
 }
 
-Sprite& AnimatedSprite::GetFrame(unsigned index){
+Util::smart_ptr<Texture> AnimatedSprite::GetFrame(unsigned index){
 	return frames_.at(index);
 } 
