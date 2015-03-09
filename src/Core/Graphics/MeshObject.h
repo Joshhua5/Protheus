@@ -22,8 +22,7 @@ namespace Pro {
 			VERTEX_NORMAL,
 			VERTEX_UV_NORMAL,
 			VERTEX_UV
-		};
-
+		}; 
 
 		struct MeshObject {
 			string name;

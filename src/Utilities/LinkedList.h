@@ -23,7 +23,8 @@ namespace Pro {
 			std::atomic<unsigned> _size;
 			// TODO use the size to determine if empty (check if there's need for a variable)
 			std::atomic<bool> _empty;
-			 
+			
+			//! Returns the node at the @index
 			inline Node* NodeAt(unsigned index) const {
 				if (index > _size)
 					return nullptr;
@@ -33,6 +34,7 @@ namespace Pro {
 				return ptr;
 			}
 
+			//! Removes the last remaining node without locking and returns the object ptr
 			inline T* RemoveLastNodeNoLock(){
 				_empty.store(true); 
 				auto return_ptr = _start->_ptr;
@@ -42,6 +44,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
+			//! Removes the last node without locking and returns the object ptr
 			inline T* RemoveBackNoLock(){
 				if (_size == 1)
 					return RemoveLastNodeNoLock();
@@ -53,6 +56,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
+			//! Removes the first node without locking and returns the object ptr
 			inline T* RemoveFrontNoLock(){
 				if (_size == 1)
 					return RemoveLastNodeNoLock();
@@ -64,6 +68,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
+			//! Removes a node at @index and returns the object ptr
 			inline T* RemoveAtNoLock(unsigned index) {
 				T* return_ptr;
 
@@ -91,6 +96,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
+			//! Stores the first object in the list
 			void FirstNode(T* ptr) {
 				_edit_position.store(0);
 				_start = _end = new Node();
@@ -101,6 +107,7 @@ namespace Pro {
 				_empty.store(false);
 			}
 
+			//! Adds a object to the end of the list
 			inline void Prepend(T* ptr) {
 
 				// Prepend at the start
@@ -115,6 +122,7 @@ namespace Pro {
 				_edit_position.store(_size);
 			}
 
+			//! Adds a object to the start of the list
 			inline void Append(T* ptr) {
 				// Append at the end
 				Node* node = new Node();
@@ -164,6 +172,7 @@ namespace Pro {
 				_size++;
 			}
 
+			//! Adds @ptr to the end of the list
 			void PushBack(T* ptr) {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				// Check if first element
@@ -172,6 +181,7 @@ namespace Pro {
 				Append(ptr);
 			}
 
+			//! Adds @ptr to the start of the list
 			void PushFront(T* ptr) {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				if (_empty.load())
@@ -188,24 +198,34 @@ namespace Pro {
 				return RemoveAtNoLock(index);
 			}
 
+			//! Removes the object at the end of the list (partner LinkedList::PushBack())
 			inline T* PopBack() {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				return RemoveBackNoLock();
 			}
 
+			//! Removes the object at the start of the list (accompanies LinkedList::PushFront())
 			inline T* PopFront() {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				return RemoveFrontNoLock();
 			}
 
-			inline T* At(unsigned index) const {
+			//! Return the constant object at @index
+			inline const T* At(unsigned index) const {
 				return NodeAt(index)->_ptr;
 			}
 
+			//! Returns the object at @index
+			inline T* At(unsigned index) {
+				return NodeAt(index)->_ptr;
+			}
+
+			//! Returns the count of objects stored
 			inline unsigned size() const {
 				return _size.load();
 			}
 
+			//! Returns true if no objects are stored
 			inline bool empty() const {
 				return _empty;
 			}

@@ -35,6 +35,7 @@ namespace Pro {
 			std::atomic<bool> being_resized_;
 			std::mutex resize_lock_;
 
+			// Checks if the @pos has overflown and resets it's position if true
 			inline size_t CheckOverflow(std::atomic<size_t>* pos) const{
 				// if position is at the capacity then overflow
 				if (pos->load() == capacity_) {
@@ -43,7 +44,8 @@ namespace Pro {
 				}
 				return *pos;
 			}
-
+			
+			//! Checks if the @pos has overflown and then increments the @pos
 			inline size_t CheckOverflowWithIncrement(std::atomic<size_t>* pos) const {
 				// if position is at the capacity then overflow
 				if (pos->load() == capacity_) {

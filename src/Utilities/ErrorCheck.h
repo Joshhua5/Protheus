@@ -8,18 +8,22 @@ namespace Pro{
 			T success_code_;
 
 		public:
-			ErrorCheck(unsigned success_code){
+			//! success_code is used to determine if a function executed correctly
+			//! if returned value doesn't match the success_code then an error occured
+			ErrorCheck(const T& success_code){
 				this->success_code_ = success_code;
 			}
 
+			//! Returns true if a non @success_code was passed
 			bool HadError(){
 				return had_error_ != 0;
 			}
 
-			unsigned char ErrorCount(){
+			//! Returns the count of errors
+			unsigned short ErrorCount() const{
 				return had_error_;
 			}
-			 
+			
 			ErrorCheck& operator=(const T& code){
 				if (code != success_code_)
 					++had_error_;

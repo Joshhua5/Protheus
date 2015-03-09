@@ -17,6 +17,7 @@ History:
 
 namespace Pro {
 	namespace Math {
+		//! Constant global indentity matrix
 		static float IDENTITY_MATRIX[] = {
 			1, 0, 0, 0,
 			0, 1, 0, 0,

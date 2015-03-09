@@ -34,6 +34,7 @@ namespace Pro {
 				}
 			}
 
+			//! Returns a old object, allocates a new one with the default constructor
 			smart_ptr<T> Get() {
 				if (list_.empty())
 					// If getting error here, make sure object has default constructor

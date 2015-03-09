@@ -4,27 +4,17 @@ Copyright (C), Protheus Studios, 2013-2015.
 -------------------------------------------------------------------------
 
 Description:
-A Wavedecoder, which loads a WAVE file from a Buffer or CFile
-and returns track.
 
-SUPPORTED WAV FILES
-UNSIGNED 8/16BIT MONO or STEREO 
 -------------------------------------------------------------------------
 History:
-- 19:06:2014 Waring J.
+- 21:12:2014 Waring J.
 
 *************************************************************************/
-#pragma once
-#include "IBitstreamDecoder.h" 
 
 namespace Pro{
-	namespace Audio{
-		class CWavDecoder :
-			public IBitstreamDecoder
-		{
-		public:  
-			//! Loads a .wav file from a buffer
-			static CAudioData* load(Buffer* buffer); 
+	namespace Profile{
+		struct ProfilerState{
+
 		};
 	}
 }

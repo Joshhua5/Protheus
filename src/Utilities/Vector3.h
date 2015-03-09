@@ -149,11 +149,11 @@ namespace Pro {
 			}
 
 
-			/*! Returns a pointer to the internal structure's data
-			*/
+			//! Returns a constant pointer to the internal structures data 
 			const T* data() const {
 				return &x;
 			}
+			//! Returns a pointer to the internal structures data
 			T* data() {
 				return &x;
 			}

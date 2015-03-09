@@ -19,12 +19,13 @@ namespace Pro {
 				++finished_count_;
 			}
 
-			/*! Waits until the job has been completed */
-			inline void Wait() {
+			/*! Yeilds the thread until the job has been completed */
+			inline void Wait() const {
 				while (!IsFinished()) { std::this_thread::yield(); }
 			}
 
-			inline void Reset(unsigned count) {
+			//! Reset's the Future for reuse
+			inline void Reset(const unsigned count) {
 				finished_count_ = 0;
 				worker_count_ = count;
 			}

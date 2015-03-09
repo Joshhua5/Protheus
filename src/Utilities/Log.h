@@ -1,6 +1,7 @@
 #pragma once
 #include "Queue.h" 
 #include <string>
+#include <iostrea>
 #include <fstream> 
 #include <thread>
 #include <mutex>
@@ -47,11 +48,13 @@ namespace Pro {
 			}
 		}
 
-		static void worker_thread(Util::Queue<MessagePack>* messages, std::atomic<bool>* running, std::atomic<bool>* terminated) {
+		static void worker_thread(Util::Queue<MessagePack>* messages, std::string log_file_name, std::atomic<bool>* running, std::atomic<bool>* terminated) {
 			*terminated = false;
-			std::fstream log;
-			if (!log.is_open())
-				log.open("log.xml", std::ios::out | std::ios::binary | std::ios::trunc);
+			std::fstream log(log_file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+			if (!log.is_open()){
+				terminated->store(true);
+				return;
+			}
 
 			log.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n", 40);
 			log.write("<Log>\r\n", 7);
@@ -82,15 +85,15 @@ namespace Pro {
 
 					strCache = "<line>" + std::to_string(top.line) + "</line>\r\n";
 					log.write(strCache.data(), strCache.size());
-					 
+
 					// Perform a nullptr check on function
-					strCache = "<function>" + ((top.function != nullptr) ? std::string(top.function) : "Invalid") +"</function>\r\n"; 
+					strCache = "<function>" + ((top.function != nullptr) ? std::string(top.function) : "Invalid") + "</function>\r\n";
 					log.write(strCache.data(), strCache.size());
 
 					// top.message can contain data which will break the XML format
 					// Search for either < or > to remove
 					//for (auto position = top.message.find_first_of('<', 0); position != std::string::npos; position = top.message.find_first_of('<', 0));
-					
+
 					remove_all('>', top.message);
 					remove_all('<', top.message);
 
@@ -117,12 +120,15 @@ namespace Pro {
 		Log& operator=(Log&&) = delete;
 		Log& operator=(const Log&) = delete;
 	public:
-		Log() { 
+		//! Reserved log files:
+		//! Log.xml
+		//! Profile.xml
+		Log(const std::string& log_name){
 			running_.store(true);
 			messages_.Resize(1000);
-			std::thread(&worker_thread, &messages_, &running_, &has_terminated_).detach();
+			std::thread(&worker_thread, &messages_, log_name, &running_, &has_terminated_).detach(); 
+		} 
 
-		}
 		~Log() {
 			running_.store(false);
 		}
@@ -139,9 +145,12 @@ namespace Pro {
 			pack.line = line;
 			pack.function = file;
 			pack.message = msg;
-			messages_.Push(std::move(pack));
-
-
+			if (has_terminated_ == false)
+				messages_.Push(std::move(pack));
+			else{
+				std::cout << "Log file has closed or failed to open, did you try to create two logs with the same name?" << std::endl;
+				std::cout << "Error Message failed to write: " << msg << std::endl;
+			}
 			return num;
 		}
 

@@ -17,6 +17,7 @@ History:
 #include <mutex>  
 #include "ObjectPool.h"
 #include "Queue.h" 
+#include "Log.h"
 #include "Future.h"
 
 namespace Pro {
@@ -91,10 +92,12 @@ namespace Pro {
 				new_work_.notify_all();
 			}
 
+			//! Returns true if there's no work waiting
 			inline bool IsQueueEmpty() {
 				return work_.Empty();
 			}
 
+			//! Add a function call to the Parallel work queue
 			template<typename T, typename... Args>
 			void Batch(T* func, Future* finished, Args... arguments) {
 				if (finished == nullptr)
@@ -108,6 +111,7 @@ namespace Pro {
 				new_work_.notify_one();
 			}
 
+			//! Add a function to the Parallel work queue and passes @data to the function
 			template<typename T, typename... Args>
 			void Batch(T* func, Future* finished, void* data, Args... arguments) {
 				if (finished == nullptr)
@@ -188,7 +192,7 @@ namespace Pro {
 			*/
 			template<typename F, typename... Args>
 			void Process(F func, void* data, unsigned size, unsigned offset, Future* finished, Args... arguments) {
-
+				global_log.Report<LogCode::WARNING>("Function isn't implemented", __FUNCTION__, __LINE__);
 			}
 		}; 
 	}

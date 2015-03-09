@@ -14,6 +14,6 @@ History:
 *************************************************************************/
 #include "Log.h"
 
-Pro::Log Pro::global_log;
+Pro::Log Pro::global_log("Log.xml");
 
 

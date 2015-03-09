@@ -130,7 +130,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WINDOWS;GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
       <BrowseInformation>true</BrowseInformation>
@@ -318,6 +318,8 @@
     <ClInclude Include="OpenCL\Kernel.h" />
     <ClInclude Include="OpenCL\Platform.h" />
     <ClInclude Include="OpenCL\CLProgram.h" />
+    <ClInclude Include="Profiler\Profiler.h" />
+    <ClInclude Include="Profiler\ProfilerState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
@@ -327,7 +329,6 @@
     <ClCompile Include="FileSystem\CFile.cpp" />
     <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
-    <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Lighting.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\MeshLoader.cpp" />
@@ -360,6 +361,7 @@
     <ClCompile Include="OpenCL\Platform.cpp" />
     <ClCompile Include="OpenCL\Buffer.cpp" />
     <ClCompile Include="OpenCL\CLProgram.cpp" />
+    <ClCompile Include="Profiler\Profiler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -145,9 +145,13 @@ namespace Pro {
 				Destroy(clean);
 			} 
 
+			//! Returns the stored pointer as a const
 			inline const T* get() const { return ptr_; }
+
+			//! Returns the stored pointer
 			inline T* get() { return ptr_; }
 
+			//! Returns true if the pointer is null
 			bool IsNull() const {
 				return ptr_ == nullptr;
 			}

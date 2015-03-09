@@ -21,7 +21,7 @@ inline GLuint toColor(unsigned r_bitmask, unsigned g_bitmask, unsigned b_bitmask
 	return out;
 }
 namespace Pro {
-	namespace Graphics { 
+	namespace Graphics {
 		struct BMPHeader {
 			unsigned header_size;
 			unsigned long bmp_width;
@@ -192,31 +192,16 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 
 	if (header.color_palette_count == 0) {
 		ColorDefinition def;
-		switch (header.bit_depth) {
-		case 24:
-			for (unsigned long h_pos = 0; h_pos < header.bmp_height; ++h_pos) {
-				for (unsigned long w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
-					def.b = reader.Read<char>();
-					def.g = reader.Read<char>();
-					def.r = reader.Read<char>();
-					def.a = 0;
-					writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
-				}
-				// padding to a multiple of 4 bytes 
-				reader.Skip(header.bmp_width % 4);
+		for (unsigned long h_pos = 0; h_pos < header.bmp_height; ++h_pos) {
+			for (unsigned long w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
+				def.b = reader.Read<char>();
+				def.g = reader.Read<char>();
+				def.r = reader.Read<char>();
+				def.a = (header.bit_depth == 32) ? reader.Read<char>() : 0;
+				writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
 			}
-			break;
-		case 32:
-			for (unsigned h_pos = 0; h_pos < header.bmp_height; ++h_pos)
-				for (unsigned w_pos = 0; w_pos < header.bmp_width; ++w_pos) {
-					def.r = reader.Read<char>();
-					def.g = reader.Read<char>();
-					def.b = reader.Read<char>();
-					def.a = reader.Read<char>();
-					writer.Write<GLuint>(toColor(header.r_bitmask, header.g_bitmask, header.b_bitmask, header.a_bitmask, def));
-					break;
-				}
-			break;
+			// padding to a multiple of 4 bytes 
+			reader.Skip(header.bmp_width % 4);
 		}
 	}
 	else
@@ -229,7 +214,7 @@ smart_ptr<Texture> TextureLoader::LoadBMP(Buffer* buffer) {
 			writer.Write<GLuint>(colorTable.at(reader.Read<unsigned>()));
 			writer.Write<Texture>(Texture(1, { 1, 1 }));
 			break;
-		}
+	}
 
 	GLuint texture_id;
 	glGenTextures(1, &texture_id);

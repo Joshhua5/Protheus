@@ -13,7 +13,8 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "CAudioData.h" 
+#include "CAudioData.h"
+
 
 namespace Pro{
 	namespace Audio{

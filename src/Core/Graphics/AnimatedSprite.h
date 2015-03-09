@@ -18,6 +18,7 @@ History:
 
 namespace Pro{
 	namespace Graphics{
+		//! Depreciated
 		class AnimatedSprite
 		{
 		private:

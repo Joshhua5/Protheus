@@ -52,7 +52,7 @@ int main() {
 
 	// Load Textures
 	 
-	auto ball = TextureLoader::LoadTexture(textures.GetFile("Ball.bmp")); 
+	auto ball = TextureLoader::LoadTexture(textures.GetFile("box32bit.bmp")); 
 	auto ball_id = batcher.AttachTexture(ball); 
 	  
 	// Initialize Entities

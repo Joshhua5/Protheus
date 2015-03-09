@@ -1,11 +1,9 @@
-#pragma once
-
+#pragma once 
 #include "Transformation.h"
 
 namespace Pro {
 	namespace Graphics { 
-		class Camera : public Transformation{
-			
-		};
+		//! Simply exists to create a more understandable name
+		typedef Transformation Camera;
 	}
 }
