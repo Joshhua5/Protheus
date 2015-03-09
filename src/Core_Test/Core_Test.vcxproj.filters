@@ -21,7 +21,7 @@
     <None Include="Kernel\Test.cl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnimatedSpriteTest.cpp">
+    <ClCompile Include="LearnOGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

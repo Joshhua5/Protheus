@@ -36,7 +36,6 @@ LightPoint& Lighting::AttachLight(const LightPoint& point) {
 	return light_points_.back();
 }
 
-
 void Lighting::SetAmbient(const Vector3<float>& ambient) {
 	ambient_color_ = ambient;
 }

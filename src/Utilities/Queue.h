@@ -100,8 +100,8 @@ namespace Pro {
 
 				// Problem with the pop and push positions
 				if (push_position_ < pop_position_) {
-					memcpy(new_queue, old_queue + pop_position_, sizeof(T) * (sizem - pop_position_));
-					memcpy(new_queue + (sizem - pop_position_), old_queue, sizeof(T) * push_position_);
+					memcpy(new_queue, old_queue + pop_position_, sizeof(T) * (sizem - pop_position_ + 1));
+					memcpy(new_queue + (sizem - pop_position_ + 1), old_queue, sizeof(T) * push_position_);
 				}
 				else
 					memcpy(new_queue + pop_position_, old_queue, sizeof(T) * (push_position_ - pop_position_));

@@ -60,13 +60,15 @@ int main() {
 
 	VertexArray vao;
 	vao.Bind(); 
-	 
+	
+	// Set the attirbutes of the model
 	vao.setVertexAttribute(program, "in_normal", cube->GetObjects().at(0).NormalSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).NormalOffset());
 	vao.setVertexAttribute(program, "position", cube->GetObjects().at(0).VertexSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).VertexOffset());
 	vao.setVertexAttribute(program, "in_tex", cube->GetObjects().at(0).TexCoordSize(), GL_FLOAT, GL_FALSE, cube->GetObjects().at(0).Stride(), cube->GetObjects().at(0).TexCoordOffset());
  
 	vao.Unbind(); 
 
+	// Set positions for lighting
 	program.SetUniform("world_pos", Vector3<float>(0, 0, 0));
 	program.SetUniform("camera_pos", camera.position());
  
@@ -90,31 +92,43 @@ int main() {
 	Vector3<float> rotation(0);
 
 	while (true) {
+		// Start the frame
 		window.StartFrame(); 
-		vao.Bind();
-		//camera.rotate({ 0, 0, 0.01f }); 
+		vao.Bind(); 
 
-		//window.getMouse().getMousePosition<float>(&light.position.x, &light.position.y); 
+		// Update light position with the mouse
+		window.mouse().position<float>(&light.position.x, &light.position.y); 
+		light.position.x /= window.width();
+		light.position.y /= window.height();
+		light.position /= ToVector3<float>(window.dimensions().Cast<float>(), 1);
 		light_t.position(light.position);  
+
 		model.scale({ 0.1f, 0.1f, 0.1f });
 		model.position({ 0, -0.5f, 0 });
+
+		// Sleep for roughly 60hz
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+
+		// Set the projection
 		program.SetUniform("model", model.getMatrix());
 		program.SetUniform("view", camera.getMatrix()); 
 		program.SetUniform("projection", projection.GetPerspective());
+		// Rebind the lights as they move to the mouse
 		lights.BindLights(program);
 		program.SetUniform("normal_matrix", model.getNormalMatrix());
 		cube->Bind();
-		 
-
+		  
+		// Draw the object
 		for (const auto& obj : cube->GetObjects()){
 			program.SetUniform("has_normal", obj.HasNormals());
 			program.SetUniform("has_tex_coord", obj.HasTexCoord());
 			glDrawElements(obj.GetMode(), obj.size, GL_UNSIGNED_INT, obj.p_start); 
 		}
 
+		// Unbind the VAO
 		vao.Unbind();
 
+		// Poll for input to rotate the model
 		if (window.keyboard().IsKeyDown(KEY::KEY_W) != KEY_PRESSED::RELEASED)
 			rotation.x += 0.1f;
 		if (window.keyboard().IsKeyDown(KEY::KEY_D) != KEY_PRESSED::RELEASED)
@@ -127,9 +141,11 @@ int main() {
 			rotation.z += 0.1f;
 		if (window.keyboard().IsKeyDown(KEY::KEY_E) != KEY_PRESSED::RELEASED)
 			rotation.z -= 0.1f;
-		  
+		
+		// Apply rotation to the model
 		model.rotation(rotation);
 		 
+		// End frame
 		window.EndFrame();
 	}
 }

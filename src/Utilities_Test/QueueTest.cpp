@@ -10,10 +10,10 @@ const unsigned count = 100000;
 
 void creator(Queue<unsigned>* q, std::atomic<bool>* flag){
 	while (flag->load());
-	for (unsigned i = 0; i < count; ++i){
-		while (q->size() == q->capacity() - 10);
+	for (unsigned i = 0; i < count; ++i){ 
 		q->Push(i);
 	}
+	return;
 }
 
 void consumor(Queue<unsigned>* q, std::atomic<bool>* flag){
