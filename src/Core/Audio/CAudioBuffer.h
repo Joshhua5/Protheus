@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -16,7 +16,7 @@ History:
 *************************************************************************/
 #pragma once
 
-#include "openal\al.h"
+#include "openal/al.h"
 
 namespace Pro{
 	namespace Audio{ 

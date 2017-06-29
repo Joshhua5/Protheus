@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -31,14 +31,14 @@ namespace Pro {
 				back_ =  operator new(sizeof(T));
 			}
 			DoubleBuffer(T value) {
-				operator new(front_) T(value);
-				operator new(back_) T(value); 
+                operator new(front_) T(value);
+                operator new(back_) T(value);
 			}
-			DoubleBuffer(const DoubleBuffer&) {
+			DoubleBuffer(const DoubleBuffer& rhs) {
 				*this->back_ = *rhs.back;
 				*this->front_ = *rhs.front;
 			}
-			DoubleBuffer(DoubleBuffer&&) {
+			DoubleBuffer(DoubleBuffer&& rhs) {
 				this->back_ = rhs.back;
 				this->front_ = rhs.front;
 				rhs.back = rhs.front = nullptr;

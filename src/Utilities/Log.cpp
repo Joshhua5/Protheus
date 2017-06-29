@@ -1,8 +1,6 @@
-#pragma once 
-
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -14,6 +12,8 @@ History:
 *************************************************************************/
 #include "Log.h"
 
-Pro::Log Pro::global_log("Log.xml");
+#ifndef LOGNAME
+#define LOGNAME "Log.xml"
+#endif
 
-
+Pro::Log Pro::global_log(LOGNAME);

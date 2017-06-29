@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3DA83F0D-2777-42DB-8529-781AB8197863</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Protheus</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7DFC43B924DA9814FD34F5CD8FDE809FDF84586C</key>
+		<string>https://github.com/Protheus-Engine/Protheus.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Protheus.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7DFC43B924DA9814FD34F5CD8FDE809FDF84586C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Protheus-Engine/Protheus.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7DFC43B924DA9814FD34F5CD8FDE809FDF84586C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7DFC43B924DA9814FD34F5CD8FDE809FDF84586C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Protheus</string>
+		</dict>
+	</array>
+</dict>
+</plist>

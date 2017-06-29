@@ -1,15 +1,13 @@
 #pragma once
-
-
+ 
 #include <string> 
 #include <memory>
 #include <vector>
 #include "Program.h"
-#include <Buffer.h>
-#include <smart_ptr.h>
+#include <Buffer.h> 
 #include <BufferWriter.h>
 #include "VertexArray.h"
-#include "extern\glew.h"
+#include "OpenGL.h"
 
 namespace Pro {
 	namespace Graphics {

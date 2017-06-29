@@ -7,8 +7,8 @@ namespace Pro{
 		class IAudioEffect
 		{
 		public:
-			CAudioData process(CAudioData);
-			void process(CAudioData&);
+			virtual CAudioData process(CAudioData) = 0;
+			virtual void process(CAudioData&) = 0;
 		};
 	}
 }

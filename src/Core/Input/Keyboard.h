@@ -2,24 +2,32 @@
 
 
 #include <Vector2.h>
-#include "UserPointers.h"
-#include <utility>
-#include <queue>
+#include <Pipe.h>
 #include "Keys.h"
 
 namespace Pro {
 	namespace Input {
+		//! Keyboards data comes from the Window Class and therefor captures no data,
+		//! until a window has been bound.
 		class Keyboard {
-			std::queue<std::pair<KEY, KEY>> keyboard_key_;
-			GLFWwindow* window_;
+			//! Reference to a pointer inside Window
+            std::shared_ptr<Util::Pipe<std::pair<KEY_PRESSED, KEY>>> keyboard_key_;
+			//! Reference to key states inside Window
+			bool* keys_;
 		public:
 			bool hasKey();
-			// returns <modifier, key>
-			std::pair<KEY, KEY> PollKey();
-			KEY_PRESSED IsKeyDown(KEY);
+
+            //! Returns the next key pressed
+			std::pair<KEY_PRESSED, KEY> PollKey();
+            //! Returns the next key pressed, without removing it
+            std::pair<KEY_PRESSED, KEY> PeekKey();
+			
+			bool IsKeyDown(KEY);
+
+			KEY_PRESSED KeyState(KEY);
 
 			// depreciated
-			void AttachWindow(GLFWwindow*);
+            void AttachWindow(std::shared_ptr<Util::Pipe<std::pair<KEY_PRESSED, KEY>>>& reference, bool* keys);
 		};
 	}
 }

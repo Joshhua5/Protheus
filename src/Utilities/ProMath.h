@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -10,14 +10,15 @@ History:
 - 21:12:2014 Waring J.
 
 *************************************************************************/
+#pragma once
 
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix33.h"
 #include "Matrix44.h"
+#include "SIMD.h"
 
-#pragma once
 namespace Pro {
 	namespace Math {
 		/*! PI constant*/
@@ -132,7 +133,7 @@ namespace Pro {
 		inline T Rand(T min, T max){
 			static bool executed = false;
 			if (executed) {
-				srand(time(NULL));
+				srand((int)time(NULL));
 				executed = true;
 			}
 

@@ -1,213 +1,242 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
-A extern class to provide writing functions to a buffer
-Not safe for 2 simultaneous producers or 2 simultaneous consumors
-
-Note:
-Does not produce log data due to a dependency.
-Log writes have been replaces with throws enables with the NDEBUG flag
+A single producer and single consumer lock free queue for multi-core 
+applications, A producer or consumer may not be shared between threads with user implemented
+locking as push and pop positions aren't volitile and may store the out dated values in registers.
+ 
+ 
+ Broken condititons:
+ Push pop 1,000,000 objects onto a 1,000,000 queue
+    999999 expected 0 Line: 40 Function: consumor
+ Push pop 1,000,000 objects onto a 100,000 queue
+ 
+ 
+ Optimisation:
+ Have the push and pop functions store a variable of how many pushs and pops
+ are remaining before another check is required, this reduces the atomic access
+ to size_ dramatically
+ 
+ 
 -------------------------------------------------------------------------
 History:
 - 9:01:2015: Waring J.
 *************************************************************************/
 #pragma once
-
-#include <atomic>
-#include <mutex> 
+ 
+#include <memory>
+#include <cstring>
 
 namespace Pro {
 	namespace Util {
 		/*! Thread Safe Lock Free Queue
-			Queue resizes involves a lock. 
+			Queue resizes involves a lock.
 			*/
 
-		template<typename T>
-		class Queue {
-			std::atomic<T*> queue_;
-			std::atomic<size_t> pop_position_;
-			std::atomic<size_t> push_position_;
-			std::atomic<size_t> size_;
-			std::atomic<size_t> capacity_;
-			std::atomic<bool> being_resized_;
-			std::mutex resize_lock_;
-
-			// Checks if the @pos has overflown and resets it's position if true
-			inline size_t CheckOverflow(std::atomic<size_t>* pos) const{
-				// if position is at the capacity then overflow
-				if (pos->load() == capacity_) {
-					pos->store(0);
-					return 0;
-				}
-				return *pos;
-			}
-			
+        template<typename T>
+		class alignas(64) Queue {
+            size_t push_position_;
+			size_t pop_position_;
+            T* queue_;
+            unsigned char queue_offset_;
+			size_t capacity_;
+			size_t size_;
+            
 			//! Checks if the @pos has overflown and then increments the @pos
-			inline size_t CheckOverflowWithIncrement(std::atomic<size_t>* pos) const {
-				// if position is at the capacity then overflow
-				if (pos->load() == capacity_) {
-					// 1 To account for the increment
-					pos->store(1);
-					return 0;
-				}
-				return (*pos)++;
-			}
+            
+            inline long CheckOverflow(size_t& pos) const{
+                // if position is at the capacity then overflow
+                if (pos == capacity_)
+                    pos = 0;
+                return pos;
+            }
+            
+            //! Checks if the @pos has overflown and then increments the @pos
+            inline long CheckOverflowWithIncrement(size_t& pos) const {
+                // if position is at the capacity then overflow
+                if (pos == capacity_) {
+                    // 1 To account for the increment
+                    pos = 1;
+                    return 0;
+                }
+                return pos++;
+            }
 
-			//! If a resize is being performed then wait until the resize is finished
-			inline void WaitForResize() const{ 
-#ifdef PRO_PROFILE
-				if (being_resized_){
-					global_log.Report<LogCode::PERFORMANCE>("Push and Pops waiting on resize, suggest reserving more data.", __FUNCTION__, __LINE__);
-					while (being_resized_)
-						std::this_thread::yield(); 
-				}
-#else
-				while (being_resized_)
-					std::this_thread::yield(); 
-#endif 
-				}
-
+            inline bool DecrementSize(){
+                if(size_ <= 0)
+                    return false;
+                --size_;
+                return true;
+            }
+            
 		public:
-			Queue(const size_t size = 64) {
-				queue_ = reinterpret_cast<T*>(operator new(sizeof(T) * size));
+			Queue(const size_t size = 20480) {
+				queue_ = reinterpret_cast<T*>(operator new(sizeof(T) * size + 64));
+                queue_offset_ = 64 - ((size_t)queue_ % 64);
+                queue_ = (T*)((char*)queue_ + queue_offset_);
 				capacity_ = size;
-				being_resized_ = false;
 				pop_position_ = push_position_ = size_ = 0;
-			}
+		}
+
+			Queue(const Queue& rhs) = delete;
+
+			Queue(Queue&& rhs){
+                queue_ = rhs.queue_;
+                capacity_ = rhs.capacity_;
+                pop_position_ = rhs.pop_position_;
+                queue_offset_ = rhs.queue_offset_;
+                push_position_ = rhs.push_position_;
+                size_ = rhs.size_.load();
+                
+                rhs.queue_ = nullptr;
+                rhs.size_ = 0;
+                rhs.pop_position_ = 0;
+                rhs.queue_offset_ = 0;
+                rhs.push_position_ = 0;
+                rhs.capacity_ = 0;
+                rhs.being_resized_ = false;
+            }
+            
+            Queue& operator=(Queue&& rhs){
+                queue_ = rhs.queue_;
+                capacity_ = rhs.capacity_;
+                queue_offset_ = rhs.queue_offset_;
+                pop_position_ = rhs.pop_position_;
+                push_position_ = rhs.push_position_;
+                size_ = rhs.size_;
+                
+                rhs.queue_ = nullptr;
+                rhs.size_ = 0;
+                rhs.pop_position_ = 0;
+                rhs.queue_offset_ = 0;
+                rhs.push_position_ = 0;
+                rhs.capacity_ = 0;
+                return *this;
+            }
+            
+            Queue& operator=(const Queue& rhs) = delete; 
+
 			~Queue() {
-				// Lock to make sure nothing is resizing
-				std::lock_guard<std::mutex> lk(resize_lock_); 
-				while (!Empty())
-					Pop();
-				operator delete(queue_.load()); 
+                while (Pop());
+                queue_ = (T*)((char*)queue_ - queue_offset_);
+				operator delete(queue_);
 			}
-
-			//! Resize will block all Push's and Pops unless their constant.
-			inline void Resize(const size_t size) {
-				std::lock_guard<std::mutex> lk(resize_lock_);
-
-				if (size <= size_)
-					// Either another thread has already resized or the requested size is less than the stored size
-					return;
-
-				being_resized_ = true;
-
-				auto old_queue = queue_.load();
-				auto new_queue = reinterpret_cast<T*>(operator new (sizeof(T) * size));
-
-				const size_t sizem = capacity_ - 1;
-
-				// Problem with the pop and push positions
+  
+            //! Resizes the queue to @size and moves all objects with memcpy
+            //! Disabled by default due to being unsafe in a multithreaded application,
+            //! Although in a single threaded application use the flag ENABLE_QUEUE_RESIZE to enable
+            inline void Resize(const size_t size) {
+                T* new_queue = reinterpret_cast<T*>(operator new(sizeof(T) * size + 64));
+                unsigned new_queue_offset_ = 64 - ((size_t)new_queue % 64);
+                new_queue = (T*)((char*)new_queue + new_queue_offset_);
+                  
 				if (push_position_ < pop_position_) {
-					memcpy(new_queue, old_queue + pop_position_, sizeof(T) * (sizem - pop_position_ + 1));
-					memcpy(new_queue + (sizem - pop_position_ + 1), old_queue, sizeof(T) * push_position_);
+					std::memcpy(new_queue, queue_ + pop_position_, sizeof(T) * (capacity_ - pop_position_ - 1));
+					std::memcpy(new_queue + (capacity_ - pop_position_ - 1), queue_, sizeof(T) * push_position_);
 				}
 				else
-					memcpy(new_queue + pop_position_, old_queue, sizeof(T) * (push_position_ - pop_position_));
-
+					std::memcpy(new_queue, queue_ + pop_position_, sizeof(T) * size_);
+                
+                operator delete((T*)((char*)queue_ - queue_offset_));
 				capacity_ = size;
-				queue_.store(new_queue);
 				pop_position_ = 0;
-				push_position_ = size_.load();
-				operator delete(old_queue);
-
-				being_resized_ = false;
+				push_position_ = size_;
+                queue_ = new_queue;
+                queue_offset_ = new_queue_offset_;
 			}
 
 			// Issue if pushing while poping with only one element
-			inline void Push(const T& obj) {
-				if (size_ == capacity_ - 1)
-					Resize(static_cast<size_t>(capacity_ * 1.2f));
-				WaitForResize();
-				auto pos = CheckOverflowWithIncrement(&push_position_);
+			inline bool Push(const T& obj) {
+                if(capacity_ - size_  <= 1)
+                    Resize(static_cast<size_t>(size_ * 1.2) + 5);
+                auto pos = CheckOverflowWithIncrement(push_position_);
 
-				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj));
-				++size_;
+				new(reinterpret_cast<T*>(queue_) + pos) T(std::move(obj));
+                ++size_;
+                return true;
 			}
 
 			//! Pushes a new objects into the queue
-			inline void Push(T&& obj) {
-				if (size_ == capacity_ - 1)
-					Resize(static_cast<size_t>(capacity_ * 1.2f)); 
-				WaitForResize();
+            inline bool Push(T&& obj) {
+                if(capacity_ - size_  <= 1)
+                    Resize((size_ * 1.2) + 5);
 
-				auto pos = CheckOverflowWithIncrement(&push_position_);
+				auto pos = CheckOverflowWithIncrement(push_position_);
 
-				new(reinterpret_cast<T*>(queue_.load()) + pos) T(std::move(obj));
-				++size_;
+				new(reinterpret_cast<T*>(queue_) + pos) T(std::move(obj));
+                ++size_;
+                return true;
 			}
+            
 
 			//! Pushes a new objects into the queue, constructed with the provided arguments
 			template<typename... Args>
-			inline void Emplace(Args... arguments) {
-				if (size_ == capacity_ - 1)
-					Resize(static_cast<size_t>(capacity_ * 1.2f));
-				WaitForResize();
+            inline bool Emplace(Args... arguments) {
+                if(capacity_ - size_ <= 1)
+                    Resize((size_ * 1.2) + 5);
+                
 				auto pos = CheckOverflowWithIncrement(&push_position_);
-				new(reinterpret_cast<T*>(queue_.load()) + pos) T(arguments);
-				++size_;
-			}
+				new(reinterpret_cast<T*>(queue_) + pos) T(arguments...);
+                ++size_;
+                return true;
+            }
 
-			//! Returns reference to the next object being stored.
+			//! Returns a copy to the next object being stored.
 			//! Top doesn't wait for a resize to finish, due to its read only nature.
-			inline const T& Top() const{
-				if (Empty()) {
-#if PRO_DEBUG
-					throw "Called Top on a empty queue, undefined returned object.";
-#endif 
-				} 
-				auto pos = CheckOverflow(&pop_position_);
-				return queue_.load()[pos];
+            inline const bool Top(const T& return_obj) const{
+                if(size_ == 0)
+                    return false;
+                auto pos = CheckOverflow(pop_position_);
+                return_obj = queue_[pos];
+                return true;
 			}
 
-			//! Returns reference to the next object being stored.
-			inline T& Top() {
-				if (Empty()) {
-#if PRO_DEBUG
-					throw "Called Top on a empty queue, undefined returned object.";
-#endif 
-				}
-				WaitForResize();
-				auto pos = CheckOverflow(&pop_position_);
-				return queue_.load()[pos];
+			//! Returns a copy to the next object being stored.
+            inline bool Top(T& return_obj) {
+                if(size_ == 0)
+                    return false;
+                auto pos = CheckOverflow(pop_position_);
+				return_obj = queue_[pos];
+                return true;
 			}
 
 			//! Removes the next object from the queue.
-			inline void Pop() {
-				WaitForResize();
-
+            inline bool Pop() {
+                if(size_ == 0)
+                    return false;
+                
 				// Get the next object
-				auto pos = pop_position_.load();
-				if (pos == capacity_) {
-					pop_position_.store(1);
-					pos = 0;
-				}
-				else
-					pop_position_++;
+                auto pos = CheckOverflowWithIncrement(pop_position_);
 				// Deconstruct object
-				(queue_.load() + pos)->~T();
+				(queue_ + pos)->~T();
 				// Top doesn't increment, so do that here 
-				--size_;
+                return DecrementSize();
 			}
-
+            
 			//! Returns and removes the next object from the queue.
-			inline T TopPop() {
-				T returnObj(Top());
-				Pop();
-				return returnObj;
+            //! if the queue is empty, false is returned and return_obj isn't modified
+            inline bool TopPop(T& return_obj) {
+                if(size_ == 0)
+                    return false;
+                
+                // Get the next object
+                size_t pos = CheckOverflowWithIncrement(pop_position_);
+                // Create a copy before updating size, to prevent push from overwriting out object
+                return_obj = std::move(*(queue_ + pos)); 
+                return DecrementSize();
 			}
-
-			//! Returns true if no objects are being stored
-			inline bool Empty() const { return size_.load() == 0; }
-
+            
+            inline bool Empty() const { return size_ == 0; }
+            
 			//! Returns the count of objects being stored
 			inline size_t size() const { return size_; }
 
 			//! Returns the capacity of the queue before a resize is required.
 			inline size_t capacity() const { return capacity_; }
-			};
-		}
+ 
+		};
 	}
+}

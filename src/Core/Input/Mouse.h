@@ -1,48 +1,33 @@
 #pragma once
-   
+
 #include <Vector2.h>
 #include "Keys.h"
-#include "UserPointers.h"
-#include <queue>
+#include <atomic>
+#include "MouseEvent.h"
+#include <Pipe.h>
 
 namespace Pro {
 	namespace Input {
-		using namespace Math;
 		class Mouse {
-			std::queue<std::pair<KEY, KEY>> mouse_keys_;
-			GLFWwindow* window_;
+            std::shared_ptr<Util::Pipe<MouseEvent>> mouse_keys_;
+            Math::Vector2<int>* position_;
 		public:
-			Mouse();
-			Mouse(GLFWwindow* window);
+            Math::Vector2<int> position();
 
-			Vector2<int> position();
-
+            //! Sets vector as the position of the mouse
 			template<typename T>
-			void position(Vector2<T>& vector);
+            void position(Math::Vector2<T>& vector);
 
-			template<typename T>
-			void position(T* x, T* y);
-
-			std::pair<KEY, KEY> GetMouseKey();
+			MouseEvent GetMouseKey();
 			//! Returns true if new key events are avaliable
 			bool HasMouseKey();
-			 
-			void AttachWindow(GLFWwindow*);
+
+            void AttachWindow(std::shared_ptr<Util::Pipe<MouseEvent>>& reference, Math::Vector2<int>* keys);
 		};
 
 		template<typename T>
-		void Mouse::position(Vector2<T>& vector) {
-			position<T>(vector.x, vector.y);
-		}
-
-		template<typename T>
-		void Mouse::position(T* x, T* y) {
-			double _x, _y;
-			glfwGetCursorPos(window_, &_x, &_y);
-			if (x != nullptr)
-				*x = static_cast<T>(_x);
-			if (y != nullptr)
-				*y = static_cast<T>(_y);
+        void Mouse::position(Math::Vector2<T>& vector) {
+			vector = position_->Cast<T>();
 		}
 	}
 }

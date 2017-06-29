@@ -3,6 +3,13 @@
 using namespace Pro;
 using namespace Graphics;
 
+Texture::Texture(const Vector2<unsigned>& dim, GLenum format, GLenum type){
+    glGenTextures(1, &texture_id_);
+    glBindTexture(GL_TEXTURE_2D, texture_id_);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, dim.x, dim.y, 0, format, type, 0);
+    dimensions_ = dim;
+}
+
 Texture::Texture(const GLuint _texture_id,const Vector2<unsigned>& dim)
 {
 	texture_id_ = _texture_id;

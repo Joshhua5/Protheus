@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|ARM">
-      <Configuration>Debug</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -12,10 +8,6 @@
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|ARM">
-      <Configuration>Release</Configuration>
-      <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -29,55 +21,40 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9C7944F6-E79D-49A9-811A-8EB9B8CE9316}</ProjectGuid>
     <RootNamespace>Core</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
@@ -86,44 +63,31 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)externlib\$(Platform)\$(Configuration);$(SolutionDir)lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)Audio\openal;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <LibraryPath>$(SolutionDir)..\externlib\Win32;$(SolutionDir)$(Configuration)\;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
-    <SourcePath>$(SourcePath)</SourcePath>
-    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(SolutionDir)lib\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\externlib\Win64\;$(SolutionDir)lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
-    <IncludePath>$(ProjectDir)..\Utilities;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)Audio\openal;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>$(ProjectDir)..\Utilities;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(SolutionDir)externlib\$(Platform)\$(Configuration);$(SolutionDir)lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)Audio\openal;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)..\externlib\Win32;$(SolutionDir)lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>$(ProjectDir)..\Utilities;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>$(ProjectDir)..\Utilities;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(SolutionDir)externlib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Utilities;$(ProjectDir)Audio\openal;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)..\externlib\Win64\;$(SolutionDir)lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,42 +100,23 @@
       <BrowseInformation>true</BrowseInformation>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Utilities.lib;OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalDependencies>Utilities.lib;OpenAL32.lib;opengl32.lib;glew32sd.lib;ws2_32.lib</AdditionalDependencies>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalOptions>/DEBUG %(AdditionalOptions)</AdditionalOptions>
-      <BrowseInformation>true</BrowseInformation>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
-      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-    </Lib>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -184,12 +129,14 @@
       <BrowseInformation>true</BrowseInformation>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <StringPooling>true</StringPooling>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32ds.lib;glfw3.lib;</AdditionalDependencies>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
@@ -205,6 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -213,27 +161,14 @@
       <AdditionalDependencies>OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;Utilities.lib</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;Utilities.lib</AdditionalDependencies>
     </Lib>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;WIN32;NDEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <Lib>
-      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
-    </Lib>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -251,7 +186,7 @@
       <AdditionalDependencies>OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;OpenAL32.lib;opengl32.lib;glew32s.lib;Utilities.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -263,26 +198,33 @@
     <ClInclude Include="Audio\IAudioEffect.h" />
     <ClInclude Include="Audio\IBitstreamDecoder.h" />
     <ClInclude Include="Audio\WavDecoder.h" />
-    <ClInclude Include="FileSystem\CFile.h" />
-    <ClInclude Include="FileSystem\EFile.h" />
+    <ClInclude Include="FileSystem\File.h" />
     <ClInclude Include="FileSystem\FileSystem.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
+    <ClInclude Include="Graphics\BasicShapes.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\extern\glew.h" />
     <ClInclude Include="Graphics\extern\glfw3.h" />
     <ClInclude Include="Graphics\extern\glfw3native.h" />
     <ClInclude Include="Graphics\extern\glxew.h" />
+    <ClInclude Include="Graphics\extern\lib3ds\lib3ds.h" />
+    <ClInclude Include="Graphics\extern\lib3ds\lib3ds_impl.h" />
+    <ClInclude Include="Graphics\extern\vk_cpp.h" />
+    <ClInclude Include="Graphics\HeightMapMesh.h" />
     <ClInclude Include="Graphics\extern\wglew.h" />
     <ClInclude Include="Graphics\Lighting.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\MeshLoader.h" />
     <ClInclude Include="Graphics\MeshObject.h" />
+    <ClInclude Include="Graphics\NoiseGenerator.h" />
+    <ClInclude Include="Graphics\OpenGL.h" />
     <ClInclude Include="Graphics\Projection.h" />
     <ClInclude Include="Graphics\Program.h" />
     <ClInclude Include="Graphics\Sprite.h" />
     <ClInclude Include="Graphics\SpriteBatcher.h" />
+    <ClInclude Include="Graphics\Surface.h" />
     <ClInclude Include="Graphics\TextureUnit.h" />
-    <ClInclude Include="Graphics\Transformation.h" />
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Graphics\WindowDefinition.h" />
@@ -290,34 +232,15 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\Keys.h" />
     <ClInclude Include="Input\Mouse.h" />
-    <ClInclude Include="Input\UserPointers.h" />
-    <ClInclude Include="Networking\CClientTCPConnection.h" />
-    <ClInclude Include="Networking\CConnection.h" />
-    <ClInclude Include="Networking\CNetwork.h" />
-    <ClInclude Include="Networking\CServerTCPConnection.h" />
-    <ClInclude Include="Networking\CTCPConnection.h" />
-    <ClInclude Include="Networking\CTCPServer.h" />
+    <ClInclude Include="Input\MouseEvent.h" />
+    <ClInclude Include="Networking\ConnectionStorage.h" />
+    <ClInclude Include="Networking\ConnectionType.h" />
     <ClInclude Include="Graphics\TextureLoader.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Graphics\Shader.h" />
-    <ClInclude Include="Networking\SDL_net\begin_code.h" />
-    <ClInclude Include="Networking\SDL_net\close_code.h" />
-    <ClInclude Include="Networking\SDL_net\SDLnetsys.h" />
-    <ClInclude Include="Networking\SDL_net\SDL_net.h" />
-    <ClInclude Include="OpenCL\Buffer.h" />
-    <ClInclude Include="OpenCL\CLEvent.h" />
-    <ClInclude Include="OpenCL\Context.h" />
-    <ClInclude Include="OpenCL\Device.h" />
-    <ClInclude Include="OpenCL\extern\cl.h" />
-    <ClInclude Include="OpenCL\extern\cl.hpp" />
-    <ClInclude Include="OpenCL\extern\cl_ext.h" />
-    <ClInclude Include="OpenCL\extern\cl_gl.h" />
-    <ClInclude Include="OpenCL\extern\cl_gl_ext.h" />
-    <ClInclude Include="OpenCL\extern\cl_platform.h" />
-    <ClInclude Include="OpenCL\extern\opencl.h" />
-    <ClInclude Include="OpenCL\Kernel.h" />
-    <ClInclude Include="OpenCL\Platform.h" />
-    <ClInclude Include="OpenCL\CLProgram.h" />
+    <ClInclude Include="Networking\NetCommands.h" />
+    <ClInclude Include="Networking\Connection.h" />
+    <ClInclude Include="Networking\Server.h" />
     <ClInclude Include="Profiler\Profiler.h" />
     <ClInclude Include="Profiler\ProfilerState.h" />
   </ItemGroup>
@@ -326,41 +249,55 @@
     <ClCompile Include="Audio\AudioListener.cpp" />
     <ClCompile Include="Audio\CAudioSource.cpp" />
     <ClCompile Include="Audio\WavDecoder.cpp" />
-    <ClCompile Include="FileSystem\CFile.cpp" />
+    <ClCompile Include="FileSystem\File.cpp" />
     <ClCompile Include="FileSystem\FileSystem.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_atmosphere.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_background.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_camera.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_chunk.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_chunktable.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_file.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_io.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_light.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_material.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_math.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_matrix.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_mesh.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_node.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_quat.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_shadow.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_track.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_util.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_vector.c" />
+    <ClCompile Include="Graphics\extern\lib3ds\lib3ds_viewport.c" />
+    <ClCompile Include="Graphics\HeightMapLoader.cpp" />
+    <ClCompile Include="Graphics\HeightMapMesh.cpp" />
+    <ClCompile Include="Graphics\extern\picopng.cpp" />
     <ClCompile Include="Graphics\Lighting.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\MeshLoader.cpp" />
     <ClCompile Include="Graphics\MeshObject.cpp" />
+    <ClCompile Include="Graphics\NoiseGenerator.cpp" />
+    <ClCompile Include="Graphics\ObjLoader.cpp" />
+    <ClCompile Include="Graphics\OpenGL.cpp" />
     <ClCompile Include="Graphics\Program.cpp" />
     <ClCompile Include="Graphics\Projection.cpp" />
     <ClCompile Include="Graphics\Sprite.cpp" />
     <ClCompile Include="Graphics\SpriteBatcher.cpp" />
     <ClCompile Include="Graphics\TextureUnit.cpp" />
-    <ClCompile Include="Graphics\Transformation.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Graphics\Window_WIN.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Input\Mouse.cpp" />
-    <ClCompile Include="Networking\CClientTCPConnection.cpp" />
-    <ClCompile Include="Networking\CConnection.cpp" />
-    <ClCompile Include="Networking\CNetwork.cpp" />
-    <ClCompile Include="Networking\CServerTCPConnection.cpp" />
-    <ClCompile Include="Networking\CTCPConnection.cpp" />
-    <ClCompile Include="Networking\CTCPServer.cpp" />
     <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
-    <ClCompile Include="Networking\SDL_net\SDLnet.c" />
-    <ClCompile Include="Networking\SDL_net\SDLnetselect.c" />
-    <ClCompile Include="Networking\SDL_net\SDLnetTCP.c" />
-    <ClCompile Include="Networking\SDL_net\SDLnetUDP.c" />
-    <ClCompile Include="OpenCL\Context.cpp" />
-    <ClCompile Include="OpenCL\Kernel.cpp" />
-    <ClCompile Include="OpenCL\Platform.cpp" />
-    <ClCompile Include="OpenCL\Buffer.cpp" />
-    <ClCompile Include="OpenCL\CLProgram.cpp" />
+    <ClCompile Include="Networking\Connection.cpp" />
+    <ClCompile Include="Networking\ConnectionStorage.cpp" />
+    <ClCompile Include="Networking\NetCommands.cpp" />
+    <ClCompile Include="Networking\Server.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

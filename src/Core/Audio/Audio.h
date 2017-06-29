@@ -2,8 +2,8 @@
  
 #include <string>
 #include <atomic>
-#include <Log.h>
-#include "openal\alc.h"
+#include <Log.h> 
+#include "openal/alc.h"
 #include "CAudioSource.h"
 #include "CAudioBuffer.h"
 #include "CAudioData.h"
@@ -24,7 +24,7 @@ namespace Pro{
 
 			static  std::atomic<short> duplicateCount;
 
-			std::string getErrorString(ALenum);
+			std::string getErrorString(ALenum) const;
 			  
 		public:
 			CAudio();
@@ -36,6 +36,9 @@ namespace Pro{
 			// returns the decoded audio file 
 
 			CAudioSource createSource(const CAudioBuffer& buffer);
+            
+            // Returns true if there's an error and/or the device hasn't been created
+            bool HasError() const; 
 		}; 
 	}
 }  

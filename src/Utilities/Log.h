@@ -1,14 +1,15 @@
 #pragma once
-#include "Queue.h" 
+#include "mcmp_queue.h"
 #include <string>
-#include <iostrea>
-#include <fstream> 
+#include <iostream>
+#include <cstring>
+#include <fstream>
 #include <thread>
 #include <mutex>
 
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -19,26 +20,41 @@ History:
 
 *************************************************************************/
 
+
 namespace Pro {
 	enum struct LogCode {
 		MESSAGE,
 		FATAL,
-		ERROR,
+		FAULT,
 		WARNING,
-		PERFORMANCE
+		PERFORMANCE,
+        NETWORK,
+        AUDIO,
+		INFO
 	};
+
+    /*!
+     The Log class is for writing out information in XML format,
+     all file io's are performed in a seperate thread.
+
+     The constant LOGNAME is used to set the global_log's output file,
+     if undefined then the default name Log.xml is used
+     */
 	class Log {
 		struct MessagePack {
 			LogCode code;
-			int id;
+            unsigned id;
 			int line;
 			const char* function;
 			std::string message;
 		};
 
+        std::mutex mutex;
+        std::condition_variable cv;
 		std::atomic<bool> running_;
 		std::atomic<bool> has_terminated_;
-		Util::Queue<MessagePack> messages_;
+		std::atomic<bool> echo_;
+		Util::mcmp_queue<MessagePack> messages_;
 
 		static inline void remove_all(const char ch, std::string& in){
 			auto position = in.find_first_of(ch, 0);
@@ -48,11 +64,17 @@ namespace Pro {
 			}
 		}
 
-		static void worker_thread(Util::Queue<MessagePack>* messages, std::string log_file_name, std::atomic<bool>* running, std::atomic<bool>* terminated) {
+		static void worker_thread(Util::mcmp_queue<MessagePack>* messages,
+                                  std::string log_file_name,
+                                  std::atomic<bool>* running,
+                                  std::atomic<bool>* terminated,
+                                  std::atomic<bool>* echo,
+                                  std::mutex* mutex,
+                                  std::condition_variable* cv) {
 			*terminated = false;
-			std::fstream log(log_file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+            std::fstream log(log_file_name, std::ios::out | std::ios::binary | std::ios::trunc);
 			if (!log.is_open()){
-				terminated->store(true);
+				*terminated = true;
 				return;
 			}
 
@@ -60,10 +82,18 @@ namespace Pro {
 			log.write("<Log>\r\n", 7);
 
 			// Don't close until all messages have been written
-			while (running->load() || !messages->Empty()) {
-				while (!messages->Empty()) {
-					MessagePack& top = messages->Top();
+			while (*running) {
+                // Reduce the atomic loads by only checking after a pause in messages
+                std::unique_lock<std::mutex> lock(*mutex);
+                cv->wait_for(lock, std::chrono::seconds(5));
+                
+				bool echo_enabled = echo->load();
+                MessagePack top; 
+				while (messages->Pop(top)) {
 					// Check that the Message is valid
+					if (top.function == nullptr)
+						continue;
+					 
 					std::string strCache;
 					strCache.reserve(40);
 					log.write("<entry>\r\n", 9);
@@ -72,7 +102,7 @@ namespace Pro {
 					log.write(strCache.data(), strCache.size());
 
 					switch (top.code) {
-					case LogCode::ERROR:
+					case LogCode::FAULT:
 						log.write("<severity> error </severity>\r\n", 30);
 						break;
 					case LogCode::FATAL:
@@ -81,7 +111,30 @@ namespace Pro {
 					case LogCode::MESSAGE:
 						log.write("<severity> message </severity>\r\n", 32);
 						break;
+					case LogCode::INFO:
+						log.write("<severity> info </severity>\r\n", 32);
+						break;
+					case LogCode::PERFORMANCE:
+						log.write("<severity> performance </severity>\r\n", 36);
+						break;
+                    case LogCode::NETWORK:
+                        log.write("<severity> network </severity>\r\n", 32);
+                        break;
+					case LogCode::WARNING:
+						log.write("<severity> warning </severity>\r\n", 32);
+						break;
+                    case LogCode::AUDIO:
+                        log.write("<severity> audio </severity>\r\n", 32);
+                        break;
+					default:
+						// Assume message is broken
+						log.write("</entry>\r\n", 10);
+						top.line = -1;
 					}
+
+					// Break out of broken message
+					if (top.line < 0)
+						break;
 
 					strCache = "<line>" + std::to_string(top.line) + "</line>\r\n";
 					log.write(strCache.data(), strCache.size());
@@ -102,10 +155,14 @@ namespace Pro {
 
 					log.write("</entry>\r\n", 10);
 
-					messages->Pop();
 
+					if (echo_enabled) {
+						auto time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
+						std::cout << "[" << std::to_string(time.count()) << "] " <<
+							top.message << " Line: " << top.line << " Function: " << top.function << std::endl;
+					}
 				}
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                log.flush();
 			}
 
 			log.write("</Log>\r\n", 8);
@@ -123,28 +180,28 @@ namespace Pro {
 		//! Reserved log files:
 		//! Log.xml
 		//! Profile.xml
-		Log(const std::string& log_name){
-			running_.store(true);
-			messages_.Resize(1000);
-			std::thread(&worker_thread, &messages_, log_name, &running_, &has_terminated_).detach(); 
-		} 
+		Log(std::string log_name) : messages_(2048, std::thread::hardware_concurrency() * 4){
+            echo_ = false;
+			running_ = true;
+			std::thread(&worker_thread, &messages_, log_name, &running_, &has_terminated_, &echo_, &mutex, &cv).detach();
+		}
 
 		~Log() {
-			running_.store(false);
+			Close();
 		}
 
 		template<LogCode E>
 		inline unsigned long Report(const std::string& msg,
 			const char* file,
 			const unsigned long line) {
-			static size_t num = 0;
+			static unsigned num = 0;
 
 			MessagePack pack;
 			pack.code = E;
 			pack.id = num++;
-			pack.line = line;
+			pack.line = static_cast<unsigned>(line);
 			pack.function = file;
-			pack.message = msg;
+			pack.message = msg; 
 			if (has_terminated_ == false)
 				messages_.Push(std::move(pack));
 			else{
@@ -158,14 +215,26 @@ namespace Pro {
 		// Allows control of when to close the log
 		// Required currently as there's no way to ensure that all threads terminate correctly
 		inline void Close() {
-			running_.store(false);
+			running_ = false;
 			while (has_terminated_ == false) {
 				// Wait until thread has closed nicely
-				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+				cv.notify_all();
+				std::this_thread::sleep_for(std::chrono::milliseconds(64));
 			}
 		}
+        
+        //! Forces the worker to print to the console
+        //! and write to the file
+        inline void Flush(){
+            cv.notify_one();
+        }
+
+        //! If @enabled is true then all called to Report() will print the message to console
+        inline void EchoOnConsole(const bool enabled){
+            echo_ = enabled;
+        }
 	};
+ 
+    extern Log global_log;
 
-	extern Log global_log;
 }
-

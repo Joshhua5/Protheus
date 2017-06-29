@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -16,15 +16,13 @@ History:
 #include <Log.h>
 #include <BufferWriter.h>
 #include <initializer_list>
-#include <Vector4.h>
-#include <smart_ptr.h>
+#include <Vector4.h> 
 #include <ArrayList.h>
 #include "Program.h"
 #include "Sprite.h"
 #include "VertexArray.h"
 #include "Shader.h"
-#include "TextureUnit.h"
-#include "Transformation.h"
+#include "TextureUnit.h" 
 
 namespace Pro{
 	namespace Graphics {
@@ -38,9 +36,9 @@ namespace Pro{
 
 			static GLint max_sprites;
 			static GLint max_textures;
-			std::atomic<unsigned> current_sprite_count = 0;
+			std::atomic<unsigned> current_sprite_count;
 
-			Util::ArrayList<smart_ptr<Texture>> textures;
+            Util::ArrayList<std::shared_ptr<Texture>> textures;
 			Util::ArrayList<unsigned> sprite_count;
 			// Quick swap
 			Util::ArrayList<Util::ArrayList<unsigned>> sprite_indicies;
@@ -69,21 +67,21 @@ namespace Pro{
 			~SpriteBatcher();
 
 			//! Pushs the sprite into the batcher and prepared to be drawn at the next SpriteBatcher::Render() call.
-			//! Performance benifit to grouping textures together in push calls
+			//! Performance benefit to grouping textures together in push calls
 			void Push(int texture_id,
-				Vector3<float> position,
-				Vector2<float> dimensions,
+				const Vector3<float>& position,
+				const Vector2<float>& dimensions,
 				const  float scale = 1,
 				const  float rotate = 0);
 
 			//! Attaches a texture to the SpriteBatcher
 			//! the value returned is refered to as the texture_id in other functions
 			//! if -1, the maxiumum texture bindings has been hit.
-			int AttachTexture(smart_ptr<Texture> tex);
+			int AttachTexture(shared_ptr<Texture> tex);
 
 			//! Attaches textures to the SpriteBatcher in the order of @textures, the ids are appended onto @indicies in the same order
 			//! Returns the count of textures added.
-			int AttachTexture(ArrayList<int>& indicies, const ArrayList<smart_ptr<Texture>>& textures);
+			int AttachTexture(ArrayList<int>& indicies, const ArrayList<shared_ptr<Texture>>& textures);
 
 			//! Unbinds a texture to the SpriteBatcher
 			void RemoveTexture(int);
@@ -97,13 +95,16 @@ namespace Pro{
 			void SetCameraPosition(const Vector3<float>& position);
 
             //! Swaps a stored texture with a replacement
-            void SwapTexture(const unsigned old_texture_id , smart_ptr<Texture> replacement_texture);
+            void SwapTexture(const unsigned old_texture_id , shared_ptr<Texture> replacement_texture);
 
 			//! Renders the current Sprites
 			void Render();
 
 			//! Clears all Sprites from the SpriteBatcher
 			void Reset();
+            
+            //! Returns true if the initialisation was successful
+            bool Initialized() const;
 		};
 	}
 }

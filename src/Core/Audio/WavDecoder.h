@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -24,7 +24,7 @@ namespace Pro{
 		{
 		public:  
 			//! Loads a .wav file from a buffer
-			static CAudioData* load(Buffer* buffer); 
+            static std::shared_ptr<CAudioData> load(Buffer* buffer);
 		};
 	}
 }

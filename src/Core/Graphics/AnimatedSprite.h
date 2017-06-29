@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -13,7 +13,6 @@ History:
 #pragma once
 
 #include <vector>
-#include <smart_ptr.h>
 #include "Texture.h"
 
 namespace Pro{
@@ -22,13 +21,12 @@ namespace Pro{
 		class AnimatedSprite
 		{
 		private:
-			std::vector<Util::smart_ptr<Texture>> frames_;
-			unsigned frame_count_;
+            std::vector<std::shared_ptr<Texture>> frames_;
 		public: 
 
-			Util::smart_ptr<Texture> GetFrame(const unsigned index);
+            std::shared_ptr<Texture> GetFrame(const unsigned index);
 			 
-			void addFrame(Util::smart_ptr<Texture> texture);
+			void addFrame(std::shared_ptr<Texture> texture);
 
 			unsigned getFrameCount() const;
 		};

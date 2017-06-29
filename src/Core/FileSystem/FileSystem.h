@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -14,7 +14,7 @@ History:
 
 #pragma once
 
-#include "CFile.h"
+#include "File.h"
 #include <string>
 
 namespace Pro{
@@ -33,7 +33,7 @@ namespace Pro{
 			}
 
 			/*  Opens a file relative to the root directory */
-			IO::CFile* OpenFile(const std::string& path);
+			IO::File* OpenFile(const std::string& path);
 			/*  Sets the root directory */
 			void rootDir(const std::string& dir);
 			/*  Returns a reference to the root directory */

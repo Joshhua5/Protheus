@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -12,7 +12,7 @@ History:
 
 #pragma once
 
-#include <Vector2.h> 
+#include <Vector2.h>
 #include <Vector3.h>
 #include <Buffer.h>
 #include <string>
@@ -20,19 +20,19 @@ History:
 
 namespace Pro{
 	namespace Graphics{
-		using namespace std; 
+		using namespace std;
 
-		class Sprite 
+		class Sprite
 		{
-		private:  
+		private:
 			Vector2<float> center_;
 
 			Vector2<float> dimensions_;
 			Vector3<float> position_;
 
 			Texture* texture_ = nullptr;
-		public: 
-			Sprite(Texture*); 
+		public:
+			Sprite(Texture*);
 			~Sprite();
 
 			Texture* texture();

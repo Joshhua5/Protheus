@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -13,7 +13,7 @@ History:
 #pragma once
 
 #include <vector>
-#include "smart_ptr.h"
+#include <memory>
 
 namespace Pro {
 	namespace Util {
@@ -22,7 +22,7 @@ namespace Pro {
 		*/
 		template<typename T>
 		class Deferred {
-			std::vector<smart_ptr<T>> flagged_deleted_;
+			std::vector<std::shared_ptr<T>> flagged_deleted_;
 
 		public:
 			

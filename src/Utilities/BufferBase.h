@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -12,7 +12,9 @@ History:
 #pragma once
 
 #include <memory> 
+#include <cstring>
 #include <mutex>
+#include <math.h>
 #include "Log.h" 
 
 namespace Pro {
@@ -25,19 +27,9 @@ namespace Pro {
 			/*! Size of the buffer in bytes */
 			size_t size_;
 			/*! Pointer to the data in the heap*/
-			void* data_;
-			// TODO check the move to protected from public
-			std::mutex lock_;
+			void* data_; 
 		public:
-
-			inline void lock() {
-				lock_.lock();
-			}
-
-			inline void unlock() {
-				lock_.unlock();
-			}
-
+			  
 			inline size_t size() const {
 				return size_;
 			}

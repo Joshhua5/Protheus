@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -30,6 +30,13 @@ namespace Pro {
 				unsigned size;
 				/*! Name of the memeber */
 				std::string name;
+                
+                Member(){}
+                Member(const std::string& member_name,const unsigned member_offset,const unsigned member_size){
+                    name = member_name;
+                    offset = member_offset;
+                    size = member_size;
+                }
 			};
 		}
 	}

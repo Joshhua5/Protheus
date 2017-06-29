@@ -1,10 +1,11 @@
 #pragma once
 
+
+#include "OpenGL.h"
 #include <ProMath.h>
-#include <mutex>
 #include <unordered_map>
-#include "extern\glew.h"
 #include "Shader.h"
+#include "Texture.h"
 
 namespace Pro {
 	namespace Graphics {
@@ -20,8 +21,8 @@ namespace Pro {
 			Program& operator=(const Program&) = delete;
 		public:
 			// if false is passed, init() must be called before using
-			// this instance
-			Program(bool initialize_gl = true);
+			// this instance, use false if the OpenGL Context hasn't been created yet
+			explicit Program(bool initialize_gl = true);
 			~Program();
 			Program(Program&&);
 			Program& operator=(Program&&);
@@ -33,6 +34,8 @@ namespace Pro {
 			void Link();
 
 			bool HasError() const;
+            
+            bool Validate() const;
 
 			// Binds the program and stores the previously 
 			// program in use
@@ -49,9 +52,10 @@ namespace Pro {
 			void SetUniform(const std::string& uniform_name, const Vector3<float>& value);
 			void SetUniform(const std::string& uniform_name, const Vector2<float>& value);
 			void SetUniform(const std::string& uniform_name, GLint value);
-			void SetUniform(const std::string& uniform_name, const Matrix44<float>& value);
+			void SetUniform(const std::string& uniform_name, const Matrix44& value);
 			void SetUniform(const std::string& uniform_name, const GLint* value, unsigned size);
 			void SetUniform(const std::string& uniform_name, float* value, unsigned count);
+            void SetUniform(const std::string& uniform_name, std::shared_ptr<Texture> tex, GLenum texture_unit);
 
 			// If the stride is equal to 0 then the function call is silently returned and no state is changed
 

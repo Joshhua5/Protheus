@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -14,7 +14,8 @@ History:
 
 #pragma once
 
-#include <chrono>
+#include <chrono> 
+#include <thread>
 #include <string>
 
 namespace Pro {
@@ -56,10 +57,30 @@ namespace Pro {
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
 
-			static unsigned long long getTime() {
+			static long long getTime() {
 				return std::chrono::duration_cast<T>(
 					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 			}
+
+			//! Accepts a std::chrono::duration
+			template<class TIME>
+			static long long GetTime(){ 
+				return std::chrono::duration_cast<TIME>(
+					std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+			}
+            
+            
 		};
 	}
+    
+    static inline Util::Timer<std::chrono::nanoseconds>& GetGlobalTimer(){
+        static Util::Timer<std::chrono::nanoseconds> global;
+        return global;
+    }
+    
+    //! This function exists so C code can suspend it's thread with millisecond accuracy
+    static inline void sleep_for(unsigned milliseconds){
+        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    }
 }
+

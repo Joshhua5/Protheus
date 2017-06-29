@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -15,8 +15,7 @@ History:
 
 #include "IAudioEffect.h"
 #include <Vector3.h>
-#include <vector>
-#include "openal\al.h"
+#include <vector> 
 
 namespace Pro{
 	namespace Audio{ 
@@ -28,12 +27,8 @@ namespace Pro{
 			~CAudioSource();
 
 			ALuint id;
-			//std::vector<IAudioEffect> effects;  
-			//void addEffect(IAudioEffect);
-	
-			void play(){
-
-
+            
+            void play(){
 				alSourcePlay(id);
 			}
 

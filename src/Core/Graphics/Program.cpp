@@ -18,7 +18,8 @@ Program::Program(bool initialize_gl) {
 }
 
 Program::~Program() {
-	glDeleteProgram(program_id);
+    if(program_id != 0)
+        glDeleteProgram(program_id);
 }
 
 Program::Program(Program&& rhs) {
@@ -43,6 +44,22 @@ void Program::AttachShader(const Shader& shader) {
 void Program::Init() {
 	if (program_id == 0)
 		program_id = glCreateProgram();
+}
+
+bool Program::Validate() const{
+    GLint status = GL_TRUE;
+    glValidateProgram(program_id);
+	glGetProgramiv(program_id, GL_VALIDATE_STATUS, &status);
+    if(status != GL_TRUE){
+        char buf[512];
+        glGetProgramInfoLog(program_id, 512, nullptr, buf);
+        global_log.Report<LogCode::FAULT>(buf, __FUNCTION__, __LINE__);
+        return false;
+    }
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+		global_log.Report<LogCode::FAULT>("Error caught inside of Program::Validate, OpenGL Error: " + glGetErrorString(error), __FUNCTION__, __LINE__);
+    return true;
 }
 
 GLuint Program::id() const{
@@ -75,10 +92,13 @@ void Program::Link() {
 		GLint size;
 		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &size);
 		Buffer err(size);
-		glGetProgramInfoLog(program_id, err.size(), nullptr, err.data<char>());
-		global_log.Report<LogCode::ERROR>(err.data<char>(), __FUNCTION__, __LINE__);
+		glGetProgramInfoLog(program_id, (int)err.size(), nullptr, err.data<char>());
+		global_log.Report<LogCode::FAULT>(err.data<char>(), __FUNCTION__, __LINE__);
 		has_error = true;
 	}
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+		global_log.Report<LogCode::FAULT>("Error caught inside of Program::Link, OpenGL Error: " + glGetErrorString(error), __FUNCTION__, __LINE__);
 }
 
 bool Program::HasError() const {
@@ -92,7 +112,7 @@ inline GLint Program::getUniformLocation(GLuint program_id, const std::string& u
 	if (iterator == locations.end()) {
 		location = glGetUniformLocation(program_id, uniform_name.data());
 		if (location == -1) {
-			global_log.Report<LogCode::ERROR>("Unable to locate shader attribute: " + uniform_name, __FUNCTION__, __LINE__);
+			global_log.Report<LogCode::FAULT>("Unable to locate shader attribute: " + uniform_name, __FUNCTION__, __LINE__);
 			return -1;
 		}
 		locations.insert({ uniform_name, location });
@@ -139,13 +159,24 @@ void Program::SetUniform(const string& uniform_name, const GLint* value, unsigne
 	PreservedDisuse();
 }
 
-void Program::SetUniform(const string& uniform_name, const Matrix44<float>& value) {
+void Program::SetUniform(const string& uniform_name, const Matrix44& value) {
 	GLint location = getUniformLocation(program_id, uniform_name);
 	if (location == -1)
 		return;
 	PreservedUse();
 	glUniformMatrix4fv(location, 1, GL_FALSE, value.data());
 	PreservedDisuse();
+}
+
+void Program::SetUniform(const string& uniform_name, std::shared_ptr<Texture> tex, GLenum texture_unit) {
+    GLint location = getUniformLocation(program_id, uniform_name);
+    if (location == -1)
+        return;
+    PreservedUse();
+    glActiveTexture(texture_unit);
+    tex->Bind();
+    glUniform1i(location, texture_unit - GL_TEXTURE0);
+    PreservedDisuse();
 }
 
 void Program::SetUniform(const string& uniform_name, float* value, unsigned count) {

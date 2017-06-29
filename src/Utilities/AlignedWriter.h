@@ -9,22 +9,14 @@ namespace Pro {
 		class AlignedWriter : 
 			BufferIO {
 		public:
-			AlignedWriter(AlignedBuffer* buffer) {
-				using_smart = false;
+			AlignedWriter(AlignedBuffer* buffer) { 
 				aligned_buffer_ = buffer;
 				head_ = 0;
-			}
-			AlignedWriter(smart_ptr<AlignedBuffer> pointer) {
-				using_smart = true;
-				aligned_buffer_ = pointer;
-				head_ = 0;
-			}
+			} 
+
 			~AlignedWriter() {
-				head_ = 0;
-				if (using_smart)
-					aligned_buffer_ = nullptr;
-				else
-					aligned_buffer_.dereference();
+				head_ = 0; 
+				aligned_buffer_ = nullptr; 
 			}
 
 			/*! Writes a single value into the Pro::Util::AlignedBuffer and iterates the head*/

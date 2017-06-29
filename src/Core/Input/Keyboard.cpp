@@ -2,31 +2,38 @@
 
 using namespace Pro;
 using namespace Input;
-
-void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))
-		->keyboard->push({ (KEY)mods, (KEY)key });
-} 
-
-void Keyboard::AttachWindow(GLFWwindow* window) {
-	glfwSetKeyCallback(window, &keyboard_callback);
-	static_cast<InputPointers*>(glfwGetWindowUserPointer(window))->keyboard = &keyboard_key_;
-	this->window_ = window;
+using namespace Util;
+ 
+void Keyboard::AttachWindow(std::shared_ptr<Util::Pipe<std::pair<KEY_PRESSED, KEY>>>& reference, bool* keys) {
+	keyboard_key_ = reference;
+	keys_ = keys;
+    
 }
-
-
+ 
 bool Keyboard::hasKey() {
-	return !keyboard_key_.empty();
+	return !keyboard_key_->Empty();
 }
 
-std::pair<KEY, KEY> Keyboard::PollKey() {
+std::pair<KEY_PRESSED, KEY> Keyboard::PollKey() {
 	if (!hasKey())
-		return { KEY::KEY_UNKNOWN, KEY::KEY_UNKNOWN };
-	std::pair<KEY, KEY> k = std::move(keyboard_key_.front());
-	keyboard_key_.pop();
+		return { KEY_PRESSED::UNKNOWN, KEY::KEY_UNKNOWN };
+    std::pair<KEY_PRESSED, KEY> k;
+    keyboard_key_->TopPop(k);
 	return k;
 }
 
-KEY_PRESSED Keyboard::IsKeyDown(KEY key) {
-	return (KEY_PRESSED)glfwGetKey(window_, (int)key);
+std::pair<KEY_PRESSED, KEY> Keyboard::PeekKey() {
+    if (!hasKey())
+        return { KEY_PRESSED::UNKNOWN, KEY::KEY_UNKNOWN };
+    std::pair<KEY_PRESSED, KEY> k;
+    keyboard_key_->Top(k);
+    return k;
+}
+
+bool Keyboard::IsKeyDown(KEY key) {
+    return keys_[(int) key];
+}
+
+KEY_PRESSED Keyboard::KeyState(KEY key){
+	return (keys_[(int)key]) ? KEY_PRESSED::PRESSED : KEY_PRESSED::RELEASED;
 }

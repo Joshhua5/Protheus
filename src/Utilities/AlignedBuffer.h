@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -45,8 +45,8 @@ namespace Pro {
 			unsigned alignment_;
 
 			//! Calculates a offset for a object's index
-			inline unsigned Position(unsigned index) const { 
-				const unsigned offset = index * sizeof_;
+			inline size_t Position(size_t index) const {
+				const size_t offset = index * sizeof_;
 				return (offset + ((offset / alignment_) * (padding_ / alignment_crossover_)));
 			}
 
@@ -91,12 +91,12 @@ namespace Pro {
 				// Copy the data into the new buffer, adding in padding
 				if (data != nullptr) {
 					if (padding_ == 0)
-						memcpy(data_, data, size);
+						std::memcpy(data_, data, size);
 					else {
 						char* Read = (char*)data;
 						char* writer = (char*)data_;
 						for (unsigned x = 0; x < size / sizeof_; ++x) {
-							memcpy(writer, Read, sizeof_);
+							std::memcpy(writer, Read, sizeof_);
 							writer += sizeof_ + padding_;
 							Read += sizeof_;
 						}
@@ -132,7 +132,8 @@ namespace Pro {
 				sizeof_ = rhs.sizeof_;
 				// dereference in the move
 				rhs.data_ = nullptr;
-			}
+                return *this;
+			} 
 
 			/*!
 				Returns the data at a specific alignment boundary
@@ -144,7 +145,7 @@ namespace Pro {
 
 			/*! Returns the data at the index with bounds checking */
 			inline void* At(size_t index) const { 
-				const unsigned position = Position(index);
+				const size_t position = Position(index);
 				if (index >= position)
 					return nullptr;
 				return static_cast<char*>(data_) + position;

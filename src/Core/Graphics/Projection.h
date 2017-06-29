@@ -8,7 +8,7 @@ namespace Pro {
 		using namespace Math;
 
 		class Projection {
-			Matrix44<float> matrix_;
+			Matrix44 matrix_;
 
 			bool has_calculated_ = false;
 			// -1 if unset, 0 if ortho, 1 if perspective
@@ -24,8 +24,8 @@ namespace Pro {
 			void SetAspect(float);
 			void SetFOV(float);
 
-			const Matrix44<float>& GetPerspective();
-			const Matrix44<float>& GetOrtho();
+			const Matrix44& GetPerspective();
+			const Matrix44& GetOrtho();
 		};
 	}
 }

@@ -1,6 +1,5 @@
 #pragma once
-
-#include "extern\glew.h"
+#include "OpenGL.h"
 #include <Vector2.h>
 
 namespace Pro {
@@ -14,8 +13,9 @@ namespace Pro {
 			// leave undefined
 			Texture(const Texture&) = delete;
 			Texture& operator=(const Texture&) = delete;
-		public:
-			Texture(const GLuint texture_id, const Vector2<unsigned>& dim);
+		public: 
+            Texture(const Vector2<unsigned>& dim, GLenum format, GLenum type);
+            Texture(const GLuint texture_id, const Vector2<unsigned>& dim);
 			~Texture();
 
 			Texture(Texture&&);

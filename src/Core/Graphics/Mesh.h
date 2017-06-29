@@ -6,7 +6,7 @@
 #include <vector>
 #include "Program.h"
 #include "MeshObject.h" 
-#include "extern\glew.h"
+#include "OpenGL.h"
 
 namespace Pro {
 	namespace Graphics {
@@ -27,10 +27,10 @@ namespace Pro {
 			Mesh& operator=(Mesh&&);
 			~Mesh();
 
-			void AttachObject(MeshObject&&);
-
-			MeshObject* GetObject(const string& object_name);
+			void AttachObject(MeshObject&&); 
+			MeshObject* object(const string& object_name);
 			vector<MeshObject>& GetObjects();
+			const vector<MeshObject>& GetObjects() const;
 
 			GLenum GetMode() const;
 

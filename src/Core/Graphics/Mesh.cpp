@@ -34,16 +34,20 @@ void Mesh::AttachObject(MeshObject&& model) {
 	objects.push_back(model);
 }
 
-MeshObject* Mesh::GetObject(const string& object_name) {
+MeshObject* Mesh::object(const string& object_name) {
 	for (unsigned x = 0; x < objects.size(); ++x)
 		if (objects[x].name == object_name)
 			return &objects[x];
-	global_log.Report<LogCode::ERROR>("Unable to find mesh object" + object_name, __FUNCTION__, __LINE__);
+	global_log.Report<LogCode::FAULT>("Unable to find mesh object" + object_name, __FUNCTION__, __LINE__);
 	return nullptr;
 }
 
 
 vector<MeshObject>& Mesh::GetObjects() {
+	return objects;
+}
+
+const vector<MeshObject>& Mesh::GetObjects() const {
 	return objects;
 }
 

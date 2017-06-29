@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -25,11 +25,12 @@ namespace Pro {
 		public:
 			/*! If copy is false then the original pointer can't be deleted without breaking the Cbuffer */
 			Buffer(const Buffer& b, bool copy = true) {
-				const_cast<Buffer*>(&b)->lock_.lock();
-				Init(b.data(), b.size(), copy);
-				const_cast<Buffer*>(&b)->lock_.unlock();
+				data_ = nullptr;
+				size_ = 0;
+				was_copied_ = false; 
+				Init(b.data(), b.size(), copy); 
 			}
-			Buffer(void* _data, const unsigned _size, const bool copy = true) {
+			Buffer(void* _data, const size_t _size, const bool copy = true) {
 				if (_size == 0) {
 					data_ = nullptr;
 					size_ = 0;
@@ -38,7 +39,7 @@ namespace Pro {
 
 				if (copy) {
 					data_ = new char[_size];
-					memcpy(data_, _data, _size);
+					std::memcpy(data_, _data, _size);
 				}
 				else
 					data_ = _data;
@@ -46,18 +47,19 @@ namespace Pro {
 				was_copied_ = copy;
 				size_ = _size;
 			}
-			Buffer(const unsigned _size)
+            
+			Buffer(const size_t _size)
 			{
 				if (_size == 0)
 					data_ = nullptr;
 				else
 					data_ = new char[_size];
-				was_copied_ = false;
+				was_copied_ = true;
 				size_ = _size;
 			}
 			Buffer()
 			{
-				was_copied_ = false;
+				was_copied_ = true;
 				size_ = 0;
 				data_ = nullptr;
 			}
@@ -69,23 +71,19 @@ namespace Pro {
 			}
 
 			~Buffer()
-			{
-				lock_.lock();
+			{ 
 				if (was_copied_ && size_ != 0)
-					delete[] data_;
-				data_ = nullptr;
-				lock_.unlock();
+					delete[] static_cast<char*>(data_);
+				data_ = nullptr; 
 			}
 
 			inline Buffer&  operator=(Buffer&& b) {
 				if (this == &b)
-					return *this;
-				lock_.lock();
+					return *this; 
 				data_ = b.data();
 				size_ = b.size();
 				was_copied_ = b.was_copied_;
-				b.Dereference();
-				lock_.unlock();
+				b.Dereference(); 
 				return *this;
 			}
 			inline Buffer&  operator=(const Buffer& b) { 
@@ -99,25 +97,22 @@ namespace Pro {
 			/*! Initializes the buffer with existing data
 				Deleted existing data is already initialized.
 			*/
-			inline void  Init(const void* _data, const unsigned _size, const bool copy) {
-				lock_.lock();
+			inline void  Init(const void* _data, const size_t _size, const bool copy) { 
 				// Check if data has been initialized
-				if (was_copied_ && data_ != nullptr)
-					delete[] data_;
-
+                if (was_copied_ && data_ != nullptr)
+                    delete[] static_cast<char*>(data_);
 				if (copy) {
 					data_ = new char[_size];
-					memcpy(data_, _data, _size);
+					std::memcpy(data_, _data, _size);
 				}
 				else
 					data_ = const_cast<void*>(_data);
 
 				was_copied_ = copy;
-				size_ = _size;
-				lock_.unlock();
+				size_ = _size; 
 			}
 
-			inline void  Init(const unsigned _size) {
+			inline void  Init(const size_t _size) {
 				Init(new char[_size], _size, false);
 			}
 
@@ -136,21 +131,21 @@ namespace Pro {
 
 			/*! Resizes the buffer to the new defined size and copies accross data
 				If resized to be smaller, data is silently lost */
-			inline void Resize(const unsigned size) {
-				lock_.lock();
-				const auto old_data = data_;
-				data_ = new char[size];
+			inline void Resize(const size_t size) {
+                if(size_ == 0){
+                    Init(size);
+                    return;
+                } 
+				if (size_ != size) {
+					const auto old_data = data_;
+					data_ = new char[size];
 
-				if (size_ > size)
-					// Reducing
-					memcpy(data_, old_data, size);
-				else
-					// Increasing
-					memcpy(data_, old_data, size_);
+					// size is the new size and size_ is the original size
+					std::memcpy(data_, old_data, (size_ > size) ? size : size_);
 
-				size_ = size;
-				delete[] old_data;
-				lock_.unlock();
+					size_ = size;
+					delete[] static_cast<char*>(old_data);
+				}
 			} 
 
 			/*! Counts how many times a value occures in the buffer */
@@ -167,7 +162,7 @@ namespace Pro {
 			/*! Returns a pointer with bounds checking
 				Equivilant to (char*)m_data + pos
 			*/
-			inline void* At(const unsigned pos) const { 
+			inline void* At(const size_t pos) const {
 				return (pos < size_) ? reinterpret_cast<char*>(data_) + pos : nullptr;
 			}
 

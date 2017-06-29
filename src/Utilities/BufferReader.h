@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -26,25 +26,19 @@ namespace Pro {
 		public:
 			BufferReader(const BufferReader&) = delete;
 
-			BufferReader(Buffer* buffer) {
-				using_smart = false;
+			BufferReader(const Buffer* buffer) {
 				head_ = 0;
-				buffer_ = buffer;
+                buffer_ = (Buffer*)buffer;
 			}
-			BufferReader(smart_ptr<Buffer> pointer) {
-				using_smart = true;
-				head_ = 0;
-				buffer_ = pointer;
-			}
+            
 			BufferReader(BufferReader&& buffer) {
 				buffer_ = buffer.buffer_;
 				head_ = buffer.head_;
 				buffer.buffer_ = nullptr;
 			}
+            
 			~BufferReader() {
 				head_ = 0;
-				// Don't clean if original value wasn't a smart_ptr
-				buffer_.Dereference(using_smart);
 			}
 
 			/*! Returns a pointer to the internal buffer
@@ -141,7 +135,7 @@ namespace Pro {
 				Reads a specific amount of bits at the @m_head
 				Does not move the @m_head
 			*/
-			long ReadBits(const unsigned bits) const {
+			uint64_t ReadBits(const unsigned bits) const {
 				// TEST
 				if (bits < 8)
 					return (char)*ReadRaw() & static_cast<unsigned>((pow(2, bits) - 1));
@@ -156,19 +150,21 @@ namespace Pro {
 
 			/*! Reads a complex data type from the buffer according to the class definition */
 			template<typename T>
-			T SerializedRead(Serializer::ClassDefinition def) {
+			T SerializedRead(Serializer::ClassDefinition& def) {
 				T out;
 
-				vector<Member> loaded_members;
+                std::vector<Serializer::Member> loaded_members;
 
 				const auto member_count = Read<unsigned short>();
 
 				// Check if there's a missmatch of extern classDefinitons
-				if (member_count != def.members_.size()) {
-					string err = "";
-					for (const auto members_ : def.members_())
-						err += members_name + "\n";
-					global_log.ReportError("Missmatch of extern class definition" + err);
+				if (member_count != def.members().size()) {
+                    std::string err = "";
+                    
+                    for(auto& member : def.members())
+                        err += member.name + "\n";
+                    
+                    global_log.Report<LogCode::FAULT>("Missmatch of extern class definition" + err, __FUNCTION__, __LINE__);
 					return;
 				}
 
@@ -177,9 +173,11 @@ namespace Pro {
 				for (auto x = member_count; x != 0; --x) {
 					Serializer::Member m;
 
-					m.name = string(ReadArray<char>(32));
+                    m.name = std::string(ReadArray<char>(32));
 					m.size = Read<unsigned>();
-					m.data = Read(m.size);
+                    Buffer temp_data = Read(m.size);
+					m.data = temp_data.data();
+                    temp_data.Dereference();
 
 					loaded_members.push_back(m);
 				}
@@ -187,8 +185,8 @@ namespace Pro {
 				// check for a match between the definition
 				// and what's been loaded
 				// upon a match, load the data into the object
-				for each(const auto& member in def.members_)
-					for each(const auto& loaded_member in loaded_members) {
+                for(const auto& member : def.members())
+                    for(const auto& loaded_member : loaded_members) {
 						if (member.name != loaded_member.name)
 							continue;
 
@@ -198,7 +196,7 @@ namespace Pro {
 							member.offset;
 
 						// copy the data into the object
-						memcpy(member_pointer,
+						std::memcpy(member_pointer,
 							loaded_member.data,
 							loaded_member.size);
 					}

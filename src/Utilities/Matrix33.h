@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -12,6 +12,7 @@ History:
 *************************************************************************/
 #pragma once
 #include <memory>
+#include <cfloat>
 #include "Log.h"
  
 #pragma once
@@ -28,9 +29,9 @@ namespace Pro {
 			/*! Must have an initializer_list with 9 values */
 			Matrix33(std::initializer_list<T> values) {
 				if (values.size() == 9)
-					memcpy(matrix_, values.begin(), sizeof(T) * 9);
+					std::memcpy(matrix_, values.begin(), sizeof(T) * 9);
 				else
-					global_log.ReportErrorNR("Incorrect intitalizer_list passed to Matrix33 constructor.\0");
+                    global_log.Report<LogCode::FAULT>("Incorrect intitalizer_list passed to Matrix33 constructor.\0", __FUNCTION__, __LINE__);
 			}
 
 			Matrix33(float values[9]) {
@@ -136,12 +137,12 @@ namespace Pro {
 			}
 
 			Matrix33& operator=(Matrix33& m) {
-				memcpy(matrix_, m.matrix_, sizeof(T) * 9);
+				std::memcpy(matrix_, m.matrix_, sizeof(T) * 9);
 				return *this;
 			}
 
 			Matrix33& operator=(Matrix33&& m) {
-				memcpy(matrix_, m.matrix_, sizeof(T) * 9);
+				std::memcpy(matrix_, m.matrix_, sizeof(T) * 9);
 				return *this;
 			}
 
@@ -160,8 +161,8 @@ namespace Pro {
 			/*! T must contain a valid *, + and = operators */
 			void operator*=(Matrix33& m) {
 				Matrix33<T> out(*this);
-				for (char x = 0; x < 3; ++x) {
-					for (char y = 0; y < 3; ++y)
+				for (unsigned char x = 0; x < 3; ++x) {
+					for (unsigned char y = 0; y < 3; ++y)
 						matrix_[x][y] =
 						(out.matrix_[0][y] * m.matrix_[x][0]) +
 						(out.matrix_[1][y] * m.matrix_[x][1]) +

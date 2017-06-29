@@ -11,7 +11,7 @@ Projection::Projection(float near, float far, float fov, float aspect) {
 	aspect_ = aspect;
 	has_calculated_ = false;
 
-	matrix_ = Matrix44<float>(0.0f);
+	matrix_ = Matrix44(0.0f);
 }
 
 void Projection::SetNear(float value) {
@@ -43,14 +43,14 @@ void Projection::SetFOV(float value) {
 }
 
 
-const Matrix44<float>& Projection::GetOrtho() {
+const Matrix44& Projection::GetOrtho() {
 	if (has_calculated_ && is_ortho_ == 0)
 		return matrix_;
 
 	return matrix_;
 }
 
-const Matrix44<float>& Projection::GetPerspective(){
+const Matrix44& Projection::GetPerspective(){
 	if (has_calculated_ && is_ortho_ == 1)
 		return matrix_;
 	 

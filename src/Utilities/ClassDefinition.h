@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -12,8 +12,8 @@ History:
 #pragma once
 
 #include <string>
+#include "ArrayList.h"
 #include "Member.h"
-#include <vector>
 
 namespace Pro {
 	namespace Util {
@@ -22,45 +22,73 @@ namespace Pro {
 
 			/*! Allows a class to be packed for transmission between computers and classes of the same type with different padding */
 
-			class ClassDefinition
+            
+			class alignas(16) ClassDefinition
 			{
 				void* base_pointer;
-				vector<Member> members_;
+                unsigned size_of;
+				ArrayList<Member> members_;
+                
+                ClassDefinition() = delete;
 			public:
-				/*! Must be called with ClassDefinition(new T)*/
+				//! Pointer isn't deleted unless Finish() is called
 				ClassDefinition(void* class_pointer) {
 					base_pointer = class_pointer;
+                    size_of = 0;
 				}
-
-				~ClassDefinition() {
-					if (base_pointer != nullptr)
-						delete base_pointer;
-				}
+                
+                ClassDefinition(ClassDefinition&& rhs){
+                    members_ = std::move(rhs.members_);
+                    base_pointer = rhs.base_pointer;
+                    size_of = rhs.size_of;
+                }
+                
+                ClassDefinition(const ClassDefinition&& rhs){
+                    members_ = rhs.members_;
+                    base_pointer = rhs.base_pointer;
+                    size_of = rhs.size_of;
+                }
+                
+                ClassDefinition& operator=(ClassDefinition&& rhs){
+                    members_ = std::move(rhs.members_);
+                    base_pointer = rhs.base_pointer;
+                    size_of = rhs.size_of;
+                    return *this;
+                }
+                
+                ClassDefinition& operator=(const ClassDefinition& rhs){
+                    members_ = rhs.members_;
+                    base_pointer = rhs.base_pointer;
+                    size_of = rhs.size_of;
+                    return *this;
+                }
 
 				/*! Adds a member to the ClassDefinition */
-				void AddMember(const string& memberName, const void* member_pointer, const size_t member_size) {
-					auto m = Member();
-
-					m.name = memberName;
-					m.offset = static_cast<unsigned>((char*)member_pointer - (char*)base_pointer);
-					m.size = static_cast<unsigned>(member_size);
-
-					members_.push_back(move(m));
+				void RegisterMember(const string& member_name, const void* member_pointer, const unsigned member_size) {
+					members_.emplace_back(member_name,
+                            static_cast<unsigned>((char*)member_pointer - (char*)base_pointer),
+                            member_size);
+                    size_of += member_size;
+                     
 				}
+                
+                void RegisterMember(const string& member_name, unsigned offset, const unsigned member_size){
+                    size_of += member_size;
+                    members_.emplace_back(member_name, offset, member_size);
+                }
 
-				/*! Returns a vector of all members */
-				const vector<Member>& members() const {
-					return members_;
-				}
-
-
-				/*! Returns the sizeof all members */
+				/*! Returns the sizeof all registered members */
 				const unsigned SizeOf() const {
-					unsigned sizeTotal = 0;
-					for each(const auto m in members_)
-						sizeTotal += m.size;
-					return sizeTotal;
+                    return size_of;
 				}
+                
+                ArrayList<Member>& members(){
+                    return members_;
+                }
+                
+                const ArrayList<Member>& members() const{
+                    return members_;
+                }
 
 				/*! Returns the internal base pointer.
 					Used for offsets. */
@@ -71,14 +99,25 @@ namespace Pro {
 				void* base() {
 					return base_pointer;
 				}
+                
+                template<class T>
+                T* base(){
+                    return reinterpret_cast<T>(base_pointer);
+                }
+                
+                template<class T>
+                const T* base()const {
+                    return reinterpret_cast<T>(base_pointer);
+                }
 
-				/*! Call onces finished adding members,
-					Deletes the base pointer*/
-				void Finish() {
-					delete base_pointer;
-					base_pointer = nullptr;
-				}
-			};
+                template<class T>
+                void Finish(){
+                    if(base_pointer != nullptr){
+                        delete reinterpret_cast<T>(base_pointer);
+                        base_pointer = nullptr;
+                    }
+                }
+            };
 		}
 	}
 }

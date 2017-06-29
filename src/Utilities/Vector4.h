@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -12,32 +12,33 @@ History:
 *************************************************************************/
 #pragma once
 
-#define __SSE
-#ifdef __SSE
+#include "PreDefinition.h"
+#if defined(SSE) 
 #include <xmmintrin.h>
+#elif defined(NANO)
+
 #endif
 
+#include "Matrix44.h"
 #include "Vector2.h"
 
 namespace Pro {
 	namespace Math {
 		template <typename T>
-		struct /*alignas(16)*/ Vector4 {
-			T x, y, z, w;
-
+		struct alignas(16) Vector4 {
+            union{
+                struct{ T x, y, z, w; };
+                T m_[4];
+            };
 			Vector4() {}
 
+			Vector4(T value) {
+				x = y = z = w = value;
+			}
 			// Copy Constructor
 			Vector4(const Vector4& v) : Vector4(
 				v.x, v.y,
 				v.z, v.w) {}
-			// Move Constructor
-			Vector4(Vector4&& vec) {
-				x = move(vec.x);
-				y = move(vec.y);
-				z = move(vec.z);
-				w = move(vec.w);
-			}
 
 			Vector4(const Vector2<T>& pos, const Vector2<T>& dim) : Vector4(
 				pos.x, pos.y,
@@ -59,15 +60,15 @@ namespace Pro {
 					x + y > v.y;
 			}
 
-			inline bool Overlaps(const Vector4&) const {
+			inline bool Overlaps(const Vector4& v) const {
 				if ((x >= v.x && x + w <= v.x + v.x) &
 					((y + w <= v.y && y >= v.y) |
-					(y + w > v.y && y + w < v.y + v.y)))
+						(y + w > v.y && y + w < v.y + v.y)))
 					return true;
 				// check left and right
 				else if (y > v.y &&  y + w < v.y + v.y &&
 					((x + z > v.x &&  x + z < v.x + v.x) ||
-					(x > v.x + v.x && x < v.x + v.x)))
+						(x > v.x + v.x && x < v.x + v.x)))
 					return true;
 				return false;
 			}
@@ -102,39 +103,80 @@ namespace Pro {
 				return out;
 			}
 
+			inline Vector4& NormalizeThis() {
+				*this /= Length();
+				return *this;
+			}
 
-			Vector4 operator+(Vector4&) {
+			Vector4 operator+(const Vector4& v) const {
 				Vector4 o(*this);
 				o += v;
 				return o;
 			}
-			Vector4 operator-(Vector4&) {
+			Vector4 operator-(const Vector4& v) const {
 				Vector4 o(*this);
 				o -= v;
 				return o;
 			}
-			Vector4 operator*(Vector4&) {
+            
+            Vector4 operator*(const Matrix44& m) const{
+                Vector4 o;
+                for(int x = 0; x < 4; ++x){
+                    o.m_[x] = m.matrix_[0][x] * m_[0] +
+                              m.matrix_[1][x] * m_[1] +
+                              m.matrix_[2][x] * m_[2] +
+                              m.matrix_[3][x] * m_[3];
+                }
+                return o;
+            }
+            
+			Vector4 operator*(const Vector4& v) const {
 				Vector4 o(v);
 				o *= *this;
 				return o;
 			}
-			Vector4 operator/(Vector4&) {
+			Vector4 operator/(const Vector4& v) const {
 				Vector4 o(*this);
 				o /= v;
 				return o;
 			}
+			 
 
-			Vector4 operator=(Vector4&) {
-				x = p.x;
-				y = p.y;
-				z = p.z;
-				w = p.w;
-				return *this;
+			bool operator==(const Vector4& rhs) { 
+				return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w;
 			}
 
+			bool operator!=(const Vector4& rhs) { 
+				return !(x == rhs.x && y == rhs.y && z == rhs.z  && w == rhs.w);
+			}
 
-			void operator+=(Vector4&) {
-#ifdef __SSE
+			Vector4 operator=(const Vector4& v) {
+				x = v.x;
+				y = v.y;
+				z = v.z;
+				w = v.w;
+				return *this;
+			}
+/*
+            float operator[](unsigned i){
+                return *((float*)this + i);
+                
+                switch(i){
+                    case 0:
+                        return x;
+                    case 1:
+                        return y;
+                    case 2:
+                        return z;
+                    case 3:
+                        return w;
+                    default:
+                        return 0;
+                }
+            }*/
+
+			void operator+=(const Vector4& v) {
+#ifdef SEE
 				// SSE code
 				__m128 m1 = _mm_loadu_ps(&x);
 				__m128 m2 = _mm_loadu_ps(&v.x);
@@ -149,8 +191,8 @@ namespace Pro {
 				w += v.w;
 #endif
 			}
-			void operator-=(Vector4&) {
-#ifdef __SSE
+			void operator-=(const Vector4& v) {
+#ifdef SEE
 				// SSE code
 				__m128 m1 = _mm_loadu_ps(&x);
 				__m128 m2 = _mm_loadu_ps(&v.x);
@@ -165,8 +207,8 @@ namespace Pro {
 				w -= v.w;
 #endif
 			}
-			void operator*=(Vector4&) {
-#ifdef __SSE
+			void operator*=(const Vector4& v) {
+#ifdef SEE
 				// SSE code
 				__m128 m1 = _mm_loadu_ps(&x);
 				__m128 m2 = _mm_loadu_ps(&v.x);
@@ -181,8 +223,9 @@ namespace Pro {
 				w *= v.w;
 #endif
 			}
-			void operator/=(Vector4&) {
-#ifdef __SSE
+        
+			void operator/=(const Vector4& v) {
+#ifdef SEE
 				// SSE code
 				__m128 m1 = _mm_loadu_ps(&x);
 				__m128 m2 = _mm_loadu_ps(&v.x);
@@ -196,18 +239,7 @@ namespace Pro {
 				z /= v.z;
 				w /= v.w;
 #endif
-			}
-
-
-			/*! Returns a pointer to the internal structure's data
-			*/
-			const T* data() const {
-				return &x;
-			}
-			T* data() {
-				return &x;
-			}
-
+			}  
 		};
 	}
 }

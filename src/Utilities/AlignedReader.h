@@ -1,39 +1,42 @@
+/*************************************************************************
+ Protheus Source File.
+ Copyright (C), Protheus Studios, 2013-2016.
+ -------------------------------------------------------------------------
+ 
+ Description:
+ 
+ -------------------------------------------------------------------------
+ History:
+ - 6:5:2015 Waring J.
+ 
+ *************************************************************************/
+
 #pragma once
   
-#include "BufferIO.h"
+#include "BufferIO.h" 
 
 namespace Pro {
 	namespace Util {
 		/*! AlignedReader adds reading functionality to a preexisting AlignedBuffer 
 			AlignedReader works in the sizeOf from the AlignedBuffer instead of bytes.
 		*/
-		class AlignedReader :
-			BufferIO
-		{
+		class AlignedReader : BufferIO {
 		public:
 			AlignedReader(const AlignedReader&) = delete;
 
-			AlignedReader(AlignedBuffer* buffer) {
-				using_smart = false;
+			AlignedReader(AlignedBuffer* buffer) { 
 				head_ = 0;
 				aligned_buffer_ = buffer;
-			}
-			AlignedReader(smart_ptr<AlignedBuffer> pointer) {
-				using_smart = true;
-				head_ = 0;
-				aligned_buffer_ = pointer;
-			}
+			} 
+
 			AlignedReader(AlignedReader&& buffer) {
 				aligned_buffer_ = buffer.aligned_buffer_;
 				head_ = buffer.head_;
 				buffer.aligned_buffer_ = nullptr;
 			}
 			~AlignedReader() {
-				head_ = 0;
-				if (using_smart)
-					aligned_buffer_ = nullptr;
-				else
-					aligned_buffer_.dereference();
+				head_ = 0; 
+				aligned_buffer_ = nullptr; 
 			}
 
 			/*! Returns a pointer to the internal structure which is currently being read

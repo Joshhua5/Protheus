@@ -13,8 +13,8 @@ FileSystem::~FileSystem()
 {
 }
 
-IO::CFile* FileSystem::OpenFile(const std::string& file){
-	return new IO::CFile(rootDir_ + file);
+IO::File* FileSystem::OpenFile(const std::string& file){
+	return new IO::File(rootDir_ + file);
 }
 void FileSystem::rootDir(const std::string& dir){
 	rootDir_ = dir;

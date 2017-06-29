@@ -1,6 +1,6 @@
 /*************************************************************************
 Protheus Source File.
-Copyright (C), Protheus Studios, 2013-2015.
+Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
 Description:
@@ -11,9 +11,9 @@ History:
 - 1:06:2014: Waring J.
 *************************************************************************/
 #pragma once
-#include "Buffer.h" 
+#include "Buffer.h"  
 #include "AlignedBuffer.h"
-#include "smart_ptr.h"
+#include <memory>
 
 namespace Pro {
 	namespace Util {
@@ -23,13 +23,12 @@ namespace Pro {
 			/*! Position in the buffer currently being access */
 			unsigned head_;
 
-			/*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
-			smart_ptr<Buffer> buffer_;
-			/*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
-			smart_ptr<AlignedBuffer> aligned_buffer_;
-
-			/*! False if a simple pointer is passed */
-			bool using_smart;
+            union{
+                /*! Pointer to the buffer being accessed, used in BufferWriter/Reader*/
+                Buffer* buffer_;
+                /*! Pointer to the buffer being accessed, used in AlignedWriter/Reader*/
+                AlignedBuffer* aligned_buffer_;
+            };
 		public:
 			BufferIO() {}
 			~BufferIO() {}
@@ -58,7 +57,7 @@ namespace Pro {
 			}
 
 			//! Get's the internal buffers size
-			unsigned size() const {
+			size_t size() const {
 				return buffer_->size();
 			}
 
@@ -66,7 +65,7 @@ namespace Pro {
 			unsigned Find(const char deliminator) const {
 				// Make sure we only check inside the buffer
 				char* buffer = (char*)buffer_->At(head_);
-				char* buffer_end = (char*)buffer_->At(buffer_->size());
+				char* buffer_end = (char*)buffer_->At(buffer_->size() - 1);
 
 				int offset = 0;
 				for (; *buffer != deliminator && buffer != buffer_end; ++buffer, ++offset);
