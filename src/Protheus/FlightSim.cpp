@@ -146,7 +146,7 @@ public:
 		program.SetUniform("diffuse_color", Vector3<float>({ 255, 0, 0 }).NormalizeThis());
         
         if (hoop_model != nullptr && hoops.empty() == false) {
-            Matrix44<float> hoop_position;
+            Matrix44 hoop_position;
             hoop_position.Translate(hoops.top().position());
             program.SetUniform("world", hoop_position);
             hoop_model->Bind();
@@ -165,7 +165,7 @@ public:
 		program.SetUniform("projection", camera.GetPerspective()); 
 		program.SetUniform("camera", main_plan_camera);
 		program.SetUniform("model", IDENTITY_MATRIX);
-		Matrix44<float> terrain_position;
+		Matrix44 terrain_position;
         terrain_position.Translate({-2500, 0, -2500});
 		program.SetUniform("world", terrain_position); 
 		height.Render(wireframe);
@@ -236,19 +236,19 @@ public:
 #include <QuadTree.h>
 #include <Timer.h>
 int main() {
-	srand(Pro::GetGlobalTimer().getTime());
-	QuadTree<int, 4> tree({ 50, 50}, { 100, 100 });
-	for (int x = 0; x < 1000; ++x){ 	
-		Vector2<float> point = { Rand<float>(0, 100), Rand<float>(0, 100) };
-		tree.Insert(x, point);
-		tree.GetQuadrantData(point);
-	}
-	
-	//global_log.EchoOnConsole(true);
-	//{
-	//	FlightSim game;
-	//	game.Run();
+	//srand(Pro::GetGlobalTimer().getTime());
+	//QuadTree<int, 4> tree({ 50, 50}, { 100, 100 });
+	//for (int x = 0; x < 1000; ++x){ 	
+	//	Vector2<float> point = { Rand<float>(0, 100), Rand<float>(0, 100) };
+	//	tree.Insert(x, point);
+	//	tree.GetQuadrantData(point);
 	//}
-	//global_log.Close();
-	//sleep_for(10000);
+	
+	global_log.EchoOnConsole(true);
+	{
+		FlightSim game;
+		game.Run();
+	}
+	global_log.Close();
+	sleep_for(10000);
 } 

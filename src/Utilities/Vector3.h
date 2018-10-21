@@ -16,7 +16,7 @@ History:
  
 namespace Pro {
 	namespace Math {
-		template<typename T>
+		template<typename T = float>
 		struct Vector3 {
             union{
                 struct{T x, y, z;};

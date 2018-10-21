@@ -51,3 +51,4 @@ vs15/lib/Debug/Utilities.lib
 *.coverage
 *.pch
 *.opendb
+vs15/.vs/

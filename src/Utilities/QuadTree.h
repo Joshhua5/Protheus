@@ -132,10 +132,10 @@ namespace Pro {
 				}
 			}
 
-			const QuadTreeData<T, MAX> GetQuadrantData(const Math::Vector2<float>& point) const {
+			QuadTreeData<T, MAX> GetQuadrantData(const Math::Vector2<float>& point) {
 				if (node_data_ == nullptr)
-					return children_[GetQuadrant(point)].GetQuadrantData(point);
-				return data_;
+					return children_[GetQuadrant(point)]->GetQuadrantData(point);
+				return *node_data_;
 			} 
 
 		};

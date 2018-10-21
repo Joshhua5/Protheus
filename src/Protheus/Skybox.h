@@ -52,13 +52,13 @@ public:
         glUniform1i(loc, 0);
         
 	}
-	void Render(const Matrix44<float>& projection, const Vector3<float>& camera_rotation) {
+	void Render(const Matrix44& projection, const Vector3<float>& camera_rotation) {
 		if (has_error)
 			return;
 		vao.Bind();
 		program.Use();
 
-		static Matrix44<float> scale;
+		static Matrix44 scale;
 		static bool first_run = true;
 		if (first_run) {
 			scale.Scale(2000);
@@ -66,7 +66,7 @@ public:
 			first_run = false;
 		}
 
-		Matrix44<float> rotation;
+		Matrix44 rotation;
 		rotation.Rotate(camera_rotation);
 		 
 		program.SetUniform("projection", projection);

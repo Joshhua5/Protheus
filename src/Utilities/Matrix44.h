@@ -13,6 +13,7 @@ History:
 #pragma once
 #include "Matrix33.h"
 #include "Vector3.h"
+#include <intrin.h>
 #include <initializer_list>
 #include "Log.h"
 

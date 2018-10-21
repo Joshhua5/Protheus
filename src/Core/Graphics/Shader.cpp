@@ -62,11 +62,19 @@ bool Shader::Init(const Buffer& shader, GLenum shader_type) {
 		GLsizei log_size;
 		glGetShaderiv(m_shader_id, GL_INFO_LOG_LENGTH, &log_size);
 		Buffer error_log(log_size);
-		glGetShaderInfoLog(m_shader_id, log_size, NULL, error_log.data<GLchar>());
-		global_log.Report<LogCode::FAULT>("Unable to compile/link shader " + std::to_string(m_shader_id) + 
-			" OpenGL Error: " + glGetErrorString(gl_error) + 
-			"\n" + error_log.data<char>(),
-			__FUNCTION__, __LINE__);
+		if (log_size != 0) {
+			glGetShaderInfoLog(m_shader_id, log_size, NULL, error_log.data<GLchar>());
+			global_log.Report<LogCode::FAULT>("Unable to compile/link shader " + std::to_string(m_shader_id) +
+				" OpenGL Error: " + glGetErrorString(gl_error) +
+				"\n" + error_log.data<char>(),
+				__FUNCTION__, __LINE__);
+		}
+		else {
+			global_log.Report<LogCode::FAULT>("Unable to compile/link shader " + std::to_string(m_shader_id) +
+				" OpenGL Error: " + glGetErrorString(gl_error) +
+				"\n NO error log avaliable",
+				__FUNCTION__, __LINE__);
+		}
 		glDeleteShader(m_shader_id);
 		m_shader_id = 0;
 		return false;

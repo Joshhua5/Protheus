@@ -73,7 +73,7 @@ public:
 		rotation_.z += roll_control_;	
 		
 		// Rotate the velocity vector to the velocity in world space
-		Matrix44<float> rotation_matrix;
+		Matrix44 rotation_matrix;
 		rotation_matrix.Rotate<ROTATION_ORDER::XYZ>({ -rotation_.x, -rotation_.y, 0 }); 
 
 		const Vector3<float> world_velocity = ToVector3(ToVector4(velocity_) * rotation_matrix); 
@@ -95,8 +95,8 @@ public:
 		std::cout << "Position: x: " << position_.x << " y: " << position_.y << " z: " << position_.z << std::endl;
 	}
 
-	Matrix44<float> GetCamera() {
-		Matrix44<float> camera;
+	Matrix44 GetCamera() {
+		Matrix44 camera;
 		camera.Translate(-position_);
 		//camera.Rotate<ROTATION_ORDER::XYZ>(rotation_);
 		camera.Rotate({ rotation_.x, rotation_.y, 0 });
