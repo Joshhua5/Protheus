@@ -1,4 +1,4 @@
-#Protheus
+Protheus
 ====
 
 Protheus is a Open Source C++ Game Engine.
@@ -17,7 +17,7 @@ Only the first 3 layers have been started.
 	> Brings all the layers together
 4. Editor
 
-##Features
+Features
 ====
 
 ### Engine
