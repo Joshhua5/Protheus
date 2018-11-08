@@ -55,6 +55,11 @@ namespace Pro {
 				return x == _x && y == _y;
 			}
 
+			inline void Set(T _x, T _y) {
+				this->x = _x;
+				this->y = _y;
+			}
+
 			template<typename X>
 			Vector2<X> Cast() const {
 				return Vector2<X>(

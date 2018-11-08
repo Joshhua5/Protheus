@@ -65,6 +65,12 @@ namespace Pro {
 			inline bool Equals(T _x, T _y, T _z) const {
 				return x == _x && y == _y && z == _z;
 			}
+
+			inline void Set(T _x, T _y, T _z) {
+				this->x = _x;
+				this->y = _y;
+				this->z = _z;
+			}
 			 
 			template<typename X>
 			Vector3<X> Cast() const {

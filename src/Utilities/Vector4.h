@@ -80,6 +80,13 @@ namespace Pro {
 				w += _w;
 			}
 
+			inline void Set(T _x, T _y, T _z, T _w) {
+				this->x = _x;
+				this->y = _y;
+				this->z = _z;
+				this->w = _w;
+			}
+
 			inline bool Equals(T _x, T _y, T _z, T _w) {
 				return x == _x && y == _y && z == _z && w == _w;
 			}

@@ -23,19 +23,21 @@ namespace Pro {
 	namespace Math {
 		/*! PI constant*/
 		const float PI = 3.1415926535897932384626433832795028841971f;
+		const float RadiansToDegrees = 180.0f / PI;
+		const float DegreesToRadians = PI / 180.0f;
 
 		/*!
 			Convert radians to degrees
 			*/
 		inline float RadToDeg(const float rad) {
-			return rad * 180 / PI;
+			return rad * RadiansToDegrees;
 		}
 
 		/*!
 		Convert degrees to radians
 		*/
 		inline float DegToRad(const float deg) {
-			return deg * PI / 180;
+			return deg * DegreesToRadians;
 		}
 
 		template<typename T>
