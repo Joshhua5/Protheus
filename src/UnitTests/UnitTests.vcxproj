@@ -22,7 +22,7 @@
     <ProjectGuid>{ED9B0CF6-DF88-427F-8B52-C3A7920C5BB3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>UnitTests</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,8 +76,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(SolutionDir)$(Configuration);$(SolutionDir)..\externlib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-    <IncludePath>$(ProjectDir)..\Core;$(ProjectDir)..\Core\Audio\openal;$(ProjectDir)..\Utilities;$(ProjectDir)..\Core\Graphics\extern;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\Core;$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(ProjectDir)..\Core;$(ProjectDir)..\Core\Audio\openal;$(ProjectDir)..\Engine;$(ProjectDir)..\Utilities;$(ProjectDir)..\Core\Graphics\extern;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\Engine;$(ProjectDir)..\Core;$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -165,6 +165,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ParallelTest.cpp" />
     <ClCompile Include="PipeTest.cpp" />
     <ClCompile Include="QueueTest.cpp" />

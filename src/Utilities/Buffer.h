@@ -74,7 +74,7 @@ namespace Pro {
 			{ 
 				if (was_copied_ && size_ != 0)
 					delete[] static_cast<char*>(data_);
-				data_ = nullptr; 
+				Dereference();
 			}
 
 			inline Buffer&  operator=(Buffer&& b) {

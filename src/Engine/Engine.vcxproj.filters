@@ -27,13 +27,19 @@
     <ClInclude Include="Entity\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentStorage.h">
+    <ClInclude Include="Entity\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentData.h">
+    <ClInclude Include="Entity\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\TransformComponent.h">
+    <ClInclude Include="Entity\EntityContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\SystemScheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\Enabled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

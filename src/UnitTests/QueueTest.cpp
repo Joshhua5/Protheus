@@ -8,18 +8,18 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Pro;
 using namespace Util;
  
-const unsigned count = 1000000; 
 
 TEST_CLASS(QUEUE_TEST) {
+	const unsigned QUEUE_COUNT = 1000000; 
 
 	void creator(Queue<unsigned>* q) {
-		for (unsigned i = 0; i < count; ++i) {
+		for (unsigned i = 0; i < QUEUE_COUNT; ++i) {
 			q->Push(i);
 		}
 	}
 
 	void consumor(Queue<unsigned>* q) {
-		for (unsigned i = 0; i < count; ++i) {
+		for (unsigned i = 0; i < QUEUE_COUNT; ++i) {
 			unsigned value;
 			q->Top(value);
 			if (value != i)
@@ -31,14 +31,14 @@ TEST_CLASS(QUEUE_TEST) {
 
 	TEST_METHOD(QUEUE_WITH_CAPACITY) { 
 		unsigned long long time = 0;
-		Queue<unsigned> q(count); 
+		Queue<unsigned> q(QUEUE_COUNT);
 		creator(&q);
 		consumor(&q); 
 	}
 
 	TEST_METHOD(QUEUE_WITHOUT_CAPACITY) { 
 		unsigned long long time = 0;
-		Queue<unsigned> q(count / 10);  
+		Queue<unsigned> q(QUEUE_COUNT / 10);
 		creator(&q);
 		consumor(&q); 
 	}

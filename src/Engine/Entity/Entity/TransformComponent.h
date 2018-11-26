@@ -1,10 +1,13 @@
 #pragma once
 
+#include <cstdint>
+
 #include "ComponentData.h"
 #include "Component.h"
 
 #include "../../Utilities/ProMath.h"
 
+using namespace std;
 using namespace Pro::Math;
 
 namespace Pro {
@@ -18,8 +21,8 @@ namespace Pro {
 		class TransformComponent : Component<TransformData> {
 			 
 		public:
-			static unsigned UUID() {
-				return 1;
+			constexpr static unsigned UUID() {
+				return FowlerNollVoHash(__PRETTY_FUNCTION__, sizeof(__PRETTY_FUNCTION__));
 			}
 
 			static void Start(TransformData* data) {

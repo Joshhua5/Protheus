@@ -6,14 +6,15 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Pro;
 using namespace Util;
 
+
 volatile bool flag = true;
-const unsigned count = 1000000;
+const unsigned PIPE_COUNT = 1000000;
 
 TEST_CLASS(PIPE_TEST) {
 
 	static bool creator(Pipe<unsigned>* q) {
 		while (flag);
-		for (unsigned i = 0; i < count; ++i)
+		for (unsigned i = 0; i < PIPE_COUNT; ++i)
 			if (q->Push(i) == false)
 				--i;
 		return true;
@@ -22,7 +23,7 @@ TEST_CLASS(PIPE_TEST) {
 	static bool consumor(Pipe<unsigned>* q, Timer<std::chrono::microseconds>* timer) {
 		while (flag);
 		timer->Tick();
-		for (unsigned i = 0; i < count; ++i) {
+		for (unsigned i = 0; i < PIPE_COUNT; ++i) {
 			unsigned value;
 			if (q->TopPop(value) == false) {
 				--i;
@@ -37,7 +38,7 @@ TEST_CLASS(PIPE_TEST) {
 
 	TEST_METHOD(PERFORMANCE) {
 		unsigned long long time = 0;
-		Pipe<unsigned> q(count);
+		Pipe<unsigned> q(PIPE_COUNT);
 		flag = true;
 
 		std::thread(&PIPE_TEST::creator, &q).detach();

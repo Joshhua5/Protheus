@@ -63,7 +63,7 @@
     <ProjectGuid>{B822C1BA-5047-430A-A47D-CA52829CB401}</ProjectGuid>
     <RootNamespace>DataStructures</RootNamespace>
     <ProjectName>Utilities</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

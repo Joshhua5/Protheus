@@ -62,15 +62,15 @@ namespace Pro{
 				return (index >= 0 && index <= object_count_ - 1);
 			}
                             
-                            inline T* Block(unsigned index){
-                                if(index > chunks_.size())
-                                    return nullptr;
-                                return chunks_.At(index);
-                            }
-                            
-                            inline unsigned ChunkSize(){
-                                return block_size_;
-                            }
+            inline T* Block(unsigned index){
+                if(index > chunks_.size())
+                    return nullptr;
+                return chunks_.At(index);
+            }
+            
+            inline unsigned ChunkSize(){
+                return block_size_;
+            }
                             
                         
 		};

@@ -23,12 +23,14 @@
 namespace Pro {
 	namespace Util {
 		/*! BufferVector is used to store Data in a dynamically expanding buffer
+
+			It just wraps around a std::vector for now, but this allows us to add our own implementation later
 		*/
 		template<typename T>
         class alignas(16) ArrayList : public std::vector<T> {
             
  		public:
-            ArrayList() : std::vector<T>(0){}
+            ArrayList() : std::vector<T>(){}
             ArrayList(size_t size) : std::vector<T>(size){}
             
             inline bool IsValidIndex(size_t index){

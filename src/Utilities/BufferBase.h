@@ -22,13 +22,18 @@ namespace Pro {
 		class BufferBase
 		{
 		protected:
-			/*! Remembers if the buffer was copied to prevent the deconstructor from deleting data which it doesn't own */
+			/*! Remembers if the buffer was copied to prevent the
+				deconstructor from deleting data which it doesn't own
+			*/
 			bool was_copied_;
 			/*! Size of the buffer in bytes */
 			size_t size_;
 			/*! Pointer to the data in the heap*/
 			void* data_; 
 		public:
+			BufferBase() { 
+				data_ = nullptr;
+			}
 			  
 			inline size_t size() const {
 				return size_;
