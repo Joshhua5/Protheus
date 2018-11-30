@@ -32,10 +32,12 @@ TestCases/bin
 /src/Protheus/Debug
 /src/Core/Debug 
 /src/Utilities/Debug 
+/src/Utilities_Test/Debug 
 /src/Test/Release
 /src/Protheus/Release
 /src/Core/Release 
 /src/Utilities/Release
+/src/Utilities_Test/Release 
 src/Protheus/log.txt
 vs15/lib
 Core.lib
