@@ -3,17 +3,12 @@ Protheus Source File.
 Copyright (C), Protheus Studios, 2013-2016.
 -------------------------------------------------------------------------
 
-Description:
-A single producer and single consumer lock free queue for multi-core 
-applications, A producer or consumer may not be shared between threads with user implemented
-locking as push and pop positions aren't volitile and may store the out dated values in registers.
- 
+Description:  
  
  Broken condititons:
  Push pop 1,000,000 objects onto a 1,000,000 queue
     999999 expected 0 Line: 40 Function: consumor
- Push pop 1,000,000 objects onto a 100,000 queue
- 
+ Push pop 1,000,000 objects onto a 100,000 queue 
  
  Optimisation:
  Have the push and pop functions store a variable of how many pushs and pops
@@ -32,9 +27,9 @@ History:
 
 namespace Pro {
 	namespace Util {
-		/*! Thread Safe Lock Free Queue
+		/*!  
 			Queue resizes involves a lock.
-			*/
+		*/
 
         template<typename T>
 		class alignas(64) Queue {

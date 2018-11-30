@@ -22,7 +22,7 @@ namespace Pro {
 		/*! Linked List, Not say to store a new[] as the deconstructor will call delete
 			Thread Safe : True
 			Lock Free : False
-			*/
+		*/
 		template<typename T>
 		struct Node {
 			Node() { _prev = _next = nullptr; }

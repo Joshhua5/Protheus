@@ -214,7 +214,7 @@ namespace Pro {
             //! Returns the count of objects being stored
             inline size_t size() const { return size_; }
             
-            //! Returns the capacity of the queue before a resize is required.
+            //! Returns the capacity of the queue.
             inline size_t capacity() const { return capacity_; }
  
         };
