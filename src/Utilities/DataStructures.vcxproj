@@ -23,6 +23,8 @@
     <ClInclude Include="AlignedReader.h" />
     <ClInclude Include="AlignedWriter.h" />
     <ClInclude Include="BitCompare.h" />
+    <ClInclude Include="Bitmask.h" />
+    <ClInclude Include="BitmaskedIteratorRaw.h" />
     <ClInclude Include="BufferBase.h" />
     <ClInclude Include="BufferIO.h" />
     <ClInclude Include="BufferReader.h" />
@@ -33,11 +35,14 @@
     <ClInclude Include="Deferred.h" />
     <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Endian.h" />
+    <ClInclude Include="Iterator.h" />
     <ClInclude Include="LinkedArray.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="ErrorCheck.h" />
     <ClInclude Include="mcmp_queue.h" />
+    <ClInclude Include="Parallel.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="LinkedArrayRaw.h" />
     <ClInclude Include="SIMD.h" />
     <ClInclude Include="Sync.h" />
     <ClInclude Include="half.hpp" />
@@ -128,6 +133,7 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <StringPooling>true</StringPooling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protheus", "..\src\Protheus\Protheus.vcxproj", "{F9AC6516-613E-424E-BE31-5526A44185FF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -26,6 +26,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "..\src\Engine\Eng
 	ProjectSection(ProjectDependencies) = postProject
 		{9C7944F6-E79D-49A9-811A-8EB9B8CE9316} = {9C7944F6-E79D-49A9-811A-8EB9B8CE9316}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utilities_Test", "..\src\Utilities_Test\Utilities_Test.vcxproj", "{5F76183D-E087-4234-BDFB-D99C91CA83EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,8 +118,27 @@ Global
 		{82683EA7-0CB8-478D-A435-BCCC6BC79407}.Release|Win32.Build.0 = Release|Win32
 		{82683EA7-0CB8-478D-A435-BCCC6BC79407}.Release|x64.ActiveCfg = Release|x64
 		{82683EA7-0CB8-478D-A435-BCCC6BC79407}.Release|x64.Build.0 = Release|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|ARM.ActiveCfg = Release|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|ARM.Build.0 = Release|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|Win32.ActiveCfg = Debug|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|Win32.Build.0 = Debug|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|x64.ActiveCfg = Debug|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug_PG|x64.Build.0 = Debug|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug|ARM.ActiveCfg = Debug|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug|Win32.Build.0 = Debug|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug|x64.ActiveCfg = Debug|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Debug|x64.Build.0 = Debug|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Release|ARM.ActiveCfg = Release|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Release|Win32.ActiveCfg = Release|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Release|Win32.Build.0 = Release|Win32
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Release|x64.ActiveCfg = Release|x64
+		{5F76183D-E087-4234-BDFB-D99C91CA83EC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64C5D8F1-896B-44D0-B6D3-C2514F6F422F}
 	EndGlobalSection
 EndGlobal
