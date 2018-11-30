@@ -14,14 +14,11 @@
 
 #pragma once
 #include "LinkedList.h"
-
-
+ 
 namespace Pro{
 	namespace Util{
-		template<typedef T, unsigned chunk_size = 64>
-		class LinkedArray{  
-
-			ArrayList<ObjectChunk> references_;
+		template<typename T, unsigned chunk_size = 64>
+		class LinkedArray{    
             LinkedList<T*> blocks_;
 			unsigned object_count_;
             unsigned block_size_;
@@ -30,8 +27,13 @@ namespace Pro{
                 objects.PushBack(reinterpret_cast<T*>(operator new(sizeof(T) * block_size_)));
             }
 
-		public:
+            inline T* Block(unsigned index){
+                if(index > chunks_.size())
+                    return nullptr;
+                return chunks_.At(index);
+            }
 
+		public:
             T* At(unsigned index){
                 unsigned chunk_index = static_cast<unsigned>(floorl(index / block_size_));
                 if(chunk_index > chunks_.size() - 1)
@@ -48,7 +50,6 @@ namespace Pro{
                 return &chunk[index % block_size_];
             }
             
-            
 			inline void PushBack(T& object){
 				if(object_count_ == chunks_.size() * block_size_)
                     AddBlock();
@@ -61,18 +62,10 @@ namespace Pro{
 			inline bool IsValidIndex(size_t index){
 				return (index >= 0 && index <= object_count_ - 1);
 			}
-                            
-            inline T* Block(unsigned index){
-                if(index > chunks_.size())
-                    return nullptr;
-                return chunks_.At(index);
-            }
-            
+               
             inline unsigned ChunkSize(){
                 return block_size_;
-            }
-                            
-                        
+            }           
 		};
 	}
 }
