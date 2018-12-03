@@ -45,7 +45,7 @@ namespace Pro {
 				this->size_ = rhs.size_; 
 			}
 
-			Bitmask& operator=(const Bitmask& rhs) { 
+			const Bitmask& operator=(const Bitmask& rhs) { 
 				this->bitmask_ = rhs.bitmask_;
 				this->size_ = rhs.size_;
 				return *this;
@@ -69,6 +69,18 @@ namespace Pro {
 				else
 					bitmask_[index / bitSizeUINT] &= ~(uint32_t(1) << index % bitSizeUINT); 
 			} 
+			 
+			// Returns the index to the nth instance of the value
+			inline size_t GetOffset(size_t index, bool value) {
+				size_t offset = 0;
+				while (index != 0) {
+					if ((bitmask_[offset / bitSizeUINT] >> offset % bitSizeUINT) & uint32_t(1)) {
+						index--;
+						offset++;
+					}
+				}
+
+			}
 
 			template<bool value>
 			inline void Set(const size_t index) { 

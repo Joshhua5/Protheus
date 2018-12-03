@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Iterator.cpp" />
+    <ClCompile Include="LinkedArrayRaw.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="stdafx.cpp">

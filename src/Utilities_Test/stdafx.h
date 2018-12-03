@@ -17,3 +17,5 @@
 #include <Pipe.h>
 #include <Iterator.h>
 #include <BitmaskedIteratorRaw.h>
+#include <LinkedArrayRaw.h>
+#include <LinkedArrayIteratorRaw.h>
