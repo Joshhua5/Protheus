@@ -19,16 +19,15 @@ namespace Pro {
 		using namespace std; 
 		class Bitmask
 		{ 
-			template<typename T>
-			struct array_deleter{ void operator ()(T const * p){ delete[] p; } }; 
-
+			template<typename T> struct array_deleter{ void operator ()(T const * p){ delete[] p; } }; 
+			 
 			const size_t bitSizeUINT = 32;
 			shared_ptr<uint32_t[]> bitmask_;
 			size_t size_;
 			 
 		public:  
 			Bitmask(const size_t size, const bool default_value) :
-				bitmask_(new uint32_t[(size / bitSizeUINT) + 1], array_deleter<uint32_t>())
+				bitmask_(new uint32_t[(size / bitSizeUINT) + 1], [](uint32_t* ptr) {delete[] ptr; })
 			{  
 				memset(&bitmask_[0], (default_value) ? ~(uint32_t)0UL : (uint32_t)0UL, (size / bitSizeUINT + 1) * sizeof(uint32_t));
 				size_ = size;

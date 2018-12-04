@@ -36,7 +36,7 @@ namespace Utilities_Test
 			Complex* object1 = reinterpret_cast<Complex*>(linkedArray.Insert());
 			*object1 = Complex(1, 2, 3, 4);
 
-			Assert::AreNotEqual((Complex*)nullptr, object1);
+			Assert::AreNotEqual((void*)nullptr, (void*)object1);
 			Assert::AreEqual(1, object1->x_);
 			Assert::AreEqual(2, object1->y_);
 			Assert::AreEqual(3, object1->z_);
@@ -44,11 +44,11 @@ namespace Utilities_Test
 			 
 			Complex* object2 = linkedArray.Insert<Complex>(5, 6, 7, 8);
 			 
-			Assert::AreNotEqual((Complex*)nullptr, object2);
-			Assert::AreEqual(5, object1->x_);
-			Assert::AreEqual(6, object1->y_);
-			Assert::AreEqual(7, object1->z_);
-			Assert::AreEqual(8, object1->w_); 
+			Assert::AreNotEqual((void*)nullptr, (void*)object2);
+			Assert::AreEqual(5, object2->x_);
+			Assert::AreEqual(6, object2->y_);
+			Assert::AreEqual(7, object2->z_);
+			Assert::AreEqual(8, object2->w_); 
 		}
 
 		TEST_METHOD(SimpleGet) {

@@ -11,8 +11,8 @@ History:
 #pragma once
 
 #include <iterator>
-
-#include "Bitmask.h" 
+ 
+#include "BitmaskedIteratorRaw.h"
 #include "LinkedArrayRaw.h"
 
 namespace Pro {
@@ -23,13 +23,13 @@ namespace Pro {
 		*/
 		class LinkedArrayIteratorRaw
 		{ 
-			LinkedArrayRaw& linkedArray; 
+			LinkedArrayRaw* linkedArray; 
 			vector<LinkedArrayRaw::ArrayChunk>::iterator chunk_it;
 			BitmaskedIteratorRaw object_it;
 			 
 
 			inline bool LoadNextIterator() { 
-				if (chunk_it == linkedArray.chunks_.end())
+				if (chunk_it == linkedArray->chunks_.end())
 					return false;
 				chunk_it++;
 				object_it = chunk_it->GetIterator(); 
@@ -39,9 +39,9 @@ namespace Pro {
 		public:
 			LinkedArrayIteratorRaw() = delete;
 
-			LinkedArrayIteratorRaw(LinkedArrayRaw& target) 
+			LinkedArrayIteratorRaw(LinkedArrayRaw* target) 
 				: linkedArray(target),
-				  chunk_it(linkedArray.chunks_.begin()),
+				  chunk_it(linkedArray->chunks_.begin()),
 				  object_it(chunk_it->GetIterator())
 			{ }
 
@@ -53,7 +53,7 @@ namespace Pro {
 					return nullptr;
 				}
 				return ptr;
-			}
+			} 
 			
 			template<typename T>
 			T* Read() {
