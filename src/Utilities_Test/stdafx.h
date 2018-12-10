@@ -19,3 +19,6 @@
 #include <BitmaskedIteratorRaw.h>
 #include <LinkedArrayRaw.h>
 #include <LinkedArrayIteratorRaw.h>
+#include <Vector3.h>
+#include <Vector2.h>
+#include <Parallel.h>

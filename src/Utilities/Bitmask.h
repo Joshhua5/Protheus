@@ -10,6 +10,7 @@ History:
 #pragma once
 
 #include <iterator>
+#include <bitset>
 
 #include "BufferIO.h"
 #include "ClassDefinition.h"
@@ -18,20 +19,23 @@ namespace Pro {
 	namespace Util {
 		using namespace std; 
 		class Bitmask
-		{ 
-			template<typename T> struct array_deleter{ void operator ()(T const * p){ delete[] p; } }; 
-			 
-			const size_t bitSizeUINT = 32;
-			shared_ptr<uint32_t[]> bitmask_;
+		{   
+			const static size_t BitSetSize = 256; // half a cacheline
+			shared_ptr<bitset<BitSetSize>[]> bitmask_;
 			size_t size_;
 			 
 		public:  
 			Bitmask(const size_t size, const bool default_value) :
-				bitmask_(new uint32_t[(size / bitSizeUINT) + 1], [](uint32_t* ptr) {delete[] ptr; })
+				bitmask_(new bitset<BitSetSize>[(size / BitSetSize) + 1], [](bitset<BitSetSize>* ptr) {delete[] ptr; })
 			{  
-				memset(&bitmask_[0], (default_value) ? ~(uint32_t)0UL : (uint32_t)0UL, (size / bitSizeUINT + 1) * sizeof(uint32_t));
 				size_ = size;
-			} 
+				if(default_value)
+					for (unsigned i = 0; i < size / BitSetSize; ++i)
+						bitmask_[i].set(); 
+				else 
+					for (unsigned i = 0; i < size / BitSetSize; ++i)
+						bitmask_[i].reset(); 
+			}
 
 			Bitmask(Bitmask&& rhs) {
 				bitmask_ = std::move(rhs.bitmask_);
@@ -57,37 +61,32 @@ namespace Pro {
 			}
 			  
 			inline bool Check(const size_t index) const{ 
-				if (index >= size_)
-					return false;
-				return (bitmask_[index / bitSizeUINT] >> index % bitSizeUINT) & uint32_t(1);
+				return bitmask_[index / BitSetSize].test(index % BitSetSize); 
 			}
-
-			inline void Set(const size_t index, const bool value) { 
-				if(value)
-					bitmask_[index / bitSizeUINT] |= (uint32_t(1) << index % bitSizeUINT);
-				else
-					bitmask_[index / bitSizeUINT] &= ~(uint32_t(1) << index % bitSizeUINT); 
-			} 
 			 
 			// Returns the index to the nth instance of the value
-			inline size_t GetOffset(size_t index, bool value) {
+			template<bool value = true>
+			inline size_t GetOffset(long index) const {
 				size_t offset = 0;
-				while (index != 0) {
-					if ((bitmask_[offset / bitSizeUINT] >> offset % bitSizeUINT) & uint32_t(1)) {
-						index--;
-						offset++;
-					}
+				while (index != -1) {
+					if (bitmask_[offset / BitSetSize].test(offset % BitSetSize))
+						--index;
+					++offset;
 				}
-
+				return offset - 1;
 			}
 
+			// TODO does the template help optimization? should check the assembily
 			template<bool value>
-			inline void Set(const size_t index) { 
-				if (value)
-					bitmask_[index / bitSizeUINT] |= (uint32_t(1) << index % bitSizeUINT);
-				else
-					bitmask_[index / bitSizeUINT] &= ~(uint32_t(1) << index % bitSizeUINT);
+			inline void Set(const size_t index) {  
+				bitmask_[index / BitSetSize].set(index % BitSetSize, value);
 			}
+			
+			inline void Set(const size_t index, const bool value) {
+				bitmask_[index / BitSetSize].set(index % BitSetSize, value);
+			} 
 		};
+
+		 
 	}
 }

@@ -37,6 +37,8 @@
     <ClInclude Include="Endian.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="LinkedArray.h" />
+    <ClInclude Include="LinkedArrayChunk.h" />
+    <ClInclude Include="LinkedArrayIterator.h" />
     <ClInclude Include="LinkedArrayIteratorRaw.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="ErrorCheck.h" />
@@ -63,6 +65,7 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BitmaskedIterator.h" />
     <ClCompile Include="Log.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

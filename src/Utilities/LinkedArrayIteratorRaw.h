@@ -22,17 +22,15 @@ namespace Pro {
 			seamlessly iterating over the chunks
 		*/
 		class LinkedArrayIteratorRaw
-		{ 
-			LinkedArrayRaw* linkedArray; 
-			vector<LinkedArrayRaw::ArrayChunk>::iterator chunk_it;
-			BitmaskedIteratorRaw object_it;
-			 
-
-			inline bool LoadNextIterator() { 
-				if (chunk_it == linkedArray->chunks_.end())
+		{  
+			vector<LinkedArrayRaw::ArrayChunk>::iterator iterator_end;
+			vector<LinkedArrayRaw::ArrayChunk>::iterator iterator;
+			BitmaskedIteratorRaw chunk_iterator;
+			  
+			inline bool LoadNextIterator() {  
+				if (iterator++ == iterator_end)
 					return false;
-				chunk_it++;
-				object_it = chunk_it->GetIterator(); 
+				chunk_iterator = std::move(iterator->GetIterator());
 				return true;
 			}
 
@@ -40,13 +38,13 @@ namespace Pro {
 			LinkedArrayIteratorRaw() = delete;
 
 			LinkedArrayIteratorRaw(LinkedArrayRaw* target) 
-				: linkedArray(target),
-				  chunk_it(linkedArray->chunks_.begin()),
-				  object_it(chunk_it->GetIterator())
+				: iterator(target->chunks_.begin()),
+				  iterator_end(target->chunks_.end()),
+				  chunk_iterator(iterator->GetIterator())
 			{ }
 
 			void* Read() { 
-				void* ptr = object_it.Read();
+				void* ptr = chunk_iterator.Read();
 				if (ptr == nullptr) { 
 					if (LoadNextIterator())
 						return Read(); 
@@ -57,17 +55,17 @@ namespace Pro {
 			
 			template<typename T>
 			T* Read() {
-				void* ptr = object_it.Read();
+				void* ptr = chunk_iterator.Read();
 				if (ptr == nullptr) {
 					if (LoadNextIterator())
-						return Read();
+						return reinterpret_cast<T*>(Read());
 					return nullptr;
 				}
-				return ptr;
+				return reinterpret_cast<T*>(ptr);
 			}
 			 
 			inline bool HasNext() {
-				if (object_it.HasNext())
+				if (chunk_iterator.HasNext())
 					return true;
 				
 				// If our object list is finished,
@@ -79,5 +77,7 @@ namespace Pro {
 				return false; 
 			}
 		};
+	
+		 
 	}
 }

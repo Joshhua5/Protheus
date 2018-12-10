@@ -63,7 +63,7 @@ namespace UnitTests
 
 			result1 /= y;
 
-			Assert::IsTrue(result1.x == 4 && result1.y == 1, L"", LINE_INFO()); 
+			Assert::IsTrue(result1.x == 4 && result1.y == 1, L"", LINE_INFO());
 		}
 
 		TEST_METHOD(MULTIPLICATION) {
@@ -91,13 +91,13 @@ namespace UnitTests
 			Pro::Math::Vector2<int> x(1, 2);
 
 			Assert::IsTrue(x == x, L"", LINE_INFO());
-			Assert::IsTrue(x.Equals(1, 2), L"", LINE_INFO()); 
+			Assert::IsTrue(x.Equals(1, 2), L"", LINE_INFO());
 		}
 
 
 		TEST_METHOD(CONTAINS) {
 			Pro::Math::Vector2<int> z({ 4, 8 });
-			 
+
 			Assert::IsTrue(z.Contains(6), L"", LINE_INFO());
 			Assert::IsFalse(z.Contains(2), L"", LINE_INFO());
 			Assert::IsFalse(z.Contains(10), L"", LINE_INFO());
@@ -105,13 +105,13 @@ namespace UnitTests
 
 		TEST_METHOD(LENGTH) {
 			Pro::Math::Vector2<int> x(4, 3);
-			Assert::IsTrue(x.Length() == 5, L"", LINE_INFO()); 
+			Assert::IsTrue(x.Length() == 5, L"", LINE_INFO());
 		}
 
 		TEST_METHOD(NORMALIZE) {
 			Pro::Math::Vector2<int> x(1);
-			auto cast = x.Cast<float>(); 
-			Assert::IsTrue(cast.Normalize()		!= Math::Vector2<float>(0.707f), L"", LINE_INFO());
+			auto cast = x.Cast<float>();
+			Assert::IsTrue(cast.Normalize() != Math::Vector2<float>(0.707f), L"", LINE_INFO());
 			Assert::IsTrue(cast.NormalizeThis() != Math::Vector2<float>(0.707f), L"", LINE_INFO());
 		}
 	};

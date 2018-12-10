@@ -46,11 +46,14 @@ Utilities.lib
 /vs15/Debug
 src/Protheus/Debug 
 /vs15/Release
+/vs19/Release
+/vs19/Debug
 src/Protheus/Release
 *.obj  
 *.xml
-vs15/lib/Debug/Utilities.lib
+vs15/lib/Debug/Utilities.lib 
 *.coverage
 *.pch
 *.opendb
+vs19/.vs/
 vs15/.vs/

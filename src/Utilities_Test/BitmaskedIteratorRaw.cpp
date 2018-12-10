@@ -12,16 +12,13 @@ namespace Utilities_Test
 	using namespace Util;
 
 	TEST_CLASS(BitmaskedIteratorRawTest)
-	{
-		template<typename T>
-		struct array_deleter { void operator ()(T const * p) { delete[] p; } };
-
+	{  
 		static const int BUFFER_SIZE = 1024;  
 		 
 	public:
 
 		TEST_METHOD(CreateIterator) {
-			shared_ptr<int[]> data(new int[BUFFER_SIZE], array_deleter<int>());
+			shared_ptr<int[]> data(new int[BUFFER_SIZE], [](int* ptr) {delete[] ptr; });
 			for (int i = 0; i < BUFFER_SIZE; ++i)
 				data[i] = i;
 
@@ -32,7 +29,7 @@ namespace Utilities_Test
 		}
 		
 		TEST_METHOD(ReadWithBitmask) {
-			shared_ptr<int[]> data(new int[BUFFER_SIZE], array_deleter<int>());
+			shared_ptr<int[]> data(new int[BUFFER_SIZE], [](int* ptr) {delete[] ptr; });
 			for (int i = 0; i < BUFFER_SIZE; ++i)
 				data[i] = i;
 
@@ -47,7 +44,7 @@ namespace Utilities_Test
 		} 
 
 		TEST_METHOD(ReadLastWithBitmask) {
-			shared_ptr<int[]> data(new int[BUFFER_SIZE], array_deleter<int>());
+			shared_ptr<int[]> data(new int[BUFFER_SIZE], [](int* ptr) {delete[] ptr; });
 			for (int i = 0; i < BUFFER_SIZE; ++i)
 				data[i] = i;
 
@@ -60,9 +57,27 @@ namespace Utilities_Test
 			// The next element should be 1
 			Assert::AreEqual(BUFFER_SIZE - 1, *static_cast<int*>(iterator.Read()));
 		}
+		
+		TEST_METHOD(HasNext) {
+			shared_ptr<int[]> data(new int[BUFFER_SIZE], [](int* ptr) {delete[] ptr; });
+			for (int i = 0; i < BUFFER_SIZE; ++i)
+				data[i] = i;
+
+			Bitmask mask(BUFFER_SIZE, false);
+			BitmaskedIteratorRaw iterator(&data[0], mask, BUFFER_SIZE, sizeof(int));
+
+			// Skip the first element
+			mask.Set<true>(BUFFER_SIZE - 1);
+
+			// The next element should be 1
+			iterator.Read();
+
+			Assert::IsFalse(iterator.HasNext());
+
+		}
 
 		TEST_METHOD(ReadOverflowWithBitmask) {
-			shared_ptr<int[]> data(new int[BUFFER_SIZE], array_deleter<int>());
+			shared_ptr<int[]> data(new int[BUFFER_SIZE], [](int* ptr) {delete[] ptr; });
 			for (int i = 0; i < BUFFER_SIZE; ++i)
 				data[i] = i;
 

@@ -6,13 +6,12 @@ namespace Pro {
 	namespace ECS {
 		struct Enabled : Component { 
 			constexpr static unsigned ID() {
-				FowlerNollVoHash(__PRETTY_FUNCTION__, sizeof(__PRETTY_FUNCTION__));
-			} 
-
+				return FowlerNollVoHash(__FUNCSIG__, sizeof(__FUNCSIG__));
+			}  
 			bool enabled;
 
-			Enabled(bool value = true) {
-				enabled = value;
+			Enabled() {
+				enabled = true;
 			}
 		};
 	}

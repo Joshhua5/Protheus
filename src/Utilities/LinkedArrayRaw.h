@@ -14,11 +14,13 @@
  
 #pragma once 
 #include <vector>
-#include "Iterator.h"
-#include "Bitmask.h" 
+#include <functional>  
+#include "BitmaskedIteratorRaw.h"
+#include "BitmaskedIterator.h" 
 
 namespace Pro {
 	namespace Util {
+		using namespace std;
 		/*! LinkedArrayRaw
 			Thread Safe : False
 			Lock Free : False
@@ -41,9 +43,11 @@ namespace Pro {
 			I wrote a BitmaskedIterator to solve this, probably isn't optimal though
 		*/   
 		
-		class alignas(16) LinkedArrayRaw {
-			friend class LinkedArrayIteratorRaw;
-			struct alignas(16) ArrayChunk { 
+
+		class alignas(16) LinkedArrayRaw {  
+			friend class LinkedArrayIteratorRaw; 
+		 
+			struct alignas(16) ArrayChunk {  
 				ArrayChunk(size_t _size, size_t size_of)
 					: mask_(_size, false)
 				{
@@ -52,7 +56,30 @@ namespace Pro {
 					size_of_ = size_of;
 					actual_count_ = 0;
 					chunk_ = unique_ptr<char, function<void(char*)>>(new char[_size * size_of], [](char* ptr) {delete[] ptr; });
-				} 
+				}   
+
+				ArrayChunk(const ArrayChunk& rhs) = delete;
+				const ArrayChunk& operator= (const ArrayChunk& rhs) = delete;
+
+				ArrayChunk(ArrayChunk&& rhs) = default;
+				// :	mask_(std::move(rhs.mask_))
+				//{ 
+				//	capacity_ = rhs.capacity_;
+				//	count_ = rhs.count_;
+				//	size_of_ = rhs.size_of_;
+				//	actual_count_ = rhs.actual_count_;
+				//	chunk_ = std::move(rhs.chunk_);
+				//}
+				 
+				ArrayChunk& operator= (ArrayChunk&& rhs) = default;
+				//{
+				//	mask_ = std::move(rhs.mask_);
+				//	capacity_ = rhs.capacity_;
+				//	count_ = rhs.count_;
+				//	size_of_ = rhs.size_of_;
+				//	actual_count_ = rhs.actual_count_;
+				//	chunk_ = std::move(rhs.chunk_);
+				//}
 				 
 				unique_ptr<char, function<void(char*)>> chunk_;
 				//char* chunk_; // Memory of the objects
@@ -62,30 +89,35 @@ namespace Pro {
 				size_t size_of_; // Size of an object in bytes
 				Bitmask mask_; // Mask used to know which objects are active
 				 
+				// TODO Do we allow for objects to be created within the empty places?
+				// If we do, then replace the mask set to be the NextOffset of false
 				void* CreateObject(){  
 					actual_count_++;
 					mask_.Set<true>(count_);
-					return chunk_.get() + (size_of_ * (count_++));
+					return chunk_.get() + (size_of_ * count_++);
 				} 
 
 				void* DestroyObject(const size_t index) {
-					actual_count_--;
-					mask_.Set<false>(index);
-					return chunk_.get() + (size_of_ * (index));
+					actual_count_--; 
+					mask_.Set<false>(mask_.GetOffset(index));
+					return GetObject(index);
 				}
 
 				inline void* GetObject(const size_t index) {
-					// Incorrect since we need to consider bitmasks
-					return chunk_.get() + (size_of_ * (index));
+					return chunk_.get() + (size_of_ * mask_.GetOffset<true>(index));
 				}
 
 				inline const void* GetObject(const size_t index) const {
-					// Incorrect since we need to consider bitmasks 
-					return chunk_.get() + (size_of_ * (index));
+					return chunk_.get() + (size_of_ * mask_.GetOffset<true>(index));
 				}
 
 				inline BitmaskedIteratorRaw GetIterator() {
-					return BitmaskedIteratorRaw(chunk_.get(), mask_, capacity_, size_of_);
+					return BitmaskedIteratorRaw(chunk_.get(), mask_, count_, size_of_);
+				}
+				
+				template<typename T>
+				inline BitmaskedIterator<T> GetIterator() {
+					return BitmaskedIterator<T>(chunk_.get(), mask_, count_, size_of_);
 				}
 
 				inline bool IsPacked() const { return actual_count_ == capacity_; }
@@ -124,11 +156,8 @@ namespace Pro {
 					} 
 				}
 			};
-			  
-			using iterator = LinkedArrayIteratorRaw;
-
-			std::vector<ArrayChunk> chunks_;
-			//unsigned object_count_;
+		 
+			std::vector<ArrayChunk> chunks_; 
 			unsigned block_size_;
 			unsigned size_of_;
 
@@ -136,10 +165,10 @@ namespace Pro {
 				chunks_.push_back(ArrayChunk(chunkSize, size_of_));
 				memset(chunks_.back().chunk_.get(), 0, size_of_ * chunkSize);
 			} 
-			
-			friend class LinkedArrayIteratorRaw;
-		public:
-			LinkedArrayRaw(size_t sizeOf, int block_size = 4096) {
+			  
+		public: 
+			LinkedArrayRaw(size_t sizeOf, int block_size = 4096)
+			{
 				block_size_ = block_size;
 				size_of_ = sizeOf; 
 			}
@@ -180,10 +209,10 @@ namespace Pro {
 					index -= chunk.Count();
 				}
 				return nullptr;
-			}
+			} 
 
 			template<typename T, typename... args>
-			T* Insert(args... arg) {
+			T* Append(args... arg) {
 				for (ArrayChunk& chunk : chunks_) {
 					if (chunk.HasSpace()) {
 						T* object = reinterpret_cast<T*>(chunks_.back().CreateObject());
@@ -198,7 +227,7 @@ namespace Pro {
 				return object;
 			}
 			
-			void* Insert() {
+			void* Append() {
 				for (ArrayChunk& chunk : chunks_) {
 					if (chunk.HasSpace()) {
 						return chunk.CreateObject(); 
@@ -207,7 +236,7 @@ namespace Pro {
 				AddChunk(block_size_);
 				return chunks_.back().CreateObject();
 			} 
-			 
+			   
 			//! pack arrays to fill in empty spaces, reduce memory usage and improved cache performance
 			void Collapse() {
 				for (ArrayChunk& chunk : chunks_) {
@@ -217,12 +246,8 @@ namespace Pro {
 				// Here we should do some cleanup of potentially empty chunks,
 				// or consider cross chunk packing
 			}
-
-			// inline bool IsValidIndex(size_t index) {
-			// 	return (index >= 0 && index <= object_count_ - 1);
-			// }
-
-			void* Delete(size_t index) { 
+			  
+			void* DeleteAt(size_t index) { 
 				for (ArrayChunk& chunk : chunks_) {
 					if (chunk.ContainsIndex(index))
 						return chunk.DestroyObject(index);
@@ -241,7 +266,7 @@ namespace Pro {
 			inline float Fragmentation() {
 				float fragmentation = 0;
 				for (const auto & chunk : chunks_)
-					fragmentation += (chunk.count_ / (float)chunk.actual_count_) / (float)chunks_.size();
+					fragmentation += ((float)chunk.actual_count_ / chunk.count_) / (float)chunks_.size();
 				return fragmentation;
 			} 
 		};

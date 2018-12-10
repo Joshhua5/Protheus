@@ -5,16 +5,17 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include <LinkedArrayRaw.h>
+#include <LinkedArrayRaw.h> 
 #include <Buffer.h>
 #include <BufferReader.h>
 #include <LinkedArray.h>
+#include <LinkedArrayIterator.h>
 #include <BufferWriter.h>
 #include <iterator.h>
 
 #include "Component.h"
 #include "Components/Enabled.h"
-  
+
 /* TODO, We need a data structure that allows expansion without invalidating the original array
 	A linked array would be perfect for this.
 */
@@ -25,61 +26,98 @@ namespace Pro {
 	namespace ECS {
 		// To initialize the entity, we can return memory points and the type_info which can be used by the user to initialize, we can also provide a nice function do that 
 
-
-
 		// A EntityInstance is used for initializing a entity, it contains pointers to the components for this instance
-		class EntityInstance {
+		class EntityInitializer {
 			// We should pool this object
-			std::map<type_index, void*> component_instances; 
+			std::map<type_index, void*> component_instances;
 			friend class Entity;
+			//friend class FriendSystem;
 
 		public:
-			template<typename T, typename... args> 
-			void Initialize(args...) {
-				component_instances.at(typeid(T)) = T(args...);
+			EntityInitializer() = default;
+
+			EntityInitializer(const EntityInitializer&) = delete;
+			EntityInitializer& operator=(const EntityInitializer&) = delete;
+
+			EntityInitializer(EntityInitializer&&) = default;
+			EntityInitializer& operator=(EntityInitializer&&) = default;
+
+			template<typename T, typename... args>
+			inline void Initialize(args... arg) {
+				*reinterpret_cast<T*>(component_instances.at(typeid(T))) = T(arg...);
+			}
+
+			template<typename T>
+			inline bool Contains() {
+				return component_instances.find(typeid(T)) != component_instances.end();
+			}
+
+			template<typename T>
+			inline T* Get() {
+				return reinterpret_cast<T*>(component_instances.at(typeid(T)));
 			}
 		};
 
 		// A Entity component is the link between an entity and a component, it's responsible for the management of a components pool
-		// and initialization 
+		// and initialization
+		template<typename T>
 		struct EntityComponent {
-			type_info* Type;
-			size_t sizeOf;
-			size_t count;
-			LinkedArrayRaw components;
-			EntityComponent(size_t _sizeOf, type_info* ID, size_t _capacity = 10) :
-				components(_sizeOf) {  
-				sizeOf = _sizeOf; 
-				count = 0; 
-			} 
-
 			friend class Entity;
+			friend class EntityInitializer;
+
+			size_t count;
+			LinkedArray<T> components;
+
+			EntityComponent() : components() {
+				count = 0;
+			}
+
+			EntityComponent(const EntityComponent&) = delete;
+			EntityComponent(EntityComponent&&) = default;
+
+			EntityComponent& operator= (const EntityComponent&) = delete;
+			EntityComponent& operator= (EntityComponent&&) = default;
 
 			// NOTE: if the components are uninitialized from the create function, then
 			// should we bother initializing them with the populate? and enforce the component 
 			// reaction through systems? We'll see how this pans out, since initialization might require other
 			// components, this might be the way to go. Then again, how do you create objects with different variables...
-			template<typename T>
-			void Create(size_t count) {
-				BufferWriter writer(buffer);
-				for (unsigned i = 0; i < count; ++i) {
-					writer.Write(T()); 
-				} 
+
+			//template<typename... args>
+			//void Create(size_t count, args... arg) {
+			//	for (unsigned i = 0; i < count; ++i)
+			//		components.Append<T>(arg...);
+			//}
+
+			inline LinkedArrayIterator<T> Iterator() {
+				return LinkedArrayIterator<T>(components);
 			}
-		}; 
+		};
+
+		class EntityReference {
+
+
+		};
 
 		// A entity is a configuration of components, each entity can have many instances
 		// adding a component to a entity will add it to all instances
 		// Since we have objects that refer to the entities directly, we will need to ensure that the array is resized at
 		// known times. 
 		class Entity {
+			friend class FactorySystem;
+
 			string entityName;
 
-			//ArrayList<EntityComponent> components; 
-			std::unordered_map<std::type_index, EntityComponent> components;
-			unsigned instanceCount = 0;
-			    
+			// void* is a EntityComponent<T>* where T is the type_index
+			// function<void(void*)> is a function that is used to construct the component, it requires a cast from void* to T*
+			unordered_map<type_index, pair<void*, function<void(void*)>>> components;
+			size_t instanceCount = 0;
+
+			template<typename T>
+			inline EntityComponent<T>* GetComponent() { return reinterpret_cast<EntityComponent<T>*>(components.at(typeid(T)).first); }
+
 		public:
+			inline size_t Instances() const { return instanceCount; }
 			/// Copies the structure of the Entity
 			/// Entity(const Entity& copy) {
 			/// 
@@ -90,50 +128,65 @@ namespace Pro {
 			/// }
 
 			Entity(const string& name) {
-				entityName = name; 
-				AddComponent<Enabled>();
+				entityName = name;
+				AddComponent<Enabled>([](void* component) { reinterpret_cast<Enabled*>(component)->enabled = true; });
 			}
 
 			template<typename T>
 			void AddComponent() {
-				EntityComponent component(sizeof(T), (unsigned)T::ID()); 
-				// If we already have instances of this entity then initialize the components
-				component.Populate(instanceCount);
-				components.push_back(component);
+				// Here we use the known type information to create a function
+				// that will allow us to create components without their type known.   
+				EntityComponent<T>* component = new EntityComponent<T>();
+				for (size_t i = 0; i < instanceCount; ++i)
+					component->components.Emplace();
+
+				components.insert(
+					make_pair(type_index(typeid(T)),
+						make_pair(component, [&](void* ec)
+							{
+								EntityComponent<T>* component = reinterpret_cast<EntityComponent<T>*>(ec);
+								component->components.Emplace();
+							}
+				)));
+			}
+
+			template<typename T, typename ...args>
+			void AddComponent(std::function<void(void*)> constructor) {
+				// Here we use the known type information to create a function
+				// that will allow us to create components without their type known.  
+				EntityComponent<T>* component = new EntityComponent<T>();
+				for (size_t i = 0; i < instanceCount; ++i)
+					constructor((void*)component->components.Append());
+
+				components.insert(
+					make_pair(type_index(typeid(T)),
+						make_pair(component, [&](void* ec)
+							{
+								EntityComponent<T>* component = reinterpret_cast<EntityComponent<T>*>(ec);
+								constructor((void*)component->components.Append());
+							}
+				)));
 			}
 
 			template<typename T>
-			Iterator<T> GetComponentIterator() {
-				EntityComponent& ec = components.at(typeid(T));
-				Iterator<T> iterator(ec.buffer.data<T>(), ec.count); 
-				return iterator;
-			} 
+			LinkedArrayIterator<T> GetComponentIterator() {
+				return GetComponent<T>()->Iterator();
+			}
 			 
-			// How do we intent to get properties for the construction in here?
-			// Or do I intent to have a function on the system that handles this?
-			EntityInstance& CreateWithRef() {
-				EntityInstance instance;
-				for (std::pair<type_index, EntityComponent> value : components) {
-					// Add the component
-					// There has to be a better way! 
-					// time to use std::Vector
-					EntityComponent& buf = value.second; 
-					BufferWriter writer(&buf.buffer);
-					writer.Skip(buf.count * buf.sizeOf);
-					unsigned head = writer.head();
-					writer.Write(buf.sizeOf);
-					writer.Skip(-buf.sizeOf); 
-					 
-					instance.component_instances
-						.insert(std::pair<type_index, void*>(value.first, buf.buffer.data<char>() + head));
-				} 
-			} 
+			template<typename T>
+			inline bool Contains() {
+				return components.find(typeid(T)) != component_instances.end();
+			}
+
+			void NewInstance() {
+				for (auto& value : components)
+					value.second.second(value.second.first);
+			}
 
 			/*! Destory a instance of an entity, this will deactivate the entity and flag it for removal */
 			void Destroy() {
 
 			}
-
 		};
 	}
 }

@@ -17,32 +17,30 @@ namespace Utilities_Test
 	public:
 
 		TEST_METHOD(SetCheckSmallMask) {
-			Bitmask mask(32, false);
-			 
-			mask.Set(10, true); 
-			for (int i = 0; i < 32; ++i) {
-				if (i == 10)
-					Assert::IsTrue(mask.Check(i), L"Fail on IsTrue Set10");
-				else
-					Assert::IsFalse(mask.Check(i), L"Fail on IsFalse Set10");
-			} 
-			 
+			const int mask_size = 32;
 
+			Bitmask mask(mask_size, false);
+			vector<int> true_set;
+
+			auto Check = [&]() {
+				for (int i = 0; i < mask_size; ++i)
+					if (find(true_set.begin(), true_set.end(), i) != true_set.end())
+						Assert::IsTrue(mask.Check(i), L"Fail on IsTrue Set10");
+					else
+						Assert::IsFalse(mask.Check(i), L"Fail on IsFalse Set10");
+			};
+
+			true_set.push_back(10);
+			mask.Set(10, true);
+			Check();
+			  
+			true_set.push_back(16);
 			mask.Set(16, true);
-			for (int i = 0; i < 32; ++i) {
-				if (i == 10 || i == 16)
-					Assert::IsTrue(mask.Check(i), L"Fail on IsTrue Set16");
-				else
-					Assert::IsFalse(mask.Check(i), L"Fail on IsFalse Set16");
-			}
-			
+			Check();
+			  
+			true_set.erase(find(true_set.begin(), true_set.end(), 10));
 			mask.Set(10, false);
-			for (int i = 0; i < 32; ++i) {
-				if (i == 16)
-					Assert::IsTrue(mask.Check(i), L"Fail on IsTrue Unset10");
-				else
-					Assert::IsFalse(mask.Check(i), L"Fail on IsFalse Unset10");
-			}
+			Check(); 
 		} 
 
 		TEST_METHOD(SetCheckLargeMask) {
@@ -94,6 +92,33 @@ namespace Utilities_Test
 				// Otherwise they should be false
 				Assert::IsFalse(mask.Check(i));
 			}
+		} 
+	
+		TEST_METHOD(GetOffsetSmall) {
+			const int mask_size = 32;
+
+			Bitmask mask(mask_size, false);
+			vector<size_t> true_set = { 2, 10, 16, 28, 30 };
+
+			for (int i : true_set)
+				mask.Set<true>(i);
+
+			for (int i = 0; i < true_set.size(); ++i) 
+				Assert::AreEqual(*(true_set.begin() + i), mask.GetOffset(i), L"", LINE_INFO());
+			
+		}
+
+		TEST_METHOD(GetOffsetLarge) {
+			const int mask_size = 1024;
+
+			Bitmask mask(mask_size, false);  
+			vector<unsigned> true_set = { 64, 105, 511, 512, 513, 542, 1023, };
+
+			for (int i : true_set)
+				mask.Set<true>(i);
+
+			for (int i = 0; i < true_set.size(); ++i)
+				Assert::AreEqual(*(true_set.begin() + i), mask.GetOffset(i), L"", LINE_INFO());
 		} 
 	};
 }
