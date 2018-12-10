@@ -136,6 +136,7 @@
     <ClInclude Include="Entity\Components\Enabled.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\EntityContainer.h" />
+    <ClInclude Include="Entity\EntityIterator.h" />
     <ClInclude Include="Entity\System.h" />
     <ClInclude Include="Entity\SystemScheduler.h" />
     <ClInclude Include="Event\Event.h" />

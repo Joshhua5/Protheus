@@ -27,7 +27,8 @@ namespace Pro {
 			BitmaskedIterator<T> chunk_iterator;
 
 			inline bool LoadNextIterator() {
-				if (iterator++ == iterator_end)
+				iterator++;
+				if (iterator == iterator_end)
 					return false;
 				chunk_iterator = std::move(iterator->GetIterator());
 				return true;

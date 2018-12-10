@@ -42,6 +42,9 @@
     <ClInclude Include="Entity\Components\Enabled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\EntityIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Event\EventManager.cpp">
