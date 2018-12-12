@@ -12,18 +12,21 @@
 
  *************************************************************************/ 
 
+#include <functional>
+
 #include "BitmaskedIterator.h"
  
 namespace Pro {
 	namespace Util {
 		namespace Internal {
+			using namespace std;
 			template<typename T>
 			struct alignas(16) ArrayChunk {
 				ArrayChunk(size_t _size) : mask_(_size, false)
 				{
 					capacity_ = _size;
 					count_ = 0;
-					actual_count_ = 0;
+					actual_count_ = 0; 
 					chunk_ = unique_ptr<T, function<void(T*)>>(new T[_size], [](T* ptr) {delete[] ptr; });
 				}
 

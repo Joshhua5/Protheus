@@ -5,7 +5,7 @@ using namespace Pro;
 using namespace Math;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace UnitTests
+namespace Utilities_Test
 {
 	TEST_CLASS(Vector2) {
 

@@ -16,9 +16,9 @@
 #include <Queue.h>
 #include <Pipe.h>
 #include <Iterator.h>
-#include <BitmaskedIteratorRaw.h>
-#include <LinkedArrayRaw.h>
-#include <LinkedArrayIteratorRaw.h>
+#include <BitmaskedIterator.h>
+#include <LinkedArray.h>
+#include <LinkedArrayIterator.h>
 #include <Vector3.h>
 #include <Vector2.h>
 #include <Parallel.h>

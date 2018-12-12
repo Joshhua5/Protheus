@@ -22,7 +22,7 @@ namespace Pro{
 			using ArrayChunk = typename Internal::ArrayChunk<T>;
 
 			vector<ArrayChunk> chunks_; 
-			using chunk_iterator = typename vector<ArrayChunk>::iterator;
+			using chunk_iterator = typename vector<ArrayChunk>::iterator; 
 
 			unsigned block_size_; 
 

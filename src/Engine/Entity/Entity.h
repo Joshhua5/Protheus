@@ -1,17 +1,10 @@
 #pragma once
-
-#include <unordered_map>
-#include <map>
+ 
 #include <typeinfo>
 #include <typeindex>
-
-#include <LinkedArrayRaw.h> 
-#include <Buffer.h>
-#include <BufferReader.h>
+ 
 #include <LinkedArray.h>
-#include <LinkedArrayIterator.h>
-#include <BufferWriter.h>
-#include <iterator.h>
+#include <LinkedArrayIterator.h>  
 
 #include "Component.h"
 #include "Components/Enabled.h"

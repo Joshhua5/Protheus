@@ -25,7 +25,7 @@ namespace Pro {
 		public:
 			BitmaskedIterator() = delete;
 
-			BitmaskedIterator(void* start, Bitmask& bitmask, size_t size) :
+			BitmaskedIterator(T* start, Bitmask& bitmask, size_t size) :
 				bitmask_(bitmask)
 			{
 				pointer_ = reinterpret_cast<T*>(start);
