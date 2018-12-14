@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 
 #include <Entity/Entity.h>
+#include <Entity/EntityIterator.h>
 
 
 using namespace Pro;
@@ -137,6 +138,24 @@ namespace Engine_Test
 				entity.NewInstance();
 
 			auto iterator = entity.Iterator<Position>();
+			int expected = 0;
+			while (iterator.HasNext())
+				Assert::AreEqual(expected++, iterator.Read()->x);
+		}
+		
+		
+		TEST_METHOD(LargeIteratorTest) {
+			Entity entity("test entity");
+			entity.AddComponent<Position>([](void* comp) {
+				static int count = 0;
+				static_cast<Position*>(comp)->x = count++;
+				});
+
+			for (int i = 0; i < 1024 * 100; ++i)
+				entity.NewInstance();
+
+
+			auto iterator = entity.Iterator<Position>();  
 			int expected = 0;
 			while (iterator.HasNext())
 				Assert::AreEqual(expected++, iterator.Read()->x);

@@ -5,8 +5,8 @@
 #include <map>
 #include <typeinfo>
 #include <typeindex>
+#include <tuple>
 
-#include <LinkedArrayRaw.h> 
 #include <Buffer.h>
 #include <BufferReader.h>
 #include <LinkedArray.h>
@@ -26,32 +26,20 @@ namespace Pro {
 	using namespace Util;
 	namespace ECS {
 		// To initialize the entity, we can return memory points and the type_info which can be used by the user to initialize, we can also provide a nice function do that 
-
 		// A EntityIterator is used for initializing a entity, it contains pointers to the components for this instance
-		 
-		// Still working out how to get this to work efficiently.
+		  
+		template<class... Components>
+		class EntityIterator {
+			template<class T> using add_iterator = LinkedArrayIterator<T>;
 
-		// class EntityIterator {
-		// 	// We should pool this object
-		// 	std::vector<pair<type_index, LinkedArrayIterator<Component>*>> component_iterators;
-		// 	friend class Entity;
-		// 
-		// 	void AttachComponent(pair<type_index, LinkedArrayIterator<Component>*> component) {
-		// 
-		// 	}
-		// 
-		// public:
-		// 	EntityIterator() = default;
-		// 
-		// 	template<typename T>
-		// 	inline bool Contains() {
-		// 		return component_instances.find(typeid(T)) != component_instances.end();
-		// 	}
-		// 
-		// 	template<typename T>
-		// 	inline T* Get() {   
-		// 		return reinterpret_cast<T*>(component_iterators.at(typeid(T)));
-		// 	}
-		// }; 
+			std::tuple<add_iterator<Components...> storage;  
+		public:
+			EntityIterator(Components... args) : storage(args...) {}
+		  
+			template<typename T>
+			constexpr LinkedArrayIterator<T>& Get() {  
+				return std::get<add_iterator<T>>(); 
+			}
+		}; 
 	}
 }
