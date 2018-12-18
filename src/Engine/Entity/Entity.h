@@ -4,8 +4,9 @@
 #include <typeindex>
  
 #include <LinkedArray.h>
-#include <LinkedArrayIterator.h>  
+#include <LinkedArrayIterator.h>
 
+#include "EntityIterator.h"
 #include "Component.h"
 #include "Components/Enabled.h"
 
@@ -96,7 +97,7 @@ namespace Pro {
 		// A entity is a configuration of components, each entity can have many instances
 		// adding a component to a entity will add it to all instances
 		// Since we have objects that refer to the entities directly, we will need to ensure that the array is resized at
-		// known times. 
+		// known times.
 		class Entity {
 			friend class FactorySystem;
 
@@ -114,7 +115,7 @@ namespace Pro {
 				void* component; // EntityComponent*
 				function<void(void*)> constructor;
 			};
-
+			  
 			std::vector<ComponentEntry> components;
 			size_t instanceCount = 0;
 
@@ -132,6 +133,14 @@ namespace Pro {
 					if (components[i].index == typeid(T))
 						return reinterpret_cast<EntityComponent<T>*>(components[i].component);
 				return nullptr;
+			}
+			
+			template<typename T>
+			inline LinkedArrayIterator<T>& GetComponentIterator() {
+				for (size_t i = 0; i < components.size(); ++i)  
+					if (components[i].index == typeid(T))
+						return LinkedArrayIterator<T>(reinterpret_cast<EntityComponent<T>*>(components[i].component)->components);
+				throw "Not Found";
 			}
 
 		public:
@@ -188,9 +197,11 @@ namespace Pro {
 				); 
 			}
 
-			template<typename T>
-			LinkedArrayIterator<T> Iterator() {
-				return GetComponent<T>()->Iterator();
+			 
+			template<typename... Components>
+			EntityIterator<Components...> Iterator() {
+				//auto initializer = ;
+				return EntityIterator<Components...>({ GetComponentIterator<Components>()... });
 			}
 			 
 			template<typename T>

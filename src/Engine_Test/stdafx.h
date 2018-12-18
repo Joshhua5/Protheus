@@ -30,4 +30,5 @@
 #include <Buffer.h>
  
 #include <Entity/Entity.h>
-#include <Entity/System.h>
+#include <Entity/System.h> 
+#include <Entity/EntityIterator.h>

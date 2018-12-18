@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-
-#include <Entity/Entity.h>
-#include <Entity/EntityIterator.h>
-
-
+  
 using namespace Pro;
 using namespace ECS;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -61,8 +57,9 @@ namespace Engine_Test
 
 			Assert::AreEqual(32U, entity.Instances());
 
-			auto iterator = entity.Iterator<Position>();
-			int expected = 0;
+			auto iterator_set = entity.Iterator<Position>();
+			auto iterator = iterator_set.Get<Position>();
+			int expected = 0; 
 			while (iterator.HasNext())
 				Assert::AreEqual(expected++, iterator.Read()->x);
 		}
@@ -79,8 +76,9 @@ namespace Engine_Test
 
 			Assert::AreEqual(1U, entity.Instances());
 
-			auto enabled_iterator = entity.Iterator<Enabled>();
-			auto position_iterator = entity.Iterator<Position>();
+			auto iterator_set = entity.Iterator<Enabled, Position>();
+			auto position_iterator = iterator_set.Get<Position>();
+			auto enabled_iterator = iterator_set.Get<Enabled>();
 
 			Assert::AreEqual(true, enabled_iterator.Read()->enabled);
 			Assert::AreEqual(10, position_iterator.Read()->x);
@@ -104,7 +102,8 @@ namespace Engine_Test
 			for (int i = 0; i < 1024 * 100; ++i)
 				entity.NewInstance();
 
-			auto iterator = entity.Iterator<Position>();
+			auto iterator_set = entity.Iterator<Position>();
+			auto iterator = iterator_set.Get<Position>();
 			int expected = 0;
 			while (iterator.HasNext())
 				Assert::AreEqual(expected++, iterator.Read()->x);
@@ -117,7 +116,9 @@ namespace Engine_Test
 			for (int i = 0; i < 10; ++i)
 				entity.NewInstance();
 			 
-			auto iterator = entity.Iterator<Position>();
+			auto iterator_set = entity.Iterator<Position>();
+			auto iterator = iterator_set.Get<Position>();
+
 			unsigned count = 0;
 			while (iterator.HasNext()) {
 				iterator.Read();
@@ -137,7 +138,9 @@ namespace Engine_Test
 			for (int i = 0; i < 10; ++i)
 				entity.NewInstance();
 
-			auto iterator = entity.Iterator<Position>();
+			auto iterator_set = entity.Iterator<Position>();
+			auto iterator = iterator_set.Get<Position>();
+
 			int expected = 0;
 			while (iterator.HasNext())
 				Assert::AreEqual(expected++, iterator.Read()->x);
@@ -155,26 +158,12 @@ namespace Engine_Test
 				entity.NewInstance();
 
 
-			auto iterator = entity.Iterator<Position>();  
+			auto iterator = entity.Iterator<Position>().Get<Position>();
+
 			int expected = 0;
 			while (iterator.HasNext())
 				Assert::AreEqual(expected++, iterator.Read()->x);
-		}
-
-		TEST_METHOD(LargeIteratorTest) {
-			Entity entity("test entity");
-			entity.AddComponent<Position>([](void* comp) {
-				static int count = 0;
-				static_cast<Position*>(comp)->x = count++;
-			});
-
-			for (int i = 0; i < 1024 * 100; ++i)
-				entity.NewInstance();
-
-			auto iterator = entity.Iterator<Position>();
-			int expected = 0;
-			while (iterator.HasNext())
-				Assert::AreEqual(expected++, iterator.Read()->x); 
-		}
+		} 
+		 
 	};
 }
