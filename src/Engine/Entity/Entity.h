@@ -114,6 +114,11 @@ namespace Pro {
 				type_index index;
 				void* component; // EntityComponent*
 				function<void(void*)> constructor;
+
+				template<typename T>
+				constexpr EntityComponent<T>* Component() {
+					return reinterpret_cast<EntityComponent<T>*>(component);
+				}
 			};
 			  
 			std::vector<ComponentEntry> components;
@@ -129,17 +134,17 @@ namespace Pro {
 
 			template<typename T>
 			inline EntityComponent<T>* GetComponent() {
-				for (size_t i = 0; i < components.size(); ++i)
-					if (components[i].index == typeid(T))
-						return reinterpret_cast<EntityComponent<T>*>(components[i].component);
+				for (auto& entry : components)
+					if (entry.index == typeid(T))
+						return entry.Component<T>();
 				return nullptr;
 			}
 			
 			template<typename T>
-			inline LinkedArrayIterator<T>& GetComponentIterator() {
-				for (size_t i = 0; i < components.size(); ++i)  
-					if (components[i].index == typeid(T))
-						return LinkedArrayIterator<T>(reinterpret_cast<EntityComponent<T>*>(components[i].component)->components);
+			inline LinkedArrayIterator<T> GetComponentIterator() { 
+				for (auto& entry : components)
+					if (entry.index == typeid(T))
+						return LinkedArrayIterator<T>(entry.Component<T>()->components);
 				throw "Not Found";
 			}
 
@@ -200,7 +205,6 @@ namespace Pro {
 			 
 			template<typename... Components>
 			EntityIterator<Components...> Iterator() {
-				//auto initializer = ;
 				return EntityIterator<Components...>({ GetComponentIterator<Components>()... });
 			}
 			 

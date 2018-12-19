@@ -34,7 +34,7 @@ namespace Pro {
 			EntityIterator(LinkedArrayIterator<Components>... args) : storage(args...) {}
 		  
 			template<typename Component>
-			LinkedArrayIterator<Component>& Get() {
+			constexpr LinkedArrayIterator<Component>& Get() {
 				return std::get<LinkedArrayIterator<Component>>(storage);
 			}
 		}; 

@@ -102,11 +102,12 @@ namespace Engine_Test
 			for (int i = 0; i < 1024 * 100; ++i)
 				entity.NewInstance();
 
-			auto iterator_set = entity.Iterator<Position>();
-			auto iterator = iterator_set.Get<Position>();
+			auto iterator = entity.Iterator<Position>().Get<Position>();
 			int expected = 0;
-			while (iterator.HasNext())
-				Assert::AreEqual(expected++, iterator.Read()->x);
+
+			Position* value;
+			while ((value = iterator.Read()) != nullptr)
+				Assert::AreEqual(expected++, value->x);
 		}
 	
 		TEST_METHOD(ComponentIterator) {
@@ -156,13 +157,16 @@ namespace Engine_Test
 
 			for (int i = 0; i < 1024 * 100; ++i)
 				entity.NewInstance();
-
-
+			 
 			auto iterator = entity.Iterator<Position>().Get<Position>();
 
 			int expected = 0;
-			while (iterator.HasNext())
-				Assert::AreEqual(expected++, iterator.Read()->x);
+			Position* value;
+			do{
+				value = iterator.Read();
+				if(value != nullptr)
+					Assert::AreEqual(expected++, value->x); 
+			} while (value != nullptr);
 		} 
 		 
 	};
