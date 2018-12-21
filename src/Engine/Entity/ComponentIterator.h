@@ -9,8 +9,7 @@
  
 #include <LinkedArray.h>
 #include <LinkedArrayIterator.h>  
-
-#include "Component.h"
+ 
 #include "Components/Enabled.h"
 
 /* TODO, We need a data structure that allows expansion without invalidating the original array
@@ -25,13 +24,18 @@ namespace Pro {
 		// A EntityIterator is used for initializing a entity, it contains pointers to the components for this instance
 		  
 		template<typename... Components>
-		class EntityIterator {  
+		class alignas(16) ComponentIterator {
+			template<typename T> constexpr LinkedArrayIterator<T> GetNull() {
+				return nullptr;
+			}
+		
 			std::tuple<LinkedArrayIterator<Components>...> storage;
 
-			friend class Entity;
-		public:
-			EntityIterator(Components... args) : storage(args...) {}
-			EntityIterator(LinkedArrayIterator<Components>... args) : storage(args...) {}
+			friend class Entity; 
+		public: 
+			//ComponentIterator() : storage(GetNull<Components>()...) {}
+			ComponentIterator(Components... args) : storage(args...) {}
+			ComponentIterator(LinkedArrayIterator<Components>... args) : storage(args...) {}
 		  
 			template<typename Component>
 			constexpr LinkedArrayIterator<Component>& Get() {

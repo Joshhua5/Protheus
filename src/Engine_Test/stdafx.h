@@ -31,4 +31,4 @@
  
 #include <Entity/Entity.h>
 #include <Entity/System.h> 
-#include <Entity/EntityIterator.h>
+#include <Entity/ComponentIterator.h>

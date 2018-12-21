@@ -6,8 +6,7 @@
 #include <LinkedArray.h>
 #include <LinkedArrayIterator.h>
 
-#include "EntityIterator.h"
-#include "Component.h"
+#include "ComponentIterator.h" 
 #include "Components/Enabled.h"
 
 /* TODO, We need a data structure that allows expansion without invalidating the original array
@@ -204,8 +203,8 @@ namespace Pro {
 
 			 
 			template<typename... Components>
-			EntityIterator<Components...> Iterator() {
-				return EntityIterator<Components...>({ GetComponentIterator<Components>()... });
+			ComponentIterator<Components...> Iterator() {
+				return ComponentIterator<Components...>({ GetComponentIterator<Components>()... });
 			}
 			 
 			template<typename T>

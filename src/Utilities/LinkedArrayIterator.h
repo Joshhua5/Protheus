@@ -41,7 +41,7 @@ namespace Pro {
 				iterator(target.internal_storage().begin()),
 				iterator_end(target.internal_storage().end()),
 				chunk_iterator(iterator->GetIterator())
-			{ }
+			{ } 
 
 			T* Read() {
 				T* ptr = chunk_iterator.Read();
