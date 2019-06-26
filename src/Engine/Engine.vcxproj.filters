@@ -42,6 +42,9 @@
     <ClInclude Include="Entity\ComponentIterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Universe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Event\EventManager.cpp">

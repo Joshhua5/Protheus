@@ -41,6 +41,31 @@ namespace Engine_Test
 			while((value = iterator.Read()) != nullptr) 
 				Assert::AreEqual(true, value->enabled); 
 		}
+		
+		TEST_METHOD(LambdaInitialize) {
+			Entity entity("test entity");
+			entity.AddComponent<Enabled>([](void* comp) {
+				static_cast<Enabled*>(comp)->enabled = false;
+			});
+
+			for (int i = 0; i < 1024 * 100; ++i)
+				entity.NewInstance();
+
+			System<Enabled> system([](System<Enabled>& system) { 
+				Enabled* enabled;
+				while ((enabled = system.Next<Enabled>()) != nullptr) {
+					enabled->enabled = true;
+				}
+			});
+
+			system.Execute(entity);
+
+			auto iterator = entity.Iterator<Enabled>().Get<Enabled>();
+
+			Enabled* value;
+			while ((value = iterator.Read()) != nullptr)
+				Assert::AreEqual(true, value->enabled);
+		}
 
 	};
 }

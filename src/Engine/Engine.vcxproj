@@ -138,6 +138,7 @@
     <ClInclude Include="Entity\ComponentIterator.h" />
     <ClInclude Include="Entity\System.h" />
     <ClInclude Include="Entity\SystemScheduler.h" />
+    <ClInclude Include="Entity\Universe.h" />
     <ClInclude Include="Event\Event.h" />
     <ClInclude Include="Event\EventListener.h" />
     <ClInclude Include="Event\EventManager.h" />

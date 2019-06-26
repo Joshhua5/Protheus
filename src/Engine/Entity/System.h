@@ -41,19 +41,20 @@ namespace Pro {
 		//};
 		 
 		class SystemBase { 
-		public:
-			SystemBase() {}
+		public: 
 			void virtual Execute(Entity&) = 0;
 		};
-
+		
 		// TODO I'd like to have systems that can feed other systems
 		template<typename... Input> //, class Output = Components<>>
 		class System : SystemBase {
 			template<typename T> using add_pointer = T*;  
-			ComponentIterator<Input...>* iterator; 
-			 
-		protected: 
-
+			ComponentIterator<Input...>* iterator;   
+			std::function<void(System&)> executor;
+		public: 
+			System() = default;
+			System(function<void(System&)> _exe) : executor(_exe) {}
+		
 			inline void Reset(Entity& entity) {
 				// This needs to change.
 				// WHY we do this is that the iterator need to be constructed if it's not a pointer.
@@ -62,11 +63,16 @@ namespace Pro {
 				// and require a reference type.
 				iterator = new ComponentIterator<Input...>(entity.Iterator<Input...>());
 			}
-
+		
 			template<typename Component>
 			inline Component* Next() {
 				return iterator->Get<Component>().Read();
 			}  
-		}; 
+		
+			void Execute(Entity& entity) {
+				Reset(entity);
+				executor(*this);
+			}
+		};   
 	}
 }
