@@ -52,3 +52,4 @@ vs15/lib/Debug/Utilities.lib
 *.pch
 *.opendb
 vs15/.vs/
+src/Editor/node_modules
