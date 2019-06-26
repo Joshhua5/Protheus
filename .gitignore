@@ -53,3 +53,5 @@ vs15/lib/Debug/Utilities.lib
 *.opendb
 vs15/.vs/
 src/Editor/node_modules
+vs19/.vs/
+src/Editor/build
