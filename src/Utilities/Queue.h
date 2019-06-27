@@ -123,14 +123,17 @@ namespace Pro {
             //! Resizes the queue to @size and moves all objects with memcpy
             //! Disabled by default due to being unsafe in a multithreaded application,
             //! Although in a single threaded application use the flag ENABLE_QUEUE_RESIZE to enable
-            inline void Resize(const size_t size) {
+            inline void Resize(const size_t size) { 
+				// Create a new buffer aligned to 64B with enough space for the resize
                 T* new_queue = reinterpret_cast<T*>(operator new(sizeof(T) * size + 64));
                 unsigned new_queue_offset_ = 64 - ((size_t)new_queue % 64);
                 new_queue = (T*)((char*)new_queue + new_queue_offset_);
                   
 				if (push_position_ < pop_position_) {
-					std::memcpy(new_queue, queue_ + pop_position_, sizeof(T) * (capacity_ - pop_position_ - 1));
-					std::memcpy(new_queue + (capacity_ - pop_position_ - 1), queue_, sizeof(T) * push_position_);
+					// Take the first half of the circular buffer and place it at the start
+					std::memcpy(new_queue, queue_ + pop_position_, sizeof(T) * (capacity_ - pop_position_));
+					// Append the second half of the circular buffer and place it adjacent
+					std::memcpy(new_queue + (capacity_ - pop_position_), queue_, sizeof(T) * push_position_);
 				}
 				else
 					std::memcpy(new_queue, queue_ + pop_position_, sizeof(T) * size_);

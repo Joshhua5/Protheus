@@ -96,9 +96,9 @@ namespace Utilities_Test
 			unsigned value = 0;
 			for (unsigned i = 0; i < 16; ++i)
 			{
-				queue.TopPop(value);
+				queue.TopPop(value);   
 				Assert::AreEqual(i, value);
-			}
+			} 
 		}
 
 		TEST_METHOD(SingleConsumerProducer) { 

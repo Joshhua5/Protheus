@@ -57,3 +57,6 @@ vs15/lib/Debug/Utilities.lib
 *.opendb
 vs19/.vs/
 vs15/.vs/
+src/Engine/Debug/Engine.vcxproj.FileListAbsolute.txt
+*.vsp
+src/Engine_Test/Debug/Engine_Test.vcxproj.FileListAbsolute.txt

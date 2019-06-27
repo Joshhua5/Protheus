@@ -13,7 +13,7 @@ History:
 #include "Log.h"
 
 #ifndef LOGNAME
-#define LOGNAME "Log.xml"
+#define LOGNAME ""
 #endif
 
 Pro::Log Pro::global_log(LOGNAME);

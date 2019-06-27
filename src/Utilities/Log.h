@@ -54,6 +54,8 @@ namespace Pro {
 		std::atomic<bool> running_;
 		std::atomic<bool> has_terminated_;
 		std::atomic<bool> echo_;
+		std::thread worker_;
+		std::string log_name_;
 		Util::mcmp_queue<MessagePack> messages_;
 
 		static inline void remove_all(const char ch, std::string& in){
@@ -85,7 +87,7 @@ namespace Pro {
 			while (*running) {
                 // Reduce the atomic loads by only checking after a pause in messages
                 std::unique_lock<std::mutex> lock(*mutex);
-                cv->wait_for(lock, std::chrono::seconds(5));
+				cv->wait_for(lock, std::chrono::milliseconds(500), [&] {return *running == false; });
                 
 				bool echo_enabled = echo->load();
                 MessagePack top; 
@@ -181,9 +183,25 @@ namespace Pro {
 		//! Log.xml
 		//! Profile.xml
 		Log(std::string log_name) : messages_(2048, std::thread::hardware_concurrency() * 4){
-            echo_ = false;
-			running_ = true;
-			std::thread(&worker_thread, &messages_, log_name, &running_, &has_terminated_, &echo_, &mutex, &cv).detach();
+			// If log name is empty, then we're not writing to a file.
+			log_name_ = log_name;
+			if (log_name_ == "") {
+				echo_ = true;
+				running_ = false;  
+			}
+			else { 
+				echo_ = false;
+				running_ = true;
+				worker_ = std::thread(&worker_thread, &messages_, log_name, &running_, &has_terminated_, &echo_, &mutex, &cv);
+			} 
+
+			MessagePack pack;
+			pack.code = LogCode::INFO;
+			pack.id = 0;
+			pack.line = static_cast<unsigned>(__LINE__);
+			pack.function = __FUNCTION__;
+			pack.message = "Initialized log at: " + log_name;
+			messages_.Push(std::move(pack));  
 		}
 
 		~Log() {
@@ -216,10 +234,10 @@ namespace Pro {
 		// Required currently as there's no way to ensure that all threads terminate correctly
 		inline void Close() {
 			running_ = false;
-			while (has_terminated_ == false) {
+			while (has_terminated_ == false && log_name_ != "" ) {
 				// Wait until thread has closed nicely
 				cv.notify_all();
-				std::this_thread::sleep_for(std::chrono::milliseconds(64));
+				worker_.join(); 
 			}
 		}
         

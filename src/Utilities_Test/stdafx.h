@@ -5,6 +5,8 @@
 
 #pragma once
 
+#define LOGNAME ""
+
 #include "targetver.h"
 
 // Headers for CppUnitTest
