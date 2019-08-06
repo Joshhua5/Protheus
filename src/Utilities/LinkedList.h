@@ -26,8 +26,8 @@ namespace Pro {
 		template<typename T>
 		struct Node {
 			Node() { _prev = _next = nullptr; }
-			Node*  _prev;
-			Node*  _next;
+			Node* _prev;
+			Node* _next;
 			T _ptr;
 		};
 
@@ -86,7 +86,7 @@ namespace Pro {
 				return return_ptr;
 			}
 
-			inline bool RemoveWhere(const T* object) {
+			inline bool RemoveWhere(const T& object) {
 				if (_size == 0)
 					return false;
 				if (_size == 1 && _start->_ptr == object) {
@@ -273,13 +273,13 @@ namespace Pro {
 
 			//! Removes an object from the linked list 
 			//! Returns true if successful
-			inline bool RemoveObject(T& object) {
+			inline bool RemoveObject(const T& object) {
 				std::lock_guard<std::mutex> lk(edit_lock);
 				return RemoveWhere(object);
 			}
 
 			//! Removes the object at the end of the list (partner LinkedList::PushBack())
-			inline T PopBack() {
+			inline T PopBack() { 
 				std::lock_guard<std::mutex> lk(edit_lock);
 				return RemoveBackNoLock();
 			}

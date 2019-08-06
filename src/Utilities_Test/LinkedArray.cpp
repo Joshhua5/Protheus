@@ -27,12 +27,13 @@ namespace Utilities_Test
 		  
 		TEST_METHOD(Creation) { 
 			LinkedArray<Complex> linkedArray;
+			 
+			Assert::AreEqual(0U, linkedArray.Count());
 		}
 		 
 		TEST_METHOD(SimpleInsert) {
 			LinkedArray<Complex> linkedArray;
-			 
-
+			  
 			Complex* object1 = reinterpret_cast<Complex*>(linkedArray.Append());
 			*object1 = Complex(1, 2, 3, 4);
 

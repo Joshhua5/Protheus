@@ -89,6 +89,7 @@ namespace Pro{
 				return nullptr;
 			}
 
+			//! Returns the count of objects currently stored
 			inline size_t Count() {
 				size_t total = 0;
 				for (const auto & chunk : chunks_)

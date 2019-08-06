@@ -17,7 +17,7 @@
 #include "Queue.h"
 #include <math.h>
 
-static bool DEBUG_OBJECT_POOL_RT = false;
+static const bool DEBUG_OBJECT_POOL_RT = false;
 
 namespace Pro {
 	namespace Util {
@@ -28,11 +28,17 @@ namespace Pro {
 		//! This allows an ObjectPool to be used as an optimisation tool
         //! If the pool is deconstructed before all objects are released then
         //! Their memory will be released without deconstruction
+
+		//! Memory is stored within blocks of objects, stored as a linked list 
+
+		//! It wouldn't be a bad idea to have a object to wrap around the returned object to control
+		//! the deallocation of the object.
 		template<class T>
 		class alignas(64) ObjectPool {
 			// Each block contains block_size_ objects
 			LinkedList<T*> objects;
 
+			//! List of indexes which contain inactive objects, not leased
 			Queue<unsigned> free_object_index_;
  
 			// count of objects that this pool has served
@@ -55,8 +61,25 @@ namespace Pro {
                     printf("Chunk Ptr %p Chunk Index %i, index %i : %i", chunk, chunk_index, index % block_size_, index);
                 return &chunk[index % block_size_];
 			}
+
+			// T* GetBlock(unsigned block_id) {
+			// 		return objects.At(block_id);
+			// }
+
+			//! Returns -1 if the object doesn't belong to this pool
+			//! Otherwise the index of the object in the pool is returned
+			int BelongsTo(T* object) {
+				auto start = objects.GetStartIterator();
+				for (unsigned x = 0; start != nullptr; ++x) {
+					unsigned size = static_cast<unsigned>(((char*)object - (char*)start->_ptr) / sizeof(T));
+					if (size <= block_size_ && size >= 0)
+						return (block_size_ * x) + size;
+					start = start->_next;
+				}
+				return -1;
+			}
 		public: 
-			ObjectPool(unsigned block_size = 64){
+			ObjectPool(unsigned short block_size = 64){
                 if(block_size == 0)
                     block_size = 1;
 				block_size_ = block_size;
@@ -84,10 +107,11 @@ namespace Pro {
 				// Determine which object ID this pointer refers to
 				// Check the pointers offset to each chunk
                 int index = BelongsTo(obj);
-				if(index != -1) {
-                    obj->~T();
-                    free_object_index_.Push(index);
+				if (index != -1) {
+					obj->~T();
+					free_object_index_.Push(index);
 				}
+				--leased_objects_;
 			}
 
 			/*! Returns a old object, allocates a new one if the pool is empty */
@@ -122,24 +146,12 @@ namespace Pro {
             
             unsigned BlockCount() const{
                 return objects.size();
-            }
-            
-            T* GetBlock(unsigned block_id){
-                return objects.At(block_id);
-            }
-            
-            //! Returns -1 if the object doesn't belong to this pool
-            //! Otherwise the index of the object in the pool is returned
-            int BelongsTo(T* object){
-                auto start = objects.GetStartIterator();
-                for (unsigned x = 0; start != nullptr ; ++x){
-                    unsigned size = static_cast<unsigned>(((char*)object - (char*)start->_ptr) / sizeof(T));
-                    if(size <= block_size_ && size >= 0)
-                        return (block_size_ * x) + size;
-                    start = start->_next;
-                }
-                return -1;
-            }
+            }  
+
+			unsigned LeasedObjects() const {
+				return leased_objects_;
+			}
+             
 		};
 	}
 }

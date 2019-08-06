@@ -7,7 +7,7 @@ using namespace Util;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 
-namespace UnitTests
+namespace Utilities_Test
 {
 	typedef std::chrono::time_point<std::chrono::high_resolution_clock> time_point;
 
@@ -21,7 +21,7 @@ namespace UnitTests
 		}
 	};
 
-	TEST_CLASS(PARALLEL_TEST) {
+	TEST_CLASS(ParallelTest) {
 
 		static void call(void* argument) {
 			++*static_cast<unsigned*>(argument);
@@ -47,16 +47,16 @@ namespace UnitTests
 
 		static void nothing() { }
 
-		TEST_METHOD(BATCH_TEST) {
+		TEST_METHOD(Batch) {
 			Sync sync;
 			unsigned args = 0;
 			Parallel& parallel = GetGlobalWorkPool();
 
-			parallel.Batch(&PARALLEL_TEST::call, &sync, nullptr, 0, &args);
+			parallel.Batch(&ParallelTest::call, &sync, nullptr, 0, &args);
 			Assert::IsTrue(sync.Wait(), L"", LINE_INFO());
 		}
 
-		TEST_METHOD(MEMBER_BATCH_TEST) {
+		TEST_METHOD(MemberBatch) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 
@@ -67,7 +67,7 @@ namespace UnitTests
 			Assert::AreEqual(8, object.x, L"");
 		}
 
-		TEST_METHOD(STATIC_PROCESS_TEST) {
+		TEST_METHOD(StaticProcess) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 
@@ -95,7 +95,7 @@ namespace UnitTests
 			delete[] object2;
 		}
 
-		TEST_METHOD(SYNC_TEST) {
+		TEST_METHOD(Sync_) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 
@@ -105,7 +105,7 @@ namespace UnitTests
 			Assert::IsTrue(sync.Wait(std::chrono::seconds(10)), L"The sync never stopped waiting for the job to finish");
 		}
 
-		TEST_METHOD(DELAY_TEST) {
+		TEST_METHOD(Delay_) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 			const int wait_time = 10000;
@@ -115,10 +115,10 @@ namespace UnitTests
 			sync.Wait(std::chrono::seconds(20));
 			auto end = GetGlobalTimer().GetTime<std::chrono::milliseconds>();
 
-			Assert::IsTrue(end - start > wait_time, L"Job before the specified delay");
+			Assert::IsTrue(end - start > wait_time, L"Job started before the specified delay");
 		}
 
-		TEST_METHOD(ADD_WORKER) {
+		TEST_METHOD(AddWorker_) {
 			Parallel& parallel = GetGlobalWorkPool();
 			auto start_size = parallel.WorkerCount();
 			parallel.AddWorker(1);
@@ -129,7 +129,7 @@ namespace UnitTests
 			Assert::AreEqual(start_size, parallel.WorkerCount(), L"Unable to kill a worker");
 		}
 
-		TEST_METHOD(LOAD_TEST) {
+		TEST_METHOD(MultipleBatch) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 
@@ -137,13 +137,13 @@ namespace UnitTests
 			std::atomic<unsigned> count = 0;
 
 			for (unsigned x = 0; x < load_size; ++x)
-				parallel.Batch(&PARALLEL_TEST::counter, nullptr, nullptr, 0, &count);
+				parallel.Batch(&ParallelTest::counter, nullptr, nullptr, 0, &count);
 
 			sync.Wait();
 			Assert::AreEqual(load_size, count.load(), L"Work was lost");
 		}
 
-		TEST_METHOD(THROUGHPUT_TEST) {
+		TEST_METHOD(Throughput_) {
 			Sync sync;
 			Parallel& parallel = GetGlobalWorkPool();
 
@@ -155,7 +155,7 @@ namespace UnitTests
 			std::atomic<unsigned> count = 0;
 
 			for (unsigned x = 0; x < load_size; ++x)
-				parallel.Batch(&PARALLEL_TEST::counter, nullptr, nullptr, 0, &count);
+				parallel.Batch(&ParallelTest::counter, nullptr, nullptr, 0, &count);
 
 			sync.Wait();
 			Assert::AreEqual(load_size, count.load(), L"Work was lost");

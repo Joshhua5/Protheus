@@ -169,6 +169,8 @@
     <ClCompile Include="Bitmask.cpp">
       <FileType>CppHeader</FileType>
     </ClCompile>
+    <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClInclude Include="stdafx.h" />
