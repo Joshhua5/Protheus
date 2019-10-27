@@ -23,7 +23,7 @@ namespace Engine_Test
 		 	};
 		 }; 
 
-		 struct Velocity : Math::Vector3<float> { 
+		 struct Velocity : Math::Vector4<float> { 
 		 };
 
 		TEST_METHOD(Initialize) {
@@ -74,11 +74,11 @@ namespace Engine_Test
 		TEST_METHOD(GravitySystem) {
 			Entity entity("balls"); 
 			entity.AddComponent<Position>([](Position* component) {
-				component->Set(0, 0, 0);
+				component->Set(0, 0, 0, 1);
 			});
 			unsigned increment = 0;
 			entity.AddComponent<Velocity>([&](Velocity* component) {
-				component->Set(0, increment++ * 0.01 , 0);
+				component->Set(0, increment++ * 0.01 , 0, 0);
 			});
 
 			for (int i = 0; i < 1024 * 1024; ++i)

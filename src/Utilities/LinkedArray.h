@@ -71,10 +71,11 @@ namespace Pro{
 				return object;
 			}
 			
-			T* Append() {
-				for (ArrayChunk& chunk : chunks_)
+			T* Append() { 
+				for (const ArrayChunk& chunk : chunks_)
 					if (chunk.HasSpace())
-						return reinterpret_cast<T*>(chunks_.back().CreateObject()); 
+						return reinterpret_cast<T*>(const_cast<ArrayChunk*>(&chunk)->CreateObject());
+						 
 				// We had no space and need to create a new chunk
 				AddChunk(block_size_);
 				return reinterpret_cast<T*>(chunks_.back().CreateObject());

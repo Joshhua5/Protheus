@@ -3,7 +3,7 @@
 
 namespace Pro {
 	namespace ECS {
-		struct Position : Math::Vector3<float> {
+		struct Position : Math::Vector4<float> {
 		};
 	}
 }

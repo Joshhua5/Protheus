@@ -43,7 +43,7 @@ namespace Pro {
 				chunk_iterator(iterator->GetIterator())
 			{ } 
 
-			T* Read() {
+			inline T* Read() {
 				T* ptr = chunk_iterator.Read();
 				if (ptr == nullptr) {
 					if (LoadNextIterator())

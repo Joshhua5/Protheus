@@ -19,7 +19,7 @@ namespace Pro {
 		{
 			T* pointer_;
 			unsigned head_; 
-			unsigned end_;
+			unsigned end_; 
 			Bitmask& bitmask_;
 
 		public:
@@ -30,7 +30,7 @@ namespace Pro {
 			{
 				pointer_ = reinterpret_cast<T*>(start);
 				head_ = 0; 
-				end_ = size;
+				end_ = size;  
 			}
 
 			BitmaskedIterator(const BitmaskedIterator& rhs)
@@ -55,9 +55,9 @@ namespace Pro {
 				return *this;
 			}
 
-			T* Read() {
-				while (!bitmask_.Check(head_++) & head_ <= end_);
-				if (head_ <= end_)
+			inline T* Read() { 
+				//while (!bitmask_.Check(head_++) & head_ <= end_);
+				if (++head_ <= end_)
 					return pointer_ + (head_ - 1);
 				return nullptr;
 

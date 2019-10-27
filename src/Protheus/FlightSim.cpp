@@ -234,7 +234,7 @@ public:
 };
 
 
-struct Velocity : Math::Vector3<float> {
+struct Velocity : Math::Vector4<float> {
 };
 
 #include <QuadTree.h>
@@ -247,14 +247,14 @@ int main() {
 
 	Entity entity("balls");
 	entity.AddComponent<Position>([](Position* component) {
-		component->Set(0, 0, 0);
+		component->Set(0, 0, 0, 0);
 		});
 	unsigned increment = 0;
 	entity.AddComponent<Velocity>([&](Velocity* component) {
-		component->Set(0, increment++ * 0.01, 0);
+		component->Set(0, increment++ * 0.01, 0, 0);
 		});
 
-	for (int i = 0; i < 1024 * 1024; ++i)
+	for (int i = 0; i < 1024 * 1024 * 10; ++i)
 		entity.NewInstance();
 
 

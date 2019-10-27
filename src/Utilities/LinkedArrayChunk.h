@@ -21,7 +21,10 @@ namespace Pro {
 		namespace Internal {
 			using namespace std;
 			template<typename T>
-			struct alignas(16) ArrayChunk {
+			struct alignas(64) ArrayChunk {
+				unsigned int capacity_; // The maximum count of objects
+				unsigned int count_; // The count of objects that have taken up space
+
 				ArrayChunk(size_t _size) : mask_(_size, false)
 				{
 					capacity_ = _size;
@@ -37,8 +40,6 @@ namespace Pro {
 				ArrayChunk& operator= (ArrayChunk&& rhs) = default;
 
 				unique_ptr<T, function<void(T*)>> chunk_;
-				size_t capacity_; // The maximum count of objects
-				size_t count_; // The count of objects that have taken up space
 				size_t actual_count_; // The count of objects that are active 
 				Bitmask mask_; // Mask used to know which objects are active
 
@@ -65,7 +66,7 @@ namespace Pro {
 				}
 
 				inline BitmaskedIterator<T> GetIterator() {
-					return BitmaskedIterator<T>(chunk_.get(), mask_, count_);
+					return BitmaskedIterator<T>(chunk_.get(), mask_, capacity_);
 				}
 
 				inline bool IsPacked() const { return actual_count_ == capacity_; }
