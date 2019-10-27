@@ -233,9 +233,49 @@ public:
 	} 
 };
 
+
+struct Velocity : Math::Vector3<float> {
+};
+
 #include <QuadTree.h>
 #include <Timer.h>
+#include "../Engine/Entity/Entity.h"
+#include "../Engine/Entity/System.h" 
+#include "../Engine/Entity/Components/Position.h"
+using namespace Pro::ECS;
 int main() {
+
+	Entity entity("balls");
+	entity.AddComponent<Position>([](Position* component) {
+		component->Set(0, 0, 0);
+		});
+	unsigned increment = 0;
+	entity.AddComponent<Velocity>([&](Velocity* component) {
+		component->Set(0, increment++ * 0.01, 0);
+		});
+
+	for (int i = 0; i < 1024 * 1024; ++i)
+		entity.NewInstance();
+
+
+	System<Position, Velocity> ProcessPhysics([](System<Position, Velocity>& system) {
+		Position* position;
+		while ((position = system.Next<Position>()) != nullptr) {
+			auto velocity = system.Next<Velocity>();
+
+			velocity->y -= 9.8f / 1000.f;
+			*position += *velocity;
+
+			if (position->y <= 0) {
+				velocity->y *= -0.8f;
+				position->y = 0.01f;
+			}
+		}
+		});
+
+	for (int i = 0; i < 100; ++i) {
+		ProcessPhysics.Execute(entity);
+	}
 	//srand(Pro::GetGlobalTimer().getTime());
 	//QuadTree<int, 4> tree({ 50, 50}, { 100, 100 });
 	//for (int x = 0; x < 1000; ++x){ 	
@@ -244,11 +284,11 @@ int main() {
 	//	tree.GetQuadrantData(point);
 	//}
 	
-	global_log.EchoOnConsole(true);
-	{
-		FlightSim game;
-		game.Run();
-	}
-	global_log.Close();
-	sleep_for(10000);
+	//global_log.EchoOnConsole(true);
+	//{
+	//	FlightSim game;
+	//	game.Run();
+	//}
+	//global_log.Close();
+	//sleep_for(10000);
 } 

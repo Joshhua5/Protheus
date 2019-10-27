@@ -85,9 +85,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)lib\$(Configuration);$(SolutionDir)..\externlib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-    <IncludePath>$(ProjectDir)..\Core;$(ProjectDir)..\Core\Audio\openal;$(ProjectDir)..\Utilities;$(ProjectDir)..\Core\Graphics\extern;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(ProjectDir)..\Utilities;$(ProjectDir)..\Core;$(VC_SourcePath);</SourcePath>
+    <LibraryPath>$(SolutionDir)$(Configuration);$(SolutionDir)..\externlib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Engine;$(ProjectDir)..\Core;$(ProjectDir)..\Core\Audio\openal;$(ProjectDir)..\Utilities;$(ProjectDir)..\Core\Graphics\extern;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\Engine;$(ProjectDir)..\Utilities;$(ProjectDir)..\Core;$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>

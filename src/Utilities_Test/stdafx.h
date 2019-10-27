@@ -18,6 +18,7 @@
 #include <Queue.h>
 #include <Pipe.h>
 #include <Iterator.h>
+#include <unordered_map>
 #include <BitmaskedIterator.h>
 #include <LinkedArray.h>
 #include <LinkedArrayIterator.h>

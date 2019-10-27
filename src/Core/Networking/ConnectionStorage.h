@@ -10,6 +10,7 @@
  
 #include "Connection.h" 
 #include <ObjectPool.h>
+#include <unordered_map>
 
 namespace Pro{
     namespace Networking{
@@ -17,6 +18,7 @@ namespace Pro{
         //! Also provides cleanup of these connections and GetConnection functionality
         class ConnectionStorage{
             Util::ObjectPool<Connection> connection_pool_;
+			std::unordered_map<unsigned, Connection*> active_connections_;
             unsigned long long leased_connection_count_;
         public:
             ConnectionStorage();

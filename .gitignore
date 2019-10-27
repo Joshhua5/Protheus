@@ -23,7 +23,7 @@ TestCases/bin
 *.v11.suo
 *.ipgset
 */log.xml
-*.suo
+*.suo*
 /x86
 /lib
 /x64
@@ -32,6 +32,10 @@ TestCases/bin
 /src/Protheus/Debug
 /src/Core/Debug 
 /src/Utilities/Debug 
+/src/Utilities/VTune Amplifier Results
+/src/Protheus/VTune Amplifier Results
+/src/Core/VTune Amplifier Results
+/src/Protheus/VTune Amplifier Results
 /src/Utilities_Test/Debug 
 /src/Test/Release
 /src/Protheus/Release
@@ -47,6 +51,7 @@ Utilities.lib
 src/Protheus/Debug 
 /vs15/Release
 /vs19/Release
+/vs19/GPUCache
 /vs19/Debug
 src/Protheus/Release
 *.obj  
@@ -60,3 +65,5 @@ vs15/.vs/
 src/Engine/Debug/Engine.vcxproj.FileListAbsolute.txt
 *.vsp
 src/Engine_Test/Debug/Engine_Test.vcxproj.FileListAbsolute.txt
+
+*.amplxeproj

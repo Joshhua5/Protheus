@@ -62,7 +62,7 @@ namespace Pro {
 			size_t count;
 			LinkedArray<T> components;
 
-			EntityComponent() : components() {
+			EntityComponent() : components(10000) {
 				count = 0;
 			}
 
@@ -160,7 +160,7 @@ namespace Pro {
 
 			Entity(const string& name) {
 				entityName = name;
-				//AddComponent<Enabled>([](void* component) { reinterpret_cast<Enabled*>(component)->enabled = true; });
+				AddComponent<Enabled>([](void* component) { reinterpret_cast<Enabled*>(component)->enabled = true; });
 			}
 
 			template<typename T>
@@ -181,7 +181,7 @@ namespace Pro {
 			}
 
 			template<typename T, typename ...args>
-			void AddComponent(std::function<void(void*)> constructor) {
+			void AddComponent(std::function<void(T*)> constructor) {
 				// if (_DEBUG && (components.find(type_index(typeid(T))) != components.end())) {
 				// 	global_log.Report<LogCode::FAULT>("Duplicate Component: " + entityName, __FUNCTION__, __LINE__);
 				// 	return;
@@ -190,13 +190,13 @@ namespace Pro {
 				// that will allow us to create components without their type known.  
 				EntityComponent<T>* component = new EntityComponent<T>();
 				for (size_t i = 0; i < instanceCount; ++i)
-					constructor((void*)component->components.Append());
+					constructor((T*)component->components.Append());
 
 				components.emplace_back(type_index(typeid(T)), component,
 					[=](void* ec)
 					{
 						EntityComponent<T>* component = reinterpret_cast<EntityComponent<T>*>(ec);
-						constructor((void*)component->components.Append());
+						constructor((T*)component->components.Append());
 					}
 				); 
 			}

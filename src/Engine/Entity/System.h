@@ -52,7 +52,11 @@ namespace Pro {
 			ComponentIterator<Input...>* iterator;   
 			std::function<void(System&)> executor;
 		public: 
-			System() = default;
+			System() = default; 
+			// If possible we want to accept a function that is called on each instanct 
+			// parsing it's own components to the function
+			// currently you need to write the function to process all entities.
+			// this does allow for computation sharing, although the lassed lambda could allow that.
 			System(function<void(System&)> _exe) : executor(_exe) {}
 		
 			inline void Reset(Entity& entity) {

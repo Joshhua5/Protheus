@@ -20,7 +20,7 @@ namespace Pro {
 		using namespace std; 
 		class Bitmask
 		{   
-			const static size_t BitSetSize = 256; // half a cacheline
+			const static size_t BitSetSize = 1024; // half a cacheline
 			shared_ptr<bitset<BitSetSize>[]> bitmask_;
 			size_t size_;
 			 

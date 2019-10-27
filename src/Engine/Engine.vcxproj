@@ -133,6 +133,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Entity\Components\Enabled.h" />
+    <ClInclude Include="Entity\Components\Position.h" />
+    <ClInclude Include="Entity\Components\Status.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\EntityContainer.h" />
     <ClInclude Include="Entity\ComponentIterator.h" />

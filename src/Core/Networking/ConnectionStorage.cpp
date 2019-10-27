@@ -15,24 +15,12 @@ ConnectionStorage::ConnectionStorage(){
 }
 
 ConnectionStorage::~ConnectionStorage(){
-    for(unsigned x = 0; x < connection_pool_.BlockCount(); ++x){
-        auto block = connection_pool_.GetBlock(x);
-        for(unsigned y = 0; x < connection_pool_.blockSize(); ++y){
-            if(block[y].ID() != 0)
-                (block + y)->~Connection();
-        }
-    }
+	for (auto connection : active_connections_)
+		connection_pool_.Return(connection.second); 
 }
 
 Connection* ConnectionStorage::GetConnection(unsigned connection_id){
-    for(unsigned x = 0; x < connection_pool_.BlockCount(); ++x){
-        auto block = connection_pool_.GetBlock(x);
-        for(unsigned y = 0; x < connection_pool_.blockSize(); ++y){
-            if(block[y].ID() == connection_id)
-                return block + y;
-        }
-    }
-    return nullptr;
+	return active_connections_.at(connection_id);
 }
 
 unsigned long long ConnectionStorage::ConnectionCount() const{
@@ -41,10 +29,13 @@ unsigned long long ConnectionStorage::ConnectionCount() const{
 
 Connection* ConnectionStorage::GetNewConnection(){
     ++leased_connection_count_;
-    return connection_pool_.Get();
+    auto connection =  connection_pool_.Get();
+	active_connections_.insert({ connection->ID(), connection });
+	return connection;
 }
 
 void ConnectionStorage::ReturnConnection(Connection* connection){
     --leased_connection_count_;
-    connection_pool_.Return(connection);
+	active_connections_.erase(connection->ID());
+	connection_pool_.Return(connection); 
 }
