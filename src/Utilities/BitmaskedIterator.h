@@ -56,7 +56,7 @@ namespace Pro {
 			}
 
 			inline T* Read() { 
-				//while (!bitmask_.Check(head_++) & head_ <= end_);
+				while (!bitmask_.Check(head_++) & head_ <= end_);
 				if (++head_ <= end_)
 					return pointer_ + (head_ - 1);
 				return nullptr;

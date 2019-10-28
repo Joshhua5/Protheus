@@ -16,41 +16,7 @@
 namespace Pro {
 	using namespace std;
 	using namespace Util;
-	namespace ECS {
-		// To initialize the entity, we can return memory points and the type_info which can be used by the user to initialize, we can also provide a nice function do that 
-
-		// A EntityInstance is used for initializing a entity, it contains pointers to the components for this instance
-		// DEPRICATED
-		// class EntityReference {
-		// 	// We should pool this object
-		// 	std::map<type_index, void*> component_instances;
-		// 	friend class Entity;
-		// 	//friend class FriendSystem;
-		// 
-		// public:
-		// 	EntityInitializer() = default;
-		// 
-		// 	EntityInitializer(const EntityInitializer&) = delete;
-		// 	EntityInitializer& operator=(const EntityInitializer&) = delete;
-		// 
-		// 	EntityInitializer(EntityInitializer&&) = default;
-		// 	EntityInitializer& operator=(EntityInitializer&&) = default;
-		// 
-		// 	template<typename T, typename... args>
-		// 	inline void Initialize(args... arg) {
-		// 		*reinterpret_cast<T*>(component_instances.at(typeid(T))) = T(arg...);
-		// 	}
-		// 
-		// 	template<typename T>
-		// 	inline bool Contains() {
-		// 		return component_instances.find(typeid(T)) != component_instances.end();
-		// 	}
-		// 
-		// 	template<typename T>
-		// 	inline T* Get() {
-		// 		return reinterpret_cast<T*>(component_instances.at(typeid(T)));
-		// 	}
-		// };
+	namespace ECS { 
 
 		// A Entity component is the link between an entity and a component, it's responsible for the management of a components pool
 		// and initialization
@@ -59,10 +25,14 @@ namespace Pro {
 			friend class Entity;
 			friend class EntityInitializer;
 
+			//typename vector<T> collection;
+			//typename vector<T>::iterator iterator;
+			 
 			size_t count;
-			LinkedArray<T> components;
+			vector<T> components;
 
-			EntityComponent() : components(10000) {
+			EntityComponent() {
+				components.reserve(10000);
 				count = 0;
 			}
 
@@ -83,15 +53,10 @@ namespace Pro {
 			//		components.Append<T>(arg...);
 			//}
 
-			inline LinkedArrayIterator<T> Iterator() {
-				return LinkedArrayIterator<T>(components);
+			inline typename vector<T>::iterator Iterator() {  
+				return components.begin();
 			}
-		};
-
-		class EntityReference {
-
-
-		};
+		}; 
 
 		// A entity is a configuration of components, each entity can have many instances
 		// adding a component to a entity will add it to all instances
@@ -99,7 +64,7 @@ namespace Pro {
 		// known times.
 		class Entity {
 			friend class FactorySystem;
-
+			    
 			string entityName;
 
 			// void* is a EntityComponent<T>* where T is the type_index
@@ -140,10 +105,11 @@ namespace Pro {
 			}
 			
 			template<typename T>
-			inline LinkedArrayIterator<T> GetComponentIterator() { 
+			inline typename std::vector<T>::iterator GetComponentIterator() {
 				for (auto& entry : components)
 					if (entry.index == typeid(T))
-						return LinkedArrayIterator<T>(entry.Component<T>()->components);
+						return entry.Component<T>()->Iterator();
+						//return LinkedArrayIterator<T>(entry.Component<T>()->components);
 				throw "Not Found";
 			}
 
@@ -160,7 +126,7 @@ namespace Pro {
 
 			Entity(const string& name) {
 				entityName = name;
-				AddComponent<Enabled>([](void* component) { reinterpret_cast<Enabled*>(component)->enabled = true; });
+				AddComponent<Enabled>([](Enabled* component) { component->enabled = true; });
 			}
 
 			template<typename T>
@@ -169,13 +135,14 @@ namespace Pro {
 				// that will allow us to create components without their type known.   
 				EntityComponent<T>* component = new EntityComponent<T>();
 				for (size_t i = 0; i < instanceCount; ++i)
-					component->components.Emplace(); 
+					component->components.emplace_back(); 
 
+				// Attach the component type to the Entity
 				components.emplace_back(type_index(typeid(T)), component,
 					[=](void* ec)
 					{
-						EntityComponent<T>* component = reinterpret_cast<EntityComponent<T>*>(ec);
-						component->components.Emplace();
+						auto component = reinterpret_cast<EntityComponent<T>*>(ec);
+						component->components.emplace_back();
 					}
 				);
 			}
@@ -188,15 +155,19 @@ namespace Pro {
 				// }
 				// Here we use the known type information to create a function
 				// that will allow us to create components without their type known.  
-				EntityComponent<T>* component = new EntityComponent<T>();
-				for (size_t i = 0; i < instanceCount; ++i)
-					constructor((T*)component->components.Append());
+				auto component = new EntityComponent<T>();
+				for (size_t i = 0; i < instanceCount; ++i) {
+					component->components.emplace_back();
+					constructor(&component->components.back());
+				}
 
+				// Attach the component type to the Entity
 				components.emplace_back(type_index(typeid(T)), component,
 					[=](void* ec)
 					{
-						EntityComponent<T>* component = reinterpret_cast<EntityComponent<T>*>(ec);
-						constructor((T*)component->components.Append());
+						auto component = reinterpret_cast<EntityComponent<T>*>(ec);
+						component->components.emplace_back();
+						constructor(&component->components.back()); 
 					}
 				); 
 			}

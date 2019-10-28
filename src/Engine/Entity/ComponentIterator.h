@@ -24,22 +24,18 @@ namespace Pro {
 		// A EntityIterator is used for initializing a entity, it contains pointers to the components for this instance
 		  
 		template<typename... Components>
-		class alignas(16) ComponentIterator {
-			template<typename T> constexpr LinkedArrayIterator<T> GetNull() {
-				return nullptr;
-			}
-		
-			std::tuple<LinkedArrayIterator<Components>...> storage;
+		class alignas(16) ComponentIterator {  
+			std::tuple<vector<Components>::iterator...> storage;
 
 			friend class Entity; 
 		public: 
 			//ComponentIterator() : storage(GetNull<Components>()...) {}
-			ComponentIterator(Components... args) : storage(args...) {}
-			ComponentIterator(LinkedArrayIterator<Components>... args) : storage(args...) {}
+			//ComponentIterator(Components... args) : storage(args...) {}
+			ComponentIterator(vector<Components>::iterator... args) : storage(args...) {}
 		  
 			template<typename Component>
-			constexpr LinkedArrayIterator<Component>& Get() {
-				return std::get<LinkedArrayIterator<Component>>(storage);
+			constexpr vector<Component>::iterator& Get() {
+				return std::get<vector<Component>::iterator(storage);
 			}
 		}; 
 	}
