@@ -53,8 +53,12 @@ namespace Pro {
 			//		components.Append<T>(arg...);
 			//}
 
-			inline typename vector<T>::iterator Iterator() {  
+			inline typename vector<T>::iterator begin() {  
 				return components.begin();
+			}					
+			
+			inline typename vector<T>::iterator end() {
+				return components.end();
 			}
 		}; 
 
@@ -105,11 +109,18 @@ namespace Pro {
 			}
 			
 			template<typename T>
-			inline typename std::vector<T>::iterator GetComponentIterator() {
+			inline typename std::vector<T>::iterator GetComponentIteratorStart() {
 				for (auto& entry : components)
 					if (entry.index == typeid(T))
-						return entry.Component<T>()->Iterator();
-						//return LinkedArrayIterator<T>(entry.Component<T>()->components);
+						return entry.Component<T>()->begin(); 
+				throw "Not Found";
+			}
+
+			template<typename T>
+			inline typename std::vector<T>::iterator GetComponentIteratorEnd() {
+				for (auto& entry : components)
+					if (entry.index == typeid(T))
+						return entry.Component<T>()->end(); 
 				throw "Not Found";
 			}
 
@@ -175,7 +186,7 @@ namespace Pro {
 			 
 			template<typename... Components>
 			ComponentIterator<Components...> Iterator() {
-				return ComponentIterator<Components...>({ GetComponentIterator<Components>()... });
+				return ComponentIterator<Components...>({ GetComponentIteratorStart<Components>()... }, { GetComponentIteratorEnd<Components>()... });
 			}
 			 
 			template<typename T>

@@ -54,7 +54,7 @@ namespace Pro {
 
 
 			template<typename T> using add_pointer = T*;
-			template<typename T> using get_iterator = iterator->Get<Component>()++;
+			//template<typename T> using get_iterator = iterator->Get<Component>()++;
 		public: 
 			System() = default; 
 			// If possible we want to accept a function that is called on each instanct 
@@ -69,7 +69,7 @@ namespace Pro {
 				// ComponentIterator doesn't have a default constructor since it stores a tuple which arguments
 				// We can't pass in null for the tuple, since it stores Iterators that also don't have default constructors.
 				// and require a reference type.
-				// iterator = new ComponentIterator<Input...>(entity.Iterator<Input...>());
+				iterator = new ComponentIterator<Input...>(entity.Iterator<Input...>());
 			}
 		
 			template<typename Component>

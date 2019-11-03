@@ -27,20 +27,22 @@ namespace Pro {
 		template<typename... Components>
 		class alignas(16) ComponentIterator {  
 		public: 
-			std::tuple<typename vector<Components>::iterator...> storage;
+			std::tuple<typename vector<Components>::iterator...> current;
+			std::tuple<typename vector<Components>::iterator...> end;
 
 			friend class Entity; 
 			
-			template<typename T>
-			constexpr void next() { Get<T>()++; }
+			constexpr void next() { }
 
 			template<typename T, typename... Types>
-			constexpr void next() { Get<T>()++; next<Types>(); }
+			constexpr void next() { Get<T>()++; next<Types...>(); }
 
 		public: 
 			//ComponentIterator() : storage(GetNull<Components>()...) {}
 			//ComponentIterator(Components... args) : storage(args...) {}
-			ComponentIterator(typename vector<Components>::iterator... args) : storage(args) {}
+			ComponentIterator(
+				typename vector<Components>::iterator... start,
+				typename vector<Components>::iterator... end) : current(start), end(end) {}
 		  
 			template<typename Component>
 			constexpr typename vector<Component>::iterator& Get() {
@@ -48,7 +50,7 @@ namespace Pro {
 			} 
 
 			constexpr std::tuple<Components...>& Next() {
-				next<Components>();
+				next<Components...>();
 			}
 		}; 
 	}
