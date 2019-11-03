@@ -258,19 +258,14 @@ int main() {
 		entity.NewInstance();
 
 
-	System<Position, Velocity> ProcessPhysics([](System<Position, Velocity>& system) {
-		Position* position;
-		while ((position = system.Next<Position>()) != nullptr) {
-			auto velocity = system.Next<Velocity>();
+	System<Position, Velocity> ProcessPhysics([](Position& position, Velocity& velocity) {  
+			velocity.y -= 9.8f / 1000.f;
+			position += velocity;
 
-			velocity->y -= 9.8f / 1000.f;
-			*position += *velocity;
-
-			if (position->y <= 0) {
-				velocity->y *= -0.8f;
-				position->y = 0.01f;
-			}
-		}
+			if (position.y <= 0) {
+				velocity.y *= -0.8f;
+				position.y = 0.01f;
+			} 
 		});
 
 	for (int i = 0; i < 100; ++i) {

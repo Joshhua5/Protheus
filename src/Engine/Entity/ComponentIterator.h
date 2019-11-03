@@ -19,23 +19,36 @@
 namespace Pro {
 	using namespace std;
 	using namespace Util;
-	namespace ECS {
+	namespace ECS { 
+
 		// To initialize the entity, we can return memory points and the type_info which can be used by the user to initialize, we can also provide a nice function do that 
 		// A EntityIterator is used for initializing a entity, it contains pointers to the components for this instance
 		  
 		template<typename... Components>
 		class alignas(16) ComponentIterator {  
-			std::tuple<vector<Components>::iterator...> storage;
+		public: 
+			std::tuple<typename vector<Components>::iterator...> storage;
 
 			friend class Entity; 
+			
+			template<typename T>
+			constexpr void next() { Get<T>()++; }
+
+			template<typename T, typename... Types>
+			constexpr void next() { Get<T>()++; next<Types>(); }
+
 		public: 
 			//ComponentIterator() : storage(GetNull<Components>()...) {}
 			//ComponentIterator(Components... args) : storage(args...) {}
-			ComponentIterator(vector<Components>::iterator... args) : storage(args...) {}
+			ComponentIterator(typename vector<Components>::iterator... args) : storage(args) {}
 		  
 			template<typename Component>
-			constexpr vector<Component>::iterator& Get() {
-				return std::get<vector<Component>::iterator(storage);
+			constexpr typename vector<Component>::iterator& Get() {
+				return std::get<typename vector<Component>::iterator>(storage);
+			} 
+
+			constexpr std::tuple<Components...>& Next() {
+				next<Components>();
 			}
 		}; 
 	}

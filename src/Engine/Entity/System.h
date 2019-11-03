@@ -15,30 +15,30 @@
 #include "ComponentIterator.h"
 
 namespace Pro {
-	namespace ECS {
+	namespace ECS { 
 
-		// template <typename... Args>
-		// struct variadic_typedef { };
-		// 
-		// template<typename... Inputs>
-		// struct Components {
-		// 	typedef std::tuple<Inputs...> type;
-		// };
-		// 
-		// template<typename... Inputs>
-		// struct Components{ 
-		// 	using components = Inputs;
-		// };  
+		template <typename Func, typename A, typename ...Args> struct Caller
+		{
+			static void call(Func& f, A&& a, Args&& ...args)
+			{
+				f(std::forward<A>(a));
+				Caller<Func, Args...>::call(f, std::forward<Args>(args)...);
+			}
+		};
 
-		//template <typename... Args>
-		//struct convert_in_tuple<variadic_typedef<Args...>>
-		//{
-		//	// expand the variadic_typedef back into
-		//	// its arguments, via specialization
-		//	// (doesn't rely on functionality to be provided
-		//	// by the variadic_typedef struct itself, generic)
-		//	typedef typename convert_in_tuple<Args...>::type type;
-		//};
+		template <typename Func, typename A> struct Caller<Func, A>
+		{
+			static void call(Func& f, A&& a)
+			{
+				f(std::forward<A>(a));
+			}
+		};
+
+		template <typename Func, typename ...Args>
+		void Call(Func& f, Args&& ...args)
+		{
+			Caller<Func, Args...>::call(f, std::forward<Args>(args)...);
+		}
 		 
 		class SystemBase { 
 		public: 
@@ -48,16 +48,20 @@ namespace Pro {
 		// TODO I'd like to have systems that can feed other systems
 		template<typename... Input> //, class Output = Components<>>
 		class System : SystemBase {
-			template<typename T> using add_pointer = T*;  
 			ComponentIterator<Input...>* iterator;   
-			std::function<void(System&)> executor;
+			//std::function<void(System&)> executor;
+			std::function<void(Input&...)> executor;
+
+
+			template<typename T> using add_pointer = T*;
+			template<typename T> using get_iterator = iterator->Get<Component>()++;
 		public: 
 			System() = default; 
 			// If possible we want to accept a function that is called on each instanct 
 			// parsing it's own components to the function
 			// currently you need to write the function to process all entities.
 			// this does allow for computation sharing, although the lassed lambda could allow that.
-			System(function<void(System&)> _exe) : executor(_exe) {}
+			System(function<void(Input&...)> _exe) : executor(_exe) {}
 		
 			inline void Reset(Entity& entity) {
 				// This needs to change.
@@ -65,17 +69,20 @@ namespace Pro {
 				// ComponentIterator doesn't have a default constructor since it stores a tuple which arguments
 				// We can't pass in null for the tuple, since it stores Iterators that also don't have default constructors.
 				// and require a reference type.
-				iterator = new ComponentIterator<Input...>(entity.Iterator<Input...>());
+				// iterator = new ComponentIterator<Input...>(entity.Iterator<Input...>());
 			}
 		
 			template<typename Component>
-			inline Component* Next() {
-				return iterator->Get<Component>().Read();
+			Component& Next() { 
+				return *iterator->Get<Component>()++;
 			}  
-		
+			 
 			void Execute(Entity& entity) {
-				Reset(entity);
-				executor(*this);
+				Reset(entity); 
+				     
+				//executor(next_pointer<Input...>());
+				//executor(iterator->Next());
+				std::apply(executor, iterator->Next());
 			}
 		};   
 	}
