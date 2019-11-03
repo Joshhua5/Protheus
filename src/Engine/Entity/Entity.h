@@ -186,7 +186,10 @@ namespace Pro {
 			 
 			template<typename... Components>
 			ComponentIterator<Components...> Iterator() {
-				return ComponentIterator<Components...>({ GetComponentIteratorStart<Components>()... }, { GetComponentIteratorEnd<Components>()... });
+				return ComponentIterator<Components...>(
+					{ GetComponentIteratorStart<Components>()... },
+					{ GetComponentIteratorEnd<Components>()... }
+				);
 			}
 			 
 			template<typename T>

@@ -40,9 +40,7 @@ namespace Pro {
 		public: 
 			//ComponentIterator() : storage(GetNull<Components>()...) {}
 			//ComponentIterator(Components... args) : storage(args...) {}
-			ComponentIterator(
-				typename vector<Components>::iterator... start,
-				typename vector<Components>::iterator... end) : current(start), end(end) {}
+			ComponentIterator(typename vector<Components>... containers) : current(start...), end(end...) {}
 		  
 			template<typename Component>
 			constexpr typename vector<Component>::iterator& Get() {
